@@ -1,10 +1,11 @@
 import React from 'react';
 import {Text, View} from 'react-native';
+import logInOrSignUpStyles from "./LogInOrSignUp.style";
 
 const LogInOrSignUp = () => {
   return (
     <View>
-      <Text>Other screen</Text>
+      <Text style={logInOrSignUpStyles.title}>Log in or Sign up</Text>
     </View>
   );
 };

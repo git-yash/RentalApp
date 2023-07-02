@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {Text, View, Button, StyleSheet} from 'react-native';
 import Modal from 'react-native-modal';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+import exploreStyles from "./Explore.style";
+import LogInOrSignUp from "../LogInOrSignUp/LogInOrSignUp";
 
 const Explore = (props: {navigation: any}) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -26,36 +28,14 @@ const Explore = (props: {navigation: any}) => {
         }}
         useNativeDriverForBackdrop
         swipeDirection={['down']}
-        style={styles.modal}>
-        <View style={styles.modalView}>
-          <View style={styles.grayLine} />
+        style={exploreStyles.modal}>
+        <View style={exploreStyles.modalView}>
+          <LogInOrSignUp />
         </View>
       </Modal>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  modalView: {
-    backgroundColor: 'white',
-    width: '100%',
-    height: '95%',
-    borderTopRightRadius: 15,
-    borderTopLeftRadius: 15,
-  },
-  modal: {
-    margin: 0,
-    justifyContent: 'flex-end',
-  },
-  grayLine: {
-    backgroundColor: '#d5d7db',
-    height: 4,
-    width: 40,
-    alignSelf: 'center',
-    borderRadius: 2,
-    marginBottom: 10,
-    marginTop: 10,
-  },
-});
 
 export default Explore;
