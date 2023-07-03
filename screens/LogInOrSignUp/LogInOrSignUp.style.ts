@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import Colors from '../../assets/Colors';
 
 const logInOrSignUpStyles = StyleSheet.create({
-  container: {
+  headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingTop: 10,
