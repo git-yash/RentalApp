@@ -1,7 +1,7 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
-import Colors from "../../assets/Colors";
+import Colors from '../../assets/Colors';
 
 const TabBarIcon = (props: {isFocused: boolean; icon: IconDefinition}) => {
   return (

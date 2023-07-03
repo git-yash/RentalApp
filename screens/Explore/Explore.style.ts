@@ -7,7 +7,7 @@ const exploreStyles = StyleSheet.create({
     height: '95%',
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
-    alignItems: 'center',
+
   },
   modal: {
     margin: 0,
