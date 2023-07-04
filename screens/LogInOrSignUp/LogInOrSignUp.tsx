@@ -7,6 +7,7 @@ import Modal from 'react-native-modal';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import exploreStyles from '../Explore/Explore.style';
 import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
+import Util from '../../Util';
 
 const LogInOrSignUp = (props: {
   isModalVisible: boolean;
@@ -43,7 +44,7 @@ const LogInOrSignUp = (props: {
         <CustomTextInput
           inputTitle={'Phone number'}
           placeholderText={'Enter phone number...'}
-          value={phoneText}
+          value={Util.formatPhoneNumber(phoneText)}
           onChange={setPhoneText}
           autoCapitalize={'none'}
           keyboardType={'phone-pad'}

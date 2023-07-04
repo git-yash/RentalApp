@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Box, Input, Text} from 'native-base';
 import customTextInputStyles from './CustomTextInput.style';
 import Colors from '../../assets/Colors';
-import { KeyboardTypeOptions } from "react-native";
+import {KeyboardTypeOptions} from 'react-native';
 
 const CustomTextInput = (props: {
   inputTitle: string;
@@ -67,7 +67,6 @@ const CustomTextInput = (props: {
           placeholderTextColor={Colors.gray800}
           invalidOutlineColor={Colors.invalidRed}
           onBlur={onBlurInput}
-          cursorColor={Colors.green} //TODO: fix this thing
           onFocus={onFocusInput}
           color={inputTextColor}
           onChangeText={props.onChange}
