@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Pressable, Text, View} from 'react-native';
+import {Button, Pressable, Text, View} from 'react-native';
 import logInOrSignUpStyles from './LogInOrSignUp.style';
 import {faXmark} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -8,6 +8,8 @@ import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import exploreStyles from '../Explore/Explore.style';
 import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
 import Util from '../../Util';
+import Colors from '../../assets/Colors';
+import {Spinner} from 'native-base';
 
 const LogInOrSignUp = (props: {
   isModalVisible: boolean;
@@ -18,7 +20,13 @@ const LogInOrSignUp = (props: {
     ignoreAndroidSystemSettings: false,
   };
 
-  const [phoneText, setPhoneText] = useState('');
+  const [emailText, setEmailText] = useState('');
+  const [isValidEmail, setIsValidEmail] = useState(true);
+
+  const handleEmailOnChange = (text: string) => {
+    setEmailText(text);
+    setIsValidEmail(Util.isValidEmail(text));
+  };
 
   return (
     <Modal
@@ -42,14 +50,22 @@ const LogInOrSignUp = (props: {
           </View>
         </View>
         <CustomTextInput
-          inputTitle={'Phone number'}
-          placeholderText={'Enter phone number...'}
-          value={Util.formatPhoneNumber(phoneText)}
-          onChange={setPhoneText}
+          inputTitle={'Email'}
+          isValidInput={isValidEmail}
+          placeholderText={'Enter email...'}
+          errorMessage={'Please enter valid email!'}
+          value={emailText}
+          onChange={handleEmailOnChange}
           autoCapitalize={'none'}
-          keyboardType={'phone-pad'}
-          textContentType={'telephoneNumber'}
+          keyboardType={'email-address'}
+          maxCharacterLength={320}
+          textContentType={'emailAddress'}
         />
+        <View style={logInOrSignUpStyles.continueButtonContainer}>
+          <Pressable style={logInOrSignUpStyles.continuePressable}>
+            <Text style={logInOrSignUpStyles.continueText}>Continue</Text>
+          </Pressable>
+        </View>
       </View>
     </Modal>
   );

@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
-import {Text, View, Button, StyleSheet} from 'react-native';
+import { Text, View, Button, StyleSheet, ScrollView } from "react-native";
 import exploreStyles from './Explore.style';
 import LogInOrSignUp from '../LogInOrSignUp/LogInOrSignUp';
+import Colors from "../../assets/Colors";
 
 const Explore = (props: {navigation: any}) => {
   const [isModalVisible, setModalVisible] = useState(false);
 
   return (
-    <View style={{flex: 1}}>
+    <ScrollView style={{flex: 1}}>
       <Button
         title="Show modal"
         onPress={() => setModalVisible(!isModalVisible)}
@@ -16,7 +17,7 @@ const Explore = (props: {navigation: any}) => {
         isModalVisible={isModalVisible}
         setIsModalVisible={setModalVisible}
       />
-    </View>
+    </ScrollView>
   );
 };
 

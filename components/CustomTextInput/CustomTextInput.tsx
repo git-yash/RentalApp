@@ -7,10 +7,13 @@ import {KeyboardTypeOptions} from 'react-native';
 const CustomTextInput = (props: {
   inputTitle: string;
   placeholderText: string;
+  isValidInput: boolean;
   value: string;
   onChange: any;
+  errorMessage: string;
   autoCapitalize: 'none' | 'sentences' | 'words' | 'characters' | undefined;
   keyboardType: KeyboardTypeOptions | undefined;
+  maxCharacterLength: number;
   textContentType:
     | 'none'
     | 'URL'
@@ -82,9 +85,14 @@ const CustomTextInput = (props: {
           size="md"
           placeholder={props.placeholderText}
           w="90%"
+          maxLength={props.maxCharacterLength}
           style={customTextInputStyles.input}
+          isInvalid={!props.isValidInput}
         />
       </Box>
+      {!props.isValidInput && (
+        <Text style={customTextInputStyles.errorMessage}>{props.errorMessage}</Text>
+      )}
     </Box>
   );
 };

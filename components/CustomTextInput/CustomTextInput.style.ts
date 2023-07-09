@@ -16,6 +16,11 @@ const customTextInputStyles = StyleSheet.create({
   mainContainer: {
     paddingTop: 15,
   },
+  errorMessage: {
+    paddingLeft: 20,
+    fontSize: 10,
+    color: Colors.invalidRed,
+  },
 });
 
 export default customTextInputStyles;

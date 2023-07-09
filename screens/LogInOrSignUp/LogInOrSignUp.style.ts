@@ -24,6 +24,25 @@ const logInOrSignUpStyles = StyleSheet.create({
     flex: 1,
     paddingRight: 30,
   },
+  phoneInfoText: {
+    color: Colors.gray700,
+    fontFamily: 'Poppins-Regular',
+    fontSize: 12,
+    paddingLeft: 20,
+  },
+  continueButtonContainer: {
+    backgroundColor: Colors.green,
+    borderRadius: 10,
+    margin: 15,
+  },
+  continuePressable: {
+    margin: 12,
+  },
+  continueText: {
+    fontFamily: 'Poppins-SemiBold',
+    color: 'white',
+    textAlign: 'center',
+  },
 });
 
 export default logInOrSignUpStyles;

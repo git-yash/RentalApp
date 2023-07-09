@@ -8,7 +8,7 @@ const TabBarIcon = (props: {isFocused: boolean; icon: IconDefinition}) => {
     <FontAwesomeIcon
       icon={props.icon}
       color={props.isFocused ? Colors.green : 'gray'}
-      size={23}
+      size={20}
     />
   );
 };
