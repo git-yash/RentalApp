@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Pressable, Text, View} from 'react-native';
+import {Button, Platform, Pressable, Text, View} from 'react-native';
 import logInOrSignUpStyles from './LogInOrSignUp.style';
 import {faXmark} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -8,8 +8,8 @@ import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import exploreStyles from '../Explore/Explore.style';
 import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
 import Util from '../../Util';
-import Colors from '../../assets/Colors';
-import {Spinner} from 'native-base';
+import OrDivider from '../../components/OrDivider/OrDivider';
+import SocialLoginButton from '../../components/SocialLoginButton/SocialLoginButton';
 
 const LogInOrSignUp = (props: {
   isModalVisible: boolean;
@@ -22,6 +22,8 @@ const LogInOrSignUp = (props: {
 
   const [emailText, setEmailText] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
+
+  const isIOS: boolean = Platform.OS === 'ios';
 
   const handleEmailOnChange = (text: string) => {
     setEmailText(text);
@@ -66,6 +68,17 @@ const LogInOrSignUp = (props: {
             <Text style={logInOrSignUpStyles.continueText}>Continue</Text>
           </Pressable>
         </View>
+        <OrDivider />
+        {isIOS && (
+          <SocialLoginButton
+            socialName={'Apple'}
+            imageURI={'/Users/yashshah/RentalApp/assets/images/appleLogo.png'}
+          />
+        )}
+        <SocialLoginButton
+          socialName={'Google'}
+          imageURI={'/Users/yashshah/RentalApp/assets/images/googleLogo24.png'}
+        />
       </View>
     </Modal>
   );

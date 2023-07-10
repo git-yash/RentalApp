@@ -1,7 +1,7 @@
 export default {
   green: '#6ab97f',
   borderGrey: '#c4c6c9',
-  invalidRed: '#b3050b',
+  invalidRed: '#c5494d',
   gray50: '#FAFAFA',
   gray100: '#F5F5F5',
   gray200: '#EEEEEE',
