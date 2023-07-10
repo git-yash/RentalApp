@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, Image, Pressable} from 'react-native';
 import socialLoginButtonStyles from './SocialLoginButton.style';
 
 const SocialLoginButton = (props: {
-  socialName: string;
+  socialName: 'Apple' | 'Google' | 'Facebook';
   imageURI: string | undefined;
 }) => {
   return (

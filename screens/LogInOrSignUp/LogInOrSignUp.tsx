@@ -10,7 +10,6 @@ import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
 import Util from '../../Util';
 import OrDivider from '../../components/OrDivider/OrDivider';
 import SocialLoginButton from '../../components/SocialLoginButton/SocialLoginButton';
-import logInOrSignUpStyle from './LogInOrSignUp.style';
 
 const LogInOrSignUp = (props: {
   isModalVisible: boolean;
@@ -29,7 +28,7 @@ const LogInOrSignUp = (props: {
 
   const handleEmailOnChange = (text: string) => {
     setEmailText(text);
-    setIsValidEmail(Util.isValidEmail(text));
+    setIsValidEmail(Util.isValidEmail(text.trim()));
   };
 
   return (
@@ -87,6 +86,10 @@ const LogInOrSignUp = (props: {
         <SocialLoginButton
           socialName={'Google'}
           imageURI={'/Users/yashshah/RentalApp/assets/images/googleLogo24.png'}
+        />
+        <SocialLoginButton
+          socialName={'Facebook'}
+          imageURI={'/Users/yashshah/RentalApp/assets/images/facebookLogo.png'}
         />
       </View>
     </Modal>
