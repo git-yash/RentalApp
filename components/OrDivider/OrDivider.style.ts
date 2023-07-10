@@ -6,6 +6,7 @@ const orDividerStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 10,
   },
   line: {
     flex: 1,

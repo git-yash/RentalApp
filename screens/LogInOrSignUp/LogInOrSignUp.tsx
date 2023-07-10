@@ -10,6 +10,7 @@ import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
 import Util from '../../Util';
 import OrDivider from '../../components/OrDivider/OrDivider';
 import SocialLoginButton from '../../components/SocialLoginButton/SocialLoginButton';
+import logInOrSignUpStyle from './LogInOrSignUp.style';
 
 const LogInOrSignUp = (props: {
   isModalVisible: boolean;
@@ -24,6 +25,7 @@ const LogInOrSignUp = (props: {
   const [isValidEmail, setIsValidEmail] = useState(true);
 
   const isIOS: boolean = Platform.OS === 'ios';
+  const isDisabled: boolean = emailText.length === 0 || !isValidEmail;
 
   const handleEmailOnChange = (text: string) => {
     setEmailText(text);
@@ -63,8 +65,15 @@ const LogInOrSignUp = (props: {
           maxCharacterLength={320}
           textContentType={'emailAddress'}
         />
-        <View style={logInOrSignUpStyles.continueButtonContainer}>
-          <Pressable style={logInOrSignUpStyles.continuePressable}>
+        <View
+          style={
+            isDisabled
+              ? logInOrSignUpStyles.continueButtonContainerDisabled
+              : logInOrSignUpStyles.continueButtonContainerEnabled
+          }>
+          <Pressable
+            disabled={isDisabled}
+            style={logInOrSignUpStyles.continuePressable}>
             <Text style={logInOrSignUpStyles.continueText}>Continue</Text>
           </Pressable>
         </View>

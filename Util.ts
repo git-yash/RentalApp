@@ -14,6 +14,10 @@ export default class Util {
   }
 
   public static isValidEmail(email: string): boolean {
+    if (email.length === 0) {
+      return true;
+    }
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }

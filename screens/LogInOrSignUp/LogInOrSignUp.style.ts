@@ -30,8 +30,13 @@ const logInOrSignUpStyles = StyleSheet.create({
     fontSize: 12,
     paddingLeft: 20,
   },
-  continueButtonContainer: {
+  continueButtonContainerEnabled: {
     backgroundColor: Colors.green,
+    borderRadius: 10,
+    margin: 15,
+  },
+  continueButtonContainerDisabled: {
+    backgroundColor: Colors.gray400,
     borderRadius: 10,
     margin: 15,
   },
