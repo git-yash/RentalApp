@@ -46,7 +46,6 @@ const CustomTextInput = (props: {
     | undefined;
 }) => {
   const [inputTextColor, setInputTextColor] = useState(Colors.gray800);
-
   function onBlurInput() {
     setInputTextColor(Colors.gray800);
   }
@@ -91,7 +90,9 @@ const CustomTextInput = (props: {
         />
       </Box>
       {!props.isValidInput && (
-        <Text style={customTextInputStyles.errorMessage}>{props.errorMessage}</Text>
+        <Text style={customTextInputStyles.errorMessage}>
+          {props.errorMessage}
+        </Text>
       )}
     </Box>
   );

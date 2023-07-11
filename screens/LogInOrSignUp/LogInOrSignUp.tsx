@@ -70,12 +70,12 @@ const LogInOrSignUp = (props: {
               <Text style={logInOrSignUpStyles.text}>Log in or Sign up</Text>
             </View>
           </View>
-          <ScrollView>
+          <ScrollView style={{paddingTop: 15}}>
             <CustomTextInput
               inputTitle={'Email'}
               isValidInput={isValidEmail}
               placeholderText={'Enter email...'}
-              errorMessage={'Please enter valid email!'}
+              errorMessage={'Please enter a valid email!'}
               value={emailText}
               onChange={handleEmailOnChange}
               autoCapitalize={'none'}

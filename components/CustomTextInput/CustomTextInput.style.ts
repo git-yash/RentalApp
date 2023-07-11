@@ -13,9 +13,7 @@ const customTextInputStyles = StyleSheet.create({
     paddingLeft: 20,
     paddingBottom: 5,
   },
-  mainContainer: {
-    paddingTop: 15,
-  },
+  mainContainer: {},
   errorMessage: {
     paddingLeft: 20,
     fontSize: 10,

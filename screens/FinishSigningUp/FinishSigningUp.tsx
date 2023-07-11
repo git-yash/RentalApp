@@ -5,10 +5,24 @@ import logInOrSignUpStyles from '../LogInOrSignUp/LogInOrSignUp.style';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faAngleLeft} from '@fortawesome/free-solid-svg-icons';
 import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
+import CustomSecureTextInput from '../../components/CustomSecureTextInput/CustomSecureTextInput';
+import Util from '../../Util';
+import Colors from '../../assets/Colors';
 
 const FinishSigningUp = (props: {email: string; setFinishSigningUp: any}) => {
   const [firstNameText, setFirstNameText] = useState('');
   const [lastNameText, setLastNameText] = useState('');
+  const [passwordText, setPasswordText] = useState('');
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [passwordBorderColor, setPasswordBorderColor] = useState(Colors.green);
+
+  const handlePasswordTextChange = (text: string) => {
+    setIsPasswordValid(Util.isPasswordValid(text));
+    setPasswordText(text);
+    setPasswordBorderColor(
+      Util.getPasswordStrengthBorderColor(Util.getPasswordStrength(text)),
+    );
+  };
 
   return (
     <View style={exploreStyles.modalView}>
@@ -26,7 +40,7 @@ const FinishSigningUp = (props: {email: string; setFinishSigningUp: any}) => {
           <Text style={logInOrSignUpStyles.text}>Finish Signing Up</Text>
         </View>
       </View>
-      <ScrollView>
+      <ScrollView style={{paddingTop: 15}}>
         <CustomTextInput
           inputTitle={'First Name'}
           placeholderText={'Enter first name...'}
@@ -51,10 +65,21 @@ const FinishSigningUp = (props: {email: string; setFinishSigningUp: any}) => {
           maxCharacterLength={30}
           textContentType={'name'}
         />
+        <CustomSecureTextInput
+          inputTitle={'Password'}
+          placeholderText={'Enter password...'}
+          value={passwordText}
+          onChange={handlePasswordTextChange}
+          errorMessage={'Password is required and cannot be weak!'}
+          isValid={isPasswordValid}
+          borderColor={passwordBorderColor}
+        />
         <Pressable
           disabled={false}
           style={logInOrSignUpStyles.continuePressableEnabled}>
-          <Text style={logInOrSignUpStyles.continueText}>Continue</Text>
+          <Text style={logInOrSignUpStyles.continueText}>
+            Agree and Continue
+          </Text>
         </Pressable>
       </ScrollView>
     </View>

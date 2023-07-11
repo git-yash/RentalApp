@@ -1,4 +1,5 @@
 import {ImageSourcePropType} from 'react-native';
+import Colors from './assets/Colors';
 
 export default class Util {
   public static formatPhoneNumber(phoneNumber: string): string {
@@ -34,5 +35,46 @@ export default class Util {
     }
 
     return require('./assets/images/facebookLogo.png');
+  }
+
+  public static getPasswordStrength(password: string): string {
+    if (password.length === 0) {
+      return 'No Password';
+    }
+
+    let strongPassword = new RegExp(
+      '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})',
+    );
+    let mediumPassword = new RegExp(
+      '((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))',
+    );
+
+    if (strongPassword.test(password)) {
+      return 'Strong';
+    } else if (mediumPassword.test(password)) {
+      return 'Medium';
+    } else {
+      return 'Weak';
+    }
+  }
+
+  public static getPasswordStrengthBorderColor(
+    passwordStrength: string,
+  ): string {
+    if (passwordStrength === 'Strong') {
+      return Colors.green;
+    } else if (passwordStrength === 'Medium') {
+      return Colors.mediumYellow;
+    } else if (passwordStrength === 'Weak') {
+      return Colors.invalidRed;
+    }
+
+    return Colors.gray400;
+  }
+
+  public static isPasswordValid(password: string): boolean {
+    return (
+      password.length === 0 || Util.getPasswordStrength(password) === 'Weak'
+    );
   }
 }

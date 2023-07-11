@@ -2,6 +2,7 @@ export default {
   green: '#6ab97f',
   borderGrey: '#c4c6c9',
   invalidRed: '#c5494d',
+  mediumYellow: '#e8d51a',
   gray50: '#FAFAFA',
   gray100: '#F5F5F5',
   gray200: '#EEEEEE',
