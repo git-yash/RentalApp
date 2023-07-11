@@ -15,14 +15,19 @@ const logInOrSignUpStyles = StyleSheet.create({
     height: 30,
     justifyContent: 'center',
     alignItems: 'center',
+    margin: 10,
+  },
+  dismissPressable: {
+    width: 50,
   },
   text: {
     textAlign: 'center',
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 15,
   },
   textContainer: {
     flex: 1,
-    paddingRight: 30,
+    paddingRight: 50,
   },
   phoneInfoText: {
     color: Colors.gray700,
@@ -30,18 +35,19 @@ const logInOrSignUpStyles = StyleSheet.create({
     fontSize: 12,
     paddingLeft: 20,
   },
-  continueButtonContainerEnabled: {
+  continuePressableEnabled: {
     backgroundColor: Colors.green,
+    height: 50,
+    justifyContent: 'center',
     borderRadius: 10,
     margin: 15,
   },
-  continueButtonContainerDisabled: {
+  continuePressableDisabled: {
     backgroundColor: Colors.gray400,
+    height: 50,
+    justifyContent: 'center',
     borderRadius: 10,
     margin: 15,
-  },
-  continuePressable: {
-    margin: 12,
   },
   continueText: {
     fontFamily: 'Poppins-SemiBold',

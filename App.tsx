@@ -6,6 +6,7 @@ import Explore from './screens/Explore/Explore';
 import TabBarIcon from './components/TabBarIcon/TabBarIcon';
 import Colors from './assets/Colors';
 import {NativeBaseProvider} from 'native-base';
+import {StatusBar} from 'react-native';
 
 function App(): JSX.Element {
   const Tab = createBottomTabNavigator();
@@ -13,6 +14,7 @@ function App(): JSX.Element {
   return (
     <NativeBaseProvider>
       <NavigationContainer>
+        <StatusBar barStyle={'dark-content'} />
         <Tab.Navigator>
           <Tab.Screen
             name={'Explore'}

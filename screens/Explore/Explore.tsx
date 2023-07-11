@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Text, View, Button, StyleSheet, ScrollView } from "react-native";
+import { Text, View, Button, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import exploreStyles from './Explore.style';
 import LogInOrSignUp from '../LogInOrSignUp/LogInOrSignUp';
 import Colors from "../../assets/Colors";
@@ -8,7 +8,7 @@ const Explore = (props: {navigation: any}) => {
   const [isModalVisible, setModalVisible] = useState(false);
 
   return (
-    <ScrollView style={{flex: 1}}>
+    <SafeAreaView>
       <Button
         title="Show modal"
         onPress={() => setModalVisible(!isModalVisible)}
@@ -17,7 +17,7 @@ const Explore = (props: {navigation: any}) => {
         isModalVisible={isModalVisible}
         setIsModalVisible={setModalVisible}
       />
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 

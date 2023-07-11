@@ -1,17 +1,21 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Image, Pressable} from 'react-native';
 import socialLoginButtonStyles from './SocialLoginButton.style';
+import Util from '../../Util';
 
 const SocialLoginButton = (props: {
   socialName: 'Apple' | 'Google' | 'Facebook';
-  imageURI: string | undefined;
 }) => {
   return (
     <Pressable style={socialLoginButtonStyles.button}>
       <View style={socialLoginButtonStyles.iconContainer}>
         <Image
-          style={socialLoginButtonStyles.logo}
-          source={{uri: props.imageURI}}
+          style={
+            props.socialName === 'Facebook'
+              ? socialLoginButtonStyles.facebookLogo
+              : socialLoginButtonStyles.logo
+          }
+          source={Util.getImageSource(props.socialName)}
         />
       </View>
       <Text style={socialLoginButtonStyles.buttonText}>

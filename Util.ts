@@ -1,3 +1,5 @@
+import {ImageSourcePropType} from 'react-native';
+
 export default class Util {
   public static formatPhoneNumber(phoneNumber: string): string {
     // Remove any non-digit characters from the phone number
@@ -22,5 +24,15 @@ export default class Util {
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     );
     return emailRegex.test(email);
+  }
+
+  public static getImageSource(imageName: string): ImageSourcePropType {
+    if (imageName === 'Apple') {
+      return require('./assets/images/appleLogo.png');
+    } else if (imageName === 'Google') {
+      return require('./assets/images/googleLogo24.png');
+    }
+
+    return require('./assets/images/facebookLogo.png');
   }
 }

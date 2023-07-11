@@ -27,6 +27,10 @@ const socialLoginButtonStyles = StyleSheet.create({
     aspectRatio: 0.9,
     resizeMode: 'contain',
   },
+  facebookLogo: {
+    height: 25,
+    width: 25,
+  },
 });
 
 export default socialLoginButtonStyles;
