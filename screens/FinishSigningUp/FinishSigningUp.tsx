@@ -5,7 +5,7 @@ import logInOrSignUpStyles from '../LogInOrSignUp/LogInOrSignUp.style';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faAngleLeft} from '@fortawesome/free-solid-svg-icons';
 import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
-import CustomSecureTextInput from '../../components/CustomSecureTextInput/CustomSecureTextInput';
+import CustomSecurePasswordCheckerTextInput from '../../components/CustomSecureTextInput/CustomSecurePasswordCheckerTextInput';
 import Util from '../../Util';
 import Colors from '../../assets/Colors';
 
@@ -65,7 +65,7 @@ const FinishSigningUp = (props: {email: string; setFinishSigningUp: any}) => {
           maxCharacterLength={30}
           textContentType={'name'}
         />
-        <CustomSecureTextInput
+        <CustomSecurePasswordCheckerTextInput
           inputTitle={'Password'}
           placeholderText={'Enter password...'}
           value={passwordText}

@@ -11,8 +11,9 @@ import {
 import Colors from '../../assets/Colors';
 import Util from '../../Util';
 import Modal from 'react-native-modal';
+import customSecurePasswordCheckerTextInputStyles from './CustomSecurePasswordCheckerTextInput.style';
 
-const CustomSecureTextInput = (props: {
+const CustomSecurePasswordCheckerTextInput = (props: {
   inputTitle: string;
   placeholderText: string;
   value: string;
@@ -39,16 +40,10 @@ const CustomSecureTextInput = (props: {
         {props.inputTitle}
       </Text>
       <Box
-        style={{
-          backgroundColor: Util.getPasswordStrengthBorderColor(
-            Util.getPasswordStrength(props.value),
-          ),
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginLeft: 15,
-          marginRight: 15,
-          borderRadius: 10,
-        }}>
+        backgroundColor={Util.getPasswordStrengthBorderColor(
+          Util.getPasswordStrength(props.value),
+        )}
+        style={customSecurePasswordCheckerTextInputStyles.inputContainer}>
         <Input
           w={{
             md: '25%',
@@ -56,7 +51,7 @@ const CustomSecureTextInput = (props: {
           type={show ? 'text' : 'password'}
           InputRightElement={
             <Pressable
-              style={{width: '20%', alignItems: 'flex-end', paddingRight: 5}}
+              style={customSecurePasswordCheckerTextInputStyles.eyePressable}
               onPress={() => setShow(!show)}>
               <FontAwesomeIcon
                 style={{color: Colors.green}}
@@ -85,39 +80,22 @@ const CustomSecureTextInput = (props: {
           style={customTextInputStyles.input}
         />
         <Box
-          style={{
-            backgroundColor: Util.getPasswordStrengthBorderColor(
-              Util.getPasswordStrength(props.value),
-            ),
-            borderRadius: 5,
-            width: '100%',
-            flex: 1,
-            marginLeft: 5,
-            marginRight: 5,
-            marginBottom: 5,
-            justifyContent: 'space-between',
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <Text
-            style={{
-              color: 'white',
-              fontFamily: 'Poppins-SemiBold',
-              fontSize: 13,
-              fontWeight: '600',
-              marginLeft: 5,
-            }}>
+          backgroundColor={Util.getPasswordStrengthBorderColor(
+            Util.getPasswordStrength(props.value),
+          )}
+          style={customSecurePasswordCheckerTextInputStyles.checkerContainer}>
+          <Text style={customSecurePasswordCheckerTextInputStyles.checkerText}>
             Password Strength: {Util.getPasswordStrength(props.value)}
           </Text>
           <Pressable
             onPress={() => {
               setShowPasswordInfoModal(true);
             }}
-            style={{width: 30, height: 30}}>
+            style={customSecurePasswordCheckerTextInputStyles.infoPressable}>
             <FontAwesomeIcon
               icon={faCircleInfo}
               color={'white'}
-              style={{alignContent: 'center', marginTop: 3}}
+              style={customSecurePasswordCheckerTextInputStyles.infoIcon}
               size={25}
             />
           </Pressable>
@@ -131,56 +109,28 @@ const CustomSecureTextInput = (props: {
       <Modal
         isVisible={showPasswordInfoModal}
         swipeDirection={['down', 'right']}>
-        <Box
-          style={{
-            backgroundColor: 'white',
-            width: 300,
-            height: 400,
-            alignSelf: 'center',
-            borderRadius: 15,
-            borderWidth: 5,
-            borderColor: Colors.green,
-          }}>
+        <Box style={customSecurePasswordCheckerTextInputStyles.modalView}>
           <Box
-            style={{
-              flexDirection: 'row',
-              borderBottomWidth: 2,
-              borderBottomColor: Colors.borderGrey,
-              marginBottom: 15,
-            }}>
+            style={
+              customSecurePasswordCheckerTextInputStyles.infoModalHeaderContainer
+            }>
             <Pressable
               onPress={() => {
                 setShowPasswordInfoModal(false);
               }}
-              style={{width: 50, height: 30, margin: 10}}>
+              style={
+                customSecurePasswordCheckerTextInputStyles.dismissPressable
+              }>
               <FontAwesomeIcon icon={faXmark} color={'black'} size={25} />
             </Pressable>
-            <Text
-              style={{
-                alignSelf: 'center',
-                fontFamily: 'Poppins-SemiBold',
-                fontSize: 16,
-                fontWeight: '600',
-              }}>
+            <Text style={customSecurePasswordCheckerTextInputStyles.infoTitle}>
               Password Strength
             </Text>
           </Box>
-          <Text
-            style={{
-              marginLeft: 10,
-              fontFamily: 'Poppins-SemiBold',
-              fontSize: 14,
-              fontWeight: '500',
-            }}>
+          <Text style={customSecurePasswordCheckerTextInputStyles.infoSubtitle}>
             Strong passwords include: {'\n'}
           </Text>
-          <Text
-            style={{
-              marginLeft: 20,
-              fontFamily: 'Poppins-SemiBold',
-              fontSize: 14,
-              fontWeight: '400',
-            }}>
+          <Text style={customSecurePasswordCheckerTextInputStyles.infoText}>
             - At least 8 characters {'\n'}- At least 1 uppercase character{' '}
             {'\n'}- At least 1 lowercase letter {'\n'}- At least 1 digit {'\n'}-
             At least 1 special character
@@ -191,4 +141,4 @@ const CustomSecureTextInput = (props: {
   );
 };
 
-export default CustomSecureTextInput;
+export default CustomSecurePasswordCheckerTextInput;
