@@ -8,6 +8,11 @@ import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
 import CustomSecurePasswordCheckerTextInput from '../../components/CustomSecureTextInput/CustomSecurePasswordCheckerTextInput';
 import Util from '../../Util';
 import Colors from '../../assets/Colors';
+import RNDateTimePicker, {
+  DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
+import customTextInputStyles from '../../components/CustomTextInput/CustomTextInput.style';
+import CustomDateTimePicker from '../../components/CustomDateTimePicker/CustomDateTimePicker';
 
 const FinishSigningUp = (props: {email: string; setFinishSigningUp: any}) => {
   const [firstNameText, setFirstNameText] = useState('');
@@ -15,6 +20,16 @@ const FinishSigningUp = (props: {email: string; setFinishSigningUp: any}) => {
   const [passwordText, setPasswordText] = useState('');
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [passwordBorderColor, setPasswordBorderColor] = useState(Colors.green);
+  const [birthdate, setDate] = useState(new Date());
+
+  const setBirthDate = (event: DateTimePickerEvent, date: Date) => {
+    const {
+      type,
+      nativeEvent: {timestamp},
+    } = event;
+
+    setDate(date);
+  };
 
   const handlePasswordTextChange = (text: string) => {
     setIsPasswordValid(Util.isPasswordValid(text));
@@ -37,7 +52,7 @@ const FinishSigningUp = (props: {email: string; setFinishSigningUp: any}) => {
           </Pressable>
         </View>
         <View style={logInOrSignUpStyles.textContainer}>
-          <Text style={logInOrSignUpStyles.text}>Finish Signing Up</Text>
+          <Text style={logInOrSignUpStyles.text}>Finish signing up</Text>
         </View>
       </View>
       <ScrollView style={{paddingTop: 15}}>
@@ -64,6 +79,11 @@ const FinishSigningUp = (props: {email: string; setFinishSigningUp: any}) => {
           keyboardType={'default'}
           maxCharacterLength={30}
           textContentType={'name'}
+        />
+        <CustomDateTimePicker
+          mode={'date'}
+          onChange={setBirthDate}
+          value={birthdate}
         />
         <CustomSecurePasswordCheckerTextInput
           inputTitle={'Password'}
