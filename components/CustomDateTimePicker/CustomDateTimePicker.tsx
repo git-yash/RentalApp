@@ -3,19 +3,18 @@ import {Text, View} from 'react-native';
 import customTextInputStyles from '../CustomTextInput/CustomTextInput.style';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import Colors from '../../assets/Colors';
-import customDateTimePickerStyles from "./CustomDateTimePicker.style";
+import customDateTimePickerStyles from './CustomDateTimePicker.style';
 
 const CustomDateTimePicker = (props: {
   mode: any;
   onChange: any;
   value: Date;
+  isValid: boolean;
+  bottomMessage: string | undefined;
 }) => {
   return (
     <View>
-      <Text
-        style={customDateTimePickerStyles.inputTitleText}>
-        Birthdate
-      </Text>
+      <Text style={customDateTimePickerStyles.inputTitleText}>Birthdate</Text>
       <RNDateTimePicker
         value={props.value}
         mode={props.mode}
@@ -25,6 +24,16 @@ const CustomDateTimePicker = (props: {
         style={customDateTimePickerStyles.dateTimePicker}
         onChange={props.onChange}
       />
+      {props.bottomMessage && (
+        <Text
+          style={
+            props.isValid
+              ? customDateTimePickerStyles.bottomMessage
+              : customDateTimePickerStyles.invalidBottomMessage
+          }>
+          {props.bottomMessage}
+        </Text>
+      )}
     </View>
   );
 };

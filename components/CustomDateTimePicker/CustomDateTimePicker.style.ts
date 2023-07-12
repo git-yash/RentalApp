@@ -10,6 +10,20 @@ const customDateTimePickerStyles = StyleSheet.create({
     paddingLeft: 20,
   },
   dateTimePicker: {alignSelf: 'flex-start', margin: 5, marginBottom: 10},
+  bottomMessage: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 10,
+    color: Colors.gray700,
+    marginLeft: 20,
+    marginBottom: 15,
+  },
+  invalidBottomMessage: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 10,
+    color: Colors.invalidRed,
+    marginLeft: 20,
+    marginBottom: 15,
+  },
 });
 
 export default customDateTimePickerStyles;

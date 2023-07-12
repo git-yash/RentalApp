@@ -16,11 +16,14 @@ import CustomDateTimePicker from '../../components/CustomDateTimePicker/CustomDa
 
 const FinishSigningUp = (props: {email: string; setFinishSigningUp: any}) => {
   const [firstNameText, setFirstNameText] = useState('');
+  const [isFirstNameValid, setIsFirstNameValid] = useState(true);
+  const [isLastNameValid, setIsLastNameValid] = useState(true);
   const [lastNameText, setLastNameText] = useState('');
   const [passwordText, setPasswordText] = useState('');
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [passwordBorderColor, setPasswordBorderColor] = useState(Colors.green);
   const [birthdate, setDate] = useState(new Date());
+  const [isBirthdateValid, setIsDateValid] = useState(true);
 
   const setBirthDate = (event: DateTimePickerEvent, date: Date) => {
     const {
@@ -29,6 +32,12 @@ const FinishSigningUp = (props: {email: string; setFinishSigningUp: any}) => {
     } = event;
 
     setDate(date);
+
+    if (Util.getAge(birthdate) >= 18) {
+      setIsDateValid(true);
+    } else {
+      setIsDateValid(false);
+    }
   };
 
   const handlePasswordTextChange = (text: string) => {
@@ -84,6 +93,8 @@ const FinishSigningUp = (props: {email: string; setFinishSigningUp: any}) => {
           mode={'date'}
           onChange={setBirthDate}
           value={birthdate}
+          bottomMessage={'You must be 18 years or older to sign up.'}
+          isValid={isBirthdateValid}
         />
         <CustomSecurePasswordCheckerTextInput
           inputTitle={'Password'}
