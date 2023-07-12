@@ -64,6 +64,8 @@ const CustomTextInput = (props: {
           alignItems: 'center',
           justifyContent: 'space-between',
           paddingBottom: 10,
+          marginLeft: 15,
+          marginRight: 15,
         }}>
         <Input
           placeholderTextColor={Colors.gray800}
@@ -83,7 +85,6 @@ const CustomTextInput = (props: {
           bgColor={'white'}
           size="md"
           placeholder={props.placeholderText}
-          w="90%"
           maxLength={props.maxCharacterLength}
           style={customTextInputStyles.input}
           isInvalid={!props.isValidInput}

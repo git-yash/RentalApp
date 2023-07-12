@@ -42,6 +42,7 @@ const LogInOrSignUp = (props: {
   return (
     <Modal
       isVisible={props.isModalVisible}
+      scrollOffset={1000}
       onSwipeComplete={() => {
         props.setIsModalVisible(false);
         ReactNativeHapticFeedback.trigger('impactMedium', options);
