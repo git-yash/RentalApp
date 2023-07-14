@@ -74,7 +74,8 @@ export default class Util {
 
   public static isPasswordValid(password: string): boolean {
     return (
-      password.length === 0 || Util.getPasswordStrength(password) === 'Weak'
+      !(Util.getPasswordStrength(password) === 'No Password') &&
+      !(Util.getPasswordStrength(password) === 'Weak')
     );
   }
 
@@ -87,4 +88,8 @@ export default class Util {
     }
     return age;
   }
+  public static options = {
+    enableVibrateFallback: true,
+    ignoreAndroidSystemSettings: false,
+  };
 }

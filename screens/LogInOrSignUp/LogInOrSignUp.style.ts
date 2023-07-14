@@ -40,6 +40,7 @@ const logInOrSignUpStyles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     borderRadius: 10,
+    marginTop: 5,
     margin: 15,
   },
   continuePressableDisabled: {

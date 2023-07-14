@@ -18,6 +18,7 @@ const customTextInputStyles = StyleSheet.create({
     paddingLeft: 20,
     fontSize: 10,
     color: Colors.invalidRed,
+    paddingBottom: 5,
   },
 });
 

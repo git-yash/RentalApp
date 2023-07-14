@@ -18,19 +18,16 @@ import Util from '../../Util';
 import OrDivider from '../../components/OrDivider/OrDivider';
 import SocialLoginButton from '../../components/SocialLoginButton/SocialLoginButton';
 import FinishSigningUp from '../FinishSigningUp/FinishSigningUp';
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const LogInOrSignUp = (props: {
   isModalVisible: boolean;
   setIsModalVisible: any;
 }) => {
-  const options = {
-    enableVibrateFallback: true,
-    ignoreAndroidSystemSettings: false,
-  };
-
   const [emailText, setEmailText] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [finishSigningUp, setFinishSigningUp] = useState(false);
+  const [canHideModal, setCanHideModal] = useState(false);
 
   const isDisabled: boolean = emailText.length === 0 || !isValidEmail;
 
@@ -42,15 +39,17 @@ const LogInOrSignUp = (props: {
   return (
     <Modal
       isVisible={props.isModalVisible}
-      scrollOffset={1000}
       onSwipeComplete={() => {
         props.setIsModalVisible(false);
-        ReactNativeHapticFeedback.trigger('impactMedium', options);
+        ReactNativeHapticFeedback.trigger('impactMedium', Util.options);
       }}
       onModalWillHide={() => {
-        if (finishSigningUp) {
+        if (finishSigningUp && !canHideModal) {
           props.setIsModalVisible(true);
-          ReactNativeHapticFeedback.trigger('notificationWarning', options);
+          ReactNativeHapticFeedback.trigger(
+            'notificationWarning',
+            Util.options,
+          );
         }
       }}
       useNativeDriverForBackdrop
@@ -71,7 +70,7 @@ const LogInOrSignUp = (props: {
               <Text style={logInOrSignUpStyles.text}>Log in or Sign up</Text>
             </View>
           </View>
-          <ScrollView style={{paddingTop: 15}}>
+          <KeyboardAwareScrollView style={{paddingTop: 15}}>
             <CustomTextInput
               inputTitle={'Email'}
               isValidInput={isValidEmail}
@@ -100,7 +99,7 @@ const LogInOrSignUp = (props: {
             <SocialLoginButton socialName={'Apple'} />
             <SocialLoginButton socialName={'Google'} />
             <SocialLoginButton socialName={'Facebook'} />
-          </ScrollView>
+          </KeyboardAwareScrollView>
         </View>
       )}
 
@@ -109,6 +108,9 @@ const LogInOrSignUp = (props: {
           <FinishSigningUp
             email={emailText}
             setFinishSigningUp={setFinishSigningUp}
+            setIsModalVisible={props.setIsModalVisible}
+            setCanHideModal={setCanHideModal}
+            emailText={emailText}
           />
         </View>
       )}

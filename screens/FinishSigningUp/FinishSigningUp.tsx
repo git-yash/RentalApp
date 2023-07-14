@@ -8,13 +8,18 @@ import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
 import CustomSecurePasswordCheckerTextInput from '../../components/CustomSecureTextInput/CustomSecurePasswordCheckerTextInput';
 import Util from '../../Util';
 import Colors from '../../assets/Colors';
-import RNDateTimePicker, {
-  DateTimePickerEvent,
-} from '@react-native-community/datetimepicker';
-import customTextInputStyles from '../../components/CustomTextInput/CustomTextInput.style';
+import {DateTimePickerEvent} from '@react-native-community/datetimepicker';
 import CustomDateTimePicker from '../../components/CustomDateTimePicker/CustomDateTimePicker';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-const FinishSigningUp = (props: {email: string; setFinishSigningUp: any}) => {
+const FinishSigningUp = (props: {
+  email: string;
+  setFinishSigningUp: any;
+  setIsModalVisible: any;
+  setCanHideModal: any;
+  emailText: string;
+}) => {
   const [firstNameText, setFirstNameText] = useState('');
   const [isFirstNameValid, setIsFirstNameValid] = useState(true);
   const [isLastNameValid, setIsLastNameValid] = useState(true);
@@ -24,20 +29,32 @@ const FinishSigningUp = (props: {email: string; setFinishSigningUp: any}) => {
   const [passwordBorderColor, setPasswordBorderColor] = useState(Colors.green);
   const [birthdate, setDate] = useState(new Date());
   const [isBirthdateValid, setIsDateValid] = useState(true);
+  const [emailText, setEmailText] = useState(props.emailText);
+  const [isValidEmail, setIsValidEmail] = useState(true);
+
+  const handleEmailOnChange = (text: string): void => {
+    setEmailText(text);
+    setIsValidEmail(Util.isValidEmail(text.trim()));
+  };
+
+  const setFirstNameTextWithValidation = (newFirstNameText: string) => {
+    setFirstNameText(newFirstNameText);
+    setNameValidity(newFirstNameText, setIsFirstNameValid);
+  };
+
+  const setLastNameTextWithValidation = (newLastNameText: string) => {
+    setLastNameText(newLastNameText);
+    setNameValidity(newLastNameText, setIsLastNameValid);
+  };
 
   const setBirthDate = (event: DateTimePickerEvent, date: Date) => {
     const {
-      type,
-      nativeEvent: {timestamp},
+      nativeEvent: {},
     } = event;
 
     setDate(date);
 
-    if (Util.getAge(birthdate) >= 18) {
-      setIsDateValid(true);
-    } else {
-      setIsDateValid(false);
-    }
+    setAgeValidity();
   };
 
   const handlePasswordTextChange = (text: string) => {
@@ -46,6 +63,38 @@ const FinishSigningUp = (props: {email: string; setFinishSigningUp: any}) => {
     setPasswordBorderColor(
       Util.getPasswordStrengthBorderColor(Util.getPasswordStrength(text)),
     );
+  };
+
+  const setNameValidity = (nameText: string, setNameValid: any) => {
+    setNameValid(!(setNameValid.length <= 1));
+  };
+
+  const setAgeValidity = () => {
+    setIsDateValid(Util.getAge(birthdate) >= 18);
+  };
+
+  const setInputValidity = () => {
+    setNameValidity(firstNameText, setIsFirstNameValid);
+    setNameValidity(lastNameText, setIsLastNameValid);
+    setIsValidEmail(Util.isValidEmail(emailText));
+    setAgeValidity();
+    setIsPasswordValid(!Util.isPasswordValid(passwordText));
+  };
+
+  const handleAgreeAndContinue = () => {
+    if (
+      isFirstNameValid &&
+      isLastNameValid &&
+      isBirthdateValid &&
+      isPasswordValid
+    ) {
+      props.setCanHideModal(true);
+      props.setIsModalVisible(false);
+      ReactNativeHapticFeedback.trigger('notificationSuccess', Util.options);
+    } else {
+      setInputValidity();
+      ReactNativeHapticFeedback.trigger('notificationError', Util.options);
+    }
   };
 
   return (
@@ -61,16 +110,16 @@ const FinishSigningUp = (props: {email: string; setFinishSigningUp: any}) => {
           </Pressable>
         </View>
         <View style={logInOrSignUpStyles.textContainer}>
-          <Text style={logInOrSignUpStyles.text}>Finish signing up</Text>
+          <Text style={logInOrSignUpStyles.text}>Finish Signing Up</Text>
         </View>
       </View>
-      <ScrollView style={{paddingTop: 15}}>
+      <KeyboardAwareScrollView style={{paddingTop: 15}} extraScrollHeight={50}>
         <CustomTextInput
           inputTitle={'First Name'}
           placeholderText={'Enter first name...'}
-          isValidInput={true}
+          isValidInput={isFirstNameValid}
           value={firstNameText}
-          onChange={setFirstNameText}
+          onChange={setFirstNameTextWithValidation}
           errorMessage={'Please enter valid first name!'}
           autoCapitalize={'words'}
           keyboardType={'default'}
@@ -80,14 +129,26 @@ const FinishSigningUp = (props: {email: string; setFinishSigningUp: any}) => {
         <CustomTextInput
           inputTitle={'Last Name'}
           placeholderText={'Enter last name...'}
-          isValidInput={true}
+          isValidInput={isLastNameValid}
           value={lastNameText}
-          onChange={setLastNameText}
+          onChange={setLastNameTextWithValidation}
           errorMessage={'Please enter valid last name!'}
           autoCapitalize={'words'}
           keyboardType={'default'}
           maxCharacterLength={30}
           textContentType={'name'}
+        />
+        <CustomTextInput
+          inputTitle={'Email'}
+          isValidInput={isValidEmail}
+          placeholderText={'Enter email...'}
+          errorMessage={'Please enter a valid email!'}
+          value={emailText}
+          onChange={handleEmailOnChange}
+          autoCapitalize={'none'}
+          keyboardType={'email-address'}
+          maxCharacterLength={320}
+          textContentType={'emailAddress'}
         />
         <CustomDateTimePicker
           mode={'date'}
@@ -105,14 +166,22 @@ const FinishSigningUp = (props: {email: string; setFinishSigningUp: any}) => {
           isValid={isPasswordValid}
           borderColor={passwordBorderColor}
         />
+        <View>
+          <Text
+            style={{fontFamily: 'Poppins-Regular', margin: 15, fontSize: 12}}>
+            By pressing Agree and Continue, you agree to Rental App's Terms and
+            Conditions and acknowledge the Privacy Policy.
+          </Text>
+        </View>
         <Pressable
+          onPress={handleAgreeAndContinue}
           disabled={false}
           style={logInOrSignUpStyles.continuePressableEnabled}>
           <Text style={logInOrSignUpStyles.continueText}>
             Agree and Continue
           </Text>
         </Pressable>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </View>
   );
 };
