@@ -72,10 +72,9 @@ export default class Util {
     return Colors.gray400;
   }
 
-  public static isPasswordValid(password: string): boolean {
+  public static isPasswordInvalid(password: string): boolean {
     return (
-      !(Util.getPasswordStrength(password) === 'No Password') &&
-      !(Util.getPasswordStrength(password) === 'Weak')
+      Util.getPasswordStrength(password) === 'No Password' || Util.getPasswordStrength(password) === 'Weak'
     );
   }
 

@@ -58,7 +58,7 @@ const FinishSigningUp = (props: {
   };
 
   const handlePasswordTextChange = (text: string) => {
-    setIsPasswordValid(Util.isPasswordValid(text));
+    setIsPasswordValid(Util.isPasswordInvalid(text));
     setPasswordText(text);
     setPasswordBorderColor(
       Util.getPasswordStrengthBorderColor(Util.getPasswordStrength(text)),
@@ -66,7 +66,7 @@ const FinishSigningUp = (props: {
   };
 
   const setNameValidity = (nameText: string, setNameValid: any) => {
-    setNameValid(!(setNameValid.length <= 1));
+    setNameValid(!(nameText.length <= 1));
   };
 
   const setAgeValidity = () => {
@@ -78,7 +78,7 @@ const FinishSigningUp = (props: {
     setNameValidity(lastNameText, setIsLastNameValid);
     setIsValidEmail(Util.isValidEmail(emailText));
     setAgeValidity();
-    setIsPasswordValid(!Util.isPasswordValid(passwordText));
+    setIsPasswordValid(Util.isPasswordInvalid(passwordText));
   };
 
   const handleAgreeAndContinue = () => {
@@ -113,7 +113,7 @@ const FinishSigningUp = (props: {
           <Text style={logInOrSignUpStyles.text}>Finish Signing Up</Text>
         </View>
       </View>
-      <KeyboardAwareScrollView style={{paddingTop: 15}} extraScrollHeight={50}>
+      <KeyboardAwareScrollView style={{paddingTop: 15}} extraScrollHeight={60}>
         <CustomTextInput
           inputTitle={'First Name'}
           placeholderText={'Enter first name...'}
