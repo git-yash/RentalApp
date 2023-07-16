@@ -18,7 +18,7 @@ export default class Util {
 
   public static isValidEmail(email: string): boolean {
     if (email.length === 0) {
-      return true;
+      return false;
     }
 
     const emailRegex = new RegExp(
@@ -74,7 +74,8 @@ export default class Util {
 
   public static isPasswordInvalid(password: string): boolean {
     return (
-      Util.getPasswordStrength(password) === 'No Password' || Util.getPasswordStrength(password) === 'Weak'
+      Util.getPasswordStrength(password) === 'No Password' ||
+      Util.getPasswordStrength(password) === 'Weak'
     );
   }
 

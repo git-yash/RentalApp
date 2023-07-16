@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Pressable, ScrollView, Text, View} from 'react-native';
+import {Pressable, Text, View} from 'react-native';
 import exploreStyles from '../Explore/Explore.style';
 import logInOrSignUpStyles from '../LogInOrSignUp/LogInOrSignUp.style';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -25,7 +25,7 @@ const FinishSigningUp = (props: {
   const [isLastNameValid, setIsLastNameValid] = useState(true);
   const [lastNameText, setLastNameText] = useState('');
   const [passwordText, setPasswordText] = useState('');
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [passwordBorderColor, setPasswordBorderColor] = useState(Colors.green);
   const [birthdate, setDate] = useState(new Date());
   const [isBirthdateValid, setIsDateValid] = useState(true);
@@ -65,35 +65,51 @@ const FinishSigningUp = (props: {
     );
   };
 
-  const setNameValidity = (nameText: string, setNameValid: any) => {
-    setNameValid(!(nameText.length <= 1));
+  const setNameValidity = (nameText: string, setNameValid: any): boolean => {
+    const isValid = nameText.length > 1;
+    setNameValid(isValid);
+    return isValid;
   };
 
-  const setAgeValidity = () => {
-    setIsDateValid(Util.getAge(birthdate) >= 18);
+  const setAgeValidity = (): boolean => {
+    const isValidAge = Util.getAge(birthdate) >= 1;
+    setIsDateValid(isValidAge);
+    return isValidAge;
   };
 
-  const setInputValidity = () => {
-    setNameValidity(firstNameText, setIsFirstNameValid);
-    setNameValidity(lastNameText, setIsLastNameValid);
-    setIsValidEmail(Util.isValidEmail(emailText));
-    setAgeValidity();
-    setIsPasswordValid(Util.isPasswordInvalid(passwordText));
+  const setValidity = () => {
+    const isValidEmail = Util.isValidEmail(emailText);
+    setIsValidEmail(isValidEmail);
+    const isValidPassword = !Util.isPasswordInvalid(passwordText);
+    setIsPasswordValid(isValidPassword);
+
+    const isValidFirstName = setNameValidity(
+      firstNameText,
+      setIsFirstNameValid,
+    );
+    const isValidLastName = setNameValidity(lastNameText, setIsLastNameValid);
+    const isValidAge = setAgeValidity();
+
+    return (
+      isValidFirstName &&
+      isValidLastName &&
+      isValidEmail &&
+      isValidAge &&
+      isValidPassword
+    );
   };
 
   const handleAgreeAndContinue = () => {
-    if (
-      isFirstNameValid &&
-      isLastNameValid &&
-      isBirthdateValid &&
-      isPasswordValid
-    ) {
+    const isFormValid = setValidity();
+
+    if (isFormValid) {
       props.setCanHideModal(true);
       props.setIsModalVisible(false);
       ReactNativeHapticFeedback.trigger('notificationSuccess', Util.options);
+      // valid
     } else {
-      setInputValidity();
       ReactNativeHapticFeedback.trigger('notificationError', Util.options);
+      // invalid
     }
   };
 
@@ -174,7 +190,9 @@ const FinishSigningUp = (props: {
           </Text>
         </View>
         <Pressable
-          onPress={handleAgreeAndContinue}
+          onPress={() => {
+            handleAgreeAndContinue();
+          }}
           disabled={false}
           style={logInOrSignUpStyles.continuePressableEnabled}>
           <Text style={logInOrSignUpStyles.continueText}>

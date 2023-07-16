@@ -24,7 +24,7 @@ const LogInOrSignUp = (props: {
   isModalVisible: boolean;
   setIsModalVisible: any;
 }) => {
-  const [emailText, setEmailText] = useState('');
+  const [emailText, setEmailText] = useState('yash@great.com');
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [finishSigningUp, setFinishSigningUp] = useState(false);
   const [canHideModal, setCanHideModal] = useState(false);
