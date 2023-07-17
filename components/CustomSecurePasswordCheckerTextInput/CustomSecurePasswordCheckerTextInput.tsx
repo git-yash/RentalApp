@@ -18,8 +18,7 @@ const CustomSecurePasswordCheckerTextInput = (props: {
   placeholderText: string;
   value: string;
   onChange: any;
-  errorMessage: string;
-  isValid: boolean;
+  errorMessage: string | undefined;
   borderColor: string;
 }) => {
   const [inputTextColor, setInputTextColor] = useState(Colors.gray800);
@@ -101,7 +100,7 @@ const CustomSecurePasswordCheckerTextInput = (props: {
           </Pressable>
         </Box>
       </Box>
-      {props.isValid && (
+      {props.errorMessage && (
         <Text style={customTextInputStyles.errorMessage}>
           {props.errorMessage}
         </Text>

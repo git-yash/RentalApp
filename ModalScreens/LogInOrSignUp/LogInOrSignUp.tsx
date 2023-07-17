@@ -22,14 +22,15 @@ const LogInOrSignUp = (props: {
   setIsModalVisible: any;
 }) => {
   const [emailText, setEmailText] = useState('');
-  const [isValidEmail, setIsValidEmail] = useState(true);
+  const [emailError, setEmailError] = useState<string | undefined>(undefined);
   const [modalScreenName, setModalScreenName] = useState<
     'LogInOrSignUp' | 'FinishSigningUp' | 'EnterPassword'
   >('LogInOrSignUp');
   const [canHideModal, setCanHideModal] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
-  const isDisabled: boolean = emailText.length === 0 || !isValidEmail;
+  const isDisabled: boolean =
+    emailText.length === 0 || emailError !== undefined;
 
   useEffect(() => {
     setModalScreenName('LogInOrSignUp');
@@ -48,7 +49,11 @@ const LogInOrSignUp = (props: {
 
   const handleEmailOnChange = (text: string): void => {
     setEmailText(text);
-    setIsValidEmail(Util.isValidEmail(text.trim()));
+    setEmailError(
+      Util.isValidEmail(emailText.trim())
+        ? undefined
+        : 'Please enter a valid email!',
+    );
   };
 
   const handleContinuePress = async (documentId: string) => {
@@ -108,9 +113,8 @@ const LogInOrSignUp = (props: {
           <KeyboardAwareScrollView style={{paddingTop: 15}}>
             <CustomTextInput
               inputTitle={'Email'}
-              isValidInput={isValidEmail}
               placeholderText={'Enter email...'}
-              errorMessage={'Please enter a valid email!'}
+              errorMessage={emailError}
               value={emailText}
               onChange={handleEmailOnChange}
               autoCapitalize={'none'}

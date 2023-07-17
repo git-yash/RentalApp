@@ -1,12 +1,14 @@
 import React from 'react';
 import {NavigationContainer, useIsFocused} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {faUser, faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
+import {faMagnifyingGlass, faUser} from '@fortawesome/free-solid-svg-icons';
 import Explore from './screens/Explore/Explore';
 import TabBarIcon from './components/TabBarIcon/TabBarIcon';
 import Colors from './assets/Colors';
 import {NativeBaseProvider} from 'native-base';
 import {StatusBar} from 'react-native';
+import Profile from './screens/Profile/Profile';
+import auth from '@react-native-firebase/auth';
 
 function App(): JSX.Element {
   const Tab = createBottomTabNavigator();
@@ -36,8 +38,8 @@ function App(): JSX.Element {
             }}
           />
           <Tab.Screen
-            name={'Log in'}
-            component={Explore}
+            name={auth().currentUser ? 'Profile' : 'Log in'}
+            component={Profile}
             options={{
               tabBarIcon: () => (
                 <TabBarIcon isFocused={useIsFocused()} icon={faUser} />

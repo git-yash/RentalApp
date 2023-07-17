@@ -24,32 +24,44 @@ const FinishSigningUp = (props: {
   emailText: string;
 }) => {
   const [firstNameText, setFirstNameText] = useState('');
-  const [isFirstNameValid, setIsFirstNameValid] = useState(true);
-  const [isLastNameValid, setIsLastNameValid] = useState(true);
+  const [firstNameError, setFirstNameError] = useState<string | undefined>(
+    undefined,
+  );
   const [lastNameText, setLastNameText] = useState('');
+  const [lastNameError, setLastNameError] = useState<string | undefined>(
+    undefined,
+  );
   const [passwordText, setPasswordText] = useState('');
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [passwordError, setPasswordError] = useState<string | undefined>(
+    undefined,
+  );
   const [passwordBorderColor, setPasswordBorderColor] = useState(Colors.green);
   const [birthdate, setDate] = useState(new Date());
-  const [isBirthdateValid, setIsDateValid] = useState(true);
+  const [birthdateError, setBirthdateError] = useState<string | undefined>(
+    undefined,
+  );
   const [emailText, setEmailText] = useState(props.emailText);
-  const [isValidEmail, setIsValidEmail] = useState(true);
+  const [emailError, setEmailError] = useState<string | undefined>(undefined);
 
   const [isLoading, setIsLoading] = useState(false);
 
   const handleEmailOnChange = (text: string): void => {
     setEmailText(text);
-    setIsValidEmail(Util.isValidEmail(text.trim()));
+    setEmailError(
+      Util.isValidEmail(emailText.trim())
+        ? undefined
+        : 'Please enter a valid email!',
+    );
   };
 
   const setFirstNameTextWithValidation = (newFirstNameText: string) => {
     setFirstNameText(newFirstNameText);
-    setNameValidity(newFirstNameText, setIsFirstNameValid);
+    setNameValidity(newFirstNameText, setFirstNameError);
   };
 
   const setLastNameTextWithValidation = (newLastNameText: string) => {
     setLastNameText(newLastNameText);
-    setNameValidity(newLastNameText, setIsLastNameValid);
+    setNameValidity(newLastNameText, setLastNameError);
   };
 
   const setBirthDate = (event: DateTimePickerEvent, date: Date) => {
@@ -63,36 +75,41 @@ const FinishSigningUp = (props: {
   };
 
   const handlePasswordTextChange = (text: string) => {
-    setIsPasswordValid(Util.isPasswordInvalid(text));
+    setPasswordError(
+      !Util.isPasswordInvalid(text)
+        ? undefined
+        : 'Password is required and cannot be weak!',
+    );
     setPasswordText(text);
     setPasswordBorderColor(
       Util.getPasswordStrengthBorderColor(Util.getPasswordStrength(text)),
     );
   };
 
-  const setNameValidity = (nameText: string, setNameValid: any): boolean => {
+  const setNameValidity = (nameText: string, setNameError: any): boolean => {
     const isValid = nameText.length > 1;
-    setNameValid(isValid);
+    setNameError(isValid ? undefined : 'Please enter a valid name!');
     return isValid;
   };
 
   const setAgeValidity = (): boolean => {
-    const isValidAge = Util.getAge(birthdate) >= 1;
-    setIsDateValid(isValidAge);
+    const isValidAge = Util.getAge(birthdate) >= 18;
+    setBirthdateError(
+      isValidAge ? undefined : 'You must be 18 years or older to sign up',
+    );
     return isValidAge;
   };
 
   const setValidity = () => {
     const isValidEmail = Util.isValidEmail(emailText);
-    setIsValidEmail(isValidEmail);
+    setEmailError(isValidEmail ? undefined : 'Please enter a valid email!');
     const isValidPassword = !Util.isPasswordInvalid(passwordText);
-    setIsPasswordValid(!isValidPassword);
-
-    const isValidFirstName = setNameValidity(
-      firstNameText,
-      setIsFirstNameValid,
+    setPasswordError(
+      isValidPassword ? undefined : 'Password is required and cannot be weak!',
     );
-    const isValidLastName = setNameValidity(lastNameText, setIsLastNameValid);
+
+    const isValidFirstName = setNameValidity(firstNameText, setFirstNameError);
+    const isValidLastName = setNameValidity(lastNameText, setLastNameError);
     const isValidAge = setAgeValidity();
 
     return (
@@ -134,6 +151,9 @@ const FinishSigningUp = (props: {
             console.log('That email address is invalid!');
             setIsLoading(false);
           }
+          if (error.code === 'auth/email-already-in-use') {
+            setEmailError('This email is already in use, try logging in.');
+          }
           console.error(error);
           setIsLoading(false);
         });
@@ -165,10 +185,9 @@ const FinishSigningUp = (props: {
         <CustomTextInput
           inputTitle={'First Name'}
           placeholderText={'Enter first name...'}
-          isValidInput={isFirstNameValid}
           value={firstNameText}
           onChange={setFirstNameTextWithValidation}
-          errorMessage={'Please enter valid first name!'}
+          errorMessage={firstNameError}
           autoCapitalize={'words'}
           keyboardType={'default'}
           maxCharacterLength={30}
@@ -177,10 +196,9 @@ const FinishSigningUp = (props: {
         <CustomTextInput
           inputTitle={'Last Name'}
           placeholderText={'Enter last name...'}
-          isValidInput={isLastNameValid}
           value={lastNameText}
           onChange={setLastNameTextWithValidation}
-          errorMessage={'Please enter valid last name!'}
+          errorMessage={lastNameError}
           autoCapitalize={'words'}
           keyboardType={'default'}
           maxCharacterLength={30}
@@ -188,9 +206,8 @@ const FinishSigningUp = (props: {
         />
         <CustomTextInput
           inputTitle={'Email'}
-          isValidInput={isValidEmail}
           placeholderText={'Enter email...'}
-          errorMessage={'Please enter a valid email!'}
+          errorMessage={emailError}
           value={emailText}
           onChange={handleEmailOnChange}
           autoCapitalize={'none'}
@@ -202,16 +219,15 @@ const FinishSigningUp = (props: {
           mode={'date'}
           onChange={setBirthDate}
           value={birthdate}
+          isValid={birthdateError === undefined}
           bottomMessage={'You must be 18 years or older to sign up.'}
-          isValid={isBirthdateValid}
         />
         <CustomSecurePasswordCheckerTextInput
           inputTitle={'Password'}
           placeholderText={'Enter password...'}
           value={passwordText}
           onChange={handlePasswordTextChange}
-          errorMessage={'Password is required and cannot be weak!'}
-          isValid={isPasswordValid}
+          errorMessage={passwordError}
           borderColor={passwordBorderColor}
         />
         <View>

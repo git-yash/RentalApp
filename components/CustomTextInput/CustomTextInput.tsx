@@ -7,10 +7,9 @@ import {KeyboardTypeOptions} from 'react-native';
 const CustomTextInput = (props: {
   inputTitle: string;
   placeholderText: string;
-  isValidInput: boolean;
   value: string;
   onChange: any;
-  errorMessage: string;
+  errorMessage: string | undefined;
   autoCapitalize: 'none' | 'sentences' | 'words' | 'characters' | undefined;
   keyboardType: KeyboardTypeOptions | undefined;
   maxCharacterLength: number;
@@ -46,6 +45,7 @@ const CustomTextInput = (props: {
     | undefined;
 }) => {
   const [inputTextColor, setInputTextColor] = useState(Colors.gray800);
+
   function onBlurInput() {
     setInputTextColor(Colors.gray800);
   }
@@ -87,10 +87,10 @@ const CustomTextInput = (props: {
           placeholder={props.placeholderText}
           maxLength={props.maxCharacterLength}
           style={customTextInputStyles.input}
-          isInvalid={!props.isValidInput}
+          isInvalid={props.errorMessage !== undefined}
         />
       </Box>
-      {!props.isValidInput && (
+      {props.errorMessage && (
         <Text style={customTextInputStyles.errorMessage}>
           {props.errorMessage}
         </Text>

@@ -12,7 +12,7 @@ const ContinuePressable = (props: {
   return (
     <Pressable
       onPress={props.onPress}
-      disabled={props.isDisabled}
+      disabled={props.isDisabled || props.isLoading}
       style={
         props.isDisabled
           ? logInOrSignUpStyles.continuePressableDisabled
