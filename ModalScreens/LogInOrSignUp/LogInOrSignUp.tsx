@@ -1,24 +1,19 @@
-import React, {useRef, useState} from 'react';
-import {
-  Platform,
-  Pressable,
-  ScrollView,
-  StatusBar,
-  Text,
-  View,
-} from 'react-native';
+import React, {useState} from 'react';
+import {Dimensions, Pressable, Text, View} from 'react-native';
 import logInOrSignUpStyles from './LogInOrSignUp.style';
 import {faXmark} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import Modal from 'react-native-modal';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
-import exploreStyles from '../Explore/Explore.style';
+import exploreStyles from '../../screens/Explore/Explore.style';
 import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
 import Util from '../../Util';
 import OrDivider from '../../components/OrDivider/OrDivider';
 import SocialLoginButton from '../../components/SocialLoginButton/SocialLoginButton';
 import FinishSigningUp from '../FinishSigningUp/FinishSigningUp';
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import EnterPassword from '../EnterPassword/EnterPassword';
+import ContinuePressable from '../../components/ContinuePressable/ContinuePressable';
 
 const LogInOrSignUp = (props: {
   isModalVisible: boolean;
@@ -26,7 +21,9 @@ const LogInOrSignUp = (props: {
 }) => {
   const [emailText, setEmailText] = useState('yash@great.com');
   const [isValidEmail, setIsValidEmail] = useState(true);
-  const [finishSigningUp, setFinishSigningUp] = useState(false);
+  const [modalScreenName, setModalScreenName] = useState<
+    'LogInOrSignUp' | 'FinishSigningUp' | 'EnterPassword'
+  >('EnterPassword');
   const [canHideModal, setCanHideModal] = useState(false);
 
   const isDisabled: boolean = emailText.length === 0 || !isValidEmail;
@@ -39,12 +36,13 @@ const LogInOrSignUp = (props: {
   return (
     <Modal
       isVisible={props.isModalVisible}
+      scrollOffset={Dimensions.get('window').height * 0.8} // 80% of screen height is scrollable
       onSwipeComplete={() => {
         props.setIsModalVisible(false);
         ReactNativeHapticFeedback.trigger('impactMedium', Util.options);
       }}
       onModalWillHide={() => {
-        if (finishSigningUp && !canHideModal) {
+        if (modalScreenName === 'FinishSigningUp' && !canHideModal) {
           props.setIsModalVisible(true);
           ReactNativeHapticFeedback.trigger(
             'notificationWarning',
@@ -56,7 +54,7 @@ const LogInOrSignUp = (props: {
       swipeThreshold={300}
       swipeDirection={['down']}
       style={exploreStyles.modal}>
-      {!finishSigningUp && (
+      {modalScreenName === 'LogInOrSignUp' && (
         <View style={exploreStyles.modalView}>
           <View style={logInOrSignUpStyles.headerContainer}>
             <View style={logInOrSignUpStyles.iconContainer}>
@@ -83,18 +81,11 @@ const LogInOrSignUp = (props: {
               maxCharacterLength={320}
               textContentType={'emailAddress'}
             />
-            <Pressable
-              onPress={() => {
-                setFinishSigningUp(true);
-              }}
-              disabled={isDisabled}
-              style={
-                isDisabled
-                  ? logInOrSignUpStyles.continuePressableDisabled
-                  : logInOrSignUpStyles.continuePressableEnabled
-              }>
-              <Text style={logInOrSignUpStyles.continueText}>Continue</Text>
-            </Pressable>
+            <ContinuePressable
+              onPress={() => setModalScreenName('FinishSigningUp')}
+              isDisabled={isDisabled}
+              text={'Continue'}
+            />
             <OrDivider />
             <SocialLoginButton socialName={'Apple'} />
             <SocialLoginButton socialName={'Google'} />
@@ -103,15 +94,21 @@ const LogInOrSignUp = (props: {
         </View>
       )}
 
-      {finishSigningUp && (
+      {modalScreenName === 'FinishSigningUp' && (
         <View style={exploreStyles.modalView}>
           <FinishSigningUp
             email={emailText}
-            setFinishSigningUp={setFinishSigningUp}
+            setModalScreenName={setModalScreenName}
             setIsModalVisible={props.setIsModalVisible}
             setCanHideModal={setCanHideModal}
             emailText={emailText}
           />
+        </View>
+      )}
+
+      {modalScreenName === 'EnterPassword' && (
+        <View style={exploreStyles.modalView}>
+          <EnterPassword setModalScreenName={setModalScreenName} />
         </View>
       )}
     </Modal>

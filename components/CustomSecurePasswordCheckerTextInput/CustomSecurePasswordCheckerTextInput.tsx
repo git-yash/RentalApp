@@ -1,11 +1,11 @@
-import {Box, Input, Text, Pressable} from 'native-base';
+import {Box, Input, Pressable, Text} from 'native-base';
 import React, {useState} from 'react';
 import customTextInputStyles from '../CustomTextInput/CustomTextInput.style';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
+  faCircleInfo,
   faEye,
   faEyeSlash,
-  faCircleInfo,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import Colors from '../../assets/Colors';
@@ -60,7 +60,7 @@ const CustomSecurePasswordCheckerTextInput = (props: {
               />
             </Pressable>
           }
-          placeholder="Enter your password"
+          placeholder="Enter your password..."
           placeholderTextColor={Colors.gray800}
           invalidOutlineColor={Colors.invalidRed}
           onBlur={onBlurInput}
@@ -108,7 +108,8 @@ const CustomSecurePasswordCheckerTextInput = (props: {
       )}
       <Modal
         isVisible={showPasswordInfoModal}
-        swipeDirection={['down', 'right']}>
+        swipeDirection={['down', 'right']}
+        onBackdropPress={() => setShowPasswordInfoModal(false)}>
         <Box style={customSecurePasswordCheckerTextInputStyles.modalView}>
           <Box
             style={

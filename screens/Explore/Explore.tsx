@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
-import { Text, View, Button, StyleSheet, ScrollView, SafeAreaView } from "react-native";
-import exploreStyles from './Explore.style';
-import LogInOrSignUp from '../LogInOrSignUp/LogInOrSignUp';
-import Colors from "../../assets/Colors";
+import {Button, SafeAreaView} from 'react-native';
+import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 
 const Explore = (props: {navigation: any}) => {
   const [isModalVisible, setModalVisible] = useState(false);

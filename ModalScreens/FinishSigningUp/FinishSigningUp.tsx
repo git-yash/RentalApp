@@ -1,21 +1,22 @@
 import React, {useState} from 'react';
 import {Pressable, Text, View} from 'react-native';
-import exploreStyles from '../Explore/Explore.style';
+import exploreStyles from '../../screens/Explore/Explore.style';
 import logInOrSignUpStyles from '../LogInOrSignUp/LogInOrSignUp.style';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faAngleLeft} from '@fortawesome/free-solid-svg-icons';
 import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
-import CustomSecurePasswordCheckerTextInput from '../../components/CustomSecureTextInput/CustomSecurePasswordCheckerTextInput';
+import CustomSecurePasswordCheckerTextInput from '../../components/CustomSecurePasswordCheckerTextInput/CustomSecurePasswordCheckerTextInput';
 import Util from '../../Util';
 import Colors from '../../assets/Colors';
 import {DateTimePickerEvent} from '@react-native-community/datetimepicker';
 import CustomDateTimePicker from '../../components/CustomDateTimePicker/CustomDateTimePicker';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import ContinuePressable from '../../components/ContinuePressable/ContinuePressable';
 
 const FinishSigningUp = (props: {
   email: string;
-  setFinishSigningUp: any;
+  setModalScreenName: any;
   setIsModalVisible: any;
   setCanHideModal: any;
   emailText: string;
@@ -25,7 +26,7 @@ const FinishSigningUp = (props: {
   const [isLastNameValid, setIsLastNameValid] = useState(true);
   const [lastNameText, setLastNameText] = useState('');
   const [passwordText, setPasswordText] = useState('');
-  const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [passwordBorderColor, setPasswordBorderColor] = useState(Colors.green);
   const [birthdate, setDate] = useState(new Date());
   const [isBirthdateValid, setIsDateValid] = useState(true);
@@ -81,7 +82,7 @@ const FinishSigningUp = (props: {
     const isValidEmail = Util.isValidEmail(emailText);
     setIsValidEmail(isValidEmail);
     const isValidPassword = !Util.isPasswordInvalid(passwordText);
-    setIsPasswordValid(isValidPassword);
+    setIsPasswordValid(!isValidPassword);
 
     const isValidFirstName = setNameValidity(
       firstNameText,
@@ -120,7 +121,7 @@ const FinishSigningUp = (props: {
           <Pressable
             style={logInOrSignUpStyles.dismissPressable}
             onPress={() => {
-              props.setFinishSigningUp(false);
+              props.setModalScreenName('LogInOrSignUp');
             }}>
             <FontAwesomeIcon icon={faAngleLeft} size={20} />
           </Pressable>
@@ -189,16 +190,11 @@ const FinishSigningUp = (props: {
             Conditions and acknowledge the Privacy Policy.
           </Text>
         </View>
-        <Pressable
-          onPress={() => {
-            handleAgreeAndContinue();
-          }}
-          disabled={false}
-          style={logInOrSignUpStyles.continuePressableEnabled}>
-          <Text style={logInOrSignUpStyles.continueText}>
-            Agree and Continue
-          </Text>
-        </Pressable>
+        <ContinuePressable
+          onPress={handleAgreeAndContinue}
+          isDisabled={false}
+          text={'Agree and Continue'}
+        />
       </KeyboardAwareScrollView>
     </View>
   );
