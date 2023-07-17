@@ -7,6 +7,12 @@ const enterPasswordStyles = StyleSheet.create({
     textDecorationLine: 'underline',
     paddingTop: 15,
   },
+  titleText: {
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 20,
+    fontWeight: '500',
+    paddingBottom: 20,
+  },
 });
 
 export default enterPasswordStyles;

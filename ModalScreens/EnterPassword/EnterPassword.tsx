@@ -8,7 +8,10 @@ import CustomSecureTextInput from '../../components/CustomSecureTextInput/Custom
 import ContinuePressable from '../../components/ContinuePressable/ContinuePressable';
 import enterPasswordStyles from './EnterPassword.style';
 
-const EnterPassword = (props: {setModalScreenName: any}) => {
+const EnterPassword = (props: {
+  setModalScreenName: any;
+  setIsModalVisible: any;
+}) => {
   const [passwordText, setPasswordText] = useState('');
 
   return (
@@ -26,6 +29,11 @@ const EnterPassword = (props: {setModalScreenName: any}) => {
         </View>
       </View>
       <View style={{paddingTop: 15}}>
+        <View style={enterPasswordStyles.forgotPasswordContainer}>
+          <Text style={enterPasswordStyles.titleText}>
+            Welcome to Rentality
+          </Text>
+        </View>
         <CustomSecureTextInput
           inputTitle={'Password'}
           placeholderText={'Enter password...'}
@@ -33,7 +41,9 @@ const EnterPassword = (props: {setModalScreenName: any}) => {
           onChange={setPasswordText}
         />
         <ContinuePressable
-          onPress={() => {}}
+          onPress={() => {
+            props.setIsModalVisible(false);
+          }}
           isDisabled={passwordText.length < 1}
           text={'Continue'}
         />

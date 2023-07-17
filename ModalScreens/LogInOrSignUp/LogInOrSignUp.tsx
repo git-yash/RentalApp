@@ -36,7 +36,7 @@ const LogInOrSignUp = (props: {
   return (
     <Modal
       isVisible={props.isModalVisible}
-      scrollOffset={Dimensions.get('window').height * 0.8} // 80% of screen height is scrollable
+      scrollOffset={Dimensions.get('window').height * 0.85} // 85% of screen height is scrollable
       onSwipeComplete={() => {
         props.setIsModalVisible(false);
         ReactNativeHapticFeedback.trigger('impactMedium', Util.options);
@@ -108,7 +108,10 @@ const LogInOrSignUp = (props: {
 
       {modalScreenName === 'EnterPassword' && (
         <View style={exploreStyles.modalView}>
-          <EnterPassword setModalScreenName={setModalScreenName} />
+          <EnterPassword
+            setModalScreenName={setModalScreenName}
+            setIsModalVisible={props.setIsModalVisible}
+          />
         </View>
       )}
     </Modal>
