@@ -15,6 +15,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import EnterPassword from '../EnterPassword/EnterPassword';
 import ContinuePressable from '../../components/ContinuePressable/ContinuePressable';
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const LogInOrSignUp = (props: {
   isModalVisible: boolean;
@@ -25,7 +26,7 @@ const LogInOrSignUp = (props: {
   const [modalScreenName, setModalScreenName] = useState<
     'LogInOrSignUp' | 'FinishSigningUp' | 'EnterPassword'
   >('LogInOrSignUp');
-  const [canHideModal, setCanHideModal] = useState(false);
+  const [canHideModal, setCanHideModal] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
   const isDisabled: boolean = emailText.length === 0 || !isValidEmail;
@@ -33,7 +34,17 @@ const LogInOrSignUp = (props: {
   useEffect(() => {
     setModalScreenName('LogInOrSignUp');
     setEmailText('');
-  }, [props.isModalVisible]);
+    setCanHideModal(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth().currentUser]);
+
+  useEffect(() => {
+    if (modalScreenName === 'LogInOrSignUp') {
+      setCanHideModal(true);
+    } else {
+      setCanHideModal(false);
+    }
+  }, [modalScreenName]);
 
   const handleEmailOnChange = (text: string): void => {
     setEmailText(text);
@@ -52,6 +63,7 @@ const LogInOrSignUp = (props: {
         setModalScreenName('FinishSigningUp');
       }
       setIsLoading(false);
+      setCanHideModal(false);
     } catch (error) {
       console.error('Error checking document existence:', error);
       setIsLoading(false);
@@ -67,7 +79,7 @@ const LogInOrSignUp = (props: {
         ReactNativeHapticFeedback.trigger('impactMedium', Util.options);
       }}
       onModalWillHide={() => {
-        if (modalScreenName === 'FinishSigningUp' && !canHideModal) {
+        if (!canHideModal) {
           props.setIsModalVisible(true);
           ReactNativeHapticFeedback.trigger(
             'notificationWarning',
@@ -138,6 +150,7 @@ const LogInOrSignUp = (props: {
             emailText={emailText}
             setModalScreenName={setModalScreenName}
             setIsModalVisible={props.setIsModalVisible}
+            setCanHideModal={setCanHideModal}
           />
         </View>
       )}

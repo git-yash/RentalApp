@@ -152,6 +152,7 @@ const FinishSigningUp = (props: {
             style={logInOrSignUpStyles.dismissPressable}
             onPress={() => {
               props.setModalScreenName('LogInOrSignUp');
+              props.setCanHideModal(true);
             }}>
             <FontAwesomeIcon icon={faAngleLeft} size={20} />
           </Pressable>

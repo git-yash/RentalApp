@@ -13,6 +13,7 @@ const EnterPassword = (props: {
   setModalScreenName: any;
   setIsModalVisible: any;
   emailText: string;
+  setCanHideModal: any;
 }) => {
   const [passwordText, setPasswordText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -25,6 +26,7 @@ const EnterPassword = (props: {
     try {
       await auth().signInWithEmailAndPassword(props.emailText, passwordText);
       // Handle successful sign-in
+      props.setCanHideModal(true);
       props.setIsModalVisible(false);
       console.log('logged in ' + auth().currentUser?.email);
       setIsLoading(false);
@@ -42,7 +44,10 @@ const EnterPassword = (props: {
         <View style={logInOrSignUpStyles.iconContainer}>
           <Pressable
             style={logInOrSignUpStyles.dismissPressable}
-            onPress={() => props.setModalScreenName('LogInOrSignUp')}>
+            onPress={() => {
+              props.setModalScreenName('LogInOrSignUp');
+              props.setCanHideModal(true);
+            }}>
             <FontAwesomeIcon icon={faAngleLeft} size={20} />
           </Pressable>
         </View>
