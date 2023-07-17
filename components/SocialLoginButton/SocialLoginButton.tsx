@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Image, Pressable} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import socialLoginButtonStyles from './SocialLoginButton.style';
 import Util from '../../Util';
 
@@ -7,7 +7,7 @@ const SocialLoginButton = (props: {
   socialName: 'Apple' | 'Google' | 'Facebook';
 }) => {
   return (
-    <Pressable style={socialLoginButtonStyles.button}>
+    <TouchableOpacity style={socialLoginButtonStyles.button}>
       <View style={socialLoginButtonStyles.iconContainer}>
         <Image
           style={
@@ -21,7 +21,7 @@ const SocialLoginButton = (props: {
       <Text style={socialLoginButtonStyles.buttonText}>
         Continue with {props.socialName}
       </Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavigationContainer, useIsFocused} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {faMagnifyingGlass, faUser} from '@fortawesome/free-solid-svg-icons';
 import Explore from './screens/Explore/Explore';
@@ -22,11 +22,8 @@ function App(): JSX.Element {
             name={'Explore'}
             component={Explore}
             options={{
-              tabBarIcon: () => (
-                <TabBarIcon
-                  isFocused={useIsFocused()}
-                  icon={faMagnifyingGlass}
-                />
+              tabBarIcon: ({focused}) => (
+                <TabBarIcon isFocused={focused} icon={faMagnifyingGlass} />
               ),
               tabBarActiveTintColor: Colors.green,
               tabBarInactiveTintColor: Colors.gray500,
@@ -41,8 +38,8 @@ function App(): JSX.Element {
             name={auth().currentUser ? 'Profile' : 'Log in'}
             component={Profile}
             options={{
-              tabBarIcon: () => (
-                <TabBarIcon isFocused={useIsFocused()} icon={faUser} />
+              tabBarIcon: ({focused}) => (
+                <TabBarIcon isFocused={focused} icon={faUser} />
               ),
               tabBarActiveTintColor: Colors.green,
               tabBarInactiveTintColor: Colors.gray500,
