@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Dimensions, Pressable, Text, View} from 'react-native';
 import logInOrSignUpStyles from './LogInOrSignUp.style';
 import {faXmark} from '@fortawesome/free-solid-svg-icons';
@@ -29,6 +29,11 @@ const LogInOrSignUp = (props: {
   const [isLoading, setIsLoading] = useState(false);
 
   const isDisabled: boolean = emailText.length === 0 || !isValidEmail;
+
+  useEffect(() => {
+    setModalScreenName('LogInOrSignUp');
+    setEmailText('');
+  }, [props.isModalVisible]);
 
   const handleEmailOnChange = (text: string): void => {
     setEmailText(text);

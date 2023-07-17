@@ -26,6 +26,7 @@ const EnterPassword = (props: {
       await auth().signInWithEmailAndPassword(props.emailText, passwordText);
       // Handle successful sign-in
       props.setIsModalVisible(false);
+      console.log('logged in ' + auth().currentUser?.email);
       setIsLoading(false);
     } catch (error) {
       // Handle sign-in error
