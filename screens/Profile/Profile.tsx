@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Button, SafeAreaView} from 'react-native';
 import auth from '@react-native-firebase/auth';
+import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 
 const Profile = (props: {navigation: any}) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -34,6 +35,10 @@ const Profile = (props: {navigation: any}) => {
           onPress={() => setModalVisible(true)}
         />
       )}
+      <LogInOrSignUp
+        isModalVisible={isModalVisible}
+        setIsModalVisible={setModalVisible}
+      />
     </SafeAreaView>
   );
 };

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, Pressable, Text, View} from 'react-native';
+import {Dimensions, Text, TouchableOpacity, View} from 'react-native';
 import logInOrSignUpStyles from './LogInOrSignUp.style';
 import {faXmark} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -100,11 +100,11 @@ const LogInOrSignUp = (props: {
         <View style={exploreStyles.modalView}>
           <View style={logInOrSignUpStyles.headerContainer}>
             <View style={logInOrSignUpStyles.iconContainer}>
-              <Pressable
+              <TouchableOpacity
                 style={logInOrSignUpStyles.dismissPressable}
                 onPress={() => props.setIsModalVisible(false)}>
                 <FontAwesomeIcon icon={faXmark} size={20} />
-              </Pressable>
+              </TouchableOpacity>
             </View>
             <View style={logInOrSignUpStyles.textContainer}>
               <Text style={logInOrSignUpStyles.text}>Log in or Sign up</Text>

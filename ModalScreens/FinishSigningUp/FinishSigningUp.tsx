@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Pressable, Text, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import exploreStyles from '../../screens/Explore/Explore.style';
 import logInOrSignUpStyles from '../LogInOrSignUp/LogInOrSignUp.style';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -168,14 +168,14 @@ const FinishSigningUp = (props: {
     <View style={exploreStyles.modalView}>
       <View style={logInOrSignUpStyles.headerContainer}>
         <View style={logInOrSignUpStyles.iconContainer}>
-          <Pressable
+          <TouchableOpacity
             style={logInOrSignUpStyles.dismissPressable}
             onPress={() => {
               props.setModalScreenName('LogInOrSignUp');
               props.setCanHideModal(true);
             }}>
             <FontAwesomeIcon icon={faAngleLeft} size={20} />
-          </Pressable>
+          </TouchableOpacity>
         </View>
         <View style={logInOrSignUpStyles.textContainer}>
           <Text style={logInOrSignUpStyles.text}>Finish Signing Up</Text>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, Text} from 'react-native';
+import {Text, TouchableOpacity} from 'react-native';
 import logInOrSignUpStyles from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp.style';
 import {Spinner} from 'native-base';
 
@@ -10,7 +10,7 @@ const ContinuePressable = (props: {
   isLoading: boolean;
 }) => {
   return (
-    <Pressable
+    <TouchableOpacity
       onPress={props.onPress}
       disabled={props.isDisabled || props.isLoading}
       style={
@@ -22,7 +22,7 @@ const ContinuePressable = (props: {
       {!props.isLoading && (
         <Text style={logInOrSignUpStyles.continueText}>{props.text}</Text>
       )}
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
