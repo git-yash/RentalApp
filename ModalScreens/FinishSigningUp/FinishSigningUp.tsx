@@ -13,6 +13,8 @@ import CustomDateTimePicker from '../../components/CustomDateTimePicker/CustomDa
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ContinuePressable from '../../components/ContinuePressable/ContinuePressable';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 const FinishSigningUp = (props: {
   email: string;
@@ -32,6 +34,8 @@ const FinishSigningUp = (props: {
   const [isBirthdateValid, setIsDateValid] = useState(true);
   const [emailText, setEmailText] = useState(props.emailText);
   const [isValidEmail, setIsValidEmail] = useState(true);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleEmailOnChange = (text: string): void => {
     setEmailText(text);
@@ -102,14 +106,40 @@ const FinishSigningUp = (props: {
 
   const handleAgreeAndContinue = () => {
     const isFormValid = setValidity();
+    setIsLoading(true);
 
     if (isFormValid) {
-      props.setCanHideModal(true);
-      props.setIsModalVisible(false);
-      ReactNativeHapticFeedback.trigger('notificationSuccess', Util.options);
       // valid
+      auth()
+        .createUserWithEmailAndPassword(emailText, passwordText)
+        .then(() => {
+          props.setCanHideModal(true);
+          props.setIsModalVisible(false);
+          ReactNativeHapticFeedback.trigger(
+            'notificationSuccess',
+            Util.options,
+          );
+          firestore()
+            .collection('users')
+            .doc(emailText)
+            .set({
+              firstName: firstNameText,
+              lastName: lastNameText,
+              birthdate: birthdate,
+            })
+            .then(() => setIsLoading(false));
+        })
+        .catch(error => {
+          if (error.code === 'auth/invalid-email') {
+            console.log('That email address is invalid!');
+            setIsLoading(false);
+          }
+          console.error(error);
+          setIsLoading(false);
+        });
     } else {
       ReactNativeHapticFeedback.trigger('notificationError', Util.options);
+      setIsLoading(false);
       // invalid
     }
   };
@@ -194,6 +224,7 @@ const FinishSigningUp = (props: {
           onPress={handleAgreeAndContinue}
           isDisabled={false}
           text={'Agree and Continue'}
+          isLoading={isLoading}
         />
       </KeyboardAwareScrollView>
     </View>

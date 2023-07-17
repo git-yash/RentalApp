@@ -10,6 +10,7 @@ const CustomSecureTextInput = (props: {
   placeholderText: string;
   value: string;
   onChange: any;
+  error: string | undefined;
 }) => {
   const [inputTextColor, setInputTextColor] = useState(Colors.gray800);
   const [show, setShow] = useState(false);
@@ -66,8 +67,14 @@ const CustomSecureTextInput = (props: {
           bgColor={'white'}
           size="md"
           style={customTextInputStyles.input}
+          isInvalid={props.error !== undefined}
         />
       </Box>
+      {props.error && (
+        <Box style={{justifyContent: 'flex-start', flexDirection: 'row'}}>
+          <Text style={customTextInputStyles.errorMessage}>{props.error}</Text>
+        </Box>
+      )}
     </Box>
   );
 };

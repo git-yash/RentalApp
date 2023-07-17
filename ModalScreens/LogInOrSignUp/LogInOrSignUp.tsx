@@ -14,23 +14,43 @@ import FinishSigningUp from '../FinishSigningUp/FinishSigningUp';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import EnterPassword from '../EnterPassword/EnterPassword';
 import ContinuePressable from '../../components/ContinuePressable/ContinuePressable';
+import firestore from '@react-native-firebase/firestore';
 
 const LogInOrSignUp = (props: {
   isModalVisible: boolean;
   setIsModalVisible: any;
 }) => {
-  const [emailText, setEmailText] = useState('yash@great.com');
+  const [emailText, setEmailText] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [modalScreenName, setModalScreenName] = useState<
     'LogInOrSignUp' | 'FinishSigningUp' | 'EnterPassword'
-  >('EnterPassword');
+  >('LogInOrSignUp');
   const [canHideModal, setCanHideModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const isDisabled: boolean = emailText.length === 0 || !isValidEmail;
 
   const handleEmailOnChange = (text: string): void => {
     setEmailText(text);
     setIsValidEmail(Util.isValidEmail(text.trim()));
+  };
+
+  const handleContinuePress = async (documentId: string) => {
+    setIsLoading(true);
+    try {
+      const documentRef = firestore().collection('users').doc(documentId);
+      const documentSnapshot = await documentRef.get();
+
+      if (documentSnapshot.exists) {
+        setModalScreenName('EnterPassword');
+      } else {
+        setModalScreenName('FinishSigningUp');
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Error checking document existence:', error);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -82,9 +102,10 @@ const LogInOrSignUp = (props: {
               textContentType={'emailAddress'}
             />
             <ContinuePressable
-              onPress={() => setModalScreenName('FinishSigningUp')}
+              onPress={() => handleContinuePress(emailText)}
               isDisabled={isDisabled}
               text={'Continue'}
+              isLoading={isLoading}
             />
             <OrDivider />
             <SocialLoginButton socialName={'Apple'} />
@@ -109,6 +130,7 @@ const LogInOrSignUp = (props: {
       {modalScreenName === 'EnterPassword' && (
         <View style={exploreStyles.modalView}>
           <EnterPassword
+            emailText={emailText}
             setModalScreenName={setModalScreenName}
             setIsModalVisible={props.setIsModalVisible}
           />

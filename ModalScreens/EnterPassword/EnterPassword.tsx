@@ -7,12 +7,33 @@ import {faAngleLeft} from '@fortawesome/free-solid-svg-icons';
 import CustomSecureTextInput from '../../components/CustomSecureTextInput/CustomSecureTextInput';
 import ContinuePressable from '../../components/ContinuePressable/ContinuePressable';
 import enterPasswordStyles from './EnterPassword.style';
+import auth from '@react-native-firebase/auth';
 
 const EnterPassword = (props: {
   setModalScreenName: any;
   setIsModalVisible: any;
+  emailText: string;
 }) => {
   const [passwordText, setPasswordText] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined,
+  );
+
+  const handleContinue = async () => {
+    setIsLoading(true);
+    try {
+      await auth().signInWithEmailAndPassword(props.emailText, passwordText);
+      // Handle successful sign-in
+      props.setIsModalVisible(false);
+      setIsLoading(false);
+    } catch (error) {
+      // Handle sign-in error
+      console.error('Sign-in error:', error);
+      setIsLoading(false);
+      setErrorMessage('Incorrect Password');
+    }
+  };
 
   return (
     <View style={exploreStyles.modalView}>
@@ -39,13 +60,13 @@ const EnterPassword = (props: {
           placeholderText={'Enter password...'}
           value={passwordText}
           onChange={setPasswordText}
+          error={errorMessage}
         />
         <ContinuePressable
-          onPress={() => {
-            props.setIsModalVisible(false);
-          }}
+          onPress={handleContinue}
           isDisabled={passwordText.length < 1}
           text={'Continue'}
+          isLoading={isLoading}
         />
         <View style={enterPasswordStyles.forgotPasswordContainer}>
           <Text style={enterPasswordStyles.forgotPasswordText}>

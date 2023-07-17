@@ -1,11 +1,13 @@
 import React from 'react';
 import {Pressable, Text} from 'react-native';
 import logInOrSignUpStyles from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp.style';
+import {Spinner} from 'native-base';
 
 const ContinuePressable = (props: {
   onPress: any;
   isDisabled: boolean;
   text: string;
+  isLoading: boolean;
 }) => {
   return (
     <Pressable
@@ -16,7 +18,10 @@ const ContinuePressable = (props: {
           ? logInOrSignUpStyles.continuePressableDisabled
           : logInOrSignUpStyles.continuePressableEnabled
       }>
-      <Text style={logInOrSignUpStyles.continueText}>{props.text}</Text>
+      {props.isLoading && <Spinner color={'white'} />}
+      {!props.isLoading && (
+        <Text style={logInOrSignUpStyles.continueText}>{props.text}</Text>
+      )}
     </Pressable>
   );
 };
