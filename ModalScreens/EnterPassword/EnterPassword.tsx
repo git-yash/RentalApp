@@ -8,6 +8,8 @@ import CustomSecureTextInput from '../../components/CustomSecureTextInput/Custom
 import ContinuePressable from '../../components/ContinuePressable/ContinuePressable';
 import enterPasswordStyles from './EnterPassword.style';
 import auth from '@react-native-firebase/auth';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+import Util from '../../Util';
 
 const EnterPassword = (props: {
   setModalScreenName: any;
@@ -26,12 +28,14 @@ const EnterPassword = (props: {
     try {
       await auth().signInWithEmailAndPassword(props.emailText, passwordText);
       // Handle successful sign-in
+      ReactNativeHapticFeedback.trigger('notificationSuccess', Util.options);
       props.setCanHideModal(true);
       props.setIsModalVisible(false);
       console.log('logged in ' + auth().currentUser?.email);
       setIsLoading(false);
     } catch (error) {
       // Handle sign-in error
+      ReactNativeHapticFeedback.trigger('notificationError', Util.options);
       console.error('Sign-in error:', error);
       setIsLoading(false);
       setErrorMessage('Incorrect Password');

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Button, SafeAreaView} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
@@ -11,14 +11,6 @@ import {faUser as regularUser} from '@fortawesome/free-regular-svg-icons';
 const Profile = (props: {navigation: any}) => {
   const [isModalVisible, setModalVisible] = useState(false);
   library.add(solidUser, regularUser);
-
-  useEffect(() => {
-    if (!auth().currentUser) {
-      setModalVisible(true);
-    } else {
-      console.log(auth().currentUser?.email);
-    }
-  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -33,7 +25,7 @@ const Profile = (props: {navigation: any}) => {
           />
         ),
       });
-    }, [props.navigation, isModalVisible]),
+    }, [props.navigation, isModalVisible]), // Changes icon of tab bar item when user is logged in or not
   );
   return (
     <SafeAreaView>
@@ -45,7 +37,6 @@ const Profile = (props: {navigation: any}) => {
               .signOut()
               .then(() => {
                 setModalVisible(true);
-                console.log('logged in ' + auth().currentUser?.email);
               });
           }}
         />
