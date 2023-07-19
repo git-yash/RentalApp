@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, View} from 'react-native';
+import {Alert, SafeAreaView, View} from 'react-native';
 import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import auth from '@react-native-firebase/auth';
 import Geolocation, {
@@ -8,6 +8,7 @@ import Geolocation, {
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {Spinner} from 'native-base';
 import Colors from '../../assets/Colors';
+import SearchBar from '../../components/SearchBar/SearchBar';
 
 const Explore = (props: {navigation: any}) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -40,26 +41,29 @@ const Explore = (props: {navigation: any}) => {
   const mapStyle = require('../../assets/MapStyle.json');
 
   return (
-    <View style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1}}>
       <LogInOrSignUp
         isModalVisible={isModalVisible}
         setIsModalVisible={setModalVisible}
       />
+      <View style={{flex: 0.4}}>
+        <SearchBar />
+      </View>
       {canShowMap && (
         <MapView
           customMapStyle={mapStyle}
           provider={PROVIDER_GOOGLE}
           initialRegion={{
-            latitude: position?.coords.latitude as number, // San Diego Coords
+            latitude: position?.coords.latitude as number,
             longitude: position?.coords.longitude as number,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
-          style={{height: '100%', width: '100%'}}
+          style={{flex: 2}}
         />
       )}
       {!canShowMap && <Spinner color={Colors.green} />}
-    </View>
+    </SafeAreaView>
   );
 };
 
