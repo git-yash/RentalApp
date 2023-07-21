@@ -9,50 +9,53 @@ import {NativeBaseProvider} from 'native-base';
 import {StatusBar} from 'react-native';
 import Profile from './screens/Profile/Profile';
 import auth from '@react-native-firebase/auth';
+import {ActionSheetProvider} from '@expo/react-native-action-sheet';
 
 function App(): JSX.Element {
   const Tab = createBottomTabNavigator();
 
   return (
-    <NativeBaseProvider>
-      <NavigationContainer>
-        <StatusBar barStyle={'dark-content'} />
-        <Tab.Navigator>
-          <Tab.Screen
-            name={'Explore'}
-            component={Explore}
-            options={{
-              tabBarIcon: ({focused}) => (
-                <TabBarIcon isFocused={focused} icon={faMagnifyingGlass} />
-              ),
-              tabBarActiveTintColor: Colors.green,
-              tabBarInactiveTintColor: Colors.gray500,
-              tabBarLabelStyle: {
-                fontFamily: 'Poppins-SemiBold',
-                fontSize: 12,
-              },
-              headerShown: false,
-            }}
-          />
-          <Tab.Screen
-            name={auth().currentUser ? 'Profile' : 'Log in'}
-            component={Profile}
-            options={{
-              tabBarIcon: ({focused}) => (
-                <TabBarIcon isFocused={focused} icon={faUser} />
-              ),
-              tabBarActiveTintColor: Colors.green,
-              tabBarInactiveTintColor: Colors.gray500,
-              tabBarLabelStyle: {
-                fontFamily: 'Poppins-SemiBold',
-                fontSize: 12,
-              },
-              headerShown: false,
-            }}
-          />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </NativeBaseProvider>
+    <ActionSheetProvider>
+      <NativeBaseProvider>
+        <NavigationContainer>
+          <StatusBar barStyle={'dark-content'} />
+          <Tab.Navigator>
+            <Tab.Screen
+              name={'Explore'}
+              component={Explore}
+              options={{
+                tabBarIcon: ({focused}) => (
+                  <TabBarIcon isFocused={focused} icon={faMagnifyingGlass} />
+                ),
+                tabBarActiveTintColor: Colors.green,
+                tabBarInactiveTintColor: Colors.gray500,
+                tabBarLabelStyle: {
+                  fontFamily: 'Poppins-SemiBold',
+                  fontSize: 12,
+                },
+                headerShown: false,
+              }}
+            />
+            <Tab.Screen
+              name={auth().currentUser ? 'Profile' : 'Log in'}
+              component={Profile}
+              options={{
+                tabBarIcon: ({focused}) => (
+                  <TabBarIcon isFocused={focused} icon={faUser} />
+                ),
+                tabBarActiveTintColor: Colors.green,
+                tabBarInactiveTintColor: Colors.gray500,
+                tabBarLabelStyle: {
+                  fontFamily: 'Poppins-SemiBold',
+                  fontSize: 12,
+                },
+                headerShown: false,
+              }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </NativeBaseProvider>
+    </ActionSheetProvider>
   );
 }
 
