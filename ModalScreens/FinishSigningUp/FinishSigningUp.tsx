@@ -144,7 +144,12 @@ const FinishSigningUp = (props: {
               lastName: lastNameText,
               birthdate: birthdate,
             })
-            .then(() => setIsLoading(false));
+            .then(() => {
+              setIsLoading(false);
+              auth().currentUser?.updateProfile({
+                displayName: firstNameText + ' ' + lastNameText,
+              });
+            });
         })
         .catch(error => {
           if (error.code === 'auth/invalid-email') {

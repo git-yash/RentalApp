@@ -1,5 +1,6 @@
 import {ImageSourcePropType} from 'react-native';
 import Colors from './assets/Colors';
+import auth from '@react-native-firebase/auth';
 
 export default class Util {
   public static formatPhoneNumber(phoneNumber: string): string {
@@ -88,8 +89,17 @@ export default class Util {
     }
     return age;
   }
+
   public static options = {
     enableVibrateFallback: true,
     ignoreAndroidSystemSettings: false,
   };
+
+  public static getUserInitials(): string {
+    let name = auth().currentUser?.displayName;
+    // @ts-ignore
+    const words = name.split(' ');
+    const initials = words.map(word => word.charAt(0).toUpperCase());
+    return initials.join('');
+  }
 }
