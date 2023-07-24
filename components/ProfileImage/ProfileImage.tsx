@@ -10,8 +10,7 @@ const ProfileImage = (props: {initials: string; uri: string | undefined}) => {
         bg={Colors.gray700}
         size={'xl'}
         source={{
-          uri:
-            props.uri === undefined ? 'https://bit.ly/broken-link' : props.uri,
+          uri: props.uri,
         }}>
         {props.initials}
       </Avatar>

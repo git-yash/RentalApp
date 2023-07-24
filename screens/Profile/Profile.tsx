@@ -35,6 +35,10 @@ const Profile = (props: {navigation: any}) => {
 
   useEffect(() => {
     fetchImage().then(() => console.log('image fetched'));
+  }, [isModalVisible]);
+
+  useEffect(() => {
+    fetchImage().then(() => console.log('image fetched'));
   }, []);
 
   useFocusEffect(

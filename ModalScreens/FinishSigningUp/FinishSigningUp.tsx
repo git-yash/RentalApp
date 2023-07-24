@@ -136,19 +136,21 @@ const FinishSigningUp = (props: {
             'notificationSuccess',
             Util.options,
           );
-          firestore()
-            .collection('users')
-            .doc(emailText)
-            .set({
-              firstName: firstNameText,
-              lastName: lastNameText,
-              birthdate: birthdate,
+          auth()
+            .currentUser?.updateProfile({
+              displayName: firstNameText + ' ' + lastNameText,
             })
             .then(() => {
-              setIsLoading(false);
-              auth().currentUser?.updateProfile({
-                displayName: firstNameText + ' ' + lastNameText,
-              });
+              firestore()
+                .collection('users')
+                .doc(emailText)
+                .set({
+                  birthdate: birthdate,
+                  dateJoined: Date.now(),
+                })
+                .then(() => {
+                  setIsLoading(false);
+                });
             });
         })
         .catch(error => {
