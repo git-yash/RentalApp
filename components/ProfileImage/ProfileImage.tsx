@@ -2,8 +2,10 @@ import React from 'react';
 import {Avatar} from 'native-base';
 import Colors from '../../assets/Colors';
 import {View} from 'react-native';
+import Util from '../../Util';
+import auth from '@react-native-firebase/auth';
 
-const ProfileImage = (props: {initials: string; uri: string | undefined}) => {
+const ProfileImage = (props: {uri: string | undefined}) => {
   return (
     <View>
       <Avatar
@@ -12,7 +14,7 @@ const ProfileImage = (props: {initials: string; uri: string | undefined}) => {
         source={{
           uri: props.uri,
         }}>
-        {props.initials}
+        {auth().currentUser ? Util.getUserInitials() : ''}
       </Avatar>
     </View>
   );

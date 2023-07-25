@@ -12,7 +12,6 @@ import {useActionSheet} from '@expo/react-native-action-sheet';
 import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 import Colors from '../../assets/Colors';
 import storage from '@react-native-firebase/storage';
-import Util from '../../Util';
 
 const Profile = (props: {navigation: any}) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -35,7 +34,7 @@ const Profile = (props: {navigation: any}) => {
 
   useEffect(() => {
     fetchImage().then(() => console.log('image fetched'));
-  }, [isModalVisible]);
+  }, [auth().currentUser]);
 
   useEffect(() => {
     fetchImage().then(() => console.log('image fetched'));
@@ -71,8 +70,17 @@ const Profile = (props: {navigation: any}) => {
   };
 
   const handleEditProfileImageActionSheetButton = () => {
-    const options = ['Choose Photo', 'Take Photo', 'Cancel'];
-    const cancelButtonIndex = 2;
+    const optionsWithoutImage = ['Choose Photo', 'Take Photo', 'Cancel'];
+    const optionsWithImage = [
+      'Replace Photo',
+      'Take Photo',
+      'Remove Current Photo',
+      'Cancel',
+    ];
+    const options =
+      imageURI !== undefined ? optionsWithImage : optionsWithoutImage;
+    const cancelButtonIndex = imageURI !== undefined ? 3 : 2;
+    const destructiveButtonIndex = imageURI !== undefined ? 2 : undefined;
 
     let imagePickerOptions = {
       width: 300,
@@ -92,6 +100,7 @@ const Profile = (props: {navigation: any}) => {
       {
         options,
         cancelButtonIndex,
+        destructiveButtonIndex,
       },
       (selectedIndex: number | undefined) => {
         switch (selectedIndex) {
@@ -113,6 +122,15 @@ const Profile = (props: {navigation: any}) => {
               });
             });
             break;
+          case 2:
+            setImageURI(undefined);
+            storage()
+              .ref(profileImageRef)
+              .delete()
+              .then(() => {
+                console.log('removed');
+              });
+            break;
 
           case cancelButtonIndex:
           // Canceled
@@ -125,7 +143,7 @@ const Profile = (props: {navigation: any}) => {
     <SafeAreaView>
       {auth().currentUser && (
         <View>
-          <ProfileImage initials={Util.getUserInitials()} uri={imageURI} />
+          <ProfileImage uri={imageURI} />
           <Button
             title="Edit"
             onPress={() => {

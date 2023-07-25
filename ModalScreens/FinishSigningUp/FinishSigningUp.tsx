@@ -130,12 +130,6 @@ const FinishSigningUp = (props: {
       auth()
         .createUserWithEmailAndPassword(emailText, passwordText)
         .then(() => {
-          props.setCanHideModal(true);
-          props.setIsModalVisible(false);
-          ReactNativeHapticFeedback.trigger(
-            'notificationSuccess',
-            Util.options,
-          );
           auth()
             .currentUser?.updateProfile({
               displayName: firstNameText + ' ' + lastNameText,
@@ -149,6 +143,12 @@ const FinishSigningUp = (props: {
                   dateJoined: Date.now(),
                 })
                 .then(() => {
+                  props.setCanHideModal(true);
+                  props.setIsModalVisible(false);
+                  ReactNativeHapticFeedback.trigger(
+                    'notificationSuccess',
+                    Util.options,
+                  );
                   setIsLoading(false);
                 });
             });

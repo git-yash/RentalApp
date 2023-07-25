@@ -96,10 +96,16 @@ export default class Util {
   };
 
   public static getUserInitials(): string {
-    let name = <string>auth().currentUser?.displayName;
-    const nameArray = name.split(' ');
-    const firstNameIn = nameArray[0].charAt(0).toUpperCase();
-    const lastNameIn = nameArray[nameArray.length - 1].charAt(0).toUpperCase();
-    return firstNameIn + lastNameIn;
+    let name = auth().currentUser?.displayName;
+    if (typeof name === 'string') {
+      const nameArray = name.split(' ');
+      const firstNameIn = nameArray[0].charAt(0).toUpperCase();
+      const lastNameIn = nameArray[nameArray.length - 1]
+        .charAt(0)
+        .toUpperCase();
+      return firstNameIn + lastNameIn;
+    }
+
+    return '';
   }
 }
