@@ -141,6 +141,7 @@ const FinishSigningUp = (props: {
                 .set({
                   birthdate: birthdate,
                   dateJoined: Date.now(),
+                  isOnline: true,
                 })
                 .then(() => {
                   props.setCanHideModal(true);

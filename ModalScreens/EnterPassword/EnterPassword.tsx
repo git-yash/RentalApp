@@ -10,6 +10,7 @@ import enterPasswordStyles from './EnterPassword.style';
 import auth from '@react-native-firebase/auth';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import Util from '../../Util';
+import firestore from '@react-native-firebase/firestore';
 
 const EnterPassword = (props: {
   setModalScreenName: any;
@@ -26,13 +27,23 @@ const EnterPassword = (props: {
   const handleContinue = async () => {
     setIsLoading(true);
     try {
-      await auth().signInWithEmailAndPassword(props.emailText, passwordText);
+      await auth()
+        .signInWithEmailAndPassword(props.emailText, passwordText)
+        .then(() => {
+          ReactNativeHapticFeedback.trigger(
+            'notificationSuccess',
+            Util.options,
+          );
+          props.setCanHideModal(true);
+          props.setIsModalVisible(false);
+          console.log('logged in ' + auth().currentUser?.email);
+          firestore()
+            .collection('users')
+            .doc(props.emailText)
+            .update({isOnline: true});
+          setIsLoading(false);
+        });
       // Handle successful sign-in
-      ReactNativeHapticFeedback.trigger('notificationSuccess', Util.options);
-      props.setCanHideModal(true);
-      props.setIsModalVisible(false);
-      console.log('logged in ' + auth().currentUser?.email);
-      setIsLoading(false);
     } catch (error) {
       // Handle sign-in error
       ReactNativeHapticFeedback.trigger('notificationError', Util.options);

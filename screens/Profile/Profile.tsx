@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {Button, SafeAreaView, View} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {AppState, Button, SafeAreaView, View} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import {useFocusEffect} from '@react-navigation/native';
@@ -7,11 +7,12 @@ import TabBarIcon from '../../components/TabBarIcon/TabBarIcon';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {faUser as solidUser} from '@fortawesome/free-solid-svg-icons';
 import {faUser as regularUser} from '@fortawesome/free-regular-svg-icons';
-import ProfileImage from '../../components/ProfileImage/ProfileImage';
+import ProfileImageNameView from '../../components/ProfileImage/ProfileImageNameView';
 import {useActionSheet} from '@expo/react-native-action-sheet';
 import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 import Colors from '../../assets/Colors';
 import storage from '@react-native-firebase/storage';
+import firestore from '@react-native-firebase/firestore';
 
 const Profile = (props: {navigation: any}) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -21,6 +22,40 @@ const Profile = (props: {navigation: any}) => {
   library.add(solidUser, regularUser);
 
   const {showActionSheetWithOptions} = useActionSheet();
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        firestore()
+          .collection('users')
+          .doc(auth().currentUser?.email as string)
+          .update({isOnline: true})
+          .then(() => {
+            console.log('is online');
+          });
+      } else {
+        firestore()
+          .collection('users')
+          .doc(auth().currentUser?.email as string)
+          .update({isOnline: false})
+          .then(() => {
+            console.log('is offline');
+          });
+      }
+
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   const fetchImage = async () => {
     try {
@@ -143,7 +178,7 @@ const Profile = (props: {navigation: any}) => {
     <SafeAreaView>
       {auth().currentUser && (
         <View>
-          <ProfileImage uri={imageURI} />
+          <ProfileImageNameView uri={imageURI} />
           <Button
             title="Edit"
             onPress={() => {
