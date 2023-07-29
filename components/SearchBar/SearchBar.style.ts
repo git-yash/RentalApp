@@ -10,6 +10,8 @@ const searchBarStyles = StyleSheet.create({
     margin: 10,
     borderColor: Colors.green,
     borderWidth: 2,
+    height: '40%',
+    alignItems: 'center',
   },
   searchBarIcon: {
     position: 'relative',
@@ -18,7 +20,6 @@ const searchBarStyles = StyleSheet.create({
   },
   searchBarInput: {
     borderWidth: 0,
-    borderColor: 'white',
     padding: 8,
     fontFamily: 'Poppins-Regular',
     flex: 1,

@@ -15,7 +15,6 @@ const ProfileImageNameView = (props: {uri: string | undefined}) => {
           uri: props.uri,
         }}>
         {auth().currentUser ? Util.getUserInitials() : ''}
-        <Avatar.Badge bg={Colors.green} />
       </Avatar>
       <Text
         style={{

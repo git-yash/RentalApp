@@ -1,18 +1,26 @@
-import React, {useEffect, useState} from 'react';
-import {Alert, SafeAreaView, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {Alert, AppState, SafeAreaView, View} from 'react-native';
 import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import auth from '@react-native-firebase/auth';
 import Geolocation, {
   GeolocationResponse,
 } from '@react-native-community/geolocation';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {MapMarker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {Spinner} from 'native-base';
 import Colors from '../../assets/Colors';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import firestore from '@react-native-firebase/firestore';
+import Util from '../../Util';
+import CustomMapMarker from '../../components/CustomMapMarker/CustomMapMarker';
 
 const Explore = (props: {navigation: any}) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [canShowMap, setCanShowMap] = useState(false);
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  const [position, setPosition] = useState<GeolocationResponse>();
+  const mapStyle = require('../../assets/MapStyle.json');
+  const [rentals, setRentals] = useState();
 
   useEffect(() => {
     if (!auth().currentUser) {
@@ -21,13 +29,53 @@ const Explore = (props: {navigation: any}) => {
       console.log(auth().currentUser?.email);
     }
 
-    getCurrentPosition().then(() => setCanShowMap(true));
+    getCurrentPosition().then(() => {
+      setCanShowMap(true);
+      Util.getAllRentals(
+        {
+          lat: position?.coords.latitude as number,
+          lng: position?.coords.longitude as number,
+        },
+        5,
+      ).then(r => setRentals(r));
+    });
+  }, []);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        firestore()
+          .collection('users')
+          .doc(auth().currentUser?.email as string)
+          .update({isOnline: true})
+          .then(() => {
+            console.log('is online');
+          });
+      } else if (nextAppState === 'inactive') {
+        firestore()
+          .collection('users')
+          .doc(auth().currentUser?.email as string)
+          .update({isOnline: false})
+          .then(() => {
+            console.log('is offline');
+          });
+      }
+
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+    });
+
+    return () => {
+      subscription.remove();
+    };
   }, []);
 
   const getCurrentPosition = async () => {
     await Geolocation.getCurrentPosition(
       pos => {
-        // setPosition(JSON.stringify(pos));
         setPosition(pos);
         console.log(pos.coords.latitude);
         console.log(pos.coords.longitude);
@@ -36,9 +84,6 @@ const Explore = (props: {navigation: any}) => {
       {enableHighAccuracy: true},
     );
   };
-
-  const [position, setPosition] = useState<GeolocationResponse>();
-  const mapStyle = require('../../assets/MapStyle.json');
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -56,11 +101,29 @@ const Explore = (props: {navigation: any}) => {
           initialRegion={{
             latitude: position?.coords.latitude as number,
             longitude: position?.coords.longitude as number,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+            latitudeDelta: 0.15,
+            longitudeDelta: 0.15,
           }}
-          style={{flex: 2}}
-        />
+          style={{flex: 2}}>
+          {/*<MapCircle*/}
+          {/*  center={{*/}
+          {/*    latitude: position?.coords.latitude as number,*/}
+          {/*    longitude: position?.coords.longitude as number,*/}
+          {/*  }}*/}
+          {/*  radius={8046.72} // 5 miles*/}
+          {/*  strokeColor={Colors.green}*/}
+          {/*  strokeWidth={2}*/}
+          {/*/>*/}
+          {rentals?.map(r => (
+            <MapMarker
+              coordinate={{
+                latitude: position?.coords.latitude as number,
+                longitude: position?.coords.longitude as number,
+              }}>
+              <CustomMapMarker price={r.pricePerHour} isSelected={true} />
+            </MapMarker>
+          ))}
+        </MapView>
       )}
       {!canShowMap && <Spinner color={Colors.green} />}
     </SafeAreaView>

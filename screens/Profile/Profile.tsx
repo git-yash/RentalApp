@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {AppState, Button, SafeAreaView, View} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Button, SafeAreaView, ScrollView} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import {useFocusEffect} from '@react-navigation/native';
@@ -12,50 +12,18 @@ import {useActionSheet} from '@expo/react-native-action-sheet';
 import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 import Colors from '../../assets/Colors';
 import storage from '@react-native-firebase/storage';
-import firestore from '@react-native-firebase/firestore';
+import Geocoder from 'react-native-geocoding';
 
 const Profile = (props: {navigation: any}) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [imageURI, setImageURI] = useState<string | undefined>(undefined);
   const profileImageRef: string =
     'userProfilePictures/' + auth().currentUser?.email;
+  const [rentals, setRentals] = useState();
+  const [location, setLocation] = useState<Geocoder.LatLng>();
   library.add(solidUser, regularUser);
 
   const {showActionSheetWithOptions} = useActionSheet();
-  const appState = useRef(AppState.currentState);
-  const [appStateVisible, setAppStateVisible] = useState(appState.current);
-
-  useEffect(() => {
-    const subscription = AppState.addEventListener('change', nextAppState => {
-      if (
-        appState.current.match(/inactive|background/) &&
-        nextAppState === 'active'
-      ) {
-        firestore()
-          .collection('users')
-          .doc(auth().currentUser?.email as string)
-          .update({isOnline: true})
-          .then(() => {
-            console.log('is online');
-          });
-      } else {
-        firestore()
-          .collection('users')
-          .doc(auth().currentUser?.email as string)
-          .update({isOnline: false})
-          .then(() => {
-            console.log('is offline');
-          });
-      }
-
-      appState.current = nextAppState;
-      setAppStateVisible(appState.current);
-    });
-
-    return () => {
-      subscription.remove();
-    };
-  }, []);
 
   const fetchImage = async () => {
     try {
@@ -67,13 +35,20 @@ const Profile = (props: {navigation: any}) => {
     }
   };
 
-  useEffect(() => {
-    fetchImage().then(() => console.log('image fetched'));
-  }, [auth().currentUser]);
+  // useEffect(() => {
+  //   Geocoder.init(Util.getAPIKeyForPlatform(Platform.OS));
+  //   Geocoder.from('1112 Stillwell Ridge, Cedar Park, TX, USA')
+  //     .then(json => {
+  //       setLocation(json.results[0].geometry.location);
+  //       console.log(location);
+  //     })
+  //     .catch(error => console.warn(error));
+  //   Util.getAllRentals(location, 5).then(r => console.log(r));
+  // }, []);
 
   useEffect(() => {
     fetchImage().then(() => console.log('image fetched'));
-  }, []);
+  }, [auth().currentUser]);
 
   useFocusEffect(
     useCallback(() => {
@@ -107,7 +82,7 @@ const Profile = (props: {navigation: any}) => {
   const handleEditProfileImageActionSheetButton = () => {
     const optionsWithoutImage = ['Choose Photo', 'Take Photo', 'Cancel'];
     const optionsWithImage = [
-      'Replace Photo',
+      'Choose Photo',
       'Take Photo',
       'Remove Current Photo',
       'Cancel',
@@ -177,7 +152,7 @@ const Profile = (props: {navigation: any}) => {
   return (
     <SafeAreaView>
       {auth().currentUser && (
-        <View>
+        <ScrollView>
           <ProfileImageNameView uri={imageURI} />
           <Button
             title="Edit"
@@ -191,7 +166,7 @@ const Profile = (props: {navigation: any}) => {
               handleSignOut();
             }}
           />
-        </View>
+        </ScrollView>
       )}
       {!auth().currentUser && (
         <Button
@@ -203,6 +178,15 @@ const Profile = (props: {navigation: any}) => {
         isModalVisible={isModalVisible}
         setIsModalVisible={setModalVisible}
       />
+      {/*<View>*/}
+      {/*  <GooglePlacesAutocomplete*/}
+      {/*    placeholder="Type a place"*/}
+      {/*    query={{*/}
+      {/*      key: 'AIzaSyDWj-6xCvsq1FbtKfV6hfMCw4rlarXuT-E',*/}
+      {/*    }}*/}
+      {/*    onPress={(data, details = null) => console.log(data, details)}*/}
+      {/*  />*/}
+      {/*</View>*/}
     </SafeAreaView>
   );
 };

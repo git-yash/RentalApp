@@ -1,6 +1,9 @@
-import {ImageSourcePropType} from 'react-native';
+import {ImageSourcePropType, Platform} from 'react-native';
 import Colors from './assets/Colors';
 import auth from '@react-native-firebase/auth';
+import Geocoder from 'react-native-geocoding';
+import firestore from '@react-native-firebase/firestore';
+import LatLng = Geocoder.LatLng;
 
 export default class Util {
   public static formatPhoneNumber(phoneNumber: string): string {
@@ -107,5 +110,69 @@ export default class Util {
     }
 
     return '';
+  }
+
+  public static getAPIKeyForPlatform(platform: string): string {
+    switch (platform) {
+      case 'ios':
+        return 'AIzaSyBess9KnTOAUWkF1uLGWsCR6mdJM4VTvl0';
+      case 'android':
+        return 'AIzaSyALRojxK1-M8lo-vB28xa1_nQomRhj4K3Q';
+      default:
+        return 'AIzaSyC_ndBoSOiL1Cvm3tzb-kdSC18Fpfja3_Q';
+    }
+  }
+
+  public static getLocationFromAddress(address: string): LatLng | void {
+    Geocoder.init(Util.getAPIKeyForPlatform(Platform.OS));
+
+    Geocoder.from(address)
+      .then(json => {
+        return json.results[0].geometry.location;
+      })
+      .catch(error => console.log(error));
+  }
+
+  public static async getAllRentals(
+    location: LatLng,
+    radiusInMiles: number,
+  ): Promise<[Rental]> {
+    const databaseRef = firestore().collection('posts');
+    const currentLatitude = location.lat;
+    const currentLongitude = location.lng;
+
+    const latRadian = radiusInMiles / 3963.2; // Approximate miles to radians conversion
+    const lonRadian =
+      radiusInMiles / 3963.2 / Math.cos(currentLatitude * (Math.PI / 180));
+    const maxLatitude = currentLatitude + (latRadian * 180) / Math.PI;
+    const minLatitude = currentLatitude - (latRadian * 180) / Math.PI;
+    const maxLongitude = currentLongitude + (lonRadian * 180) / Math.PI;
+    const minLongitude = currentLongitude - (lonRadian * 180) / Math.PI;
+
+    try {
+      const querySnapshot = await databaseRef
+        .where(
+          'location',
+          '>=',
+          new firestore.GeoPoint(minLatitude, minLongitude),
+        )
+        .where(
+          'location',
+          '<=',
+          new firestore.GeoPoint(maxLatitude, maxLongitude),
+        )
+        .get();
+
+      const rentalObjects = [];
+      querySnapshot.forEach(doc => {
+        const data = doc.data();
+        rentalObjects.push({id: doc.id, ...data});
+      });
+
+      return rentalObjects;
+    } catch (error) {
+      console.error('Error fetching rental objects:', error);
+      return [];
+    }
   }
 }
