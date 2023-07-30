@@ -13,4 +13,5 @@ export interface Rental {
   location: GeoPoint;
   reviews: Review[];
   owner: User;
+  picturePaths: string[];
 }

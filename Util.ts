@@ -3,9 +3,10 @@ import Colors from './assets/Colors';
 import auth from '@react-native-firebase/auth';
 import Geocoder from 'react-native-geocoding';
 import firestore from '@react-native-firebase/firestore';
-import LatLng = Geocoder.LatLng;
 import {Rental} from './modals/Rental';
 import {Review} from './modals/Review';
+import storage from '@react-native-firebase/storage';
+import LatLng = Geocoder.LatLng;
 
 export default class Util {
   public static formatPhoneNumber(phoneNumber: string): string {
@@ -135,6 +136,58 @@ export default class Util {
       .catch(error => console.log(error));
   }
 
+  // public static async convertPromiseToArray(
+  //   promiseArray: Promise<string[]>,
+  // ): string[] {
+  //   try {
+  //     return await promiseArray;
+  //   } catch (error) {
+  //     console.error('Error occurred:', error);
+  //     return [];
+  //   }
+  // }
+
+  public static async getAllReviews(rentalID: string): Review[] {
+    try {
+      const collectionRef = firestore()
+        .collection('posts')
+        .doc(rentalID)
+        .collection('reviews');
+      const querySnapshot = await collectionRef.get();
+
+      const reviews: Review[] = [];
+      querySnapshot.forEach(doc => {
+        const data = doc.data();
+        reviews.push({
+          description: data.description,
+          postID: data.postID,
+          rating: data.rating,
+          title: data.title,
+        });
+      });
+
+      return reviews;
+    } catch (error) {
+      console.error('Error fetching documents:', error);
+      return [];
+    }
+  }
+
+  public static async getAllPicturePaths(postID: string): Promise<string[]> {
+    try {
+      const storageRef = storage()
+        .ref()
+        .child('rentalPostPictures/' + postID);
+
+      const items = await storageRef.listAll();
+
+      return await Promise.all(items.items.map(ref => ref.getDownloadURL()));
+    } catch (error) {
+      console.error('Error fetching files:', error);
+      return [];
+    }
+  }
+
   public static async getAllRentals(
     location: LatLng,
     radiusInMiles: number,
@@ -168,7 +221,27 @@ export default class Util {
       const rentalObjects: Rental[] = [];
       querySnapshot.forEach(doc => {
         const data: Rental = doc.data();
-        rentalObjects.push({id: doc.id, ...data});
+        let picturePaths: string[] = [];
+        Util.getAllPicturePaths(doc.id).then(paths => (picturePaths = paths));
+        rentalObjects.push({
+          id: doc.id,
+          reviews: Util.getAllReviews(doc.id),
+          title: data.title,
+          pricePerHour: data.pricePerHour,
+          rating: data.rating,
+          address: data.address,
+          location: data.location,
+          description: data.description,
+          isAvailable: data.isAvailable,
+          owner: data.owner,
+          picturePaths: picturePaths,
+        });
+      });
+
+      rentalObjects.forEach(rental => {
+        Util.getAllPicturePaths(rental.id).then(paths => {
+          rental.picturePaths = paths;
+        });
       });
 
       return rentalObjects;

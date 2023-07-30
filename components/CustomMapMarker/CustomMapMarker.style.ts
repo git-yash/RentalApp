@@ -8,6 +8,8 @@ const customMapMarkerStyles = StyleSheet.create({
     borderRadius: 50,
     paddingRight: 10,
     paddingLeft: 10,
+    borderWidth: 3,
+    borderColor: Colors.green,
   },
   selectedText: {fontFamily: 'Poppins-SemiBold', color: 'white'},
   unSelectedView: {

@@ -1,5 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Alert, AppState, SafeAreaView, Text, View} from 'react-native';
+import {
+  Alert,
+  AppState,
+  Dimensions,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
 import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import auth from '@react-native-firebase/auth';
 import Geolocation, {
@@ -13,6 +21,8 @@ import firestore from '@react-native-firebase/firestore';
 import Util from '../../Util';
 import CustomMapMarker from '../../components/CustomMapMarker/CustomMapMarker';
 import {Rental} from '../../modals/Rental';
+import MiniRentalExploreView from '../../components/MiniRentalExploreView/MiniRentalExploreView';
+import window from '@react-navigation/native/lib/typescript/src/__mocks__/window';
 
 const Explore = (props: {navigation: any}) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -50,7 +60,7 @@ const Explore = (props: {navigation: any}) => {
       5,
     ).then(r => {
       setRentals(r);
-      console.log(selectedRental?.id);
+      console.log(selectedRental?.picturePaths.length);
     });
   }, [position]);
 
@@ -144,6 +154,17 @@ const Explore = (props: {navigation: any}) => {
           ))}
         </MapView>
       )}
+      <View style={{flex: 0.7}}>
+        <ScrollView
+          horizontal={true}
+          decelerationRate={0}
+          snapToInterval={Dimensions.get('window').width * 0.9}
+          snapToAlignment={'center'}>
+          {rentals?.map((rental, index) => (
+            <MiniRentalExploreView rental={rental} key={index} />
+          ))}
+        </ScrollView>
+      </View>
       {!canShowMap && <Spinner color={Colors.green} />}
     </SafeAreaView>
   );
