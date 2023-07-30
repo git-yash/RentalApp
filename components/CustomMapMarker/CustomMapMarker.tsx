@@ -1,18 +1,25 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import Colors from '../../assets/Colors';
+import customMapMarkerStyles from './CustomMapMarker.style';
 
-const CustomMapMarker = (props: {price: number; isSelected: boolean}) => {
+const CustomMapMarker = (props: {
+  key: number;
+  price: number;
+  isSelected: boolean;
+}) => {
   return (
     <View
-      style={{
-        backgroundColor: Colors.green,
-        padding: 5,
-        borderRadius: 50,
-        paddingRight: 10,
-        paddingLeft: 10,
-      }}>
-      <Text style={{fontFamily: 'Poppins-SemiBold', color: 'white'}}>
+      style={
+        props.isSelected
+          ? customMapMarkerStyles.selectedView
+          : customMapMarkerStyles.unSelectedView
+      }>
+      <Text
+        style={
+          props.isSelected
+            ? customMapMarkerStyles.selectedText
+            : customMapMarkerStyles.unSelectedText
+        }>
         ${props.price}
       </Text>
     </View>

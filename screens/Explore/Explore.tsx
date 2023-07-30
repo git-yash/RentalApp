@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Alert, AppState, SafeAreaView, View} from 'react-native';
+import {Alert, AppState, SafeAreaView, Text, View} from 'react-native';
 import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import auth from '@react-native-firebase/auth';
 import Geolocation, {
@@ -12,6 +12,7 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import firestore from '@react-native-firebase/firestore';
 import Util from '../../Util';
 import CustomMapMarker from '../../components/CustomMapMarker/CustomMapMarker';
+import {Rental} from '../../modals/Rental';
 
 const Explore = (props: {navigation: any}) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -20,7 +21,10 @@ const Explore = (props: {navigation: any}) => {
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
   const [position, setPosition] = useState<GeolocationResponse>();
   const mapStyle = require('../../assets/MapStyle.json');
-  const [rentals, setRentals] = useState();
+  const [rentals, setRentals] = useState<Rental[]>([]);
+  const [selectedRental, setSelectedRental] = useState<Rental | undefined>(
+    undefined,
+  );
 
   useEffect(() => {
     if (!auth().currentUser) {
@@ -29,17 +33,26 @@ const Explore = (props: {navigation: any}) => {
       console.log(auth().currentUser?.email);
     }
 
-    getCurrentPosition().then(() => {
-      setCanShowMap(true);
-      Util.getAllRentals(
-        {
-          lat: position?.coords.latitude as number,
-          lng: position?.coords.longitude as number,
-        },
-        5,
-      ).then(r => setRentals(r));
-    });
+    void setCurrentPosition();
   }, []);
+
+  useEffect(() => {
+    if (!position) {
+      return;
+    }
+    console.log(`coords: ${position?.coords}`);
+    setCanShowMap(true);
+    Util.getAllRentals(
+      {
+        lat: position?.coords.latitude as number,
+        lng: position?.coords.longitude as number,
+      },
+      5,
+    ).then(r => {
+      setRentals(r);
+      console.log(selectedRental?.id);
+    });
+  }, [position]);
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {
@@ -73,12 +86,10 @@ const Explore = (props: {navigation: any}) => {
     };
   }, []);
 
-  const getCurrentPosition = async () => {
+  const setCurrentPosition = async () => {
     await Geolocation.getCurrentPosition(
       pos => {
         setPosition(pos);
-        console.log(pos.coords.latitude);
-        console.log(pos.coords.longitude);
       },
       error => Alert.alert('GetCurrentPosition Error', JSON.stringify(error)),
       {enableHighAccuracy: true},
@@ -114,13 +125,21 @@ const Explore = (props: {navigation: any}) => {
           {/*  strokeColor={Colors.green}*/}
           {/*  strokeWidth={2}*/}
           {/*/>*/}
-          {rentals?.map(r => (
+          {rentals?.map((rental, index) => (
             <MapMarker
               coordinate={{
-                latitude: position?.coords.latitude as number,
-                longitude: position?.coords.longitude as number,
+                latitude: rental.location.latitude as number,
+                longitude: rental.location.longitude as number,
+              }}
+              key={index}
+              onPress={() => {
+                setSelectedRental(rental);
               }}>
-              <CustomMapMarker price={r.pricePerHour} isSelected={true} />
+              <CustomMapMarker
+                price={rental.pricePerHour}
+                isSelected={rental.id === selectedRental?.id}
+                key={index}
+              />
             </MapMarker>
           ))}
         </MapView>

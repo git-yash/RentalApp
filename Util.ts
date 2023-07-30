@@ -4,6 +4,8 @@ import auth from '@react-native-firebase/auth';
 import Geocoder from 'react-native-geocoding';
 import firestore from '@react-native-firebase/firestore';
 import LatLng = Geocoder.LatLng;
+import {Rental} from './modals/Rental';
+import {Review} from './modals/Review';
 
 export default class Util {
   public static formatPhoneNumber(phoneNumber: string): string {
@@ -136,8 +138,8 @@ export default class Util {
   public static async getAllRentals(
     location: LatLng,
     radiusInMiles: number,
-  ): Promise<[Rental]> {
-    const databaseRef = firestore().collection('posts');
+  ): Promise<Rental[]> {
+    const databaseRef = firestore().collection<Rental>('posts');
     const currentLatitude = location.lat;
     const currentLongitude = location.lng;
 
@@ -163,9 +165,9 @@ export default class Util {
         )
         .get();
 
-      const rentalObjects = [];
+      const rentalObjects: Rental[] = [];
       querySnapshot.forEach(doc => {
-        const data = doc.data();
+        const data: Rental = doc.data();
         rentalObjects.push({id: doc.id, ...data});
       });
 

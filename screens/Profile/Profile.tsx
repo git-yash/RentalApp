@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Button, SafeAreaView, ScrollView} from 'react-native';
+import {Button, SafeAreaView, ScrollView, Text} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import {useFocusEffect} from '@react-navigation/native';
