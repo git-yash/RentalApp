@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Dimensions, Text, TouchableOpacity, View} from 'react-native';
 import logInOrSignUpStyles from './LogInOrSignUp.style';
 import {faXmark} from '@fortawesome/free-solid-svg-icons';
@@ -14,66 +14,24 @@ import FinishSigningUp from '../FinishSigningUp/FinishSigningUp';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import EnterPassword from '../EnterPassword/EnterPassword';
 import ContinuePressable from '../../components/ContinuePressable/ContinuePressable';
-import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
+import useLogInOrSignUp from './useLogInOrSignUp';
 
 const LogInOrSignUp = (props: {
   isModalVisible: boolean;
   setIsModalVisible: any;
 }) => {
-  const [emailText, setEmailText] = useState('');
-  const [emailError, setEmailError] = useState<string | undefined>(undefined);
-  const [modalScreenName, setModalScreenName] = useState<
-    'LogInOrSignUp' | 'FinishSigningUp' | 'EnterPassword'
-  >('LogInOrSignUp');
-  const [canHideModal, setCanHideModal] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const isDisabled: boolean =
-    emailText.length === 0 || emailError !== undefined;
-
-  useEffect(() => {
-    setModalScreenName('LogInOrSignUp');
-    setEmailText('');
-    setCanHideModal(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth().currentUser]);
-
-  useEffect(() => {
-    if (modalScreenName === 'LogInOrSignUp') {
-      setCanHideModal(true);
-    } else {
-      setCanHideModal(false);
-    }
-  }, [modalScreenName]);
-
-  const handleEmailOnChange = (text: string): void => {
-    setEmailText(text);
-    setEmailError(
-      Util.isValidEmail(emailText.trim())
-        ? undefined
-        : 'Please enter a valid email!',
-    );
-  };
-
-  const handleContinuePress = async (documentId: string) => {
-    setIsLoading(true);
-    try {
-      const documentRef = firestore().collection('users').doc(documentId);
-      const documentSnapshot = await documentRef.get();
-
-      if (documentSnapshot.exists) {
-        setModalScreenName('EnterPassword');
-      } else {
-        setModalScreenName('FinishSigningUp');
-      }
-      setIsLoading(false);
-      setCanHideModal(false);
-    } catch (error) {
-      console.error('Error checking document existence:', error);
-      setIsLoading(false);
-    }
-  };
+  const {
+    emailText,
+    emailError,
+    canHideModal,
+    setCanHideModal,
+    isLoading,
+    handleEmailOnChange,
+    isDisabled,
+    modalScreenName,
+    setModalScreenName,
+    handleContinuePress,
+  } = useLogInOrSignUp();
 
   return (
     <Modal

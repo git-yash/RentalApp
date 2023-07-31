@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import exploreStyles from '../../screens/Explore/Explore.style';
 import logInOrSignUpStyles from '../LogInOrSignUp/LogInOrSignUp.style';
@@ -7,10 +7,8 @@ import {faAngleLeft} from '@fortawesome/free-solid-svg-icons';
 import CustomSecureTextInput from '../../components/CustomSecureTextInput/CustomSecureTextInput';
 import ContinuePressable from '../../components/ContinuePressable/ContinuePressable';
 import enterPasswordStyles from './EnterPassword.style';
-import auth from '@react-native-firebase/auth';
-import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
-import Util from '../../Util';
-import firestore from '@react-native-firebase/firestore';
+import useEnterPassword from './useEnterPassword';
+import EnterPasswordService from './EnterPassword.service';
 
 const EnterPassword = (props: {
   setModalScreenName: any;
@@ -18,40 +16,15 @@ const EnterPassword = (props: {
   emailText: string;
   setCanHideModal: any;
 }) => {
-  const [passwordText, setPasswordText] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined,
-  );
-
-  const handleContinue = async () => {
-    setIsLoading(true);
-    try {
-      await auth()
-        .signInWithEmailAndPassword(props.emailText, passwordText)
-        .then(() => {
-          ReactNativeHapticFeedback.trigger(
-            'notificationSuccess',
-            Util.options,
-          );
-          props.setCanHideModal(true);
-          props.setIsModalVisible(false);
-          console.log('logged in ' + auth().currentUser?.email);
-          firestore()
-            .collection('users')
-            .doc(props.emailText)
-            .update({isOnline: true});
-          setIsLoading(false);
-        });
-      // Handle successful sign-in
-    } catch (error) {
-      // Handle sign-in error
-      ReactNativeHapticFeedback.trigger('notificationError', Util.options);
-      console.error('Sign-in error:', error);
-      setIsLoading(false);
-      setErrorMessage('Incorrect Password');
-    }
-  };
+  const {
+    passwordText,
+    setPasswordText,
+    isLoading,
+    setIsLoading,
+    errorMessage,
+    setErrorMessage,
+  } = useEnterPassword();
+  const enterPasswordService = new EnterPasswordService();
 
   return (
     <View style={exploreStyles.modalView}>
@@ -84,7 +57,16 @@ const EnterPassword = (props: {
           error={errorMessage}
         />
         <ContinuePressable
-          onPress={handleContinue}
+          onPress={() => {
+            void enterPasswordService.handleSignIn(
+              props.emailText,
+              passwordText,
+              props.setCanHideModal,
+              props.setIsModalVisible,
+              setIsLoading,
+              setErrorMessage,
+            );
+          }}
           isDisabled={passwordText.length < 1}
           text={'Continue'}
           isLoading={isLoading}
