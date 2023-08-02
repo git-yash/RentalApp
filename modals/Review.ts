@@ -3,4 +3,5 @@ export interface Review {
   postID: string;
   description: string;
   rating: number;
+  user?: User;
 }

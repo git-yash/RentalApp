@@ -1,15 +1,29 @@
 import {Rental} from '../../modals/Rental';
 import firestore from '@react-native-firebase/firestore';
-import LatLng = Geocoder.LatLng;
 import storage from '@react-native-firebase/storage';
 import {Review} from '../../modals/Review';
 import Geocoder from 'react-native-geocoding';
+import LatLng = Geocoder.LatLng;
 
 export default class ExploreService {
+  async getUserFromUserEmail(email: string): Promise<User | undefined> {
+    return firestore()
+      .collection<User>('users')
+      .doc(email)
+      .get()
+      .then(documentSnapshot => {
+        console.log(documentSnapshot.exists);
+        console.log(documentSnapshot.data() as User);
+        return documentSnapshot.exists
+          ? (documentSnapshot.data() as User)
+          : undefined;
+      });
+  }
+
   async getAllReviews(rentalID: string): Promise<Review[]> {
     try {
       const collectionRef = firestore()
-        .collection('posts')
+        .collection<Rental>('posts')
         .doc(rentalID)
         .collection('reviews');
       const querySnapshot = await collectionRef.get();
@@ -18,6 +32,7 @@ export default class ExploreService {
       querySnapshot.forEach(doc => {
         const data = doc.data();
         reviews.push({
+          user: undefined,
           description: data.description,
           postID: data.postID,
           rating: data.rating,
@@ -81,15 +96,11 @@ export default class ExploreService {
       querySnapshot.forEach(doc => {
         const data: Rental = doc.data();
 
-        let picturePaths: string[] = [];
-        this.getAllPicturePaths(doc.id).then(_paths => (picturePaths = _paths));
-
-        let reviews: Review[] = [];
-        this.getAllReviews(doc.id).then(_reviews => (reviews = _reviews));
-
         rentalObjects.push({
+          user: undefined,
+          userEmail: data.userEmail,
           id: doc.id,
-          reviews: reviews,
+          reviews: [],
           title: data.title,
           pricePerHour: data.pricePerHour,
           rating: data.rating,
@@ -97,14 +108,21 @@ export default class ExploreService {
           location: data.location,
           description: data.description,
           isAvailable: data.isAvailable,
-          owner: data.owner,
-          picturePaths: picturePaths,
+          picturePaths: [],
         });
       });
 
       rentalObjects.forEach(rental => {
         this.getAllPicturePaths(rental.id).then(paths => {
           rental.picturePaths = paths;
+        });
+
+        this.getAllReviews(rental.id).then(
+          _reviews => (rental.reviews = _reviews),
+        );
+
+        this.getUserFromUserEmail(rental.userEmail).then(_user => {
+          rental.user = _user;
         });
       });
 

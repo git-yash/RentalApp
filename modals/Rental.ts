@@ -12,6 +12,7 @@ export interface Rental {
   address: string;
   location: GeoPoint;
   reviews: Review[];
-  owner: User;
+  userEmail: string;
+  user?: User;
   picturePaths: string[];
 }

@@ -30,6 +30,7 @@ export default class FinishSigningUpService {
                 birthdate: birthdate,
                 dateJoined: Date.now(),
                 isOnline: true,
+                name: firstNameText + ' ' + lastNameText,
               })
               .then(() => {
                 setCanHideModal(true);
