@@ -40,7 +40,9 @@ const Explore = (props: {navigation: any}) => {
             latitudeDelta: 0.15,
             longitudeDelta: 0.15,
           }}
-          style={{flex: 2}}>
+          style={{
+            flex: 2,
+          }}>
           {/*<MapCircle*/}
           {/*  center={{*/}
           {/*    latitude: position?.coords.latitude as number,*/}
@@ -69,14 +71,19 @@ const Explore = (props: {navigation: any}) => {
           ))}
         </MapView>
       )}
-      <View style={{flex: 0.7}}>
+      <View style={{flex: 0.7, position: 'absolute', bottom: 0}}>
         <ScrollView
           horizontal={true}
           decelerationRate={0}
           snapToInterval={Dimensions.get('window').width * 0.9}
           snapToAlignment={'center'}>
           {rentals?.map((rental, index) => (
-            <MiniRentalExploreView rental={rental} key={index} />
+            <MiniRentalExploreView
+              rental={rental}
+              currentLatitude={position?.coords.latitude as number}
+              currentLongitude={position?.coords.longitude as number}
+              key={index}
+            />
           ))}
         </ScrollView>
       </View>

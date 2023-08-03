@@ -132,14 +132,13 @@ export default class Util {
       .catch(error => console.log(error));
   }
 
-  // public static async convertPromiseToArray(
-  //   promiseArray: Promise<string[]>,
-  // ): string[] {
-  //   try {
-  //     return await promiseArray;
-  //   } catch (error) {
-  //     console.error('Error occurred:', error);
-  //     return [];
-  //   }
-  // }
+  public static getNameWithLastNameAbbreviated(
+    name: string | undefined,
+  ): string | undefined {
+    if (!name) {
+      return undefined;
+    }
+    let nameArray: string[] = name.split(' ');
+    return nameArray[0] + ' ' + nameArray[1][0] + '.';
+  }
 }
