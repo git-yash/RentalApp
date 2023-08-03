@@ -8,6 +8,7 @@ const useMiniRentalExploreView = (
   miniRentalExploreViewService: MiniRentalExploreViewService,
 ) => {
   const [distance, setDistance] = useState<string | undefined>();
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
 
   useEffect(() => {
     miniRentalExploreViewService
@@ -19,7 +20,7 @@ const useMiniRentalExploreView = (
       .then(result => setDistance(result ? result : 'N/A'));
   }, []);
 
-  return {distance};
+  return {distance, isBookmarked, setIsBookmarked};
 };
 
 export default useMiniRentalExploreView;

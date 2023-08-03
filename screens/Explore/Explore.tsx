@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, SafeAreaView, ScrollView, View} from 'react-native';
+import {Dimensions, FlatList, SafeAreaView, View} from 'react-native';
 import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import MapView, {MapMarker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {Spinner} from 'native-base';
@@ -15,10 +15,11 @@ const Explore = (props: {navigation: any}) => {
     setModalVisible,
     position,
     rentals,
-    selectedRental,
-    setSelectedRental,
+    currentItemIndex,
+    onViewableItemsChanged,
     canShowMap,
     mapStyle,
+    flatListRef,
   } = useExplore();
 
   return (
@@ -60,11 +61,12 @@ const Explore = (props: {navigation: any}) => {
               }}
               key={index}
               onPress={() => {
-                setSelectedRental(rental);
+                flatListRef.current.scrollToIndex({index: index});
               }}>
               <CustomMapMarker
                 price={rental.pricePerHour}
-                isSelected={rental.id === selectedRental?.id}
+                // isSelected={rental.id === selectedRental?.id}
+                isSelected={currentItemIndex === index}
                 key={index}
               />
             </MapMarker>
@@ -72,20 +74,24 @@ const Explore = (props: {navigation: any}) => {
         </MapView>
       )}
       <View style={{flex: 0.7, position: 'absolute', bottom: 0}}>
-        <ScrollView
+        <FlatList
+          data={rentals}
           horizontal={true}
+          ref={flatListRef}
+          snapToInterval={Dimensions.get('window').width * 0.8}
           decelerationRate={0}
-          snapToInterval={Dimensions.get('window').width * 0.9}
-          snapToAlignment={'center'}>
-          {rentals?.map((rental, index) => (
+          snapToAlignment={'center'}
+          keyExtractor={item => item.id}
+          onViewableItemsChanged={onViewableItemsChanged}
+          viewabilityConfig={{viewAreaCoveragePercentThreshold: 50}}
+          renderItem={({item}) => (
             <MiniRentalExploreView
-              rental={rental}
-              currentLatitude={position?.coords.latitude as number}
+              rental={item}
               currentLongitude={position?.coords.longitude as number}
-              key={index}
+              currentLatitude={position?.coords.latitude as number}
             />
-          ))}
-        </ScrollView>
+          )}
+        />
       </View>
       {!canShowMap && <Spinner color={Colors.green} />}
     </SafeAreaView>

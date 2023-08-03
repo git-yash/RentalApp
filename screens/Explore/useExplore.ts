@@ -15,10 +15,16 @@ const useExplore = () => {
   const [position, setPosition] = useState<GeolocationResponse>();
   const mapStyle = require('../../assets/MapStyle.json');
   const [rentals, setRentals] = useState<Rental[]>([]);
-  const [selectedRental, setSelectedRental] = useState<Rental | undefined>(
-    undefined,
-  );
   const exploreService = new ExploreService();
+  const flatListRef = useRef();
+  const [currentItemIndex, setCurrentItemIndex] = useState(0);
+
+  const onViewableItemsChanged = useRef(({viewableItems}) => {
+    if (viewableItems.length > 0) {
+      const index = viewableItems[0].index;
+      setCurrentItemIndex(index);
+    }
+  }).current;
 
   useEffect(() => {
     if (!auth().currentUser) {
@@ -46,7 +52,6 @@ const useExplore = () => {
       )
       .then(r => {
         setRentals(r);
-        console.log(selectedRental?.picturePaths.length);
       });
   }, [position]);
 
@@ -96,10 +101,11 @@ const useExplore = () => {
     setModalVisible,
     position,
     rentals,
-    selectedRental,
-    setSelectedRental,
+    currentItemIndex,
+    onViewableItemsChanged,
     canShowMap,
     mapStyle,
+    flatListRef,
   };
 };
 
