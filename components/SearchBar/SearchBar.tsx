@@ -10,7 +10,7 @@ const SearchBar = () => {
     <View style={searchBarStyles.searchBarContainer}>
       <FontAwesomeIcon
         icon={faMagnifyingGlass}
-        size={18}
+        size={19}
         color={Colors.green}
         style={searchBarStyles.searchBarIcon}
       />

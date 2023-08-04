@@ -1,16 +1,17 @@
 import {StyleSheet} from 'react-native';
-import Colors from '../../assets/Colors';
 
 const searchBarStyles = StyleSheet.create({
   searchBarContainer: {
+    shadowRadius: 10,
+    shadowColor: 'black',
+    shadowOpacity: 0.3,
+    height: '40%',
     borderRadius: 100,
     flexDirection: 'row',
     flexWrap: 'nowrap',
     textAlign: 'left',
     margin: 10,
-    borderColor: Colors.green,
-    borderWidth: 2,
-    height: '40%',
+    backgroundColor: 'white',
     alignItems: 'center',
   },
   searchBarIcon: {
