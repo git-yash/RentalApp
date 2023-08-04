@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, FlatList, SafeAreaView, View} from 'react-native';
+import {Dimensions, FlatList, SafeAreaView, Text, View} from 'react-native';
 import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import MapView, {MapMarker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {Spinner} from 'native-base';
@@ -19,6 +19,7 @@ const Explore = (props: {navigation: any}) => {
     onViewableItemsChanged,
     canShowMap,
     mapStyle,
+    mapRef,
     flatListRef,
   } = useExplore();
 
@@ -35,6 +36,7 @@ const Explore = (props: {navigation: any}) => {
         <MapView
           customMapStyle={mapStyle}
           provider={PROVIDER_GOOGLE}
+          ref={mapRef}
           initialRegion={{
             latitude: position?.coords.latitude as number,
             longitude: position?.coords.longitude as number,

@@ -13,6 +13,7 @@ import {faHeart as regularHeart} from '@fortawesome/free-regular-svg-icons';
 import MiniRentalExploreViewService from './MiniRentalExploreView.service';
 import useMiniRentalExploreView from './useMiniRentalExploreView';
 import {library} from '@fortawesome/fontawesome-svg-core';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 const MiniRentalExploreView = (props: {
   rental: Rental;
@@ -105,7 +106,13 @@ const MiniRentalExploreView = (props: {
             </View>
             <TouchableOpacity
               style={{padding: 5}}
-              onPress={() => setIsBookmarked(!isBookmarked)}>
+              onPress={() => {
+                setIsBookmarked(!isBookmarked);
+                ReactNativeHapticFeedback.trigger(
+                  'effectDoubleClick',
+                  Util.options,
+                );
+              }}>
               <FontAwesomeIcon
                 icon={isBookmarked ? solidHeart : regularHeart}
                 color={Colors.green}

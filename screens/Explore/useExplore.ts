@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {Alert, AppState} from 'react-native';
 import Geolocation, {
   GeolocationResponse,
@@ -17,14 +17,30 @@ const useExplore = () => {
   const [rentals, setRentals] = useState<Rental[]>([]);
   const exploreService = new ExploreService();
   const flatListRef = useRef();
+  const mapRef = useRef(null);
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
 
   const onViewableItemsChanged = useRef(({viewableItems}) => {
     if (viewableItems.length > 0) {
-      const index = viewableItems[0].index;
-      setCurrentItemIndex(index);
+      setCurrentItemIndex(viewableItems[0].index);
     }
   }).current;
+
+  useEffect(() => {
+    if (!rentals?.length) {
+      return;
+    }
+    const currentRentalLocation = rentals[currentItemIndex].location;
+    mapRef?.current?.animateToRegion(
+      {
+        latitude: currentRentalLocation.latitude,
+        longitude: currentRentalLocation.longitude,
+        latitudeDelta: 0.15,
+        longitudeDelta: 0.15,
+      },
+      500,
+    );
+  }, [currentItemIndex, rentals]);
 
   useEffect(() => {
     if (!auth().currentUser) {
@@ -52,6 +68,7 @@ const useExplore = () => {
       )
       .then(r => {
         setRentals(r);
+        console.log('rentals set');
       });
   }, [position]);
 
@@ -105,6 +122,7 @@ const useExplore = () => {
     onViewableItemsChanged,
     canShowMap,
     mapStyle,
+    mapRef,
     flatListRef,
   };
 };
