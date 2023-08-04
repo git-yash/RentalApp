@@ -1,5 +1,8 @@
 import {useEffect, useState} from 'react';
 import MiniRentalExploreViewService from './MiniRentalExploreView.service';
+import {Rental} from '../../modals/Rental';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+import Util from '../../Util';
 
 const useMiniRentalExploreView = (
   currentLatitude: number,
@@ -20,7 +23,21 @@ const useMiniRentalExploreView = (
       .then(result => setDistance(result ? result : 'N/A'));
   }, []);
 
-  return {distance, isBookmarked, setIsBookmarked};
+  const handleRentalPress = (rental: Rental) => {
+    console.log(rental.picturePaths.length);
+  };
+
+  const handleHeartPress = () => {
+    setIsBookmarked(!isBookmarked);
+    ReactNativeHapticFeedback.trigger('effectDoubleClick', Util.options);
+  };
+
+  return {
+    distance,
+    isBookmarked,
+    handleHeartPress,
+    handleRentalPress,
+  };
 };
 
 export default useMiniRentalExploreView;

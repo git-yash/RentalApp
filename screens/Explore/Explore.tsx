@@ -67,7 +67,6 @@ const Explore = (props: {navigation: any}) => {
               }}>
               <CustomMapMarker
                 price={rental.pricePerHour}
-                // isSelected={rental.id === selectedRental?.id}
                 isSelected={currentItemIndex === index}
                 key={index}
               />

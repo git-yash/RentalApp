@@ -38,7 +38,7 @@ const useExplore = () => {
         latitudeDelta: 0.15,
         longitudeDelta: 0.15,
       },
-      500,
+      300,
     );
   }, [currentItemIndex, rentals]);
 
@@ -68,7 +68,6 @@ const useExplore = () => {
       )
       .then(r => {
         setRentals(r);
-        console.log('rentals set');
       });
   }, [position]);
 

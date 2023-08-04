@@ -1,19 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {Rental} from '../../modals/Rental';
-import {Dimensions, Image, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Colors from '../../assets/Colors';
-import Util from '../../Util';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {
-  faBookmark,
-  faHeart as solidHeart,
-  faStar,
-} from '@fortawesome/free-solid-svg-icons';
+import {faHeart as solidHeart, faStar} from '@fortawesome/free-solid-svg-icons';
 import {faHeart as regularHeart} from '@fortawesome/free-regular-svg-icons';
 import MiniRentalExploreViewService from './MiniRentalExploreView.service';
 import useMiniRentalExploreView from './useMiniRentalExploreView';
 import {library} from '@fortawesome/fontawesome-svg-core';
-import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+import miniRentalExploreViewStyle from './MiniRentalExploreView.style';
 
 const MiniRentalExploreView = (props: {
   rental: Rental;
@@ -21,106 +16,57 @@ const MiniRentalExploreView = (props: {
   currentLongitude: number;
 }) => {
   const miniRentalExploreViewService = new MiniRentalExploreViewService();
-  const {distance, isBookmarked, setIsBookmarked} = useMiniRentalExploreView(
-    props.currentLatitude,
-    props.currentLongitude,
-    props.rental.address,
-    miniRentalExploreViewService,
-  );
+  const {distance, isBookmarked, handleRentalPress, handleHeartPress} =
+    useMiniRentalExploreView(
+      props.currentLatitude,
+      props.currentLongitude,
+      props.rental.address,
+      miniRentalExploreViewService,
+    );
   library.add(solidHeart, regularHeart);
   return (
-    <TouchableOpacity
-      onPress={() => console.log(props.rental.picturePaths.length)}>
-      <View
-        style={{
-          backgroundColor: 'white',
-          shadowRadius: 5,
-          shadowColor: 'black',
-          shadowOpacity: 0.1,
-          margin: 10,
-          borderRadius: 15,
-          flexDirection: 'row',
-          padding: 5,
-          width: Dimensions.get('window').width * 0.8,
-        }}>
+    <TouchableOpacity onPress={() => handleRentalPress(props.rental)}>
+      <View style={miniRentalExploreViewStyle.mainContainer}>
         <Image
           source={{uri: props.rental.picturePaths[0]}}
-          style={{height: 100, width: 100, borderRadius: 15, margin: 5}}
+          style={miniRentalExploreViewStyle.image}
         />
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            flex: 1,
-            marginLeft: 5,
-          }}>
-          <View style={{justifyContent: 'space-between'}}>
+        <View style={miniRentalExploreViewStyle.rightContainer}>
+          <View style={miniRentalExploreViewStyle.titlePriceContainer}>
             <View>
-              <Text
-                style={{
-                  marginTop: 5,
-                  fontFamily: 'Poppins-SemiBold',
-                  fontSize: 17,
-                }}>
+              <Text style={miniRentalExploreViewStyle.titleText}>
                 {props.rental.title}
               </Text>
-              <Text
-                style={{
-                  fontFamily: 'Poppins-Regular',
-                  fontSize: 15,
-                  color: Colors.gray500,
-                }}>
+              <Text style={miniRentalExploreViewStyle.distanceText}>
                 {distance}
               </Text>
             </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text
-                style={{
-                  marginBottom: 5,
-                  fontFamily: 'Poppins-SemiBold',
-                  fontSize: 25,
-                }}>
+            <View style={miniRentalExploreViewStyle.pricePerHourContainer}>
+              <Text style={miniRentalExploreViewStyle.priceText}>
                 ${props.rental.pricePerHour}
               </Text>
-              <Text style={{marginLeft: 3, fontFamily: 'Poppins-Regular'}}>
-                / hour
-              </Text>
+              <Text style={miniRentalExploreViewStyle.hourText}>/ hour</Text>
             </View>
           </View>
-          <View
-            style={{
-              marginTop: 5,
-              marginRight: 5,
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-            }}>
-            <View style={{flexDirection: 'row'}}>
+          <View style={miniRentalExploreViewStyle.ratingLikeContainer}>
+            <View style={miniRentalExploreViewStyle.ratingContainer}>
               <FontAwesomeIcon
-                style={{marginTop: 1, marginRight: 3}}
+                style={miniRentalExploreViewStyle.starIcon}
                 icon={faStar}
                 color={Colors.green}
               />
-              <Text style={{fontFamily: 'Poppins-Regular'}}>
+              <Text style={miniRentalExploreViewStyle.ratingText}>
                 {props.rental.rating}
               </Text>
             </View>
             <TouchableOpacity
-              style={{padding: 5}}
-              onPress={() => {
-                setIsBookmarked(!isBookmarked);
-                ReactNativeHapticFeedback.trigger(
-                  'effectDoubleClick',
-                  Util.options,
-                );
-              }}>
+              style={miniRentalExploreViewStyle.heartButton}
+              onPress={() => handleHeartPress()}>
               <FontAwesomeIcon
                 icon={isBookmarked ? solidHeart : regularHeart}
                 color={Colors.green}
                 size={20}
-                style={{
-                  alignSelf: 'flex-end',
-                  marginBottom: 5,
-                }}
+                style={miniRentalExploreViewStyle.heartIcon}
               />
             </TouchableOpacity>
           </View>
