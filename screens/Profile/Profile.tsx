@@ -10,6 +10,7 @@ import {faUser as regularUser} from '@fortawesome/free-regular-svg-icons';
 import ProfileImageNameView from '../../components/ProfileImage/ProfileImageNameView';
 import useProfile from './useProfile';
 import ProfileService from './Profile.service';
+import CategoryTabBar from '../../components/CategoryTabBar/CategoryTabBar';
 
 const Profile = (props: {navigation: any}) => {
   const {

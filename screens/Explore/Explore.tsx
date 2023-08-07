@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Dimensions, FlatList, SafeAreaView, Text, View} from 'react-native';
 import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import MapView, {MapMarker, PROVIDER_GOOGLE} from 'react-native-maps';
@@ -8,6 +8,8 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import CustomMapMarker from '../../components/CustomMapMarker/CustomMapMarker';
 import MiniRentalExploreView from '../../components/MiniRentalExploreView/MiniRentalExploreView';
 import useExplore from './useExplore';
+import CategoryTabBar from '../../components/CategoryTabBar/CategoryTabBar';
+import CategoryTabBarItem from '../../components/CategoryTabBarItem/CategoryTabBarItem';
 
 const Explore = (props: {navigation: any}) => {
   const {
@@ -29,8 +31,9 @@ const Explore = (props: {navigation: any}) => {
         isModalVisible={isModalVisible}
         setIsModalVisible={setModalVisible}
       />
-      <View style={{flex: 0.4}}>
+      <View style={{flex: 0.43}}>
         <SearchBar />
+        <CategoryTabBar />
       </View>
       {canShowMap && (
         <MapView

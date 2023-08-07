@@ -13,7 +13,12 @@ const miniRentalExploreViewStyle = StyleSheet.create({
     padding: 5,
     width: Dimensions.get('window').width * 0.8,
   },
-  image: {height: 100, width: 100, borderRadius: 15, margin: 5},
+  image: {
+    height: 100,
+    width: 100,
+    borderRadius: 15,
+    margin: 5,
+  },
   rightContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',

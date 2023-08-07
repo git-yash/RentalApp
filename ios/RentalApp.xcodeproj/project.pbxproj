@@ -28,6 +28,7 @@
 		BA10997156F848B7AB3E4000 /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A7BD4B3B0CD44DCAA8BAA4B /* Poppins-ExtraBold.ttf */; };
 		BA7EAA7700BD488FA4CE43B1 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E6834DF8BD91413D8D39BB73 /* Poppins-SemiBold.ttf */; };
 		C459C9E82A64D4D400F6ED26 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C459C9E72A64D4D400F6ED26 /* GoogleService-Info.plist */; };
+		C4A4EDA42A802CB9009C43AD /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4A4EDA32A802CB9009C43AD /* MaterialIcons.ttf */; };
 		CECE6EE3613B46C9B714811D /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 814B4AFF8E9E4FB5AB79544F /* Poppins-Bold.ttf */; };
 		E567B099E7B64E809911FC09 /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D203452A5733494D8E49D6EA /* Poppins-Light.ttf */; };
 		EB18B1DA91BC4F7D9CA79FAC /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71DD00B9DD904DA0AEEC39A0 /* Poppins-Italic.ttf */; };
@@ -76,6 +77,7 @@
 		BE379C701CC34B1299E443AB /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		C0C35185C6124B739ABC643A /* Poppins-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraLight.ttf"; path = "../assets/fonts/Poppins-ExtraLight.ttf"; sourceTree = "<group>"; };
 		C459C9E72A64D4D400F6ED26 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C4A4EDA32A802CB9009C43AD /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		D203452A5733494D8E49D6EA /* Poppins-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Light.ttf"; path = "../assets/fonts/Poppins-Light.ttf"; sourceTree = "<group>"; };
 		D7090F9CFCC14B8B9A1ACF77 /* Poppins-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-LightItalic.ttf"; path = "../assets/fonts/Poppins-LightItalic.ttf"; sourceTree = "<group>"; };
 		E6834DF8BD91413D8D39BB73 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-SemiBold.ttf"; path = "../assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				C4A4EDA32A802CB9009C43AD /* MaterialIcons.ttf */,
 				C459C9E72A64D4D400F6ED26 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* RentalApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -314,6 +317,7 @@
 				7CFDCB98F39D42FEA7ADE0FB /* Poppins-BlackItalic.ttf in Resources */,
 				CECE6EE3613B46C9B714811D /* Poppins-Bold.ttf in Resources */,
 				2BC2558959254A18B67CF41F /* Poppins-BoldItalic.ttf in Resources */,
+				C4A4EDA42A802CB9009C43AD /* MaterialIcons.ttf in Resources */,
 				BA10997156F848B7AB3E4000 /* Poppins-ExtraBold.ttf in Resources */,
 				9E9955E1190F4195B0D5AC6F /* Poppins-ExtraBoldItalic.ttf in Resources */,
 				194CF7F1E2944A85940F0A81 /* Poppins-ExtraLight.ttf in Resources */,
@@ -713,7 +717,6 @@
 					"-DFOLLY_NO_CONFIG",
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
-					" ",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
@@ -790,7 +793,6 @@
 					"-DFOLLY_NO_CONFIG",
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
-					" ",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
