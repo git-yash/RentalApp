@@ -6,7 +6,7 @@ const miniRentalExploreViewStyle = StyleSheet.create({
     backgroundColor: 'white',
     shadowRadius: 5,
     shadowColor: 'black',
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.2,
     margin: 10,
     borderRadius: 15,
     flexDirection: 'row',

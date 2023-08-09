@@ -11,7 +11,7 @@ const SearchBar = () => {
       <FontAwesomeIcon
         icon={faMagnifyingGlass}
         size={19}
-        color={Colors.green}
+        color={Colors.gray500}
         style={searchBarStyles.searchBarIcon}
       />
       <TextInput

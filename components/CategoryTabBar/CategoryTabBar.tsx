@@ -46,6 +46,7 @@ const CategoryTabBar = () => {
   return (
     <FlatList
       horizontal={true}
+      style={{paddingBottom: 5}}
       showsHorizontalScrollIndicator={false}
       data={categoryItems}
       renderItem={({item}) => (

@@ -23,8 +23,18 @@ const useMiniRentalExploreView = (
       .then(result => setDistance(result ? result : 'N/A'));
   }, []);
 
-  const handleRentalPress = (rental: Rental) => {
+  const handleRentalPress = (
+    rental: Rental,
+    navigation: any,
+    userLatitude: number,
+    userLongitude: number,
+  ) => {
     console.log(rental.picturePaths.length);
+    navigation.navigate('Details', {
+      rental: rental,
+      currentLatitude: userLatitude,
+      currentLongitude: userLongitude,
+    });
   };
 
   const handleHeartPress = () => {

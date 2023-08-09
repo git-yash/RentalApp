@@ -9,7 +9,6 @@ import CustomMapMarker from '../../components/CustomMapMarker/CustomMapMarker';
 import MiniRentalExploreView from '../../components/MiniRentalExploreView/MiniRentalExploreView';
 import useExplore from './useExplore';
 import CategoryTabBar from '../../components/CategoryTabBar/CategoryTabBar';
-import CategoryTabBarItem from '../../components/CategoryTabBarItem/CategoryTabBarItem';
 
 const Explore = (props: {navigation: any}) => {
   const {
@@ -26,15 +25,11 @@ const Explore = (props: {navigation: any}) => {
   } = useExplore();
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <LogInOrSignUp
         isModalVisible={isModalVisible}
         setIsModalVisible={setModalVisible}
       />
-      <View style={{flex: 0.43}}>
-        <SearchBar />
-        <CategoryTabBar />
-      </View>
       {canShowMap && (
         <MapView
           customMapStyle={mapStyle}
@@ -49,15 +44,6 @@ const Explore = (props: {navigation: any}) => {
           style={{
             flex: 2,
           }}>
-          {/*<MapCircle*/}
-          {/*  center={{*/}
-          {/*    latitude: position?.coords.latitude as number,*/}
-          {/*    longitude: position?.coords.longitude as number,*/}
-          {/*  }}*/}
-          {/*  radius={8046.72} // 5 miles*/}
-          {/*  strokeColor={Colors.green}*/}
-          {/*  strokeWidth={2}*/}
-          {/*/>*/}
           {rentals?.map((rental, index) => (
             <MapMarker
               coordinate={{
@@ -81,6 +67,7 @@ const Explore = (props: {navigation: any}) => {
         <FlatList
           data={rentals}
           horizontal={true}
+          showsHorizontalScrollIndicator={false}
           ref={flatListRef}
           snapToInterval={Dimensions.get('window').width * 0.8}
           decelerationRate={0}
@@ -93,12 +80,22 @@ const Explore = (props: {navigation: any}) => {
               rental={item}
               currentLongitude={position?.coords.longitude as number}
               currentLatitude={position?.coords.latitude as number}
+              navigation={props.navigation}
             />
           )}
         />
+        <View
+          style={{
+            flex: 0.43,
+            backgroundColor: 'white',
+            paddingTop: 5,
+          }}>
+          <CategoryTabBar />
+          <SearchBar />
+        </View>
       </View>
       {!canShowMap && <Spinner color={Colors.green} />}
-    </SafeAreaView>
+    </View>
   );
 };
 

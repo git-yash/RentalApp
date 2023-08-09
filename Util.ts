@@ -141,4 +141,17 @@ export default class Util {
     let nameArray: string[] = name.split(' ');
     return nameArray[0] + ' ' + nameArray[1][0] + '.';
   }
+
+  public static getCityAndState(address: string): string | null {
+    const regex = /,\s*([^,]+),\s*([^,]+),\s*USA$/;
+    const match = address.match(regex);
+
+    if (match) {
+      const city = match[1].trim();
+      const state = match[2].trim();
+      return `${city}, ${state}`;
+    } else {
+      return null;
+    }
+  }
 }

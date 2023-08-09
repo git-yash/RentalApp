@@ -14,6 +14,7 @@ const MiniRentalExploreView = (props: {
   rental: Rental;
   currentLatitude: number;
   currentLongitude: number;
+  navigation: any;
 }) => {
   const miniRentalExploreViewService = new MiniRentalExploreViewService();
   const {distance, isBookmarked, handleRentalPress, handleHeartPress} =
@@ -25,7 +26,15 @@ const MiniRentalExploreView = (props: {
     );
   library.add(solidHeart, regularHeart);
   return (
-    <TouchableOpacity onPress={() => handleRentalPress(props.rental)}>
+    <TouchableOpacity
+      onPress={() =>
+        handleRentalPress(
+          props.rental,
+          props.navigation,
+          props.currentLatitude,
+          props.currentLongitude,
+        )
+      }>
       <View style={miniRentalExploreViewStyle.mainContainer}>
         <Image
           source={{uri: props.rental.picturePaths[0]}}

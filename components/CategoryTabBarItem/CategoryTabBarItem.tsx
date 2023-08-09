@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Text, Pressable, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../assets/Colors';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+import Util from '../../Util';
 
 const CategoryTabBarItem = (props: {
   label: string;
@@ -10,8 +12,11 @@ const CategoryTabBarItem = (props: {
   setWhichCategorySelected: any;
 }) => {
   return (
-    <TouchableOpacity
-      onPress={() => props.setWhichCategorySelected(props.label)}>
+    <Pressable
+      onPress={() => {
+        props.setWhichCategorySelected(props.label);
+        ReactNativeHapticFeedback.trigger('impactHeavy', Util.options);
+      }}>
       <View
         style={{
           borderBottomColor: 'black',
@@ -29,13 +34,13 @@ const CategoryTabBarItem = (props: {
         <Text
           style={{
             fontFamily: 'Poppins-SemiBold',
-            fontSize: 10,
+            fontSize: 12,
             color: props.isSelected ? 'black' : Colors.gray500,
           }}>
           {props.label}
         </Text>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
