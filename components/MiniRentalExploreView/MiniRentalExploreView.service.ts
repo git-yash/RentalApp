@@ -1,6 +1,8 @@
 import axios from 'axios';
 import {Platform} from 'react-native';
 import Util from '../../Util';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 export default class MiniRentalExploreViewService {
   async getAddressFromLocation(
@@ -54,5 +56,38 @@ export default class MiniRentalExploreViewService {
     } catch (error) {
       return 'error';
     }
+  }
+
+  async addBookmarkToBookMarks(rentalId: string): Promise<void> {
+    return firestore()
+      .collection('users')
+      .doc(auth().currentUser?.email as string)
+      .collection('bookmarkedPosts')
+      .doc(rentalId)
+      .set({})
+      .then(r => console.log(r));
+  }
+
+  async removeBookmarkFromBookmarks(rentalId: string): Promise<void> {
+    return firestore()
+      .collection('users')
+      .doc(auth().currentUser?.email as string)
+      .collection('bookmarkedPosts')
+      .doc(rentalId)
+      .delete()
+      .then(() => console.log('removed'));
+  }
+
+  async isInBookmarkedPosts(rentalId: string): Promise<boolean> {
+    const documentRef = firestore()
+      .collection('users')
+      .doc(auth().currentUser?.email as string)
+      .collection('bookmarkedPosts')
+      .doc(rentalId);
+
+    return documentRef.get().then(documentSnapshot => {
+      console.log(documentSnapshot.exists + rentalId);
+      return documentSnapshot.exists;
+    });
   }
 }

@@ -33,13 +33,28 @@ export default class FinishSigningUpService {
                 name: firstNameText + ' ' + lastNameText,
               })
               .then(() => {
-                setCanHideModal(true);
-                setIsModalVisible(false);
-                ReactNativeHapticFeedback.trigger(
-                  'notificationSuccess',
-                  Util.options,
-                );
-                setIsLoading(false);
+                const parentDocRef = firestore()
+                  .collection('users')
+                  .doc(emailText);
+                const subcollectionRef =
+                  parentDocRef.collection('bookmarkedPosts');
+                subcollectionRef
+                  .add({})
+                  .then(() => {
+                    setCanHideModal(true);
+                    setIsModalVisible(false);
+                    ReactNativeHapticFeedback.trigger(
+                      'notificationSuccess',
+                      Util.options,
+                    );
+                    setIsLoading(false);
+                  })
+                  .catch(error => {
+                    console.error(
+                      'Error adding document to subcollection:',
+                      error,
+                    );
+                  });
               });
           });
       })

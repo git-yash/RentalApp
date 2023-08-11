@@ -18,6 +18,7 @@ import auth from '@react-native-firebase/auth';
 import {ActionSheetProvider} from '@expo/react-native-action-sheet';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import RentalDetails from './screens/RentalDetails/RentalDetails';
+import Bookmarks from './screens/Bookmarks/Bookmarks';
 
 function App(): JSX.Element {
   const Tab = createBottomTabNavigator();
@@ -69,7 +70,7 @@ function App(): JSX.Element {
             />
             <Tab.Screen
               name={'Bookmarks'}
-              component={ExploreStack}
+              component={Bookmarks}
               options={{
                 tabBarIcon: ({focused}) => (
                   <TabBarIcon isFocused={focused} icon={faHeart} />

@@ -12,6 +12,10 @@ const searchBarStyles = StyleSheet.create({
     textAlign: 'left',
     margin: 10,
     backgroundColor: 'white',
+    paddingTop: 5,
+    paddingBottom: 5,
+    marginBottom: 10,
+    marginTop: 15,
     alignItems: 'center',
   },
   searchBarIcon: {

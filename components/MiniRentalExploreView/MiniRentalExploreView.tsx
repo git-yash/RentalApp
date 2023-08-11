@@ -22,6 +22,7 @@ const MiniRentalExploreView = (props: {
       props.currentLatitude,
       props.currentLongitude,
       props.rental.address,
+      props.rental,
       miniRentalExploreViewService,
     );
   library.add(solidHeart, regularHeart);
@@ -29,7 +30,6 @@ const MiniRentalExploreView = (props: {
     <TouchableOpacity
       onPress={() =>
         handleRentalPress(
-          props.rental,
           props.navigation,
           props.currentLatitude,
           props.currentLongitude,
