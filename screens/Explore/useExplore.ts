@@ -7,6 +7,9 @@ import {Rental} from '../../modals/Rental';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import ExploreService from './Explore.service';
+import useBookmarks from '../Bookmarks/useBookmarks';
+import {useMyContext} from '../../MyContext';
+import {useIsFocused} from '@react-navigation/native';
 
 const useExplore = () => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -19,6 +22,7 @@ const useExplore = () => {
   const flatListRef = useRef();
   const mapRef = useRef(null);
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
+  const {bookmarkedPosts} = useMyContext();
 
   const onViewableItemsChanged = useRef(({viewableItems}) => {
     if (viewableItems.length > 0) {
@@ -42,7 +46,16 @@ const useExplore = () => {
     );
   }, [currentItemIndex, rentals]);
 
+  const isScreenFocused = useIsFocused();
+
   useEffect(() => {
+    if (isScreenFocused) {
+      console.log('explore focused');
+    }
+  }, [isScreenFocused]);
+
+  useEffect(() => {
+    console.log('made it');
     if (!auth().currentUser) {
       setModalVisible(true);
     } else {
@@ -68,8 +81,9 @@ const useExplore = () => {
       )
       .then(r => {
         setRentals(r);
+        console.log(`${bookmarkedPosts.length}: bookmarks`);
       });
-  }, [position]);
+  }, [position, bookmarkedPosts]);
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {

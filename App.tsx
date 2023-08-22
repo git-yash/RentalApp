@@ -19,6 +19,7 @@ import {ActionSheetProvider} from '@expo/react-native-action-sheet';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import RentalDetails from './screens/RentalDetails/RentalDetails';
 import Bookmarks from './screens/Bookmarks/Bookmarks';
+import {MyContextProvider} from './MyContext';
 
 function App(): JSX.Element {
   const Tab = createBottomTabNavigator();
@@ -45,97 +46,121 @@ function App(): JSX.Element {
       </Stack.Navigator>
     );
   };
+  const BookmarksStack = () => {
+    const Stack = createNativeStackNavigator();
+    return (
+      <Stack.Navigator>
+        <Stack.Screen
+          name={'Bookmarks'}
+          component={Bookmarks}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={'Details'}
+          component={RentalDetails}
+          options={{
+            headerTitleStyle: {
+              fontFamily: 'Poppins-Regular',
+            },
+            headerTintColor: 'black',
+          }}
+        />
+      </Stack.Navigator>
+    );
+  };
 
   return (
-    <ActionSheetProvider>
-      <NativeBaseProvider>
-        <NavigationContainer>
-          <StatusBar barStyle={'dark-content'} />
-          <Tab.Navigator>
-            <Tab.Screen
-              name={'Explore'}
-              component={ExploreStack}
-              options={{
-                tabBarIcon: ({focused}) => (
-                  <TabBarIcon isFocused={focused} icon={faMagnifyingGlass} />
-                ),
-                tabBarActiveTintColor: Colors.green,
-                tabBarInactiveTintColor: Colors.gray500,
-                tabBarLabelStyle: {
-                  fontFamily: 'Poppins-SemiBold',
-                  fontSize: 12,
-                },
-                headerShown: false,
-              }}
-            />
-            <Tab.Screen
-              name={'Bookmarks'}
-              component={Bookmarks}
-              options={{
-                tabBarIcon: ({focused}) => (
-                  <TabBarIcon isFocused={focused} icon={faHeart} />
-                ),
-                tabBarActiveTintColor: Colors.green,
-                tabBarInactiveTintColor: Colors.gray500,
-                tabBarLabelStyle: {
-                  fontFamily: 'Poppins-SemiBold',
-                  fontSize: 12,
-                },
-                headerShown: false,
-              }}
-            />
-            <Tab.Screen
-              name={'Post'}
-              component={ExploreStack}
-              options={{
-                tabBarIcon: ({focused}) => (
-                  <TabBarIcon isFocused={focused} icon={faPlus} />
-                ),
-                tabBarActiveTintColor: Colors.green,
-                tabBarInactiveTintColor: Colors.gray500,
-                tabBarLabelStyle: {
-                  fontFamily: 'Poppins-SemiBold',
-                  fontSize: 12,
-                },
-                headerShown: false,
-              }}
-            />
-            <Tab.Screen
-              name={'Messages'}
-              component={ExploreStack}
-              options={{
-                tabBarIcon: ({focused}) => (
-                  <TabBarIcon isFocused={focused} icon={faMessage} />
-                ),
-                tabBarActiveTintColor: Colors.green,
-                tabBarInactiveTintColor: Colors.gray500,
-                tabBarLabelStyle: {
-                  fontFamily: 'Poppins-SemiBold',
-                  fontSize: 12,
-                },
-                headerShown: false,
-              }}
-            />
-            <Tab.Screen
-              name={auth().currentUser ? 'Profile' : 'Log in'}
-              component={Profile}
-              options={{
-                tabBarIcon: ({focused}) => (
-                  <TabBarIcon isFocused={focused} icon={faUser} />
-                ),
-                tabBarActiveTintColor: Colors.green,
-                tabBarInactiveTintColor: Colors.gray500,
-                tabBarLabelStyle: {
-                  fontFamily: 'Poppins-SemiBold',
-                  fontSize: 12,
-                },
-                headerShown: false,
-              }}
-            />
-          </Tab.Navigator>
-        </NavigationContainer>
-      </NativeBaseProvider>
-    </ActionSheetProvider>
+    <MyContextProvider>
+      <ActionSheetProvider>
+        <NativeBaseProvider>
+          <NavigationContainer>
+            <StatusBar barStyle={'dark-content'} />
+            <Tab.Navigator>
+              <Tab.Screen
+                name={'Explore'}
+                component={ExploreStack}
+                options={{
+                  tabBarIcon: ({focused}) => (
+                    <TabBarIcon isFocused={focused} icon={faMagnifyingGlass} />
+                  ),
+                  tabBarActiveTintColor: Colors.green,
+                  tabBarInactiveTintColor: Colors.gray500,
+                  tabBarLabelStyle: {
+                    fontFamily: 'Poppins-SemiBold',
+                    fontSize: 12,
+                  },
+                  headerShown: false,
+                }}
+              />
+              <Tab.Screen
+                name={'Bookmarks'}
+                component={BookmarksStack}
+                options={{
+                  tabBarIcon: ({focused}) => (
+                    <TabBarIcon isFocused={focused} icon={faHeart} />
+                  ),
+                  tabBarActiveTintColor: Colors.green,
+                  tabBarInactiveTintColor: Colors.gray500,
+                  tabBarLabelStyle: {
+                    fontFamily: 'Poppins-SemiBold',
+                    fontSize: 12,
+                  },
+                  headerShown: false,
+                }}
+              />
+              <Tab.Screen
+                name={'Post'}
+                component={ExploreStack}
+                options={{
+                  tabBarIcon: ({focused}) => (
+                    <TabBarIcon isFocused={focused} icon={faPlus} />
+                  ),
+                  tabBarActiveTintColor: Colors.green,
+                  tabBarInactiveTintColor: Colors.gray500,
+                  tabBarLabelStyle: {
+                    fontFamily: 'Poppins-SemiBold',
+                    fontSize: 12,
+                  },
+                  headerShown: false,
+                }}
+              />
+              <Tab.Screen
+                name={'Messages'}
+                component={ExploreStack}
+                options={{
+                  tabBarIcon: ({focused}) => (
+                    <TabBarIcon isFocused={focused} icon={faMessage} />
+                  ),
+                  tabBarActiveTintColor: Colors.green,
+                  tabBarInactiveTintColor: Colors.gray500,
+                  tabBarLabelStyle: {
+                    fontFamily: 'Poppins-SemiBold',
+                    fontSize: 12,
+                  },
+                  headerShown: false,
+                }}
+              />
+              <Tab.Screen
+                name={auth().currentUser ? 'Profile' : 'Log in'}
+                component={Profile}
+                options={{
+                  tabBarIcon: ({focused}) => (
+                    <TabBarIcon isFocused={focused} icon={faUser} />
+                  ),
+                  tabBarActiveTintColor: Colors.green,
+                  tabBarInactiveTintColor: Colors.gray500,
+                  tabBarLabelStyle: {
+                    fontFamily: 'Poppins-SemiBold',
+                    fontSize: 12,
+                  },
+                  headerShown: false,
+                }}
+              />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </NativeBaseProvider>
+      </ActionSheetProvider>
+    </MyContextProvider>
   );
 }
 

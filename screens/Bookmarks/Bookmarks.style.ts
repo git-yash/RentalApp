@@ -4,6 +4,7 @@ import Colors from '../../assets/Colors';
 const bookmarksStyle = StyleSheet.create({
   mainContainer: {
     padding: 15,
+    height: '100%',
   },
   bookmarksText: {
     fontFamily: 'Poppins-SemiBold',
@@ -14,11 +15,11 @@ const bookmarksStyle = StyleSheet.create({
   noBookmarksView: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: '90%',
   },
   noBookmarksText: {
     fontFamily: 'Poppins-Regular',
     fontSize: 15,
+    paddingTop: '50%',
   },
 });
 

@@ -4,6 +4,8 @@ import storage from '@react-native-firebase/storage';
 import {Review} from '../../modals/Review';
 import Geocoder from 'react-native-geocoding';
 import LatLng = Geocoder.LatLng;
+import BookmarksService from '../Bookmarks/Bookmarks.service';
+import MiniRentalExploreViewService from '../../components/MiniRentalExploreView/MiniRentalExploreView.service';
 
 export default class ExploreService {
   async getUserFromUserEmail(email: string): Promise<User | undefined> {
@@ -77,6 +79,7 @@ export default class ExploreService {
     const minLatitude = currentLatitude - (latRadian * 180) / Math.PI;
     const maxLongitude = currentLongitude + (lonRadian * 180) / Math.PI;
     const minLongitude = currentLongitude - (lonRadian * 180) / Math.PI;
+    const miniRentalExploreViewService = new MiniRentalExploreViewService();
 
     try {
       const querySnapshot = await databaseRef
@@ -112,7 +115,7 @@ export default class ExploreService {
         });
       });
 
-      rentalObjects.forEach(rental => {
+      for (const rental of rentalObjects) {
         this.getAllPicturePaths(rental.id).then(paths => {
           rental.picturePaths = paths;
         });
@@ -124,7 +127,7 @@ export default class ExploreService {
         this.getUserFromUserEmail(rental.userEmail).then(_user => {
           rental.user = _user;
         });
-      });
+      }
 
       return rentalObjects;
     } catch (error) {

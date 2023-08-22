@@ -11,7 +11,7 @@ const miniRentalExploreViewStyle = StyleSheet.create({
     borderRadius: 15,
     flexDirection: 'row',
     padding: 5,
-    width: Dimensions.get('window').width * 0.8,
+    width: Dimensions.get('window').width * 0.85,
   },
   image: {
     height: 100,

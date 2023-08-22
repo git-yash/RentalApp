@@ -1,5 +1,7 @@
 import {Rental} from '../../modals/Rental';
-import firestore from '@react-native-firebase/firestore';
+import firestore, {
+  FirebaseFirestoreTypes,
+} from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import ExploreService from '../Explore/Explore.service';
 
@@ -37,7 +39,7 @@ export default class BookmarksService {
             if (!documentIds.includes(doc.id)) {
               return;
             }
-            const data: Rental = doc.data();
+            const data: FirebaseFirestoreTypes.DocumentData = doc.data();
 
             rentalObjects.push({
               user: undefined,

@@ -15,15 +15,11 @@ import rentalDetailsStyle from './RentalDetails.style';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
 import Colors from '../../assets/Colors';
-import {Divider} from 'native-base';
-import OrDivider from '../../components/OrDivider/OrDivider';
 import MapView, {MapMarker, PROVIDER_GOOGLE} from 'react-native-maps';
 import UserPositionCustomMapMarker from '../../components/UserPositionCustomMapMarker/UserPositionCustomMapMarker';
-import CustomMapMarker from '../../components/CustomMapMarker/CustomMapMarker';
 import {useActionSheet} from '@expo/react-native-action-sheet';
-import openMap, {createMapLink} from 'react-native-open-maps';
-import BottomSheet from '@gorhom/bottom-sheet';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {createMapLink} from 'react-native-open-maps';
 
 const RentalDetails = (props: {navigation: any; route: any}) => {
   const {rental, currentLatitude, currentLongitude} = props.route.params;

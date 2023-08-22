@@ -22,6 +22,12 @@ const exploreStyles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
   },
+  flatListView: {flex: 0.7, position: 'absolute', bottom: 0},
+  categoryAndSearchView: {
+    flex: 0.43,
+    backgroundColor: 'white',
+    paddingTop: 5,
+  },
 });
 
 export default exploreStyles;

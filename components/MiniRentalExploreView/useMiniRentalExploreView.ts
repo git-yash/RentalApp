@@ -3,6 +3,7 @@ import MiniRentalExploreViewService from './MiniRentalExploreView.service';
 import {Rental} from '../../modals/Rental';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import Util from '../../Util';
+import {useMyContext} from '../../MyContext';
 
 const useMiniRentalExploreView = (
   currentLatitude: number,
@@ -21,7 +22,7 @@ const useMiniRentalExploreView = (
       );
     }
 
-    setIsInBookmarks().then(() => console.log('set'));
+    void setIsInBookmarks();
   }, []);
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const useMiniRentalExploreView = (
     userLatitude: number,
     userLongitude: number,
   ) => {
-    console.log(rental.picturePaths.length);
+    console.log('is bookmarked' + rental.isBookmarked);
     navigation.navigate('Details', {
       rental: rental,
       currentLatitude: userLatitude,
@@ -59,7 +60,9 @@ const useMiniRentalExploreView = (
   };
 
   const handleHeartPress = () => {
-    setIsBookmarked(!isBookmarked);
+    rental.isBookmarked = !isBookmarked;
+    setIsBookmarked(rental.isBookmarked);
+    console.log(rental.isBookmarked);
     ReactNativeHapticFeedback.trigger('effectDoubleClick', Util.options);
   };
 

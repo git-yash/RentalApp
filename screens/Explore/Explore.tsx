@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Dimensions, FlatList, SafeAreaView, Text, View} from 'react-native';
 import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import MapView, {MapMarker, PROVIDER_GOOGLE} from 'react-native-maps';
@@ -9,6 +9,9 @@ import CustomMapMarker from '../../components/CustomMapMarker/CustomMapMarker';
 import MiniRentalExploreView from '../../components/MiniRentalExploreView/MiniRentalExploreView';
 import useExplore from './useExplore';
 import CategoryTabBar from '../../components/CategoryTabBar/CategoryTabBar';
+import exploreStyles from './Explore.style';
+import UserPositionCustomMapMarker from '../../components/UserPositionCustomMapMarker/UserPositionCustomMapMarker';
+import {useIsFocused} from '@react-navigation/native';
 
 const Explore = (props: {navigation: any}) => {
   const {
@@ -61,15 +64,22 @@ const Explore = (props: {navigation: any}) => {
               />
             </MapMarker>
           ))}
+          <MapMarker
+            coordinate={{
+              latitude: position?.coords.latitude as number,
+              longitude: position?.coords.longitude as number,
+            }}>
+            <UserPositionCustomMapMarker />
+          </MapMarker>
         </MapView>
       )}
-      <View style={{flex: 0.7, position: 'absolute', bottom: 0}}>
+      <View style={exploreStyles.flatListView}>
         <FlatList
           data={rentals}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           ref={flatListRef}
-          snapToInterval={Dimensions.get('window').width * 0.8}
+          snapToInterval={Dimensions.get('window').width * 0.9}
           decelerationRate={0}
           snapToAlignment={'center'}
           keyExtractor={item => item.id}
@@ -84,12 +94,7 @@ const Explore = (props: {navigation: any}) => {
             />
           )}
         />
-        <View
-          style={{
-            flex: 0.43,
-            backgroundColor: 'white',
-            paddingTop: 5,
-          }}>
+        <View style={exploreStyles.categoryAndSearchView}>
           <CategoryTabBar />
           <SearchBar />
         </View>

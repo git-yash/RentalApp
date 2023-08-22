@@ -15,4 +15,5 @@ export interface Rental {
   userEmail: string;
   user?: User;
   picturePaths: string[];
+  isBookmarked?: boolean;
 }

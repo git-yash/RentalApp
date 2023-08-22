@@ -15,6 +15,7 @@ const MiniRentalExploreView = (props: {
   currentLatitude: number;
   currentLongitude: number;
   navigation: any;
+  isInitiallyBookmarked: boolean;
 }) => {
   const miniRentalExploreViewService = new MiniRentalExploreViewService();
   const {distance, isBookmarked, handleRentalPress, handleHeartPress} =
@@ -72,7 +73,11 @@ const MiniRentalExploreView = (props: {
               style={miniRentalExploreViewStyle.heartButton}
               onPress={() => handleHeartPress()}>
               <FontAwesomeIcon
-                icon={isBookmarked ? solidHeart : regularHeart}
+                icon={
+                  isBookmarked || props.rental.isBookmarked
+                    ? solidHeart
+                    : regularHeart
+                }
                 color={Colors.green}
                 size={20}
                 style={miniRentalExploreViewStyle.heartIcon}

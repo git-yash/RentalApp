@@ -1,17 +1,29 @@
-import React from 'react';
-import {FlatList, SafeAreaView, ScrollView, Text, View} from 'react-native';
-import Colors from '../../assets/Colors';
+import React, {useEffect} from 'react';
+import {
+  FlatList,
+  RefreshControl,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
 import bookmarksStyle from './Bookmarks.style';
 import useBookmarks from './useBookmarks';
 import MiniRentalExploreView from '../../components/MiniRentalExploreView/MiniRentalExploreView';
 
 const Bookmarks = (props: {navigation: any}) => {
-  const {bookmarkedPosts, position} = useBookmarks();
+  const {bookmarkedPosts, position, refreshing, onRefresh} = useBookmarks(
+    props.navigation,
+  );
   const doesHaveBookmarks: boolean = bookmarkedPosts.length > 0;
 
   return (
     <SafeAreaView>
-      <View style={bookmarksStyle.mainContainer}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        style={bookmarksStyle.mainContainer}>
         <Text style={bookmarksStyle.bookmarksText}>Bookmarks</Text>
         {!doesHaveBookmarks && (
           <View>
@@ -22,21 +34,18 @@ const Bookmarks = (props: {navigation: any}) => {
             </View>
           </View>
         )}
-        {doesHaveBookmarks && (
-          <FlatList
-            data={bookmarkedPosts}
-            keyExtractor={item => item.id}
-            renderItem={({item}) => (
-              <MiniRentalExploreView
-                rental={item}
-                currentLatitude={position?.coords.latitude as number}
-                currentLongitude={position?.coords.longitude as number}
-                navigation={props.navigation}
-              />
-            )}
-          />
-        )}
-      </View>
+        {bookmarkedPosts.map((item, index) => {
+          return (
+            <MiniRentalExploreView
+              rental={item}
+              key={index}
+              currentLatitude={position?.coords.latitude as number}
+              currentLongitude={position?.coords.longitude as number}
+              navigation={props.navigation}
+            />
+          );
+        })}
+      </ScrollView>
     </SafeAreaView>
   );
 };
