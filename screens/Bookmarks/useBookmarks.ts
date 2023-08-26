@@ -7,28 +7,24 @@ import {Alert} from 'react-native';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import Util from '../../Util';
 import {useMyContext} from '../../MyContext';
+import {useIsFocused} from '@react-navigation/native';
 
-const useBookmarks = (navigation: any) => {
+const useBookmarks = () => {
   const {bookmarkedPosts, setBookmarkedPosts} = useMyContext();
   const [position, setPosition] = useState<GeolocationResponse>();
   const bookmarksService = new BookmarksService();
   const [refreshing, setRefreshing] = React.useState(false);
 
+  const isScreenFocused = useIsFocused();
+
   useEffect(() => {
-    return navigation.addListener('tabPress', e => {
-      ReactNativeHapticFeedback.trigger('impactMedium', Util.options);
-      bookmarksService
-        .setBookmarkedPosts(setBookmarkedPosts)
-        .then(() => console.log('refreseh'));
-    });
-  }, [navigation]);
+    if (isScreenFocused) {
+      refreshScreen();
+    }
+  }, [isScreenFocused]);
 
   const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    ReactNativeHapticFeedback.trigger('impactMedium', Util.options);
-    bookmarksService
-      .setBookmarkedPosts(setBookmarkedPosts)
-      .then(() => setRefreshing(false));
+    refreshScreen();
   }, []);
 
   const setCurrentPosition = async () => {
@@ -39,6 +35,14 @@ const useBookmarks = (navigation: any) => {
       error => Alert.alert('GetCurrentPosition Error', JSON.stringify(error)),
       {enableHighAccuracy: true},
     );
+  };
+
+  const refreshScreen = () => {
+    setRefreshing(true);
+    ReactNativeHapticFeedback.trigger('impactMedium', Util.options);
+    bookmarksService
+      .setBookmarkedPosts(setBookmarkedPosts)
+      .then(() => setRefreshing(false));
   };
 
   useEffect(() => {

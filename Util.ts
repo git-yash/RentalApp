@@ -3,6 +3,7 @@ import Colors from './assets/Colors';
 import auth from '@react-native-firebase/auth';
 import Geocoder from 'react-native-geocoding';
 import LatLng = Geocoder.LatLng;
+import {Rental} from './modals/Rental';
 
 export default class Util {
   public static formatPhoneNumber(phoneNumber: string): string {
@@ -153,5 +154,9 @@ export default class Util {
     } else {
       return null;
     }
+  }
+
+  public static getIndexFromRentalID(rentals: Rental[], id: string): number {
+    return rentals.findIndex(rental => rental.id === id);
   }
 }

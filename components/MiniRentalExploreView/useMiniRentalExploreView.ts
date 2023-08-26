@@ -14,6 +14,7 @@ const useMiniRentalExploreView = (
 ) => {
   const [distance, setDistance] = useState<string | undefined>();
   const [isBookmarked, setIsBookmarked] = useState<boolean | null>(null);
+  const {bookmarkedPosts, setBookmarkedPosts} = useMyContext();
 
   useEffect(() => {
     async function setIsInBookmarks() {
@@ -62,8 +63,13 @@ const useMiniRentalExploreView = (
   const handleHeartPress = () => {
     rental.isBookmarked = !isBookmarked;
     setIsBookmarked(rental.isBookmarked);
-    console.log(rental.isBookmarked);
     ReactNativeHapticFeedback.trigger('effectDoubleClick', Util.options);
+
+    const bookmarks = [...bookmarkedPosts];
+    const newRental = rental;
+    newRental.isBookmarked = rental.isBookmarked as boolean;
+    bookmarks[Util.getIndexFromRentalID(bookmarks, rental.id)] = newRental;
+    setBookmarkedPosts(bookmarks);
   };
 
   return {

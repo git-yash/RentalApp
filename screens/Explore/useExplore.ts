@@ -10,11 +10,11 @@ import ExploreService from './Explore.service';
 import useBookmarks from '../Bookmarks/useBookmarks';
 import {useMyContext} from '../../MyContext';
 import {useIsFocused} from '@react-navigation/native';
+import Util from '../../Util';
 
 const useExplore = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [canShowMap, setCanShowMap] = useState(false);
-  const appState = useRef(AppState.currentState);
   const [position, setPosition] = useState<GeolocationResponse>();
   const mapStyle = require('../../assets/MapStyle.json');
   const [rentals, setRentals] = useState<Rental[]>([]);
@@ -49,9 +49,20 @@ const useExplore = () => {
   const isScreenFocused = useIsFocused();
 
   useEffect(() => {
-    if (isScreenFocused) {
-      console.log('explore focused');
-    }
+    // if (isScreenFocused) {
+    //   const newRentals = [...rentals];
+    //   // newRentals.forEach(rental => {
+    //   //   rental.isBookmarked = false;
+    //   // });
+    //   newRentals.forEach(rental => {
+    //     bookmarkedPosts.forEach(bookmarkedPost => {
+    //       rental.isBookmarked = rental.id === bookmarkedPost.id;
+    //     });
+    //   });
+    //   setRentals(newRentals);
+    //   console.log('isbookmarked' + rentals[0].isBookmarked);
+    // TODO: fix update issue
+    // }
   }, [isScreenFocused]);
 
   useEffect(() => {

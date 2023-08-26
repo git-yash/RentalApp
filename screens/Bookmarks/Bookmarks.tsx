@@ -10,11 +10,12 @@ import {
 import bookmarksStyle from './Bookmarks.style';
 import useBookmarks from './useBookmarks';
 import MiniRentalExploreView from '../../components/MiniRentalExploreView/MiniRentalExploreView';
+import {useMyContext} from '../../MyContext';
+import ScreenTitle from '../../components/ScreenTitle/ScreenTitle';
 
 const Bookmarks = (props: {navigation: any}) => {
-  const {bookmarkedPosts, position, refreshing, onRefresh} = useBookmarks(
-    props.navigation,
-  );
+  const {position, refreshing, onRefresh} = useBookmarks();
+  const {bookmarkedPosts} = useMyContext();
   const doesHaveBookmarks: boolean = bookmarkedPosts.length > 0;
 
   return (
@@ -24,7 +25,7 @@ const Bookmarks = (props: {navigation: any}) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
         style={bookmarksStyle.mainContainer}>
-        <Text style={bookmarksStyle.bookmarksText}>Bookmarks</Text>
+        <ScreenTitle title={'Bookmarks'} />
         {!doesHaveBookmarks && (
           <View>
             <View style={bookmarksStyle.noBookmarksView}>

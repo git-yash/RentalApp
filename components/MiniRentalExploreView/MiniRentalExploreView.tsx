@@ -15,7 +15,6 @@ const MiniRentalExploreView = (props: {
   currentLatitude: number;
   currentLongitude: number;
   navigation: any;
-  isInitiallyBookmarked: boolean;
 }) => {
   const miniRentalExploreViewService = new MiniRentalExploreViewService();
   const {distance, isBookmarked, handleRentalPress, handleHeartPress} =

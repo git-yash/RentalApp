@@ -20,6 +20,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import RentalDetails from './screens/RentalDetails/RentalDetails';
 import Bookmarks from './screens/Bookmarks/Bookmarks';
 import {MyContextProvider} from './MyContext';
+import Post from './screens/Post/Post';
 
 function App(): JSX.Element {
   const Tab = createBottomTabNavigator();
@@ -110,7 +111,7 @@ function App(): JSX.Element {
               />
               <Tab.Screen
                 name={'Post'}
-                component={ExploreStack}
+                component={Post}
                 options={{
                   tabBarIcon: ({focused}) => (
                     <TabBarIcon isFocused={focused} icon={faPlus} />
