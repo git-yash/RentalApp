@@ -25,9 +25,8 @@ const RentalDetailsImagesSlider = (props: {picturePaths: string[]}) => {
             data={props.picturePaths}
             width={windowWidth}
             height={200}
-            mode={'parallax'}
             defaultIndex={currentIndex}
-            scrollAnimationDuration={500}
+            scrollAnimationDuration={300}
             onSnapToItem={index => setCurrentIndex(index)}
             renderItem={({index}) => (
               <View style={{shadowRadius: 10, shadowColor: 'black'}}>
@@ -35,7 +34,6 @@ const RentalDetailsImagesSlider = (props: {picturePaths: string[]}) => {
                   <Image
                     source={{uri: props.picturePaths[index]}}
                     width={windowWidth}
-                    style={{borderRadius: 15}}
                     height={200}
                   />
                 </TouchableOpacity>
