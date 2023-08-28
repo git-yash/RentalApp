@@ -1,5 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
+  Dimensions,
+  Image,
   Pressable,
   SafeAreaView,
   Text,
@@ -14,15 +16,31 @@ import {faArrowUpFromBracket} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import postStyle from './Post.style';
 import usePost from './usePost';
+import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
 
 const Post = (props: {navigation: any}) => {
-  const {handleUploadImagesButton} = usePost();
+  const {handleUploadImagesButton, images} = usePost();
+  const [title, setTitle] = useState('');
+  const imageLengthText = images?.length >= 1 ? '(' + images?.length + ')' : '';
   return (
     <SafeAreaView>
-      <View style={{paddingLeft: 15, paddingTop: 15}}>
-        <ScreenTitle title={'Post'} />
+      <View style={{paddingTop: 15}}>
+        <View style={{paddingLeft: 15}}>
+          <ScreenTitle title={'Post'} />
+        </View>
         {auth().currentUser && (
-          <View>
+          <View style={{paddingTop: 15}}>
+            <CustomTextInput
+              inputTitle={'Title'}
+              placeholderText={'Enter a title...'}
+              value={title}
+              onChange={setTitle}
+              errorMessage={undefined}
+              autoCapitalize={'sentences'}
+              keyboardType={'default'}
+              maxCharacterLength={33}
+              textContentType={'name'}
+            />
             <TouchableOpacity
               style={postStyle.uploadImagesButton}
               onPress={() => handleUploadImagesButton()}>
@@ -30,7 +48,9 @@ const Post = (props: {navigation: any}) => {
                 icon={faArrowUpFromBracket}
                 color={Colors.green}
               />
-              <Text style={postStyle.uploadImagesText}>Upload Images</Text>
+              <Text style={postStyle.uploadImagesText}>
+                Upload Images {imageLengthText}
+              </Text>
             </TouchableOpacity>
             <Text style={postStyle.inputBottomMessageText}>
               You must upload at least 1 image

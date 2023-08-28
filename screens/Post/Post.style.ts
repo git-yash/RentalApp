@@ -11,6 +11,8 @@ const PostStyle = StyleSheet.create({
     padding: 10,
     width: 200,
     justifyContent: 'center',
+    backgroundColor: 'white',
+    marginLeft: 15,
   },
   uploadImagesText: {
     paddingLeft: 5,
@@ -22,7 +24,7 @@ const PostStyle = StyleSheet.create({
     color: Colors.gray600,
     fontFamily: 'Poppins-Regular',
     fontSize: 12,
-    paddingLeft: 5,
+    paddingLeft: 15,
   },
 });
 
