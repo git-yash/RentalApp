@@ -1,4 +1,6 @@
 import {
+  Dimensions,
+  Image,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -15,6 +17,8 @@ import MapView, {MapMarker, PROVIDER_GOOGLE} from 'react-native-maps';
 import UserPositionCustomMapMarker from '../../components/UserPositionCustomMapMarker/UserPositionCustomMapMarker';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import useRentalDetails from './useRentalDetails';
+import Carousel from 'react-native-reanimated-carousel';
+import RentalDetailsImagesSlider from '../../components/RentalDetailsImagesSlider/RentalDetailsImagesSlider';
 
 const RentalDetails = (props: {navigation: any; route: any}) => {
   const {rental, currentLatitude, currentLongitude} = props.route.params;
@@ -33,6 +37,7 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
     <GestureHandlerRootView>
       <SafeAreaView>
         <ScrollView>
+          <RentalDetailsImagesSlider picturePaths={rental.picturePaths} />
           <View style={rentalDetailsStyle.mainContainer}>
             <Text style={rentalDetailsStyle.cityText}>
               {Util.getCityAndState(rental.address)}
