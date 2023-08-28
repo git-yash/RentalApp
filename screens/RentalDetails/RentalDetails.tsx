@@ -37,25 +37,25 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
     <GestureHandlerRootView>
       <SafeAreaView>
         <ScrollView>
+          <Text style={rentalDetailsStyle.cityText}>
+            {Util.getCityAndState(rental.address)}
+          </Text>
+          <Text style={rentalDetailsStyle.titleText}>{rental.title}</Text>
+          <View style={rentalDetailsStyle.reviewContainer}>
+            <FontAwesomeIcon
+              icon={faStar}
+              color={Colors.green}
+              style={rentalDetailsStyle.starIcon}
+            />
+            <Text style={rentalDetailsStyle.ratingText}>
+              {rental.reviews.length === 0 ? noReviews : rental.rating}
+            </Text>
+            <Text style={rentalDetailsStyle.reviewLengthText}>
+              ({rental.reviews.length})
+            </Text>
+          </View>
           <RentalDetailsImagesSlider picturePaths={rental.picturePaths} />
           <View style={rentalDetailsStyle.mainContainer}>
-            <Text style={rentalDetailsStyle.cityText}>
-              {Util.getCityAndState(rental.address)}
-            </Text>
-            <Text style={rentalDetailsStyle.titleText}>{rental.title}</Text>
-            <View style={rentalDetailsStyle.reviewContainer}>
-              <FontAwesomeIcon
-                icon={faStar}
-                color={Colors.green}
-                style={rentalDetailsStyle.starIcon}
-              />
-              <Text style={rentalDetailsStyle.ratingText}>
-                {rental.reviews.length === 0 ? noReviews : rental.rating}
-              </Text>
-              <Text style={rentalDetailsStyle.reviewLengthText}>
-                ({rental.reviews.length})
-              </Text>
-            </View>
             <Text style={rentalDetailsStyle.subtitleText}>Description</Text>
             <Text style={rentalDetailsStyle.subtitleDescriptionText}>
               {rental.description}

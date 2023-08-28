@@ -4,11 +4,18 @@ import Colors from '../../assets/Colors';
 const rentalDetailsStyle = StyleSheet.create({
   cityText: {
     fontFamily: 'Poppins-Regular',
+    paddingTop: 10,
     color: Colors.gray500,
+    paddingLeft: 15,
   },
   mainContainer: {paddingLeft: 10, paddingTop: 10, paddingRight: 10},
-  titleText: {fontFamily: 'Poppins-SemiBold', fontSize: 27},
-  reviewContainer: {flexDirection: 'row', paddingTop: 5},
+  titleText: {fontFamily: 'Poppins-SemiBold', fontSize: 27, paddingLeft: 15},
+  reviewContainer: {
+    flexDirection: 'row',
+    paddingTop: 5,
+    paddingLeft: 15,
+    paddingBottom: 10,
+  },
   starIcon: {marginTop: 1},
   ratingText: {
     paddingLeft: 5,

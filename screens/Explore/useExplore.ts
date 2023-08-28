@@ -23,6 +23,7 @@ const useExplore = () => {
   const mapRef = useRef(null);
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const {bookmarkedPosts} = useMyContext();
+  const appState = useRef(AppState.currentState);
 
   const onViewableItemsChanged = useRef(({viewableItems}) => {
     if (viewableItems.length > 0) {
