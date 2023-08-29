@@ -56,7 +56,7 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
           </View>
           <RentalDetailsImagesSlider picturePaths={rental.picturePaths} />
           <View style={rentalDetailsStyle.mainContainer}>
-            <Text style={rentalDetailsStyle.subtitleText}>Description</Text>
+            <Text style={rentalDetailsStyle.descriptionText}>Description</Text>
             <Text style={rentalDetailsStyle.subtitleDescriptionText}>
               {rental.description}
             </Text>

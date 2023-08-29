@@ -23,6 +23,10 @@ const rentalDetailsStyle = StyleSheet.create({
     paddingRight: 3,
   },
   reviewLengthText: {fontFamily: 'Poppins-SemiBold', color: Colors.gray500},
+  descriptionText: {
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 20,
+  },
   subtitleText: {
     paddingTop: 15,
     fontFamily: 'Poppins-SemiBold',

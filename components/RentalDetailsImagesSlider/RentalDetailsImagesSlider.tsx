@@ -1,10 +1,22 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, Image, Modal, TouchableOpacity, View} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  Modal,
+  Pressable,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import Colors from '../../assets/Colors';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faMagnifyingGlassPlus} from '@fortawesome/free-solid-svg-icons';
+import {
+  faMagnifyingGlassPlus,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 import {IImageInfo} from 'react-native-image-zoom-viewer/built/image-viewer.type';
 
 const RentalDetailsImagesSlider = (props: {picturePaths: string[]}) => {
@@ -33,6 +45,15 @@ const RentalDetailsImagesSlider = (props: {picturePaths: string[]}) => {
       <Modal visible={isZoomViewerEnabled} transparent={isZoomViewerEnabled}>
         <ImageViewer
           imageUrls={images}
+          renderHeader={() => {
+            return (
+              <SafeAreaView>
+                <Pressable onPress={() => setIsZoomViewerEnabled(false)}>
+                  <FontAwesomeIcon icon={faXmark} color={'white'} size={30} />
+                </Pressable>
+              </SafeAreaView>
+            );
+          }}
           index={currentIndex}
           onClick={() => setIsZoomViewerEnabled(false)}
         />
@@ -122,7 +143,8 @@ const RentalDetailsImagesSlider = (props: {picturePaths: string[]}) => {
           <View
             style={{
               flexDirection: 'row',
-              padding: 10,
+              paddingLeft: 10,
+              paddingTop: 10,
               flexWrap: 'wrap',
             }}>
             {props.picturePaths.map((item, index) => {
