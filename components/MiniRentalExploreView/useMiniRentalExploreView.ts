@@ -64,6 +64,7 @@ const useMiniRentalExploreView = (
     rental.isBookmarked = !isBookmarked;
     setIsBookmarked(rental.isBookmarked);
     ReactNativeHapticFeedback.trigger('effectDoubleClick', Util.options);
+    console.log('pressed' + isBookmarked);
 
     const bookmarks = [...bookmarkedPosts];
     const newRental = rental;

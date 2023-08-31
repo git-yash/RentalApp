@@ -9,6 +9,7 @@ import MiniRentalExploreViewService from './MiniRentalExploreView.service';
 import useMiniRentalExploreView from './useMiniRentalExploreView';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import miniRentalExploreViewStyle from './MiniRentalExploreView.style';
+import BookmarkButton from '../BookmarkButton/BookmarkButton';
 
 const MiniRentalExploreView = (props: {
   rental: Rental;
@@ -68,20 +69,12 @@ const MiniRentalExploreView = (props: {
                 {props.rental.rating}
               </Text>
             </View>
-            <TouchableOpacity
-              style={miniRentalExploreViewStyle.heartButton}
-              onPress={() => handleHeartPress()}>
-              <FontAwesomeIcon
-                icon={
-                  isBookmarked || props.rental.isBookmarked
-                    ? solidHeart
-                    : regularHeart
-                }
-                color={Colors.green}
-                size={20}
-                style={miniRentalExploreViewStyle.heartIcon}
-              />
-            </TouchableOpacity>
+            <BookmarkButton
+              rental={props.rental}
+              iconSize={20}
+              currentLongitude={props.currentLongitude}
+              currentLatitude={props.currentLatitude}
+            />
           </View>
         </View>
       </View>

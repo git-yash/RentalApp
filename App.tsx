@@ -4,7 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
   faHeart,
   faMagnifyingGlass,
-  faMessage,
+  faPaperPlane,
   faPlus,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
@@ -130,7 +130,7 @@ function App(): JSX.Element {
                 component={ExploreStack}
                 options={{
                   tabBarIcon: ({focused}) => (
-                    <TabBarIcon isFocused={focused} icon={faMessage} />
+                    <TabBarIcon isFocused={focused} icon={faPaperPlane} />
                   ),
                   tabBarActiveTintColor: Colors.green,
                   tabBarInactiveTintColor: Colors.gray500,

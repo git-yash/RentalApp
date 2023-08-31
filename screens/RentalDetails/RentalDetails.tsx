@@ -11,7 +11,8 @@ import {
 import Util from '../../Util';
 import rentalDetailsStyle from './RentalDetails.style';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faStar} from '@fortawesome/free-solid-svg-icons';
+import {faHeart as solidHeart, faStar} from '@fortawesome/free-solid-svg-icons';
+import {faHeart as regularHeart} from '@fortawesome/free-regular-svg-icons';
 import Colors from '../../assets/Colors';
 import MapView, {MapMarker, PROVIDER_GOOGLE} from 'react-native-maps';
 import UserPositionCustomMapMarker from '../../components/UserPositionCustomMapMarker/UserPositionCustomMapMarker';
@@ -19,6 +20,11 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import useRentalDetails from './useRentalDetails';
 import Carousel from 'react-native-reanimated-carousel';
 import RentalDetailsImagesSlider from '../../components/RentalDetailsImagesSlider/RentalDetailsImagesSlider';
+import {useEffect, useState} from 'react';
+import {library} from '@fortawesome/fontawesome-svg-core';
+import BookmarkButton from '../../components/BookmarkButton/BookmarkButton';
+import useMiniRentalExploreView from '../../components/MiniRentalExploreView/useMiniRentalExploreView';
+import MiniRentalExploreViewService from '../../components/MiniRentalExploreView/MiniRentalExploreView.service';
 
 const RentalDetails = (props: {navigation: any; route: any}) => {
   const {rental, currentLatitude, currentLongitude} = props.route.params;
@@ -31,7 +37,20 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
     props.navigation,
     rental,
   );
+  library.add(solidHeart, regularHeart);
   // max is 33
+  useEffect(() => {
+    props.navigation.setOptions({
+      headerRight: () => (
+        <BookmarkButton
+          rental={rental}
+          iconSize={23}
+          currentLatitude={currentLatitude}
+          currentLongitude={currentLongitude}
+        />
+      ),
+    });
+  }, []);
 
   return (
     <GestureHandlerRootView>
