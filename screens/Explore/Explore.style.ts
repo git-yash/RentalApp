@@ -22,11 +22,20 @@ const exploreStyles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
   },
-  flatListView: {flex: 0.7, position: 'absolute', bottom: 0},
+  flatListView: {
+    flex: 0.7,
+    position: 'absolute',
+    bottom: '10%',
+  },
   categoryAndSearchView: {
     flex: 0.43,
+    position: 'absolute',
+    top: 0,
     backgroundColor: 'white',
-    paddingTop: 5,
+    paddingTop: 15,
+  },
+  mapView: {
+    flex: 2,
   },
 });
 

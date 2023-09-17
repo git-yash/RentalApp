@@ -18,14 +18,13 @@ const MiniRentalExploreView = (props: {
   navigation: any;
 }) => {
   const miniRentalExploreViewService = new MiniRentalExploreViewService();
-  const {distance, isBookmarked, handleRentalPress, handleHeartPress} =
-    useMiniRentalExploreView(
-      props.currentLatitude,
-      props.currentLongitude,
-      props.rental.address,
-      props.rental,
-      miniRentalExploreViewService,
-    );
+  const {distance, handleRentalPress} = useMiniRentalExploreView(
+    props.currentLatitude,
+    props.currentLongitude,
+    props.rental.address,
+    props.rental,
+    miniRentalExploreViewService,
+  );
   library.add(solidHeart, regularHeart);
   return (
     <TouchableOpacity

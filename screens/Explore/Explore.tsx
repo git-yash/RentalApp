@@ -1,5 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {Dimensions, FlatList, SafeAreaView, Text, View} from 'react-native';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {
+  Button,
+  Dimensions,
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import MapView, {MapMarker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {Spinner} from 'native-base';
@@ -12,6 +20,12 @@ import CategoryTabBar from '../../components/CategoryTabBar/CategoryTabBar';
 import exploreStyles from './Explore.style';
 import UserPositionCustomMapMarker from '../../components/UserPositionCustomMapMarker/UserPositionCustomMapMarker';
 import {useIsFocused} from '@react-navigation/native';
+import BottomSheet, {
+  BottomSheetFlatList,
+  BottomSheetScrollView,
+  BottomSheetSectionList,
+} from '@gorhom/bottom-sheet';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const Explore = (props: {navigation: any}) => {
   const {
@@ -44,9 +58,7 @@ const Explore = (props: {navigation: any}) => {
             latitudeDelta: 0.15,
             longitudeDelta: 0.15,
           }}
-          style={{
-            flex: 2,
-          }}>
+          style={exploreStyles.mapView}>
           {rentals?.map((rental, index) => (
             <MapMarker
               coordinate={{
@@ -73,6 +85,10 @@ const Explore = (props: {navigation: any}) => {
           </MapMarker>
         </MapView>
       )}
+      <View style={exploreStyles.categoryAndSearchView}>
+        <SearchBar />
+        <CategoryTabBar />
+      </View>
       <View style={exploreStyles.flatListView}>
         <FlatList
           data={rentals}
@@ -94,14 +110,26 @@ const Explore = (props: {navigation: any}) => {
             />
           )}
         />
-        <View style={exploreStyles.categoryAndSearchView}>
-          <CategoryTabBar />
-          <SearchBar />
-        </View>
       </View>
+      <GestureHandlerRootView />
       {!canShowMap && <Spinner color={Colors.green} />}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 300,
+  },
+  contentContainer: {
+    backgroundColor: 'white',
+  },
+  itemContainer: {
+    padding: 6,
+    margin: 6,
+    backgroundColor: '#eee',
+  },
+});
 
 export default Explore;

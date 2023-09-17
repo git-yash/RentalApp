@@ -1,11 +1,12 @@
 import {StyleSheet} from 'react-native';
+import Colors from '../../assets/Colors';
 
 const searchBarStyles = StyleSheet.create({
   searchBarContainer: {
     shadowRadius: 10,
     shadowColor: 'black',
     shadowOpacity: 0.3,
-    height: '40%',
+    height: '37%',
     borderRadius: 100,
     flexDirection: 'row',
     flexWrap: 'nowrap',
@@ -28,6 +29,12 @@ const searchBarStyles = StyleSheet.create({
     padding: 8,
     fontFamily: 'Poppins-Regular',
     flex: 1,
+  },
+  filterPressable: {
+    borderRadius: 100,
+    padding: 9,
+    marginRight: 4,
+    backgroundColor: Colors.gray300,
   },
 });
 
