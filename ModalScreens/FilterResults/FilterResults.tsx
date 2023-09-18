@@ -57,13 +57,16 @@ const FilterResults = (props: {
           <Slider
             trackMarks={[0, 0.25, 0.5, 0.75, 1]}
             step={0.25}
-            value={searchRadius * 0.025}
+            value={(searchRadius - 5) / 20}
+            onValueChange={value => {
+              setSearchRadius(value[0] * 20 + 5);
+            }}
             thumbTintColor={Colors.green}
             minimumTrackTintColor={Colors.green}
             trackClickable={true}
             renderTrackMarkComponent={index => {
               return (
-                <View style={{paddingLeft: 5, paddingTop: 40}}>
+                <View style={{paddingTop: 40, paddingLeft: 3}}>
                   <Text style={{fontFamily: 'Poppins-Regular'}}>
                     {unitOfMeasurement === 'miles'
                       ? distancesInMiles[index]
