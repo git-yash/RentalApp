@@ -1,13 +1,5 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {
-  Button,
-  Dimensions,
-  FlatList,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import React, {useCallback, useMemo, useRef} from 'react';
+import {Dimensions, FlatList, StyleSheet, Text, View} from 'react-native';
 import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import MapView, {MapMarker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {Spinner} from 'native-base';
@@ -19,12 +11,7 @@ import useExplore from './useExplore';
 import CategoryTabBar from '../../components/CategoryTabBar/CategoryTabBar';
 import exploreStyles from './Explore.style';
 import UserPositionCustomMapMarker from '../../components/UserPositionCustomMapMarker/UserPositionCustomMapMarker';
-import {useIsFocused} from '@react-navigation/native';
-import BottomSheet, {
-  BottomSheetFlatList,
-  BottomSheetScrollView,
-  BottomSheetSectionList,
-} from '@gorhom/bottom-sheet';
+import BottomSheet from '@gorhom/bottom-sheet';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const Explore = (props: {navigation: any}) => {
@@ -41,6 +28,17 @@ const Explore = (props: {navigation: any}) => {
     flatListRef,
   } = useExplore();
 
+  // ref
+  const bottomSheetRef = useRef<BottomSheet>(null);
+
+  // variables
+  const snapPoints = useMemo(() => ['10%', '80%'], []);
+
+  // callbacks
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
   return (
     <View style={{flex: 1}}>
       <LogInOrSignUp
@@ -48,42 +46,55 @@ const Explore = (props: {navigation: any}) => {
         setIsModalVisible={setModalVisible}
       />
       {canShowMap && (
-        <MapView
-          customMapStyle={mapStyle}
-          provider={PROVIDER_GOOGLE}
-          ref={mapRef}
-          initialRegion={{
-            latitude: position?.coords.latitude as number,
-            longitude: position?.coords.longitude as number,
-            latitudeDelta: 0.15,
-            longitudeDelta: 0.15,
-          }}
-          style={exploreStyles.mapView}>
-          {rentals?.map((rental, index) => (
-            <MapMarker
-              coordinate={{
-                latitude: rental.location.latitude as number,
-                longitude: rental.location.longitude as number,
-              }}
-              key={index}
-              onPress={() => {
-                flatListRef.current.scrollToIndex({index: index});
-              }}>
-              <CustomMapMarker
-                price={rental.pricePerHour}
-                isSelected={currentItemIndex === index}
-                key={index}
-              />
-            </MapMarker>
-          ))}
-          <MapMarker
-            coordinate={{
+        <>
+          <MapView
+            customMapStyle={mapStyle}
+            provider={PROVIDER_GOOGLE}
+            ref={mapRef}
+            initialRegion={{
               latitude: position?.coords.latitude as number,
               longitude: position?.coords.longitude as number,
-            }}>
-            <UserPositionCustomMapMarker />
-          </MapMarker>
-        </MapView>
+              latitudeDelta: 0.15,
+              longitudeDelta: 0.15,
+            }}
+            style={exploreStyles.mapView}>
+            {rentals?.map((rental, index) => (
+              <MapMarker
+                coordinate={{
+                  latitude: rental.location.latitude as number,
+                  longitude: rental.location.longitude as number,
+                }}
+                key={index}
+                onPress={() => {
+                  flatListRef.current?.scrollToIndex({index: index});
+                }}>
+                <CustomMapMarker
+                  price={rental.pricePerHour}
+                  isSelected={currentItemIndex === index}
+                  key={index}
+                />
+              </MapMarker>
+            ))}
+            <MapMarker
+              coordinate={{
+                latitude: position?.coords.latitude as number,
+                longitude: position?.coords.longitude as number,
+              }}>
+              <UserPositionCustomMapMarker />
+            </MapMarker>
+          </MapView>
+          <GestureHandlerRootView style={styles.container}>
+            <BottomSheet
+              ref={bottomSheetRef}
+              index={0}
+              snapPoints={snapPoints}
+              onChange={handleSheetChanges}>
+              <View style={styles.contentContainer}>
+                <Text>Awesome 🎉</Text>
+              </View>
+            </BottomSheet>
+          </GestureHandlerRootView>
+        </>
       )}
       <View style={exploreStyles.categoryAndSearchView}>
         <SearchBar />
@@ -111,24 +122,18 @@ const Explore = (props: {navigation: any}) => {
           )}
         />
       </View>
-      <GestureHandlerRootView />
       {!canShowMap && <Spinner color={Colors.green} />}
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 300,
+    backgroundColor: 'grey',
   },
   contentContainer: {
-    backgroundColor: 'white',
-  },
-  itemContainer: {
-    padding: 6,
-    margin: 6,
-    backgroundColor: '#eee',
+    flex: 1,
+    alignItems: 'center',
   },
 });
 

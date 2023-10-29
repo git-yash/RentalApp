@@ -37,7 +37,7 @@ const logInOrSignUpStyles = StyleSheet.create({
   },
   continuePressableEnabled: {
     backgroundColor: Colors.green,
-    height: 50,
+    height: 40,
     justifyContent: 'center',
     borderRadius: 10,
     marginTop: 5,
@@ -45,7 +45,7 @@ const logInOrSignUpStyles = StyleSheet.create({
   },
   continuePressableDisabled: {
     backgroundColor: Colors.gray400,
-    height: 50,
+    height: 40,
     justifyContent: 'center',
     borderRadius: 10,
     marginTop: 5,

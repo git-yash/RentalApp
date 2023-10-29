@@ -21,10 +21,11 @@ const PostStyle = StyleSheet.create({
   },
   inputBottomMessageText: {
     paddingTop: 5,
+    marginBottom: 15,
     color: Colors.gray600,
     fontFamily: 'Poppins-Regular',
     fontSize: 12,
-    paddingLeft: 15,
+    paddingLeft: 20,
   },
 });
 

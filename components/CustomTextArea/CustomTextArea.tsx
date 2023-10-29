@@ -1,48 +1,16 @@
 import React, {useState} from 'react';
-import {Box, Input, Text} from 'native-base';
-import customTextInputStyles from './CustomTextInput.style';
 import Colors from '../../assets/Colors';
-import {KeyboardTypeOptions} from 'react-native';
+import {Box, Text, TextArea} from 'native-base';
+import customTextInputStyles from '../CustomTextInput/CustomTextInput.style';
 
-const CustomTextInput = (props: {
+const CustomTextArea = (props: {
   inputTitle: string;
   placeholderText: string;
   value: string;
   onChange: any;
   errorMessage: string | undefined;
   autoCapitalize: 'none' | 'sentences' | 'words' | 'characters' | undefined;
-  keyboardType: KeyboardTypeOptions | undefined;
   maxCharacterLength: number;
-  textContentType:
-    | 'none'
-    | 'URL'
-    | 'addressCity'
-    | 'addressCityAndState'
-    | 'addressState'
-    | 'countryName'
-    | 'creditCardNumber'
-    | 'emailAddress'
-    | 'familyName'
-    | 'fullStreetAddress'
-    | 'givenName'
-    | 'jobTitle'
-    | 'location'
-    | 'middleName'
-    | 'name'
-    | 'namePrefix'
-    | 'nameSuffix'
-    | 'nickname'
-    | 'organizationName'
-    | 'postalCode'
-    | 'streetAddressLine1'
-    | 'streetAddressLine2'
-    | 'sublocality'
-    | 'telephoneNumber'
-    | 'username'
-    | 'password'
-    | 'newPassword'
-    | 'oneTimeCode'
-    | undefined;
 }) => {
   const [inputTextColor, setInputTextColor] = useState(Colors.gray800);
 
@@ -60,6 +28,15 @@ const CustomTextInput = (props: {
         <Text style={customTextInputStyles.inputTitleText}>
           {props.inputTitle}
         </Text>
+        <Text
+          style={{
+            fontFamily: 'Poppins-Regular',
+            paddingLeft: 10,
+            fontSize: 12,
+            color: Colors.gray700,
+          }}>
+          ({props.value.length}/{props.maxCharacterLength} characters)
+        </Text>
       </Box>
       <Box
         style={{
@@ -69,10 +46,11 @@ const CustomTextInput = (props: {
           marginLeft: 15,
           marginRight: 15,
         }}>
-        <Input
+        <TextArea
           placeholderTextColor={Colors.gray800}
           invalidOutlineColor={Colors.invalidRed}
           onBlur={onBlurInput}
+          h={20}
           onFocus={onFocusInput}
           color={inputTextColor}
           onChangeText={props.onChange}
@@ -90,6 +68,7 @@ const CustomTextInput = (props: {
           maxLength={props.maxCharacterLength}
           style={customTextInputStyles.input}
           isInvalid={props.errorMessage !== undefined}
+          autoCompleteType={undefined}
         />
       </Box>
       {props.errorMessage && (
@@ -101,4 +80,4 @@ const CustomTextInput = (props: {
   );
 };
 
-export default CustomTextInput;
+export default CustomTextArea;

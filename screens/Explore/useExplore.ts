@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Alert, AppState} from 'react-native';
 import Geolocation, {
   GeolocationResponse,
@@ -7,10 +7,10 @@ import {Rental} from '../../modals/Rental';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import ExploreService from './Explore.service';
-import useBookmarks from '../Bookmarks/useBookmarks';
 import {useMyContext} from '../../MyContext';
 import {useIsFocused} from '@react-navigation/native';
 import Util from '../../Util';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 const useExplore = () => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -24,6 +24,26 @@ const useExplore = () => {
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const {bookmarkedPosts} = useMyContext();
   const appState = useRef(AppState.currentState);
+  const [refreshing, setRefreshing] = React.useState(false);
+  const refreshScreen = () => {
+    setRefreshing(true);
+    ReactNativeHapticFeedback.trigger('impactMedium', Util.options);
+    exploreService
+      .getAllRentals(
+        {
+          lat: position?.coords.latitude as number,
+          lng: position?.coords.longitude as number,
+        },
+        5,
+      )
+      .then(r => {
+        setRentals(r);
+        setRefreshing(false);
+      });
+  };
+  const onRefresh = React.useCallback(() => {
+    refreshScreen();
+  }, []);
 
   const onViewableItemsChanged = useRef(({viewableItems}) => {
     if (viewableItems.length > 0) {
@@ -145,6 +165,8 @@ const useExplore = () => {
     rentals,
     currentItemIndex,
     onViewableItemsChanged,
+    refreshing,
+    onRefresh,
     canShowMap,
     mapStyle,
     mapRef,

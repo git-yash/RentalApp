@@ -21,6 +21,7 @@ import RentalDetails from './screens/RentalDetails/RentalDetails';
 import Bookmarks from './screens/Bookmarks/Bookmarks';
 import {MyContextProvider} from './MyContext';
 import Post from './screens/Post/Post';
+import Messages from './screens/Messages/Messages';
 
 function App(): JSX.Element {
   const Tab = createBottomTabNavigator();
@@ -127,7 +128,7 @@ function App(): JSX.Element {
               />
               <Tab.Screen
                 name={'Messages'}
-                component={ExploreStack}
+                component={Messages}
                 options={{
                   tabBarIcon: ({focused}) => (
                     <TabBarIcon isFocused={focused} icon={faPaperPlane} />
