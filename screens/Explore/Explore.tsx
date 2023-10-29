@@ -40,7 +40,7 @@ const Explore = (props: {navigation: any}) => {
   }, []);
 
   return (
-    <View style={{flex: 1}}>
+    <View>
       <LogInOrSignUp
         isModalVisible={isModalVisible}
         setIsModalVisible={setModalVisible}
@@ -128,11 +128,11 @@ const Explore = (props: {navigation: any}) => {
 };
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'grey',
+    height: '100%',
+    width: '100%',
+    zIndex: 1,
   },
   contentContainer: {
-    flex: 1,
     alignItems: 'center',
   },
 });
