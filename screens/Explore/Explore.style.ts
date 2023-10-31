@@ -30,6 +30,11 @@ const exploreStyles = StyleSheet.create({
   categoryAndSearchView: {
     position: 'absolute',
     top: 0,
+    zIndex: 2,
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
     backgroundColor: 'white',
     paddingTop: 15,
   },
@@ -38,6 +43,23 @@ const exploreStyles = StyleSheet.create({
     bottom: 0,
     height: '100%',
     width: '100%',
+  },
+  listModalContainer: {
+    height: '100%',
+    width: '100%',
+    zIndex: 1,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
+  },
+  listModalContentContainer: {
+    alignItems: 'center',
+    flex: 1,
   },
 });
 

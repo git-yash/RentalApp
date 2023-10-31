@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Alert, AppState} from 'react-native';
 import Geolocation, {
   GeolocationResponse,
@@ -11,6 +11,7 @@ import {useMyContext} from '../../MyContext';
 import {useIsFocused} from '@react-navigation/native';
 import Util from '../../Util';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+import BottomSheet from '@gorhom/bottom-sheet';
 
 const useExplore = () => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -23,8 +24,15 @@ const useExplore = () => {
   const mapRef = useRef(null);
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const {bookmarkedPosts} = useMyContext();
+  const [isListView, setIsListView] = useState(false);
   const appState = useRef(AppState.currentState);
   const [refreshing, setRefreshing] = React.useState(false);
+
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const snapPoints = useMemo(() => ['10%', '85%'], []);
+  const handleSheetChanges = useCallback((index: number) => {
+    setIsListView(prevState => !prevState);
+  }, []);
   const refreshScreen = () => {
     setRefreshing(true);
     ReactNativeHapticFeedback.trigger('impactMedium', Util.options);
@@ -162,11 +170,15 @@ const useExplore = () => {
     isModalVisible,
     setModalVisible,
     position,
+    bottomSheetRef,
     rentals,
     currentItemIndex,
     onViewableItemsChanged,
     refreshing,
     onRefresh,
+    snapPoints,
+    handleSheetChanges,
+    isListView,
     canShowMap,
     mapStyle,
     mapRef,

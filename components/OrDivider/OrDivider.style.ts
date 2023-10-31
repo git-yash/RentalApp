@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import Colors from '../../assets/Colors';
 
 const orDividerStyles = StyleSheet.create({
-  container: {
+  listModalContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

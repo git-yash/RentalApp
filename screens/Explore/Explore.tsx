@@ -1,7 +1,22 @@
-import React, {useCallback, useMemo, useRef} from 'react';
-import {Dimensions, FlatList, StyleSheet, Text, View} from 'react-native';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import {
+  Dimensions,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import MapView, {MapMarker, PROVIDER_GOOGLE} from 'react-native-maps';
+import {faMap} from '@fortawesome/free-solid-svg-icons';
 import {Spinner} from 'native-base';
 import Colors from '../../assets/Colors';
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -13,6 +28,7 @@ import exploreStyles from './Explore.style';
 import UserPositionCustomMapMarker from '../../components/UserPositionCustomMapMarker/UserPositionCustomMapMarker';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 const Explore = (props: {navigation: any}) => {
   const {
@@ -20,6 +36,10 @@ const Explore = (props: {navigation: any}) => {
     setModalVisible,
     position,
     rentals,
+    snapPoints,
+    handleSheetChanges,
+    isListView,
+    bottomSheetRef,
     currentItemIndex,
     onViewableItemsChanged,
     canShowMap,
@@ -27,17 +47,6 @@ const Explore = (props: {navigation: any}) => {
     mapRef,
     flatListRef,
   } = useExplore();
-
-  // ref
-  const bottomSheetRef = useRef<BottomSheet>(null);
-
-  // variables
-  const snapPoints = useMemo(() => ['10%', '80%'], []);
-
-  // callbacks
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
 
   return (
     <View>
@@ -83,14 +92,61 @@ const Explore = (props: {navigation: any}) => {
               <UserPositionCustomMapMarker />
             </MapMarker>
           </MapView>
-          <GestureHandlerRootView style={styles.container}>
+          <GestureHandlerRootView
+            style={exploreStyles.listModalContainer}
+            pointerEvents={'box-none'}>
             <BottomSheet
               ref={bottomSheetRef}
-              index={0}
+              handleIndicatorStyle={{backgroundColor: Colors.gray400}}
+              index={1}
               snapPoints={snapPoints}
               onChange={handleSheetChanges}>
-              <View style={styles.contentContainer}>
-                <Text>Awesome 🎉</Text>
+              <View style={exploreStyles.listModalContentContainer}>
+                <Text style={{fontFamily: 'Poppins-Regular'}}>
+                  View all {rentals.length} rentals
+                </Text>
+                <FlatList
+                  style={{marginTop: 15}}
+                  data={rentals}
+                  keyExtractor={item => item.id}
+                  contentContainerStyle={{paddingBottom: '20%'}}
+                  renderItem={({item}) => (
+                    <MiniRentalExploreView
+                      rental={item}
+                      currentLongitude={position?.coords.longitude as number}
+                      currentLatitude={position?.coords.latitude as number}
+                      navigation={props.navigation}
+                    />
+                  )}
+                />
+                {isListView && (
+                  <TouchableOpacity
+                    onPress={() => bottomSheetRef.current?.snapToIndex(0)}
+                    style={{
+                      position: 'absolute',
+                      zIndex: 5,
+                      bottom: '5%',
+                      padding: 10,
+                      borderRadius: 50,
+                      alignSelf: 'center',
+                      backgroundColor: 'black',
+                    }}>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text
+                        style={{
+                          color: 'white',
+                          fontFamily: 'Poppins-SemiBold',
+                        }}>
+                        Show Map
+                      </Text>
+                      <FontAwesomeIcon
+                        icon={faMap}
+                        color={'white'}
+                        style={{marginLeft: 5, marginTop: 2}}
+                      />
+                    </View>
+                  </TouchableOpacity>
+                )}
               </View>
             </BottomSheet>
           </GestureHandlerRootView>
@@ -126,15 +182,5 @@ const Explore = (props: {navigation: any}) => {
     </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    width: '100%',
-    zIndex: 1,
-  },
-  contentContainer: {
-    alignItems: 'center',
-  },
-});
 
 export default Explore;
