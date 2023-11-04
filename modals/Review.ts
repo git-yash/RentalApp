@@ -4,4 +4,6 @@ export interface Review {
   description: string;
   rating: number;
   user?: User;
+  userEmail: string;
+  date: Date;
 }

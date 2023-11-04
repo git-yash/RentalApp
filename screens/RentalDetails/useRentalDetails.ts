@@ -3,6 +3,7 @@ import {createMapLink} from 'react-native-open-maps';
 import {useActionSheet} from '@expo/react-native-action-sheet';
 import {Rental} from '../../modals/Rental';
 import {useEffect} from 'react';
+import {Review} from '../../modals/Review';
 
 const useRentalDetails = (navigation: any, rental: Rental) => {
   const {showActionSheetWithOptions} = useActionSheet();
@@ -12,6 +13,30 @@ const useRentalDetails = (navigation: any, rental: Rental) => {
       title: rental.title,
     });
   }, []);
+
+  const getReviewRatingPercentages = () => {
+    const reviews: Review[] = rental.reviews;
+    const reviewRatings: number[] = [0, 0, 0, 0, 0];
+    const reviewRatingPercentages: number[] = [0, 0, 0, 0, 0];
+    for (const review of reviews) {
+      reviewRatings[review.rating - 1]++;
+    }
+    for (let i = 0; i < reviewRatings.length; i++) {
+      reviewRatingPercentages[i] = (reviewRatings[i] / reviews.length) * 100;
+    }
+
+    return reviewRatingPercentages.reverse();
+  };
+
+  const getAverageRating = () => {
+    const reviews: Review[] = rental.reviews;
+    let total: number = 0;
+    for (const review of reviews) {
+      total += review.rating;
+    }
+    return (total / reviews.length).toFixed(1);
+  };
+
   const handleMapViewPressablePress = () => {
     if (Platform.OS === 'ios') {
       const options = ['Open In Maps', 'Open In Google Maps', 'Cancel'];
@@ -59,6 +84,8 @@ const useRentalDetails = (navigation: any, rental: Rental) => {
 
   return {
     handleMapViewPressablePress,
+    getReviewRatingPercentages,
+    getAverageRating,
   };
 };
 

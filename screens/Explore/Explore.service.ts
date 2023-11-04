@@ -6,6 +6,7 @@ import Geocoder from 'react-native-geocoding';
 import LatLng = Geocoder.LatLng;
 import BookmarksService from '../Bookmarks/Bookmarks.service';
 import MiniRentalExploreViewService from '../../components/MiniRentalExploreView/MiniRentalExploreView.service';
+import Util from '../../Util';
 
 export default class ExploreService {
   async getUserFromUserEmail(email: string): Promise<User | undefined> {
@@ -35,12 +36,20 @@ export default class ExploreService {
         const data = doc.data();
         reviews.push({
           user: undefined,
+          userEmail: data.userEmail,
           description: data.description,
           postID: data.postID,
           rating: data.rating,
           title: data.title,
+          date: data.date.toDate(),
         });
       });
+      for (const review of reviews) {
+        this.getUserFromUserEmail(review.userEmail).then(_user => {
+          review.user = _user;
+          console.log('date' + review.date);
+        });
+      }
 
       return reviews;
     } catch (error) {

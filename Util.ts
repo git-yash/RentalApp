@@ -159,4 +159,54 @@ export default class Util {
   public static getIndexFromRentalID(rentals: Rental[], id: string): number {
     return rentals.findIndex(rental => rental.id === id);
   }
+
+  public static getFormattedNumberText(num: number, word: string): string {
+    let formattedNum: string;
+    if (num === 1) {
+      return num + ' ' + word;
+    }
+    if (num >= 1000000) {
+      const millionValue = (num / 1000000).toFixed(1);
+      formattedNum = millionValue.endsWith('.0')
+        ? millionValue.slice(0, -2) + 'm'
+        : millionValue + 'm';
+    } else if (num >= 1000) {
+      const thousandValue = (num / 1000).toFixed(1);
+      formattedNum = thousandValue.endsWith('.0')
+        ? thousandValue.slice(0, -2) + 'k'
+        : thousandValue + 'k';
+    } else {
+      formattedNum = num.toString();
+    }
+
+    return formattedNum + ' ' + word + 's';
+  }
+
+  public static formatCustomDate(date: Date): string {
+    const today = new Date();
+    const daysOfWeek = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ];
+    const timeDifference = today.getTime() - date.getTime();
+    const daysDifference = Math.floor(timeDifference / (1000 * 3600 * 24));
+
+    if (daysDifference === 0) {
+      return 'Today';
+    } else if (daysDifference === 1) {
+      return 'Yesterday';
+    } else if (daysDifference < 7) {
+      return daysOfWeek[date.getDay()];
+    } else if (daysDifference < 365) {
+      return date.toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
+    } else {
+      const yearsDifference = today.getFullYear() - date.getFullYear();
+      return `${yearsDifference} year${yearsDifference > 1 ? 's' : ''} ago`;
+    }
+  }
 }

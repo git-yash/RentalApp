@@ -1,6 +1,5 @@
 import {
-  Dimensions,
-  Image,
+  Platform,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -14,14 +13,13 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHeart as solidHeart, faStar} from '@fortawesome/free-solid-svg-icons';
 import {faHeart as regularHeart} from '@fortawesome/free-regular-svg-icons';
 import Colors from '../../assets/Colors';
-import MapView, {MapMarker, PROVIDER_GOOGLE} from 'react-native-maps';
-import UserPositionCustomMapMarker from '../../components/UserPositionCustomMapMarker/UserPositionCustomMapMarker';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import useRentalDetails from './useRentalDetails';
 import RentalDetailsImagesSlider from '../../components/RentalDetailsImagesSlider/RentalDetailsImagesSlider';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import BookmarkButton from '../../components/BookmarkButton/BookmarkButton';
+import {Progress} from 'native-base';
 
 const RentalDetails = (props: {navigation: any; route: any}) => {
   const {rental, currentLatitude, currentLongitude} = props.route.params;
@@ -30,10 +28,18 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
   const shouldShowReadMore: boolean =
     rental.description >= readMoreMaxCharLength;
   const mapStyle = require('../../assets/MapStyle.json');
-  const {handleMapViewPressablePress} = useRentalDetails(
-    props.navigation,
-    rental,
-  );
+  const {
+    handleMapViewPressablePress,
+    getReviewRatingPercentages,
+    getAverageRating,
+  } = useRentalDetails(props.navigation, rental);
+  const [rating, setRating] = useState(0);
+  const averageRating: number = getAverageRating();
+  const reviewRatingPercentages: number[] = getReviewRatingPercentages();
+
+  const handleStarPress = starNumber => {
+    setRating(starNumber);
+  };
   library.add(solidHeart, regularHeart);
   // max is 33
   useEffect(() => {
@@ -92,28 +98,163 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
             )}
             <Text style={rentalDetailsStyle.deliveryText}>Delivery</Text>
 
-            <Pressable
-              onPress={() => handleMapViewPressablePress()}
-              style={rentalDetailsStyle.mapPressable}>
-              <MapView
-                customMapStyle={mapStyle}
-                provider={PROVIDER_GOOGLE}
-                initialRegion={{
-                  latitude: currentLatitude,
-                  longitude: currentLongitude,
-                  latitudeDelta: 0.15,
-                  longitudeDelta: 0.15,
-                }}
-                style={rentalDetailsStyle.mapView}>
-                <MapMarker
-                  coordinate={{
-                    latitude: currentLatitude,
-                    longitude: currentLongitude,
-                  }}>
-                  <UserPositionCustomMapMarker />
-                </MapMarker>
-              </MapView>
+            <Pressable onPress={() => handleMapViewPressablePress()}>
+              <Text style={rentalDetailsStyle.addressText}>
+                {rental.address}
+              </Text>
             </Pressable>
+            <View
+              style={{
+                flexDirection: 'row',
+                flex: 1,
+                justifyContent: 'space-between',
+              }}>
+              <Text style={rentalDetailsStyle.subtitleText}>
+                Ratings & Reviews
+              </Text>
+              <Pressable>
+                <Text
+                  style={{
+                    paddingTop: 20,
+                    alignContent: 'flex-end',
+                    textDecorationLine: 'underline',
+                    fontFamily: 'Poppins-Regular',
+                  }}>
+                  See All
+                </Text>
+              </Pressable>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <View
+                style={{
+                  alignSelf: 'center',
+                  flex: 1,
+                  justifyContent: 'center',
+                }}>
+                <Text
+                  style={{
+                    fontFamily: 'Poppins-SemiBold',
+                    fontSize: 40,
+                    textAlign: 'center',
+                  }}>
+                  {averageRating}
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'Poppins-Regular',
+                    textAlign: 'center',
+                  }}>
+                  Out of 5
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'column',
+                  flex: 3,
+                  marginTop: 5,
+                }}>
+                {reviewRatingPercentages.map((percentage, index) => (
+                  <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
+                    <Text style={{fontFamily: 'Poppins-Regular', fontSize: 10}}>
+                      {reviewRatingPercentages.length - index}
+                    </Text>
+                    <Progress
+                      value={percentage}
+                      size={'xs'}
+                      w={'90%'}
+                      style={{margin: 4}}
+                      _filledTrack={{bg: Colors.green}}
+                    />
+                  </View>
+                ))}
+              </View>
+            </View>
+            <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
+              <Text style={{fontFamily: 'Poppins-Regular'}}>
+                {Util.getFormattedNumberText(rental.reviews.length, 'Review')}
+              </Text>
+            </View>
+            <View
+              style={{
+                ...Platform.select({
+                  ios: {
+                    shadowColor: 'rgba(0, 0, 0, 0.5)',
+                    shadowOffset: {width: 0, height: 2},
+                    shadowOpacity: 1,
+                    shadowRadius: 2,
+                  },
+                  android: {
+                    elevation: 3,
+                  },
+                }),
+                borderRadius: 15,
+                padding: 10,
+                marginTop: 10,
+                backgroundColor: 'white',
+                alignSelf: 'center',
+                width: '95%',
+              }}>
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View>
+                  <Text style={{fontFamily: 'Poppins-SemiBold', fontSize: 15}}>
+                    {rental.reviews[0].title}
+                  </Text>
+                  <View style={{flexDirection: 'row', marginTop: 2}}>
+                    {[1, 2, 3, 4, 5].map(starNumber => (
+                      <FontAwesomeIcon
+                        icon={faStar}
+                        style={{marginRight: 3}}
+                        size={14}
+                        color={
+                          starNumber <= rental.reviews[0].rating
+                            ? Colors.green
+                            : Colors.gray300
+                        }
+                      />
+                    ))}
+                  </View>
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      fontFamily: 'Poppins-Regular',
+                      alignSelf: 'center',
+                      fontSize: 13,
+                      color: Colors.gray600,
+                    }}>
+                    {Util.formatCustomDate(rental.reviews[0].date)}
+                  </Text>
+                  <Text
+                    style={{
+                      fontFamily: 'Poppins-Regular',
+                      alignSelf: 'flex-end',
+                      fontSize: 13,
+                      color: Colors.gray600,
+                    }}>
+                    {rental.reviews[0].user.name}
+                  </Text>
+                </View>
+              </View>
+              <Text style={{marginTop: 10, fontFamily: 'Poppins-Regular'}}>
+                {rental.reviews[0].description}
+              </Text>
+            </View>
+
+            {/*<View style={{flexDirection: 'row'}}>*/}
+            {/*  {[1, 2, 3, 4, 5].map(starNumber => (*/}
+            {/*    <Pressable*/}
+            {/*      key={starNumber}*/}
+            {/*      onPress={() => handleStarPress(starNumber)}>*/}
+            {/*      <FontAwesomeIcon*/}
+            {/*        icon={faStar}*/}
+            {/*        style={{marginRight: 3}}*/}
+            {/*        size={30}*/}
+            {/*        color={starNumber <= rating ? Colors.green : Colors.gray300}*/}
+            {/*      />*/}
+            {/*    </Pressable>*/}
+            {/*  ))}*/}
+            {/*</View>*/}
           </View>
         </ScrollView>
       </SafeAreaView>

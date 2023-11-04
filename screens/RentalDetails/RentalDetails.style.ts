@@ -48,6 +48,12 @@ const rentalDetailsStyle = StyleSheet.create({
     fontFamily: 'Poppins-SemiBold',
     fontSize: 20,
   },
+  addressText: {
+    color: Colors.green,
+    marginBottom: 10,
+    fontFamily: 'Poppins-Regular',
+    textDecorationLine: 'underline',
+  },
   mapPressable: {
     shadowOpacity: 0.3,
     shadowRadius: 5,
