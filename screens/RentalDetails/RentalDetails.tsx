@@ -103,59 +103,25 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
                 {rental.address}
               </Text>
             </Pressable>
-            <View
-              style={{
-                flexDirection: 'row',
-                flex: 1,
-                justifyContent: 'space-between',
-              }}>
+            <View style={rentalDetailsStyle.topRatingAndReviewsContainer}>
               <Text style={rentalDetailsStyle.subtitleText}>
                 Ratings & Reviews
               </Text>
               <Pressable>
-                <Text
-                  style={{
-                    paddingTop: 20,
-                    alignContent: 'flex-end',
-                    textDecorationLine: 'underline',
-                    fontFamily: 'Poppins-Regular',
-                  }}>
-                  See All
-                </Text>
+                <Text style={rentalDetailsStyle.seeAllPressable}>See All</Text>
               </Pressable>
             </View>
-            <View style={{flexDirection: 'row'}}>
-              <View
-                style={{
-                  alignSelf: 'center',
-                  flex: 1,
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  style={{
-                    fontFamily: 'Poppins-SemiBold',
-                    fontSize: 40,
-                    textAlign: 'center',
-                  }}>
+            <View style={rentalDetailsStyle.ratingsContainer}>
+              <View style={rentalDetailsStyle.averageRatingTextContainer}>
+                <Text style={rentalDetailsStyle.averageRatingText}>
                   {averageRating}
                 </Text>
-                <Text
-                  style={{
-                    fontFamily: 'Poppins-Regular',
-                    textAlign: 'center',
-                  }}>
-                  Out of 5
-                </Text>
+                <Text style={rentalDetailsStyle.outOfFiveText}>Out of 5</Text>
               </View>
-              <View
-                style={{
-                  flexDirection: 'column',
-                  flex: 3,
-                  marginTop: 5,
-                }}>
+              <View style={rentalDetailsStyle.ratingsChartContainer}>
                 {reviewRatingPercentages.map((percentage, index) => (
-                  <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
-                    <Text style={{fontFamily: 'Poppins-Regular', fontSize: 10}}>
+                  <View style={rentalDetailsStyle.ratingProgressBar}>
+                    <Text style={rentalDetailsStyle.ratingProgressBarText}>
                       {reviewRatingPercentages.length - index}
                     </Text>
                     <Progress
@@ -169,42 +135,22 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
                 ))}
               </View>
             </View>
-            <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
-              <Text style={{fontFamily: 'Poppins-Regular'}}>
+            <View style={rentalDetailsStyle.reviewsContainer}>
+              <Text style={rentalDetailsStyle.reviewText}>
                 {Util.getFormattedNumberText(rental.reviews.length, 'Review')}
               </Text>
             </View>
-            <View
-              style={{
-                ...Platform.select({
-                  ios: {
-                    shadowColor: 'rgba(0, 0, 0, 0.5)',
-                    shadowOffset: {width: 0, height: 2},
-                    shadowOpacity: 1,
-                    shadowRadius: 2,
-                  },
-                  android: {
-                    elevation: 3,
-                  },
-                }),
-                borderRadius: 15,
-                padding: 10,
-                marginTop: 10,
-                backgroundColor: 'white',
-                alignSelf: 'center',
-                width: '95%',
-              }}>
-              <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={rentalDetailsStyle.reviewConatiner}>
+              <View style={rentalDetailsStyle.topReviewContainer}>
                 <View>
-                  <Text style={{fontFamily: 'Poppins-SemiBold', fontSize: 15}}>
+                  <Text style={rentalDetailsStyle.reviewTitle}>
                     {rental.reviews[0].title}
                   </Text>
-                  <View style={{flexDirection: 'row', marginTop: 2}}>
+                  <View style={rentalDetailsStyle.starContainer}>
                     {[1, 2, 3, 4, 5].map(starNumber => (
                       <FontAwesomeIcon
                         icon={faStar}
-                        style={{marginRight: 3}}
+                        style={rentalDetailsStyle.ratingStarIcon}
                         size={14}
                         color={
                           starNumber <= rental.reviews[0].rating
@@ -216,27 +162,15 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
                   </View>
                 </View>
                 <View>
-                  <Text
-                    style={{
-                      fontFamily: 'Poppins-Regular',
-                      alignSelf: 'center',
-                      fontSize: 13,
-                      color: Colors.gray600,
-                    }}>
+                  <Text style={rentalDetailsStyle.reviewDateText}>
                     {Util.formatCustomDate(rental.reviews[0].date)}
                   </Text>
-                  <Text
-                    style={{
-                      fontFamily: 'Poppins-Regular',
-                      alignSelf: 'flex-end',
-                      fontSize: 13,
-                      color: Colors.gray600,
-                    }}>
+                  <Text style={rentalDetailsStyle.reviewUserNameText}>
                     {rental.reviews[0].user.name}
                   </Text>
                 </View>
               </View>
-              <Text style={{marginTop: 10, fontFamily: 'Poppins-Regular'}}>
+              <Text style={rentalDetailsStyle.reviewDescriptionText}>
                 {rental.reviews[0].description}
               </Text>
             </View>
