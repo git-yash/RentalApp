@@ -78,7 +78,7 @@ const Explore = (props: {navigation: any}) => {
                   flatListRef.current?.scrollToIndex({index: index});
                 }}>
                 <CustomMapMarker
-                  price={rental.pricePerHour}
+                  price={rental.prices[0]}
                   isSelected={currentItemIndex === index}
                   key={index}
                 />

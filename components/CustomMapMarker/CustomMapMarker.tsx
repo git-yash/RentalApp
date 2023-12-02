@@ -1,10 +1,12 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 import customMapMarkerStyles from './CustomMapMarker.style';
+import {Price} from '../../modals/Price';
+import Util from '../../Util';
 
 const CustomMapMarker = (props: {
   key: number;
-  price: number;
+  price: Price;
   isSelected: boolean;
 }) => {
   return (
@@ -20,7 +22,8 @@ const CustomMapMarker = (props: {
             ? customMapMarkerStyles.selectedText
             : customMapMarkerStyles.unSelectedText
         }>
-        ${props.price}
+        ${props.price.price}/
+        {Util.getTimeIncrementString(props.price.timeIncrement)[0]}
       </Text>
     </View>
   );

@@ -114,7 +114,7 @@ export default class ExploreService {
           id: doc.id,
           reviews: [],
           title: data.title,
-          pricePerHour: data.pricePerHour,
+          prices: Util.getPrices(data.prices),
           rating: data.rating,
           address: data.address,
           location: data.location,

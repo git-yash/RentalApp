@@ -10,6 +10,7 @@ import useMiniRentalExploreView from './useMiniRentalExploreView';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import miniRentalExploreViewStyle from './MiniRentalExploreView.style';
 import BookmarkButton from '../BookmarkButton/BookmarkButton';
+import Util from '../../Util';
 
 const MiniRentalExploreView = (props: {
   rental: Rental;
@@ -52,9 +53,14 @@ const MiniRentalExploreView = (props: {
             </View>
             <View style={miniRentalExploreViewStyle.pricePerHourContainer}>
               <Text style={miniRentalExploreViewStyle.priceText}>
-                ${props.rental.pricePerHour}
+                ${props.rental.prices[0].price}
               </Text>
-              <Text style={miniRentalExploreViewStyle.hourText}>/ hour</Text>
+              <Text style={miniRentalExploreViewStyle.hourText}>
+                /{' '}
+                {Util.getTimeIncrementString(
+                  props.rental.prices[0].timeIncrement,
+                )}
+              </Text>
             </View>
           </View>
           <View style={miniRentalExploreViewStyle.ratingLikeContainer}>

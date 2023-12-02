@@ -4,6 +4,7 @@ import firestore, {
 } from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import ExploreService from '../Explore/Explore.service';
+import Util from '../../Util';
 
 export default class BookmarksService {
   async setBookmarkedPosts(setBookmarkedPosts: any): Promise<void> {
@@ -47,7 +48,7 @@ export default class BookmarksService {
               id: doc.id,
               reviews: [],
               title: data.title,
-              pricePerHour: data.pricePerHour,
+              prices: Util.getPrices(data.prices),
               rating: data.rating,
               address: data.address,
               location: data.location,

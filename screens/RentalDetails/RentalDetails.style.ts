@@ -4,17 +4,21 @@ import Colors from '../../assets/Colors';
 const rentalDetailsStyle = StyleSheet.create({
   cityText: {
     fontFamily: 'Poppins-Regular',
-    paddingTop: 10,
+    marginBottom: 10,
+    marginLeft: 10,
     color: Colors.gray500,
-    paddingLeft: 10,
   },
   mainContainer: {paddingLeft: 10, paddingTop: 10, paddingRight: 10},
   titleText: {fontFamily: 'Poppins-SemiBold', fontSize: 27, paddingLeft: 10},
   reviewContainer: {
     flexDirection: 'row',
-    paddingTop: 5,
-    paddingLeft: 10,
-    paddingBottom: 10,
+    marginBottom: 10,
+    marginRight: 10,
+  },
+  cityReviewContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flex: 1,
   },
   starIcon: {marginTop: 1},
   ratingText: {
@@ -25,12 +29,12 @@ const rentalDetailsStyle = StyleSheet.create({
   reviewLengthText: {fontFamily: 'Poppins-SemiBold', color: Colors.gray500},
   descriptionText: {
     fontFamily: 'Poppins-SemiBold',
-    fontSize: 20,
+    fontSize: 17,
   },
   subtitleText: {
     paddingTop: 15,
     fontFamily: 'Poppins-SemiBold',
-    fontSize: 20,
+    fontSize: 17,
   },
   subtitleDescriptionText: {
     fontFamily: 'Poppins-Regular',
@@ -46,7 +50,7 @@ const rentalDetailsStyle = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 10,
     fontFamily: 'Poppins-SemiBold',
-    fontSize: 20,
+    fontSize: 17,
   },
   addressText: {
     color: Colors.green,
@@ -84,7 +88,7 @@ const rentalDetailsStyle = StyleSheet.create({
   },
   averageRatingText: {
     fontFamily: 'Poppins-SemiBold',
-    fontSize: 40,
+    fontSize: 34,
     textAlign: 'center',
   },
   outOfFiveText: {
@@ -115,6 +119,7 @@ const rentalDetailsStyle = StyleSheet.create({
     borderRadius: 15,
     padding: 10,
     marginTop: 10,
+    marginBottom: '20%',
     backgroundColor: 'white',
     alignSelf: 'center',
     width: '95%',
@@ -136,6 +141,49 @@ const rentalDetailsStyle = StyleSheet.create({
     color: Colors.gray600,
   },
   reviewDescriptionText: {marginTop: 10, fontFamily: 'Poppins-Regular'},
+  stickyFooter: {
+    position: 'absolute',
+    alignItems: 'center',
+    bottom: 0,
+    width: '100%',
+    flexDirection: 'row',
+    borderTopWidth: 2,
+    borderTopColor: Colors.gray300,
+    backgroundColor: 'white',
+    padding: 10,
+  },
+  perHourText: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 13,
+    marginTop: 3,
+  },
+  messagePressable: {
+    flex: 1,
+    backgroundColor: 'black',
+    padding: 5,
+    borderRadius: 10,
+  },
+  messageText: {
+    color: 'white',
+    fontFamily: 'Poppins-SemiBold',
+    margin: 5,
+    alignSelf: 'center',
+  },
+  chooseDatesPressable: {
+    flex: 1,
+    backgroundColor: Colors.green,
+    padding: 5,
+    marginLeft: 10,
+    borderRadius: 10,
+  },
+  chooseDatesText: {
+    color: 'white',
+    fontFamily: 'Poppins-SemiBold',
+    margin: 5,
+    alignSelf: 'center',
+  },
+  priceContainer: {flexDirection: 'row', alignItems: 'center', flex: 1},
+  smallPriceText: {fontFamily: 'Poppins-SemiBold', fontSize: 23},
 });
 
 export default rentalDetailsStyle;

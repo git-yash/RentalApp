@@ -59,22 +59,24 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
     <GestureHandlerRootView>
       <SafeAreaView>
         <ScrollView>
-          <Text style={rentalDetailsStyle.cityText}>
-            {Util.getCityAndState(rental.address)}
-          </Text>
           <Text style={rentalDetailsStyle.titleText}>{rental.title}</Text>
-          <View style={rentalDetailsStyle.reviewContainer}>
-            <FontAwesomeIcon
-              icon={faStar}
-              color={Colors.green}
-              style={rentalDetailsStyle.starIcon}
-            />
-            <Text style={rentalDetailsStyle.ratingText}>
-              {rental.reviews.length === 0 ? noReviews : rental.rating}
+          <View style={rentalDetailsStyle.cityReviewContainer}>
+            <Text style={rentalDetailsStyle.cityText}>
+              {Util.getCityAndState(rental.address)}
             </Text>
-            <Text style={rentalDetailsStyle.reviewLengthText}>
-              ({rental.reviews.length})
-            </Text>
+            <View style={rentalDetailsStyle.reviewContainer}>
+              <FontAwesomeIcon
+                icon={faStar}
+                color={Colors.green}
+                style={rentalDetailsStyle.starIcon}
+              />
+              <Text style={rentalDetailsStyle.ratingText}>
+                {rental.reviews.length === 0 ? noReviews : rental.rating}
+              </Text>
+              <Text style={rentalDetailsStyle.reviewLengthText}>
+                ({rental.reviews.length})
+              </Text>
+            </View>
           </View>
           <RentalDetailsImagesSlider picturePaths={rental.picturePaths} />
           <View style={rentalDetailsStyle.mainContainer}>
@@ -191,6 +193,23 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
             {/*</View>*/}
           </View>
         </ScrollView>
+        <View style={rentalDetailsStyle.stickyFooter}>
+          {/*<View style={rentalDetailsStyle.priceContainer}>*/}
+          {/*  <Text style={rentalDetailsStyle.smallPriceText}>*/}
+          {/*    ${rental.prices[0].price}*/}
+          {/*  </Text>*/}
+          {/*  <Text style={rentalDetailsStyle.perHourText}>*/}
+          {/*    {' '}*/}
+          {/*    / {Util.getTimeIncrementString(rental.prices[0].timeIncrement)}*/}
+          {/*  </Text>*/}
+          {/*</View>*/}
+          <Pressable style={rentalDetailsStyle.messagePressable}>
+            <Text style={rentalDetailsStyle.messageText}>Message</Text>
+          </Pressable>
+          <Pressable style={rentalDetailsStyle.chooseDatesPressable}>
+            <Text style={rentalDetailsStyle.chooseDatesText}>Choose Dates</Text>
+          </Pressable>
+        </View>
       </SafeAreaView>
     </GestureHandlerRootView>
   );

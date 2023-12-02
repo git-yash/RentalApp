@@ -4,6 +4,7 @@ import auth from '@react-native-firebase/auth';
 import Geocoder from 'react-native-geocoding';
 import LatLng = Geocoder.LatLng;
 import {Rental} from './modals/Rental';
+import {Price, TimeIncrements} from './modals/Price';
 
 export default class Util {
   public static formatPhoneNumber(phoneNumber: string): string {
@@ -208,5 +209,24 @@ export default class Util {
       const yearsDifference = today.getFullYear() - date.getFullYear();
       return `${yearsDifference} year${yearsDifference > 1 ? 's' : ''} ago`;
     }
+  }
+
+  public static getPrices(pricesString: string): Price[] {
+    let pricesStringArr: string[] = pricesString.split('|');
+    let prices: Price[] = [];
+    for (const priceString of pricesStringArr) {
+      let priceStringArr: string[] = pricesString.split(',');
+      let isFirmOnPrice: boolean = pricesString[2] === 'F';
+      prices.push({
+        price: parseInt(priceStringArr[0], 10),
+        timeIncrement: parseInt(priceStringArr[1], 10),
+        isFirmOnPrice: isFirmOnPrice,
+      });
+    }
+    return prices;
+  }
+
+  public static getTimeIncrementString(value: number): string | undefined {
+    return TimeIncrements[value as keyof typeof TimeIncrements];
   }
 }

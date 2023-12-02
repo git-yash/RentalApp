@@ -25,49 +25,91 @@ import Messages from './screens/Messages/Messages';
 
 function App(): JSX.Element {
   const Tab = createBottomTabNavigator();
-
-  const ExploreStack = () => {
-    const Stack = createNativeStackNavigator();
+  const Stack = createNativeStackNavigator();
+  const Tabs = () => {
     return (
-      <Stack.Navigator>
-        <Stack.Screen
+      <Tab.Navigator>
+        <Tab.Screen
           name={'Explore'}
           component={Explore}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name={'Details'}
-          component={RentalDetails}
           options={{
-            headerTitleStyle: {
-              fontFamily: 'Poppins-Regular',
+            tabBarIcon: ({focused}) => (
+              <TabBarIcon isFocused={focused} icon={faMagnifyingGlass} />
+            ),
+            tabBarActiveTintColor: Colors.green,
+            tabBarInactiveTintColor: Colors.gray500,
+            tabBarLabelStyle: {
+              fontFamily: 'Poppins-SemiBold',
+              fontSize: 12,
             },
-            headerTintColor: 'black',
+            headerShown: false,
           }}
         />
-      </Stack.Navigator>
-    );
-  };
-  const BookmarksStack = () => {
-    const Stack = createNativeStackNavigator();
-    return (
-      <Stack.Navigator>
-        <Stack.Screen
+        <Tab.Screen
           name={'Bookmarks'}
           component={Bookmarks}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name={'Details'}
-          component={RentalDetails}
           options={{
-            headerTitleStyle: {
-              fontFamily: 'Poppins-Regular',
+            tabBarIcon: ({focused}) => (
+              <TabBarIcon isFocused={focused} icon={faHeart} />
+            ),
+            tabBarActiveTintColor: Colors.green,
+            tabBarInactiveTintColor: Colors.gray500,
+            tabBarLabelStyle: {
+              fontFamily: 'Poppins-SemiBold',
+              fontSize: 12,
             },
-            headerTintColor: 'black',
+            headerShown: false,
           }}
         />
-      </Stack.Navigator>
+        <Tab.Screen
+          name={'Post'}
+          component={Post}
+          options={{
+            tabBarIcon: ({focused}) => (
+              <TabBarIcon isFocused={focused} icon={faPlus} />
+            ),
+            tabBarActiveTintColor: Colors.green,
+            tabBarInactiveTintColor: Colors.gray500,
+            tabBarLabelStyle: {
+              fontFamily: 'Poppins-SemiBold',
+              fontSize: 12,
+            },
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name={'Messages'}
+          component={Messages}
+          options={{
+            tabBarIcon: ({focused}) => (
+              <TabBarIcon isFocused={focused} icon={faPaperPlane} />
+            ),
+            tabBarActiveTintColor: Colors.green,
+            tabBarInactiveTintColor: Colors.gray500,
+            tabBarLabelStyle: {
+              fontFamily: 'Poppins-SemiBold',
+              fontSize: 12,
+            },
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name={auth().currentUser ? 'Profile' : 'Log in'}
+          component={Profile}
+          options={{
+            tabBarIcon: ({focused}) => (
+              <TabBarIcon isFocused={focused} icon={faUser} />
+            ),
+            tabBarActiveTintColor: Colors.green,
+            tabBarInactiveTintColor: Colors.gray500,
+            tabBarLabelStyle: {
+              fontFamily: 'Poppins-SemiBold',
+              fontSize: 12,
+            },
+            headerShown: false,
+          }}
+        />
+      </Tab.Navigator>
     );
   };
 
@@ -77,88 +119,24 @@ function App(): JSX.Element {
         <NativeBaseProvider>
           <NavigationContainer>
             <StatusBar barStyle={'dark-content'} />
-            <Tab.Navigator>
-              <Tab.Screen
-                name={'Explore'}
-                component={ExploreStack}
+            <Stack.Navigator>
+              <Stack.Screen
+                name={'Tabs'}
+                component={Tabs}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name={'Details'}
+                component={RentalDetails}
                 options={{
-                  tabBarIcon: ({focused}) => (
-                    <TabBarIcon isFocused={focused} icon={faMagnifyingGlass} />
-                  ),
-                  tabBarActiveTintColor: Colors.green,
-                  tabBarInactiveTintColor: Colors.gray500,
-                  tabBarLabelStyle: {
-                    fontFamily: 'Poppins-SemiBold',
-                    fontSize: 12,
+                  headerTitleStyle: {
+                    fontFamily: 'Poppins-Regular',
                   },
-                  headerShown: false,
+                  headerBackTitleVisible: false,
+                  headerTintColor: 'black',
                 }}
               />
-              <Tab.Screen
-                name={'Bookmarks'}
-                component={BookmarksStack}
-                options={{
-                  tabBarIcon: ({focused}) => (
-                    <TabBarIcon isFocused={focused} icon={faHeart} />
-                  ),
-                  tabBarActiveTintColor: Colors.green,
-                  tabBarInactiveTintColor: Colors.gray500,
-                  tabBarLabelStyle: {
-                    fontFamily: 'Poppins-SemiBold',
-                    fontSize: 12,
-                  },
-                  headerShown: false,
-                }}
-              />
-              <Tab.Screen
-                name={'Post'}
-                component={Post}
-                options={{
-                  tabBarIcon: ({focused}) => (
-                    <TabBarIcon isFocused={focused} icon={faPlus} />
-                  ),
-                  tabBarActiveTintColor: Colors.green,
-                  tabBarInactiveTintColor: Colors.gray500,
-                  tabBarLabelStyle: {
-                    fontFamily: 'Poppins-SemiBold',
-                    fontSize: 12,
-                  },
-                  headerShown: false,
-                }}
-              />
-              <Tab.Screen
-                name={'Messages'}
-                component={Messages}
-                options={{
-                  tabBarIcon: ({focused}) => (
-                    <TabBarIcon isFocused={focused} icon={faPaperPlane} />
-                  ),
-                  tabBarActiveTintColor: Colors.green,
-                  tabBarInactiveTintColor: Colors.gray500,
-                  tabBarLabelStyle: {
-                    fontFamily: 'Poppins-SemiBold',
-                    fontSize: 12,
-                  },
-                  headerShown: false,
-                }}
-              />
-              <Tab.Screen
-                name={auth().currentUser ? 'Profile' : 'Log in'}
-                component={Profile}
-                options={{
-                  tabBarIcon: ({focused}) => (
-                    <TabBarIcon isFocused={focused} icon={faUser} />
-                  ),
-                  tabBarActiveTintColor: Colors.green,
-                  tabBarInactiveTintColor: Colors.gray500,
-                  tabBarLabelStyle: {
-                    fontFamily: 'Poppins-SemiBold',
-                    fontSize: 12,
-                  },
-                  headerShown: false,
-                }}
-              />
-            </Tab.Navigator>
+            </Stack.Navigator>
           </NavigationContainer>
         </NativeBaseProvider>
       </ActionSheetProvider>
