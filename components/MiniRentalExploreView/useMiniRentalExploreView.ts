@@ -56,6 +56,7 @@ const useMiniRentalExploreView = (
       rental: rental,
       currentLatitude: userLatitude,
       currentLongitude: userLongitude,
+      distance: distance,
     });
   };
 

@@ -2,9 +2,9 @@ import {ImageSourcePropType, Platform} from 'react-native';
 import Colors from './assets/Colors';
 import auth from '@react-native-firebase/auth';
 import Geocoder from 'react-native-geocoding';
-import LatLng = Geocoder.LatLng;
 import {Rental} from './modals/Rental';
 import {Price, TimeIncrements} from './modals/Price';
+import LatLng = Geocoder.LatLng;
 
 export default class Util {
   public static formatPhoneNumber(phoneNumber: string): string {
@@ -215,8 +215,8 @@ export default class Util {
     let pricesStringArr: string[] = pricesString.split('|');
     let prices: Price[] = [];
     for (const priceString of pricesStringArr) {
-      let priceStringArr: string[] = pricesString.split(',');
-      let isFirmOnPrice: boolean = pricesString[2] === 'F';
+      let priceStringArr: string[] = priceString.split(',');
+      let isFirmOnPrice: boolean = priceStringArr[2] === 'F';
       prices.push({
         price: parseInt(priceStringArr[0], 10),
         timeIncrement: parseInt(priceStringArr[1], 10),

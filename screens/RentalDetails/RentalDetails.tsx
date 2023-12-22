@@ -1,5 +1,4 @@
 import {
-  Platform,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -22,7 +21,8 @@ import BookmarkButton from '../../components/BookmarkButton/BookmarkButton';
 import {Progress} from 'native-base';
 
 const RentalDetails = (props: {navigation: any; route: any}) => {
-  const {rental, currentLatitude, currentLongitude} = props.route.params;
+  const {rental, currentLatitude, currentLongitude, distance} =
+    props.route.params;
   const noReviews: string = 'No reviews';
   const readMoreMaxCharLength: number = 113;
   const shouldShowReadMore: boolean =
@@ -67,7 +67,7 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
           </View>
           <View style={rentalDetailsStyle.cityReviewContainer}>
             <Text style={rentalDetailsStyle.cityText}>
-              {Util.getCityAndState(rental.address)}
+              {Util.getCityAndState(rental.address)} ({distance})
             </Text>
             <View style={rentalDetailsStyle.reviewContainer}>
               <FontAwesomeIcon
@@ -89,6 +89,12 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
             <Text style={rentalDetailsStyle.subtitleDescriptionText}>
               {rental.description}
             </Text>
+            <Text style={rentalDetailsStyle.deliveryText}>Price</Text>
+            {rental.prices.map(p => (
+              <Text style={rentalDetailsStyle.priceText}>
+                {p.price} / {Util.getTimeIncrementString(p.timeIncrement)}
+              </Text>
+            ))}
             {shouldShowReadMore && (
               <TouchableOpacity>
                 <Text style={rentalDetailsStyle.readMoreText}>Read more</Text>
@@ -103,7 +109,6 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
                 <Text style={rentalDetailsStyle.readMoreText}>Read more</Text>
               </TouchableOpacity>
             )}
-            <Text style={rentalDetailsStyle.deliveryText}>Delivery</Text>
 
             {/*<Pressable onPress={() => handleMapViewPressablePress()}>*/}
             {/*  <Text style={rentalDetailsStyle.addressText}>*/}

@@ -136,6 +136,7 @@ export default class ExploreService {
         });
       }
 
+      //TODO: improve category querying
       return rentalObjects;
     } catch (error) {
       console.error('Error fetching rental objects:', error);

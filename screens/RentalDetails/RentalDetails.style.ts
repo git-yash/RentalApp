@@ -6,7 +6,7 @@ const rentalDetailsStyle = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     marginBottom: 10,
     marginLeft: 10,
-    color: Colors.gray500,
+    color: Colors.gray600,
   },
   mainContainer: {paddingLeft: 10, paddingTop: 10, paddingRight: 10},
   titleText: {fontFamily: 'Poppins-SemiBold', fontSize: 27, paddingLeft: 10},
@@ -26,7 +26,7 @@ const rentalDetailsStyle = StyleSheet.create({
     fontFamily: 'Poppins-SemiBold',
     paddingRight: 3,
   },
-  reviewLengthText: {fontFamily: 'Poppins-SemiBold', color: Colors.gray500},
+  reviewLengthText: {fontFamily: 'Poppins-SemiBold', color: Colors.gray600},
   descriptionText: {
     fontFamily: 'Poppins-SemiBold',
     fontSize: 17,
@@ -184,6 +184,10 @@ const rentalDetailsStyle = StyleSheet.create({
   },
   priceContainer: {flexDirection: 'row', alignItems: 'center', flex: 1},
   smallPriceText: {fontFamily: 'Poppins-SemiBold', fontSize: 23},
+  priceText: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 15,
+  },
 });
 
 export default rentalDetailsStyle;

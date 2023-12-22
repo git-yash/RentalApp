@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Rental} from '../../modals/Rental';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Colors from '../../assets/Colors';
@@ -34,6 +34,7 @@ const MiniRentalExploreView = (props: {
           props.navigation,
           props.currentLatitude,
           props.currentLongitude,
+          distance,
         )
       }>
       <View style={miniRentalExploreViewStyle.mainContainer}>
