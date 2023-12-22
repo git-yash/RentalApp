@@ -17,4 +17,6 @@ export interface Rental {
   user?: User;
   picturePaths: string[];
   isBookmarked?: boolean;
+  deliveryOption: string;
+  category: string;
 }

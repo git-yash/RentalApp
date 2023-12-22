@@ -60,13 +60,11 @@ export default class FinishSigningUpService {
       })
       .catch(error => {
         if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
           setIsLoading(false);
         }
         if (error.code === 'auth/email-already-in-use') {
           setEmailError('This email is already in use, try logging in.');
         }
-        console.error(error);
         setIsLoading(false);
       });
   }

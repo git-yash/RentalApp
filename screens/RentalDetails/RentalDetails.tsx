@@ -60,6 +60,11 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
       <SafeAreaView>
         <ScrollView>
           <Text style={rentalDetailsStyle.titleText}>{rental.title}</Text>
+          <View style={{marginLeft: 10}}>
+            <Text style={rentalDetailsStyle.reviewLengthText}>
+              in {rental.category}
+            </Text>
+          </View>
           <View style={rentalDetailsStyle.cityReviewContainer}>
             <Text style={rentalDetailsStyle.cityText}>
               {Util.getCityAndState(rental.address)}
@@ -100,11 +105,12 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
             )}
             <Text style={rentalDetailsStyle.deliveryText}>Delivery</Text>
 
-            <Pressable onPress={() => handleMapViewPressablePress()}>
-              <Text style={rentalDetailsStyle.addressText}>
-                {rental.address}
-              </Text>
-            </Pressable>
+            {/*<Pressable onPress={() => handleMapViewPressablePress()}>*/}
+            {/*  <Text style={rentalDetailsStyle.addressText}>*/}
+            {/*    {rental.address}*/}
+            {/*  </Text>*/}
+            {/*</Pressable>*/}
+
             <View style={rentalDetailsStyle.topRatingAndReviewsContainer}>
               <Text style={rentalDetailsStyle.subtitleText}>
                 Ratings & Reviews

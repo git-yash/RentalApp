@@ -27,11 +27,6 @@ export default class ProfileService {
   }
 
   removeImage(profileImageRef: string) {
-    storage()
-      .ref(profileImageRef)
-      .delete()
-      .then(() => {
-        console.log('removed');
-      });
+    void storage().ref(profileImageRef).delete();
   }
 }

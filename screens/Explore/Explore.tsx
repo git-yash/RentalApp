@@ -1,19 +1,5 @@
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import {
-  Dimensions,
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React from 'react';
+import {Dimensions, FlatList, Text, TouchableOpacity, View} from 'react-native';
 import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import MapView, {MapMarker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {faMap} from '@fortawesome/free-solid-svg-icons';
@@ -35,13 +21,16 @@ const Explore = (props: {navigation: any}) => {
     isModalVisible,
     setModalVisible,
     position,
-    rentals,
     snapPoints,
+    categoryItems,
     handleSheetChanges,
+    setWhichCategorySelected,
+    whichCategorySelected,
     isListView,
     bottomSheetRef,
     currentItemIndex,
     onViewableItemsChanged,
+    categoryRentals,
     canShowMap,
     mapStyle,
     mapRef,
@@ -67,7 +56,7 @@ const Explore = (props: {navigation: any}) => {
               longitudeDelta: 0.15,
             }}
             style={exploreStyles.mapView}>
-            {rentals?.map((rental, index) => (
+            {categoryRentals?.map((rental, index) => (
               <MapMarker
                 coordinate={{
                   latitude: rental.location.latitude as number,
@@ -103,11 +92,11 @@ const Explore = (props: {navigation: any}) => {
               onChange={handleSheetChanges}>
               <View style={exploreStyles.listModalContentContainer}>
                 <Text style={{fontFamily: 'Poppins-Regular'}}>
-                  View all {rentals.length} rentals
+                  View all {categoryRentals.length} rentals
                 </Text>
                 <FlatList
                   style={{marginTop: 15}}
-                  data={rentals}
+                  data={categoryRentals}
                   keyExtractor={item => item.id}
                   contentContainerStyle={{paddingBottom: '20%'}}
                   renderItem={({item}) => (
@@ -154,11 +143,15 @@ const Explore = (props: {navigation: any}) => {
       )}
       <View style={exploreStyles.categoryAndSearchView}>
         <SearchBar />
-        <CategoryTabBar />
+        <CategoryTabBar
+          setWhichCategorySelected={setWhichCategorySelected}
+          whichCategorySelected={whichCategorySelected}
+          categoryItems={categoryItems}
+        />
       </View>
       <View style={exploreStyles.flatListView}>
         <FlatList
-          data={rentals}
+          data={categoryRentals}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           ref={flatListRef}

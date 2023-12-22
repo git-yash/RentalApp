@@ -3,10 +3,9 @@ import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import {Review} from '../../modals/Review';
 import Geocoder from 'react-native-geocoding';
-import LatLng = Geocoder.LatLng;
-import BookmarksService from '../Bookmarks/Bookmarks.service';
 import MiniRentalExploreViewService from '../../components/MiniRentalExploreView/MiniRentalExploreView.service';
 import Util from '../../Util';
+import LatLng = Geocoder.LatLng;
 
 export default class ExploreService {
   async getUserFromUserEmail(email: string): Promise<User | undefined> {
@@ -15,8 +14,6 @@ export default class ExploreService {
       .doc(email)
       .get()
       .then(documentSnapshot => {
-        console.log(documentSnapshot.exists);
-        console.log(documentSnapshot.data() as User);
         return documentSnapshot.exists
           ? (documentSnapshot.data() as User)
           : undefined;
@@ -47,7 +44,6 @@ export default class ExploreService {
       for (const review of reviews) {
         this.getUserFromUserEmail(review.userEmail).then(_user => {
           review.user = _user;
-          console.log('date' + review.date);
         });
       }
 
@@ -121,6 +117,8 @@ export default class ExploreService {
           description: data.description,
           isAvailable: data.isAvailable,
           picturePaths: [],
+          category: data.category,
+          deliveryOption: data.deliveryOption,
         });
       });
 

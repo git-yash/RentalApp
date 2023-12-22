@@ -28,7 +28,6 @@ export default class BookmarksService {
         });
 
         // Now you have an array of document IDs
-        console.log('Document IDs:', documentIds);
 
         const databaseRef = firestore().collection('posts');
 
@@ -55,6 +54,8 @@ export default class BookmarksService {
               description: data.description,
               isAvailable: data.isAvailable,
               picturePaths: [],
+              category: data.category,
+              deliveryOption: data.deliveryOption,
             });
           });
 

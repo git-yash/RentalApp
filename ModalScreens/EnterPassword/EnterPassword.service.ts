@@ -23,7 +23,6 @@ export default class EnterPasswordService {
           );
           setCanHideModal(true);
           setIsModalVisible(false);
-          console.log('logged in ' + auth().currentUser?.email);
           firestore()
             .collection('users')
             .doc(emailText)

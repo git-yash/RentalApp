@@ -27,12 +27,54 @@ const useExplore = () => {
   const [isListView, setIsListView] = useState(false);
   const appState = useRef(AppState.currentState);
   const [refreshing, setRefreshing] = React.useState(false);
-
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['10%', '85%'], []);
   const handleSheetChanges = useCallback((index: number) => {
     setIsListView(prevState => !prevState);
   }, []);
+  const [categoryRentals, setCategoryRentals] = useState<Rental[]>([]);
+  const categoryItems = [
+    {
+      iconName: 'grass',
+      name: 'Lawn Equipment',
+    },
+    {
+      iconName: 'construction',
+      name: 'Power Tools',
+    },
+    {
+      iconName: 'devices',
+      name: 'Electronics',
+    },
+    {
+      iconName: 'pool',
+      name: 'Pool Equipment',
+    },
+    {
+      iconName: 'sports-basketball',
+      name: 'Sports',
+    },
+    {
+      iconName: 'hiking',
+      name: 'Outdoors',
+    },
+    {
+      iconName: 'home',
+      name: 'Home',
+    },
+    {
+      iconName: 'outdoor-grill',
+      name: 'Cooking',
+    },
+    {
+      iconName: 'group-work',
+      name: 'Other',
+    },
+  ];
+  const [whichCategorySelected, setWhichCategorySelected] = useState(
+    categoryItems[0].name,
+  );
+
   const refreshScreen = () => {
     setRefreshing(true);
     ReactNativeHapticFeedback.trigger('impactMedium', Util.options);
@@ -78,6 +120,16 @@ const useExplore = () => {
   const isScreenFocused = useIsFocused();
 
   useEffect(() => {
+    if (!rentals.length || !whichCategorySelected) {
+      return;
+    }
+    const filteredRentals = rentals.filter(
+      r => r.category === whichCategorySelected,
+    );
+    return setCategoryRentals(filteredRentals);
+  }, [whichCategorySelected, rentals]);
+
+  useEffect(() => {
     // if (isScreenFocused) {
     //   const newRentals = [...rentals];
     //   // newRentals.forEach(rental => {
@@ -95,11 +147,8 @@ const useExplore = () => {
   }, [isScreenFocused]);
 
   useEffect(() => {
-    console.log('made it');
     if (!auth().currentUser) {
       setModalVisible(true);
-    } else {
-      console.log(auth().currentUser?.email);
     }
 
     void setCurrentPosition();
@@ -109,7 +158,6 @@ const useExplore = () => {
     if (!position) {
       return;
     }
-    console.log(`coords: ${position?.coords}`);
     setCanShowMap(true);
     exploreService
       .getAllRentals(
@@ -121,7 +169,6 @@ const useExplore = () => {
       )
       .then(r => {
         setRentals(r);
-        console.log(`${bookmarkedPosts.length}: bookmarks`);
       });
   }, [position, bookmarkedPosts]);
 
@@ -134,18 +181,12 @@ const useExplore = () => {
         firestore()
           .collection('users')
           .doc(auth().currentUser?.email as string)
-          .update({isOnline: true})
-          .then(() => {
-            console.log('is online');
-          });
+          .update({isOnline: true});
       } else if (nextAppState === 'inactive') {
         firestore()
           .collection('users')
           .doc(auth().currentUser?.email as string)
-          .update({isOnline: false})
-          .then(() => {
-            console.log('is offline');
-          });
+          .update({isOnline: false});
       }
 
       appState.current = nextAppState;
@@ -170,8 +211,11 @@ const useExplore = () => {
     isModalVisible,
     setModalVisible,
     position,
+    whichCategorySelected,
+    setWhichCategorySelected,
     bottomSheetRef,
-    rentals,
+    categoryRentals,
+    categoryItems,
     currentItemIndex,
     onViewableItemsChanged,
     refreshing,

@@ -52,7 +52,6 @@ const useMiniRentalExploreView = (
     userLatitude: number,
     userLongitude: number,
   ) => {
-    console.log('is bookmarked' + rental.isBookmarked);
     navigation.navigate('Details', {
       rental: rental,
       currentLatitude: userLatitude,
@@ -64,7 +63,6 @@ const useMiniRentalExploreView = (
     rental.isBookmarked = !isBookmarked;
     setIsBookmarked(rental.isBookmarked);
     ReactNativeHapticFeedback.trigger('effectDoubleClick', Util.options);
-    console.log('pressed' + isBookmarked);
 
     const bookmarks = [...bookmarkedPosts];
     const newRental = rental;

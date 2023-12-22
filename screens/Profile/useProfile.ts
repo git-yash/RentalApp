@@ -1,14 +1,8 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {useActionSheet} from '@expo/react-native-action-sheet';
-import storage from '@react-native-firebase/storage';
-import {useFocusEffect} from '@react-navigation/native';
-import TabBarIcon from '../../components/TabBarIcon/TabBarIcon';
-import {faUser as solidUser} from '@fortawesome/free-solid-svg-icons';
-import {faUser as regularUser} from '@fortawesome/free-regular-svg-icons';
-import {ImageOrVideo} from 'react-native-image-crop-picker';
-import Colors from '../../assets/Colors';
 import ImagePicker from 'react-native-image-crop-picker';
+import Colors from '../../assets/Colors';
 import ProfileService from './Profile.service';
 
 const useProfile = () => {
@@ -31,9 +25,7 @@ const useProfile = () => {
   // }, []);
 
   useEffect(() => {
-    profileService
-      .fetchImage(profileImageRef, setImageURI)
-      .then(() => console.log('image fetched'));
+    void profileService.fetchImage(profileImageRef, setImageURI);
   }, [auth().currentUser]);
 
   const handleEditProfileImageActionSheetButton = () => {
@@ -78,9 +70,7 @@ const useProfile = () => {
               profileService
                 .uploadProfileImage(profileImageRef, image)
                 .then(() => {
-                  profileService
-                    .fetchImage(profileImageRef, setImageURI)
-                    .then(() => console.log('image fetched'));
+                  void profileService.fetchImage(profileImageRef, setImageURI);
                 });
             });
             break;
@@ -91,9 +81,7 @@ const useProfile = () => {
               profileService
                 .uploadProfileImage(profileImageRef, image)
                 .then(() => {
-                  profileService
-                    .fetchImage(profileImageRef, setImageURI)
-                    .then(() => console.log('image fetched'));
+                  void profileService.fetchImage(profileImageRef, setImageURI);
                 });
             });
             break;

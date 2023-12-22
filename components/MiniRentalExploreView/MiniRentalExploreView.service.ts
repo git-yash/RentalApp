@@ -64,8 +64,7 @@ export default class MiniRentalExploreViewService {
       .doc(auth().currentUser?.email as string)
       .collection('bookmarkedPosts')
       .doc(rentalId)
-      .set({})
-      .then(r => console.log(r));
+      .set({});
   }
 
   async removeBookmarkFromBookmarks(rentalId: string): Promise<void> {
@@ -74,8 +73,7 @@ export default class MiniRentalExploreViewService {
       .doc(auth().currentUser?.email as string)
       .collection('bookmarkedPosts')
       .doc(rentalId)
-      .delete()
-      .then(() => console.log('removed'));
+      .delete();
   }
 
   async isInBookmarkedPosts(rentalId: string): Promise<boolean> {
@@ -86,7 +84,6 @@ export default class MiniRentalExploreViewService {
       .doc(rentalId);
 
     return documentRef.get().then(documentSnapshot => {
-      console.log(documentSnapshot.exists + rentalId);
       return documentSnapshot.exists;
     });
   }
