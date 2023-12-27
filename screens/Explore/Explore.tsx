@@ -26,6 +26,8 @@ const Explore = (props: {navigation: any}) => {
     categoryItems,
     handleSheetChanges,
     setWhichCategorySelected,
+    searchResultRentals,
+    setSearchResultRentals,
     isSearchFocused,
     setIsSearchFocused,
     whichCategorySelected,

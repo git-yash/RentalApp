@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   Pressable,
   SafeAreaView,
@@ -8,101 +8,52 @@ import {
 } from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faMagnifyingGlass, faXmark} from '@fortawesome/free-solid-svg-icons';
-import Colors from '../../assets/Colors';
 import SearchBarInput from '../SearchBarInput/SearchBarInput';
 import CustomDateAndTimeInput from '../CustomDateAndTimeInput/CustomDateAndTimeInput';
 import Collapsible from 'react-native-collapsible';
+import useSearchView from './useSearchView';
+import searchViewStyle from './SearchView.style';
 
 const SearchView = (props: {setIsSearchFocused: any}) => {
-  const [areDatesApplied, setAreDatesApplied] = useState<boolean>(false);
-  const [timeText, setTimeText] = useState('Any time');
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
-  const [searchText, setSearchText] = useState<string>('');
-  const [startDateTime, setStartDateTime] = useState<Date | undefined>(
-    new Date(),
-  );
-  const [endDateTime, setEndDateTime] = useState<Date | undefined>(new Date());
-  const [areDatesValid, setAreDatesValid] = useState<boolean>(true);
-  const formattedDateOptions: Intl.DateTimeFormatOptions = {
-    month: 'short', // Short month name (three letters)
-    day: 'numeric', // Day of the month
-    hour: 'numeric', // Hour
-    minute: 'numeric', // Minute
-    hour12: true, // Use 12-hour clock
-  };
+  const {
+    searchText,
+    setSearchText,
+    setIsCollapsed,
+    isCollapsed,
+    timeText,
+    setStartDateTime,
+    startDateTime,
+    setEndDateTime,
+    endDateTime,
+    onClear,
+    areDatesValid,
+    onApply,
+    onClearAll,
+    onSearch,
+  } = useSearchView(props.setIsSearchFocused);
+
   return (
-    <SafeAreaView
-      style={{
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 2,
-        backgroundColor: 'white',
-      }}>
-      <View style={{flexDirection: 'row'}}>
+    <SafeAreaView style={searchViewStyle.safeArea}>
+      <View style={searchViewStyle.headerContainer}>
         <TouchableOpacity
           onPress={() => props.setIsSearchFocused(false)}
-          style={{width: 40, height: 40, margin: 10}}>
+          style={searchViewStyle.xMarkIcon}>
           <FontAwesomeIcon icon={faXmark} size={25} />
         </TouchableOpacity>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text
-            style={{
-              fontFamily: 'Poppins-SemiBold',
-              fontSize: 18,
-              marginBottom: 15,
-              marginRight: 60,
-            }}>
-            Search
-          </Text>
+        <View style={searchViewStyle.titleTextContainer}>
+          <Text style={searchViewStyle.titleText}>Search</Text>
         </View>
       </View>
       <View>
         <SearchBarInput searchText={searchText} setSearchText={setSearchText} />
       </View>
-      <View
-        style={{
-          backgroundColor: 'white',
-          borderRadius: 20,
-          margin: 10,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 5,
-          padding: 5,
-        }}>
+      <View style={searchViewStyle.collapsibleContainer}>
         <Pressable onPress={() => setIsCollapsed(!isCollapsed)}>
           <View>
-            <Text
-              style={{
-                paddingLeft: 15,
-                paddingTop: 15,
-                fontFamily: 'Poppins-Regular',
-                fontSize: 16,
-                fontWeight: '500',
-              }}>
+            <Text style={searchViewStyle.collapsibleTitleText}>
               When do you want it?
             </Text>
-            <Text
-              style={{
-                fontFamily: 'Poppins-Regular',
-                marginLeft: 15,
-                marginTop: 10,
-                marginBottom: 10,
-              }}>
-              {timeText}
-            </Text>
+            <Text style={searchViewStyle.timeText}>{timeText}</Text>
           </View>
         </Pressable>
         <Collapsible collapsed={isCollapsed}>
@@ -121,77 +72,18 @@ const SearchView = (props: {setIsSearchFocused: any}) => {
             timeTitle={'End time'}
           />
           {!areDatesValid && (
-            <Text
-              style={{
-                fontFamily: 'Poppins-Regular',
-                color: Colors.invalidRed,
-                marginLeft: 15,
-                marginBottom: 15,
-              }}>
+            <Text style={searchViewStyle.errorText}>
               Start date must be greater than end date!
             </Text>
           )}
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              borderTopWidth: 2,
-              borderColor: Colors.gray300,
-              paddingTop: 5,
-              marginTop: 5,
-            }}>
-            <TouchableOpacity
-              onPress={() => {
-                setStartDateTime(new Date());
-                setEndDateTime(new Date());
-                setTimeText('Any time');
-              }}>
-              <Text
-                style={{
-                  padding: 15,
-                  fontFamily: 'Poppins-Regular',
-                  textDecorationLine: 'underline',
-                  fontWeight: '500',
-                }}>
-                Clear
-              </Text>
+          <View style={searchViewStyle.collapsibleBottomContainer}>
+            <TouchableOpacity onPress={onClear}>
+              <Text style={searchViewStyle.clearText}>Clear</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => {
-                if (
-                  !startDateTime ||
-                  !endDateTime ||
-                  startDateTime.getTime() >= endDateTime.getTime()
-                ) {
-                  setAreDatesValid(false);
-                  return;
-                }
-                setAreDatesApplied(true);
-                setAreDatesValid(true);
-                let startDateTimeText = startDateTime?.toLocaleString(
-                  'en-US',
-                  formattedDateOptions,
-                );
-                let endDateTimeText = endDateTime?.toLocaleString(
-                  'en-US',
-                  formattedDateOptions,
-                );
-                setTimeText(startDateTimeText + ' to ' + endDateTimeText);
-              }}
-              style={{
-                backgroundColor: 'black',
-                padding: 10,
-                marginRight: 5,
-                borderRadius: 10,
-              }}>
-              <Text
-                style={{
-                  color: 'white',
-                  fontFamily: 'Poppins-SemiBold',
-                }}>
-                Apply
-              </Text>
+              onPress={onApply}
+              style={searchViewStyle.applyButton}>
+              <Text style={searchViewStyle.applyText}>Apply</Text>
             </TouchableOpacity>
           </View>
         </Collapsible>
@@ -214,61 +106,19 @@ const SearchView = (props: {setIsSearchFocused: any}) => {
       {/*    Apply Range*/}
       {/*  </Text>*/}
       {/*</TouchableOpacity>*/}
-      <View
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          right: 0,
-          left: 0,
-          flex: 1,
-          borderTopWidth: 2,
-          borderTopColor: Colors.gray200,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}>
-        <TouchableOpacity
-          onPress={() => {
-            setSearchText('');
-            setStartDateTime(new Date());
-            setEndDateTime(new Date());
-            setTimeText('Any time');
-          }}>
-          <Text
-            style={{
-              padding: 15,
-              fontFamily: 'Poppins-Regular',
-              textDecorationLine: 'underline',
-              fontWeight: '500',
-            }}>
-            Clear All
-          </Text>
+      <View style={searchViewStyle.footerContainer}>
+        <TouchableOpacity onPress={onClearAll}>
+          <Text style={searchViewStyle.clearText}>Clear All</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={{
-            borderRadius: 15,
-            backgroundColor: Colors.green,
-            margin: 5,
-            marginRight: 5,
-            flexDirection: 'row',
-          }}
-          onPress={() => {
-            props.setIsSearchFocused(false);
-          }}>
+          style={searchViewStyle.searchButton}
+          onPress={onSearch}>
           <FontAwesomeIcon
             icon={faMagnifyingGlass}
             color={'white'}
-            style={{alignSelf: 'center', marginLeft: 10}}
+            style={searchViewStyle.searchIcon}
           />
-          <Text
-            style={{
-              color: 'white',
-              padding: 10,
-              fontFamily: 'Poppins-Regular',
-              fontWeight: '500',
-              fontSize: 15,
-            }}>
-            Search
-          </Text>
+          <Text style={searchViewStyle.searchButtonText}>Search</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

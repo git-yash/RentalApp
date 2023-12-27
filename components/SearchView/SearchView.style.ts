@@ -1,0 +1,115 @@
+import {StyleSheet} from 'react-native';
+import Colors from '../../assets/Colors';
+
+const searchViewStyle = StyleSheet.create({
+  safeArea: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 2,
+    backgroundColor: 'white',
+  },
+  headerContainer: {flexDirection: 'row'},
+  xMarkIcon: {width: 40, height: 40, margin: 10},
+  titleTextContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  titleText: {
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 18,
+    marginBottom: 15,
+    marginRight: 60,
+  },
+  collapsibleContainer: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    margin: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    padding: 5,
+  },
+  collapsibleTitleText: {
+    paddingLeft: 15,
+    paddingTop: 15,
+    fontFamily: 'Poppins-Regular',
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  timeText: {
+    fontFamily: 'Poppins-Regular',
+    marginLeft: 15,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  errorText: {
+    fontFamily: 'Poppins-Regular',
+    color: Colors.invalidRed,
+    marginLeft: 15,
+    marginBottom: 15,
+  },
+  collapsibleBottomContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderTopWidth: 2,
+    borderColor: Colors.gray300,
+    paddingTop: 5,
+    marginTop: 5,
+  },
+  clearText: {
+    padding: 15,
+    fontFamily: 'Poppins-Regular',
+    textDecorationLine: 'underline',
+    fontWeight: '500',
+  },
+  applyButton: {
+    backgroundColor: 'black',
+    padding: 10,
+    paddingRight: 15,
+    paddingLeft: 15,
+    marginRight: 5,
+    borderRadius: 10,
+  },
+  applyText: {
+    color: 'white',
+    fontFamily: 'Poppins-SemiBold',
+  },
+  footerContainer: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    left: 0,
+    flex: 1,
+    borderTopWidth: 2,
+    borderTopColor: Colors.gray200,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  searchButton: {
+    borderRadius: 15,
+    backgroundColor: Colors.green,
+    margin: 5,
+    marginRight: 5,
+    flexDirection: 'row',
+  },
+  searchIcon: {alignSelf: 'center', marginLeft: 10},
+  searchButtonText: {
+    color: 'white',
+    padding: 10,
+    fontFamily: 'Poppins-Regular',
+    fontWeight: '500',
+    fontSize: 15,
+  },
+});
+
+export default searchViewStyle;

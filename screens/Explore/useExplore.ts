@@ -35,6 +35,7 @@ const useExplore = () => {
   }, []);
   const [isSearchFocused, setIsSearchFocused] = useState<boolean>(false);
   const [categoryRentals, setCategoryRentals] = useState<Rental[]>([]);
+  const [searchResultRentals, setSearchResultRentals] = useState<Rental[]>([]);
   const categoryItems = [
     {
       iconName: 'grass',
@@ -228,6 +229,8 @@ const useExplore = () => {
     handleSheetChanges,
     isListView,
     canShowMap,
+    searchResultRentals,
+    setSearchResultRentals,
     mapStyle,
     mapRef,
     flatListRef,
