@@ -125,7 +125,7 @@ const SearchView = (props: {setIsSearchFocused: any}) => {
               style={{
                 fontFamily: 'Poppins-Regular',
                 color: Colors.invalidRed,
-                marginLeft: 20,
+                marginLeft: 15,
                 marginBottom: 15,
               }}>
               Start date must be greater than end date!
@@ -143,8 +143,8 @@ const SearchView = (props: {setIsSearchFocused: any}) => {
             }}>
             <TouchableOpacity
               onPress={() => {
-                setStartDateTime(undefined);
-                setEndDateTime(undefined);
+                setStartDateTime(new Date());
+                setEndDateTime(new Date());
                 setTimeText('Any time');
               }}>
               <Text
@@ -229,8 +229,8 @@ const SearchView = (props: {setIsSearchFocused: any}) => {
         <TouchableOpacity
           onPress={() => {
             setSearchText('');
-            setStartDateTime(undefined);
-            setEndDateTime(undefined);
+            setStartDateTime(new Date());
+            setEndDateTime(new Date());
             setTimeText('Any time');
           }}>
           <Text
