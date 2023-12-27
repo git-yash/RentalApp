@@ -15,12 +15,21 @@ import Collapsible from 'react-native-collapsible';
 
 const SearchView = (props: {setIsSearchFocused: any}) => {
   const [areDatesApplied, setAreDatesApplied] = useState<boolean>(false);
+  const [timeText, setTimeText] = useState('Any time');
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
   const [searchText, setSearchText] = useState<string>('');
   const [startDateTime, setStartDateTime] = useState<Date | undefined>(
     new Date(),
   );
   const [endDateTime, setEndDateTime] = useState<Date | undefined>(new Date());
+  const [areDatesValid, setAreDatesValid] = useState<boolean>(true);
+  const formattedDateOptions: Intl.DateTimeFormatOptions = {
+    month: 'short', // Short month name (three letters)
+    day: 'numeric', // Day of the month
+    hour: 'numeric', // Hour
+    minute: 'numeric', // Minute
+    hour12: true, // Use 12-hour clock
+  };
   return (
     <SafeAreaView
       style={{
@@ -74,10 +83,11 @@ const SearchView = (props: {setIsSearchFocused: any}) => {
           padding: 5,
         }}>
         <Pressable onPress={() => setIsCollapsed(!isCollapsed)}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View>
             <Text
               style={{
-                padding: 15,
+                paddingLeft: 15,
+                paddingTop: 15,
                 fontFamily: 'Poppins-Regular',
                 fontSize: 16,
                 fontWeight: '500',
@@ -87,10 +97,11 @@ const SearchView = (props: {setIsSearchFocused: any}) => {
             <Text
               style={{
                 fontFamily: 'Poppins-Regular',
-                alignSelf: 'center',
-                marginRight: 15,
+                marginLeft: 15,
+                marginTop: 10,
+                marginBottom: 10,
               }}>
-              Any time
+              {timeText}
             </Text>
           </View>
         </Pressable>
@@ -109,6 +120,17 @@ const SearchView = (props: {setIsSearchFocused: any}) => {
             dateTitle={'End date'}
             timeTitle={'End time'}
           />
+          {!areDatesValid && (
+            <Text
+              style={{
+                fontFamily: 'Poppins-Regular',
+                color: Colors.invalidRed,
+                marginLeft: 20,
+                marginBottom: 15,
+              }}>
+              Start date must be greater than end date!
+            </Text>
+          )}
           <View
             style={{
               flexDirection: 'row',
@@ -119,7 +141,12 @@ const SearchView = (props: {setIsSearchFocused: any}) => {
               paddingTop: 5,
               marginTop: 5,
             }}>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setStartDateTime(undefined);
+                setEndDateTime(undefined);
+                setTimeText('Any time');
+              }}>
               <Text
                 style={{
                   padding: 15,
@@ -131,6 +158,27 @@ const SearchView = (props: {setIsSearchFocused: any}) => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
+              onPress={() => {
+                if (
+                  !startDateTime ||
+                  !endDateTime ||
+                  startDateTime.getTime() >= endDateTime.getTime()
+                ) {
+                  setAreDatesValid(false);
+                  return;
+                }
+                setAreDatesApplied(true);
+                setAreDatesValid(true);
+                let startDateTimeText = startDateTime?.toLocaleString(
+                  'en-US',
+                  formattedDateOptions,
+                );
+                let endDateTimeText = endDateTime?.toLocaleString(
+                  'en-US',
+                  formattedDateOptions,
+                );
+                setTimeText(startDateTimeText + ' to ' + endDateTimeText);
+              }}
               style={{
                 backgroundColor: 'black',
                 padding: 10,
@@ -183,6 +231,7 @@ const SearchView = (props: {setIsSearchFocused: any}) => {
             setSearchText('');
             setStartDateTime(undefined);
             setEndDateTime(undefined);
+            setTimeText('Any time');
           }}>
           <Text
             style={{
