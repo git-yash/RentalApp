@@ -7,7 +7,7 @@ const customDateTimePickerStyles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     fontWeight: '400',
     fontSize: 15,
-    paddingLeft: 20,
+    paddingLeft: 15,
   },
   dateTimePicker: {alignSelf: 'flex-start', margin: 5, marginBottom: 10},
   bottomMessage: {

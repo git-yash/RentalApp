@@ -9,12 +9,13 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import CustomMapMarker from '../../components/CustomMapMarker/CustomMapMarker';
 import MiniRentalExploreView from '../../components/MiniRentalExploreView/MiniRentalExploreView';
 import useExplore from './useExplore';
-import CategoryTabBar from '../../components/CategoryTabBar/CategoryTabBar';
 import exploreStyles from './Explore.style';
 import UserPositionCustomMapMarker from '../../components/UserPositionCustomMapMarker/UserPositionCustomMapMarker';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import SearchView from '../../components/SearchView/SearchView';
+import CategoryTabBar from '../../components/CategoryTabBar/CategoryTabBar';
 
 const Explore = (props: {navigation: any}) => {
   const {
@@ -25,6 +26,8 @@ const Explore = (props: {navigation: any}) => {
     categoryItems,
     handleSheetChanges,
     setWhichCategorySelected,
+    isSearchFocused,
+    setIsSearchFocused,
     whichCategorySelected,
     isListView,
     bottomSheetRef,
@@ -142,13 +145,19 @@ const Explore = (props: {navigation: any}) => {
         </>
       )}
       <View style={exploreStyles.categoryAndSearchView}>
-        <SearchBar />
+        <SearchBar
+          isSearchFocused={isSearchFocused}
+          setIsSearchFocused={setIsSearchFocused}
+        />
         <CategoryTabBar
           setWhichCategorySelected={setWhichCategorySelected}
           whichCategorySelected={whichCategorySelected}
           categoryItems={categoryItems}
         />
       </View>
+      {isSearchFocused && (
+        <SearchView setIsSearchFocused={setIsSearchFocused} />
+      )}
       <View style={exploreStyles.flatListView}>
         <FlatList
           data={categoryRentals}

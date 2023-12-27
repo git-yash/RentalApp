@@ -29,9 +29,11 @@ const useExplore = () => {
   const [refreshing, setRefreshing] = React.useState(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ['10%', '85%'], []);
+  const searchSnapPoints = useMemo(() => ['10%', '95%'], []);
   const handleSheetChanges = useCallback((index: number) => {
     setIsListView(prevState => !prevState);
   }, []);
+  const [isSearchFocused, setIsSearchFocused] = useState<boolean>(false);
   const [categoryRentals, setCategoryRentals] = useState<Rental[]>([]);
   const categoryItems = [
     {
@@ -218,6 +220,8 @@ const useExplore = () => {
     categoryItems,
     currentItemIndex,
     onViewableItemsChanged,
+    isSearchFocused,
+    setIsSearchFocused,
     refreshing,
     onRefresh,
     snapPoints,

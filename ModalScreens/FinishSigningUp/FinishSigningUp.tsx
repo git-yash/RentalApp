@@ -98,6 +98,7 @@ const FinishSigningUp = (props: {
         <CustomDateTimePicker
           mode={'date'}
           onChange={setBirthDate}
+          maxDate={new Date()}
           value={birthdate}
           isValid={birthdateError === undefined}
           bottomMessage={'You must be 18 years or older to sign up.'}

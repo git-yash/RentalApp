@@ -6,7 +6,7 @@ const searchBarStyles = StyleSheet.create({
     shadowRadius: 10,
     shadowColor: 'black',
     shadowOpacity: 0.3,
-    height: '37%',
+    height: 45,
     borderRadius: 100,
     flexDirection: 'row',
     flexWrap: 'nowrap',
@@ -29,7 +29,9 @@ const searchBarStyles = StyleSheet.create({
     padding: 8,
     fontFamily: 'Poppins-Regular',
     flex: 1,
+    color: Colors.gray600,
   },
+  searchPressable: {flex: 1, flexDirection: 'row'},
   filterPressable: {
     borderRadius: 100,
     padding: 9,

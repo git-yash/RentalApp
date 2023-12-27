@@ -30,6 +30,8 @@ const exploreStyles = StyleSheet.create({
   categoryAndSearchView: {
     position: 'absolute',
     top: 0,
+    right: 0,
+    left: 0,
     zIndex: 2,
     shadowColor: '#171717',
     shadowOffset: {width: -2, height: 4},
@@ -37,6 +39,15 @@ const exploreStyles = StyleSheet.create({
     shadowRadius: 3,
     backgroundColor: 'white',
     paddingTop: 15,
+  },
+  searchResultsView: {
+    position: 'absolute',
+    top: '14%',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+    backgroundColor: 'red',
   },
   mapView: {
     position: 'absolute',
