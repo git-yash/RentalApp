@@ -78,9 +78,7 @@ const useExplore = () => {
     categoryItems[0].name,
   );
 
-  const refreshScreen = () => {
-    setRefreshing(true);
-    ReactNativeHapticFeedback.trigger('impactMedium', Util.options);
+  const setAllRentals = () => {
     exploreService
       .getAllRentals(
         {
@@ -92,8 +90,14 @@ const useExplore = () => {
       )
       .then(r => {
         setRentals(r);
-        setRefreshing(false);
       });
+  };
+
+  const refreshScreen = () => {
+    setRefreshing(true);
+    ReactNativeHapticFeedback.trigger('impactMedium', Util.options);
+    setAllRentals();
+    setRefreshing(false);
   };
   const onRefresh = React.useCallback(() => {
     refreshScreen();
@@ -127,37 +131,10 @@ const useExplore = () => {
     if (!whichCategorySelected) {
       return;
     }
-
-    exploreService
-      .getAllRentals(
-        {
-          lat: position?.coords.latitude as number,
-          lng: position?.coords.longitude as number,
-        },
-        5,
-        whichCategorySelected,
-      )
-      .then(r => {
-        setRentals(r);
-      });
+    setAllRentals();
   }, [whichCategorySelected]);
 
-  // useEffect(() => {
-  // if (isScreenFocused) {
-  //   const newRentals = [...rentals];
-  //   // newRentals.forEach(rental => {
-  //   //   rental.isBookmarked = false;
-  //   // });
-  //   newRentals.forEach(rental => {
-  //     bookmarkedPosts.forEach(bookmarkedPost => {
-  //       rental.isBookmarked = rental.id === bookmarkedPost.id;
-  //     });
-  //   });
-  //   setRentals(newRentals);
-  //   console.log('isbookmarked' + rentals[0].isBookmarked);
-  // TODO: fix update issue
-  // }
-  // }, [isScreenFocused]);
+  // TODO: fix bookmark update issue
 
   useEffect(() => {
     if (!auth().currentUser) {
@@ -172,18 +149,7 @@ const useExplore = () => {
       return;
     }
     setCanShowMap(true);
-    exploreService
-      .getAllRentals(
-        {
-          lat: position?.coords.latitude as number,
-          lng: position?.coords.longitude as number,
-        },
-        5,
-        whichCategorySelected,
-      )
-      .then(r => {
-        setRentals(r);
-      });
+    setAllRentals();
   }, [position, bookmarkedPosts]);
 
   useEffect(() => {
@@ -212,7 +178,7 @@ const useExplore = () => {
   }, []);
 
   const setCurrentPosition = async () => {
-    await Geolocation.getCurrentPosition(
+    Geolocation.getCurrentPosition(
       pos => {
         setPosition(pos);
       },
