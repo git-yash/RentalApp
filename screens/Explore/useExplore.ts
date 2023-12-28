@@ -34,7 +34,7 @@ const useExplore = () => {
     setIsListView(prevState => !prevState);
   }, []);
   const [isSearchFocused, setIsSearchFocused] = useState<boolean>(false);
-  const [categoryRentals, setCategoryRentals] = useState<Rental[]>([]);
+  // const [categoryRentals, setCategoryRentals] = useState<Rental[]>([]);
   const [searchResultRentals, setSearchResultRentals] = useState<Rental[]>([]);
   const categoryItems = [
     {
@@ -88,6 +88,7 @@ const useExplore = () => {
           lng: position?.coords.longitude as number,
         },
         5,
+        whichCategorySelected,
       )
       .then(r => {
         setRentals(r);
@@ -123,31 +124,40 @@ const useExplore = () => {
   const isScreenFocused = useIsFocused();
 
   useEffect(() => {
-    if (!rentals.length || !whichCategorySelected) {
+    if (!whichCategorySelected) {
       return;
     }
-    const filteredRentals = rentals.filter(
-      r => r.category === whichCategorySelected,
-    );
-    return setCategoryRentals(filteredRentals);
-  }, [whichCategorySelected, rentals]);
 
-  useEffect(() => {
-    // if (isScreenFocused) {
-    //   const newRentals = [...rentals];
-    //   // newRentals.forEach(rental => {
-    //   //   rental.isBookmarked = false;
-    //   // });
-    //   newRentals.forEach(rental => {
-    //     bookmarkedPosts.forEach(bookmarkedPost => {
-    //       rental.isBookmarked = rental.id === bookmarkedPost.id;
-    //     });
-    //   });
-    //   setRentals(newRentals);
-    //   console.log('isbookmarked' + rentals[0].isBookmarked);
-    // TODO: fix update issue
-    // }
-  }, [isScreenFocused]);
+    exploreService
+      .getAllRentals(
+        {
+          lat: position?.coords.latitude as number,
+          lng: position?.coords.longitude as number,
+        },
+        5,
+        whichCategorySelected,
+      )
+      .then(r => {
+        setRentals(r);
+      });
+  }, [whichCategorySelected]);
+
+  // useEffect(() => {
+  // if (isScreenFocused) {
+  //   const newRentals = [...rentals];
+  //   // newRentals.forEach(rental => {
+  //   //   rental.isBookmarked = false;
+  //   // });
+  //   newRentals.forEach(rental => {
+  //     bookmarkedPosts.forEach(bookmarkedPost => {
+  //       rental.isBookmarked = rental.id === bookmarkedPost.id;
+  //     });
+  //   });
+  //   setRentals(newRentals);
+  //   console.log('isbookmarked' + rentals[0].isBookmarked);
+  // TODO: fix update issue
+  // }
+  // }, [isScreenFocused]);
 
   useEffect(() => {
     if (!auth().currentUser) {
@@ -169,6 +179,7 @@ const useExplore = () => {
           lng: position?.coords.longitude as number,
         },
         5,
+        whichCategorySelected,
       )
       .then(r => {
         setRentals(r);
@@ -217,7 +228,7 @@ const useExplore = () => {
     whichCategorySelected,
     setWhichCategorySelected,
     bottomSheetRef,
-    categoryRentals,
+    rentals,
     categoryItems,
     currentItemIndex,
     onViewableItemsChanged,

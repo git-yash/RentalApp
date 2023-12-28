@@ -35,7 +35,7 @@ const Explore = (props: {navigation: any}) => {
     bottomSheetRef,
     currentItemIndex,
     onViewableItemsChanged,
-    categoryRentals,
+    rentals,
     canShowMap,
     mapStyle,
     mapRef,
@@ -61,7 +61,7 @@ const Explore = (props: {navigation: any}) => {
               longitudeDelta: 0.15,
             }}
             style={exploreStyles.mapView}>
-            {categoryRentals?.map((rental, index) => (
+            {rentals?.map((rental, index) => (
               <MapMarker
                 coordinate={{
                   latitude: rental.location.latitude as number,
@@ -97,11 +97,11 @@ const Explore = (props: {navigation: any}) => {
               onChange={handleSheetChanges}>
               <View style={exploreStyles.listModalContentContainer}>
                 <Text style={{fontFamily: 'Poppins-Regular'}}>
-                  View all {categoryRentals.length} rentals
+                  View all {rentals.length} rentals
                 </Text>
                 <FlatList
                   style={{marginTop: 15}}
-                  data={categoryRentals}
+                  data={rentals}
                   keyExtractor={item => item.id}
                   contentContainerStyle={{paddingBottom: '20%'}}
                   renderItem={({item}) => (
@@ -162,7 +162,7 @@ const Explore = (props: {navigation: any}) => {
       )}
       <View style={exploreStyles.flatListView}>
         <FlatList
-          data={categoryRentals}
+          data={rentals}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           ref={flatListRef}

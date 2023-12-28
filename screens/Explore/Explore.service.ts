@@ -72,6 +72,7 @@ export default class ExploreService {
   async getAllRentals(
     location: LatLng,
     radiusInMiles: number,
+    category: string,
   ): Promise<Rental[]> {
     const databaseRef = firestore().collection<Rental>('posts');
     const currentLatitude = location.lat;
@@ -98,6 +99,8 @@ export default class ExploreService {
           '<=',
           new firestore.GeoPoint(maxLatitude, maxLongitude),
         )
+        .where('category', '==', category)
+        .limit(10)
         .get();
 
       const rentalObjects: Rental[] = [];
@@ -136,7 +139,6 @@ export default class ExploreService {
         });
       }
 
-      //TODO: improve category querying
       return rentalObjects;
     } catch (error) {
       console.error('Error fetching rental objects:', error);
