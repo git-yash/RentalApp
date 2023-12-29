@@ -14,7 +14,11 @@ import Collapsible from 'react-native-collapsible';
 import useSearchView from './useSearchView';
 import searchViewStyle from './SearchView.style';
 
-const SearchView = (props: {setIsSearchFocused: any}) => {
+const SearchView = (props: {
+  setIsSearchFocused: any;
+  setRentals: any;
+  setShowSearchResults: any;
+}) => {
   const {
     searchText,
     setSearchText,
@@ -23,14 +27,15 @@ const SearchView = (props: {setIsSearchFocused: any}) => {
     timeText,
     setStartDateTime,
     startDateTime,
+    isSearchTextValid,
     setEndDateTime,
     endDateTime,
     onClear,
     areDatesValid,
     onApply,
     onClearAll,
-    onSearch,
-  } = useSearchView(props.setIsSearchFocused);
+    onSearchButtonPress,
+  } = useSearchView();
 
   return (
     <SafeAreaView style={searchViewStyle.safeArea}>
@@ -47,6 +52,11 @@ const SearchView = (props: {setIsSearchFocused: any}) => {
       <View>
         <SearchBarInput searchText={searchText} setSearchText={setSearchText} />
       </View>
+      {!isSearchTextValid && (
+        <Text style={searchViewStyle.errorText}>
+          You must enter search text!
+        </Text>
+      )}
       <View style={searchViewStyle.collapsibleContainer}>
         <Pressable onPress={() => setIsCollapsed(!isCollapsed)}>
           <View>
@@ -112,7 +122,13 @@ const SearchView = (props: {setIsSearchFocused: any}) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={searchViewStyle.searchButton}
-          onPress={onSearch}>
+          onPress={() =>
+            onSearchButtonPress(
+              props.setIsSearchFocused,
+              props.setRentals,
+              props.setShowSearchResults,
+            )
+          }>
           <FontAwesomeIcon
             icon={faMagnifyingGlass}
             color={'white'}

@@ -12,6 +12,7 @@ import {useIsFocused} from '@react-navigation/native';
 import Util from '../../Util';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import BottomSheet from '@gorhom/bottom-sheet';
+import {DateRange} from '../../modals/DateRange';
 
 const useExplore = () => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -28,14 +29,15 @@ const useExplore = () => {
   const appState = useRef(AppState.currentState);
   const [refreshing, setRefreshing] = React.useState(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = useMemo(() => ['10%', '85%'], []);
-  const searchSnapPoints = useMemo(() => ['10%', '95%'], []);
+  const snapPoints = useMemo(
+    () => ['10%', showSearchResults ? '95%' : '85%'],
+    [],
+  );
   const handleSheetChanges = useCallback((index: number) => {
     setIsListView(prevState => !prevState);
   }, []);
   const [isSearchFocused, setIsSearchFocused] = useState<boolean>(false);
-  // const [categoryRentals, setCategoryRentals] = useState<Rental[]>([]);
-  const [searchResultRentals, setSearchResultRentals] = useState<Rental[]>([]);
+  const [showSearchResults, setShowSearchResults] = useState<boolean>(false);
   const categoryItems = [
     {
       iconName: 'grass',
@@ -78,15 +80,21 @@ const useExplore = () => {
     categoryItems[0].name,
   );
 
-  const setAllRentals = () => {
+  const setAllRentals = (searchText?: string, dateRange?: DateRange) => {
+    if (!position) {
+      return;
+    }
+
     exploreService
       .getAllRentals(
         {
-          lat: position?.coords.latitude as number,
-          lng: position?.coords.longitude as number,
+          lat: position.coords.latitude as number,
+          lng: position.coords.longitude as number,
         },
         5,
         whichCategorySelected,
+        searchText,
+        dateRange,
       )
       .then(r => {
         setRentals(r);
@@ -195,10 +203,13 @@ const useExplore = () => {
     setWhichCategorySelected,
     bottomSheetRef,
     rentals,
+    setAllRentals,
     categoryItems,
     currentItemIndex,
     onViewableItemsChanged,
     isSearchFocused,
+    showSearchResults,
+    setShowSearchResults,
     setIsSearchFocused,
     refreshing,
     onRefresh,
@@ -206,8 +217,6 @@ const useExplore = () => {
     handleSheetChanges,
     isListView,
     canShowMap,
-    searchResultRentals,
-    setSearchResultRentals,
     mapStyle,
     mapRef,
     flatListRef,

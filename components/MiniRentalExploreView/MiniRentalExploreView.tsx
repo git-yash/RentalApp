@@ -54,12 +54,12 @@ const MiniRentalExploreView = (props: {
             </View>
             <View style={miniRentalExploreViewStyle.pricePerHourContainer}>
               <Text style={miniRentalExploreViewStyle.priceText}>
-                ${props.rental.prices[0].price}
+                ${props.rental.priceItems[0].price}
               </Text>
               <Text style={miniRentalExploreViewStyle.hourText}>
                 /{' '}
                 {Util.getTimeIncrementString(
-                  props.rental.prices[0].timeIncrement,
+                  props.rental.priceItems[0].timeIncrement,
                 )}
               </Text>
             </View>

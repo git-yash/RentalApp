@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-const useSearchView = (props: {setIsSearchFocused: any}) => {
+const useSearchView = () => {
   const [areDatesApplied, setAreDatesApplied] = useState<boolean>(false);
   const [timeText, setTimeText] = useState('Any time');
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
@@ -10,6 +10,7 @@ const useSearchView = (props: {setIsSearchFocused: any}) => {
   );
   const [endDateTime, setEndDateTime] = useState<Date | undefined>(new Date());
   const [areDatesValid, setAreDatesValid] = useState<boolean>(true);
+  const [isSearchTextValid, setIsSearchTextValid] = useState(true);
   const formattedDateOptions: Intl.DateTimeFormatOptions = {
     month: 'short', // Short month name (three letters)
     day: 'numeric', // Day of the month
@@ -53,7 +54,11 @@ const useSearchView = (props: {setIsSearchFocused: any}) => {
     setTimeText('Any time');
   };
 
-  const onSearch = () => {
+  const onSearchButtonPress = (
+    setIsSearchFocused: any,
+    setRentals: any,
+    setShowSearchResults: any,
+  ) => {
     // if (!searchText && !areDatesApplied) {
     //   // hide search view, do nothing
     //   props.setIsSearchFocused(false);
@@ -67,7 +72,17 @@ const useSearchView = (props: {setIsSearchFocused: any}) => {
     //   // hide category tab bar, search for rentals with search string and available dates
     //   props.setIsSearchFocused(false);
     // }
-    props.setIsSearchFocused(false);
+    if (searchText.length === 0) {
+      setIsSearchTextValid(false);
+      return;
+    } else if (areDatesValid) {
+      setRentals(searchText, {startDate: startDateTime, endDate: endDateTime});
+      setShowSearchResults(true);
+    } else {
+      setRentals(searchText);
+      setShowSearchResults(true);
+    }
+    setIsSearchFocused(false);
   };
 
   return {
@@ -75,7 +90,7 @@ const useSearchView = (props: {setIsSearchFocused: any}) => {
     searchText,
     setSearchText,
     setIsCollapsed,
-    onSearch,
+    onSearchButtonPress,
     isCollapsed,
     timeText,
     onApply,
@@ -85,6 +100,7 @@ const useSearchView = (props: {setIsSearchFocused: any}) => {
     setEndDateTime,
     endDateTime,
     areDatesValid,
+    isSearchTextValid,
     onClear,
     formattedDateOptions,
     setTimeText,
