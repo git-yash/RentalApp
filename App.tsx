@@ -22,6 +22,7 @@ import Bookmarks from './screens/Bookmarks/Bookmarks';
 import {MyContextProvider} from './MyContext';
 import Post from './screens/Post/Post';
 import Messages from './screens/Messages/Messages';
+import PostTab from './screens/Post/PostTab';
 
 function App(): JSX.Element {
   const Tab = createBottomTabNavigator();
@@ -63,7 +64,7 @@ function App(): JSX.Element {
         />
         <Tab.Screen
           name={'Post'}
-          component={Post}
+          component={PostTab}
           options={{
             tabBarIcon: ({focused}) => (
               <TabBarIcon isFocused={focused} icon={faPlus} />
@@ -123,7 +124,23 @@ function App(): JSX.Element {
               <Stack.Screen
                 name={'Tabs'}
                 component={Tabs}
-                options={{headerShown: false}}
+                options={{
+                  headerShown: false,
+                  presentation: 'fullScreenModal',
+                }}
+              />
+              <Stack.Screen
+                name={'PostModal'}
+                component={Post}
+                options={{
+                  headerTitleStyle: {
+                    fontFamily: 'Poppins-SemiBold',
+                  },
+                  presentation: 'containedModal',
+                  headerTitle: 'Post',
+                  gestureEnabled: false,
+                  headerTintColor: 'black',
+                }}
               />
               <Stack.Screen
                 name={'Details'}

@@ -1,7 +1,9 @@
 import React from 'react';
-import {Text, TouchableOpacity} from 'react-native';
+import {Text, View} from 'react-native';
 import logInOrSignUpStyles from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp.style';
 import {Spinner} from 'native-base';
+import {Bounceable} from 'rn-bounceable';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const ContinuePressable = (props: {
   onPress: any;
@@ -10,19 +12,23 @@ const ContinuePressable = (props: {
   isLoading: boolean;
 }) => {
   return (
-    <TouchableOpacity
-      onPress={props.onPress}
-      disabled={props.isDisabled || props.isLoading}
-      style={
-        props.isDisabled
-          ? logInOrSignUpStyles.continuePressableDisabled
-          : logInOrSignUpStyles.continuePressableEnabled
-      }>
-      {props.isLoading && <Spinner color={'white'} />}
-      {!props.isLoading && (
-        <Text style={logInOrSignUpStyles.continueText}>{props.text}</Text>
-      )}
-    </TouchableOpacity>
+    <GestureHandlerRootView>
+      <Bounceable
+        onPress={props.onPress}
+        disabled={props.isDisabled || props.isLoading}>
+        <View
+          style={
+            props.isDisabled
+              ? logInOrSignUpStyles.continuePressableDisabled
+              : logInOrSignUpStyles.continuePressableEnabled
+          }>
+          {props.isLoading && <Spinner color={'white'} />}
+          {!props.isLoading && (
+            <Text style={logInOrSignUpStyles.continueText}>{props.text}</Text>
+          )}
+        </View>
+      </Bounceable>
+    </GestureHandlerRootView>
   );
 };
 

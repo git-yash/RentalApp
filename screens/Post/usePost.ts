@@ -1,11 +1,35 @@
-import Colors from '../../assets/Colors';
 import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 import {useActionSheet} from '@expo/react-native-action-sheet';
 import {useState} from 'react';
+import {Alert} from 'react-native';
 
-const usePost = () => {
+const usePost = (navigation: any) => {
   const [images, setImages] = useState<ImageOrVideo>();
   const {showActionSheetWithOptions} = useActionSheet();
+
+  const handleCancelButton = () => {
+    Alert.alert(
+      'Discard changes?',
+      'Do you want to save as a draft or discard this rental?',
+      [
+        {
+          text: "Don't leave",
+          style: 'cancel',
+          onPress: () => {},
+        },
+        {
+          text: 'Save Draft',
+          style: 'default',
+          onPress: () => navigation.navigate('Explore'),
+        },
+        {
+          text: 'Discard',
+          style: 'destructive',
+          onPress: () => navigation.navigate('Explore'),
+        },
+      ],
+    );
+  };
   const handleUploadImagesButton = () => {
     const options = ['Choose Photos', 'Take Photos', 'Cancel'];
     const cancelButtonIndex = 2;
@@ -48,6 +72,7 @@ const usePost = () => {
   };
 
   return {
+    handleCancelButton,
     handleUploadImagesButton,
     images,
   };

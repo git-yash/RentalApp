@@ -3,6 +3,7 @@ import Colors from '../../assets/Colors';
 
 const PostStyle = StyleSheet.create({
   uploadImagesButton: {
+    marginBottom: 10,
     marginTop: 15,
     borderRadius: 15,
     borderColor: Colors.green,
@@ -20,7 +21,6 @@ const PostStyle = StyleSheet.create({
     fontFamily: 'Poppins-SemiBold',
   },
   inputBottomMessageText: {
-    paddingTop: 5,
     marginBottom: 15,
     color: Colors.gray600,
     fontFamily: 'Poppins-Regular',
