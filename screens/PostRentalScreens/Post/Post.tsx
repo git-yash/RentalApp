@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
   KeyboardAvoidingView,
   Pressable,
@@ -8,26 +8,28 @@ import {
   View,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import LogInToViewScreen from '../../components/LogInToViewScreen/LogInToViewScreen';
-import Colors from '../../assets/Colors';
+import LogInToViewScreen from '../../../components/LogInToViewScreen/LogInToViewScreen';
+import Colors from '../../../assets/Colors';
 import {faArrowUpFromBracket, faXmark} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import postStyle from './Post.style';
 import usePost from './usePost';
-import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
-import CustomTextArea from '../../components/CustomTextArea/CustomTextArea';
-import ContinuePressable from '../../components/ContinuePressable/ContinuePressable';
-import CustomStepIndicator from '../../components/CustomStepIndicator/CustomStepIndicator';
+import CustomTextInput from '../../../components/CustomTextInput/CustomTextInput';
+import CustomTextArea from '../../../components/CustomTextArea/CustomTextArea';
+import ContinuePressable from '../../../components/ContinuePressable/ContinuePressable';
+import CustomStepIndicator from '../../../components/CustomStepIndicator/CustomStepIndicator';
 
 const Post = (props: {navigation: any}) => {
-  const {handleCancelButton, handleUploadImagesButton, images} = usePost(
-    props.navigation,
-  );
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  // const [willDeliver, setWillDeliver] = useState(false);
-  // const [willPickUp, setWillPickUp] = useState(false);
-  const imageLengthText = images?.length >= 1 ? '(' + images?.length + ')' : '';
+  const {
+    handleCancelButton,
+    handleUploadImagesButton,
+    title,
+    setTitle,
+    description,
+    setDescription,
+    imageLengthText,
+    images,
+  } = usePost(props.navigation);
 
   // set header left to x mark
   useEffect(() => {
@@ -145,13 +147,15 @@ const Post = (props: {navigation: any}) => {
       {!auth().currentUser && (
         <LogInToViewScreen message={'Log in to make a post'} />
       )}
-      <View style={{position: 'absolute', bottom: 0, right: 0, left: 0}}>
+      <View style={postStyle.bottomView}>
         <CustomStepIndicator
-          labels={['Post', 'Details', 'Price', 'Review']}
+          labels={['Post', 'Prices', 'Details', 'Review']}
           currentPosition={0}
         />
         <ContinuePressable
-          onPress={() => {}}
+          onPress={() => {
+            props.navigation.navigate('Prices');
+          }}
           isDisabled={false}
           text={'Continue'}
           isLoading={false}

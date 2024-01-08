@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import Colors from '../../assets/Colors';
+import Colors from '../../../assets/Colors';
 
 const PostStyle = StyleSheet.create({
   uploadImagesButton: {
@@ -27,6 +27,7 @@ const PostStyle = StyleSheet.create({
     fontSize: 12,
     paddingLeft: 20,
   },
+  bottomView: {position: 'absolute', bottom: 0, right: 0, left: 0},
 });
 
 export default PostStyle;

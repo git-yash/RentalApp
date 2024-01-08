@@ -20,13 +20,40 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import RentalDetails from './screens/RentalDetails/RentalDetails';
 import Bookmarks from './screens/Bookmarks/Bookmarks';
 import {MyContextProvider} from './MyContext';
-import Post from './screens/Post/Post';
+import Post from './screens/PostRentalScreens/Post/Post';
 import Messages from './screens/Messages/Messages';
-import PostTab from './screens/Post/PostTab';
+import PostTab from './screens/PostRentalScreens/Post/PostTab';
+import Prices from './screens/PostRentalScreens/Prices/Prices';
 
 function App(): JSX.Element {
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
+  const PostRentalScreensStack = createNativeStackNavigator();
+
+  const PostRentalScreens = () => {
+    return (
+      <PostRentalScreensStack.Navigator>
+        <PostRentalScreensStack.Group
+          screenOptions={{
+            headerTintColor: 'black',
+            headerTitleStyle: {fontFamily: 'Poppins-SemiBold'},
+          }}>
+          <PostRentalScreensStack.Screen
+            name={'PostModal'}
+            component={Post}
+            options={{
+              headerTitle: 'Post',
+            }}
+          />
+          <PostRentalScreensStack.Screen
+            name={'Prices'}
+            component={Prices}
+            options={{headerBackTitleVisible: false}}
+          />
+        </PostRentalScreensStack.Group>
+      </PostRentalScreensStack.Navigator>
+    );
+  };
   const Tabs = () => {
     return (
       <Tab.Navigator>
@@ -129,17 +156,33 @@ function App(): JSX.Element {
                   presentation: 'fullScreenModal',
                 }}
               />
+              {/*<Stack.Group*/}
+              {/*  screenOptions={{*/}
+              {/*    presentation: 'containedModal',*/}
+              {/*    headerTintColor: 'black',*/}
+              {/*    headerTitleStyle: {fontFamily: 'Poppins-SemiBold'},*/}
+              {/*  }}>*/}
+              {/*  <Stack.Screen*/}
+              {/*    name={'PostModal'}*/}
+              {/*    component={Post}*/}
+              {/*    options={{*/}
+              {/*      headerTitle: 'Post',*/}
+              {/*      gestureEnabled: false,*/}
+              {/*    }}*/}
+              {/*  />*/}
+              {/*  <Stack.Screen*/}
+              {/*    name={'Prices'}*/}
+              {/*    component={Prices}*/}
+              {/*    options={{animation: 'slide_from_right'}}*/}
+              {/*  />*/}
+              {/*</Stack.Group>*/}
               <Stack.Screen
-                name={'PostModal'}
-                component={Post}
+                name={'PostRentalScreens'}
+                component={PostRentalScreens}
                 options={{
-                  headerTitleStyle: {
-                    fontFamily: 'Poppins-SemiBold',
-                  },
-                  presentation: 'containedModal',
-                  headerTitle: 'Post',
+                  headerShown: false,
                   gestureEnabled: false,
-                  headerTintColor: 'black',
+                  presentation: 'containedModal',
                 }}
               />
               <Stack.Screen

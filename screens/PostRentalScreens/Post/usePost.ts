@@ -6,11 +6,16 @@ import {Alert} from 'react-native';
 const usePost = (navigation: any) => {
   const [images, setImages] = useState<ImageOrVideo>();
   const {showActionSheetWithOptions} = useActionSheet();
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  // const [willDeliver, setWillDeliver] = useState(false);
+  // const [willPickUp, setWillPickUp] = useState(false);
+  const imageLengthText = images?.length >= 1 ? '(' + images?.length + ')' : '';
 
   const handleCancelButton = () => {
     Alert.alert(
       'Discard changes?',
-      'Do you want to save as a draft or discard this rental?',
+      'Do you want to save this rental as a draft or discard this rental?',
       [
         {
           text: "Don't leave",
@@ -74,6 +79,11 @@ const usePost = (navigation: any) => {
   return {
     handleCancelButton,
     handleUploadImagesButton,
+    title,
+    setTitle,
+    description,
+    setDescription,
+    imageLengthText,
     images,
   };
 };
