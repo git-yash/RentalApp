@@ -2,6 +2,7 @@ export enum TimeIncrements {
   Hour,
   Day,
   Week,
+  Month,
 }
 
 export interface Price {

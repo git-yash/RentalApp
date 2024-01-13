@@ -8,9 +8,8 @@ const usePost = (navigation: any) => {
   const {showActionSheetWithOptions} = useActionSheet();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  // const [willDeliver, setWillDeliver] = useState(false);
-  // const [willPickUp, setWillPickUp] = useState(false);
   const imageLengthText = images?.length >= 1 ? '(' + images?.length + ')' : '';
+  const currentStepPosition: number = 0;
 
   const handleCancelButton = () => {
     Alert.alert(
@@ -85,6 +84,7 @@ const usePost = (navigation: any) => {
     setDescription,
     imageLengthText,
     images,
+    currentStepPosition,
   };
 };
 

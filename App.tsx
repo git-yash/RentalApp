@@ -48,7 +48,7 @@ function App(): JSX.Element {
           <PostRentalScreensStack.Screen
             name={'Prices'}
             component={Prices}
-            options={{headerBackTitleVisible: false}}
+            options={{headerBackTitleVisible: false, animation: 'fade'}}
           />
         </PostRentalScreensStack.Group>
       </PostRentalScreensStack.Navigator>
@@ -156,26 +156,6 @@ function App(): JSX.Element {
                   presentation: 'fullScreenModal',
                 }}
               />
-              {/*<Stack.Group*/}
-              {/*  screenOptions={{*/}
-              {/*    presentation: 'containedModal',*/}
-              {/*    headerTintColor: 'black',*/}
-              {/*    headerTitleStyle: {fontFamily: 'Poppins-SemiBold'},*/}
-              {/*  }}>*/}
-              {/*  <Stack.Screen*/}
-              {/*    name={'PostModal'}*/}
-              {/*    component={Post}*/}
-              {/*    options={{*/}
-              {/*      headerTitle: 'Post',*/}
-              {/*      gestureEnabled: false,*/}
-              {/*    }}*/}
-              {/*  />*/}
-              {/*  <Stack.Screen*/}
-              {/*    name={'Prices'}*/}
-              {/*    component={Prices}*/}
-              {/*    options={{animation: 'slide_from_right'}}*/}
-              {/*  />*/}
-              {/*</Stack.Group>*/}
               <Stack.Screen
                 name={'PostRentalScreens'}
                 component={PostRentalScreens}

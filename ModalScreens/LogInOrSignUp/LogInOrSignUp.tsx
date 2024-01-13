@@ -81,7 +81,9 @@ const LogInOrSignUp = (props: {
               textContentType={'emailAddress'}
             />
             <ContinuePressable
-              onPress={() => handleContinuePress(emailText)}
+              onPress={() => {
+                void handleContinuePress(emailText);
+              }}
               isDisabled={isDisabled}
               text={'Continue'}
               isLoading={isLoading}

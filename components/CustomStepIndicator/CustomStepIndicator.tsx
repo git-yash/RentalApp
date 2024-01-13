@@ -5,6 +5,7 @@ import StepIndicator from 'react-native-step-indicator';
 const CustomStepIndicator = (props: {
   labels: string[];
   currentPosition: number;
+  onPress: any;
 }) => {
   const customStyles = {
     stepIndicatorSize: 25,
@@ -34,6 +35,7 @@ const CustomStepIndicator = (props: {
       labels={props.labels}
       stepCount={props.labels.length}
       currentPosition={props.currentPosition}
+      onPress={props.onPress}
       customStyles={customStyles}
     />
   );

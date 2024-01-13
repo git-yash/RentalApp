@@ -27,7 +27,6 @@ const PostStyle = StyleSheet.create({
     fontSize: 12,
     paddingLeft: 20,
   },
-  bottomView: {position: 'absolute', bottom: 0, right: 0, left: 0},
 });
 
 export default PostStyle;
