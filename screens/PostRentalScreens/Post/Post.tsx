@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Pressable, SafeAreaView, Text, TouchableOpacity} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import LogInToViewScreen from '../../../components/LogInToViewScreen/LogInToViewScreen';
@@ -19,14 +19,19 @@ const Post = (props: {navigation: any}) => {
     handleCancelButton,
     handleUploadImagesButton,
     title,
-    setTitle,
+    setTitleWithValidation,
     description,
-    setDescription,
+    setDescriptionWithValidation,
     imageLengthText,
-    images,
+    areImagesValid,
+    titleErrorMessage,
+    descriptionErrorMessage,
+    itemWorthErrorMessage,
     currentStepPosition,
+    itemWorth,
+    setItemWorthWithValidation,
+    onContinuePress,
   } = usePost(props.navigation);
-  const [itemWorth, setItemWorth] = useState<string>('');
 
   // set header left to x mark
   useEffect(() => {
@@ -43,7 +48,7 @@ const Post = (props: {navigation: any}) => {
     <DismissKeyboardView>
       <SafeAreaView style={{flex: 1}}>
         {auth().currentUser && (
-          <KeyboardAwareScrollView>
+          <KeyboardAwareScrollView extraScrollHeight={25}>
             <TouchableOpacity
               style={postStyle.uploadImagesButton}
               onPress={() => handleUploadImagesButton()}>
@@ -55,15 +60,20 @@ const Post = (props: {navigation: any}) => {
                 Upload Images {imageLengthText}
               </Text>
             </TouchableOpacity>
-            <Text style={postStyle.inputBottomMessageText}>
+            <Text
+              style={
+                areImagesValid || areImagesValid === undefined
+                  ? postStyle.inputBottomMessageText
+                  : postStyle.inputBottomMessageErrorText
+              }>
               You must upload at least 1 image
             </Text>
             <CustomTextInput
               inputTitle={'Title'}
               placeholderText={'Enter a title...'}
               value={title}
-              onChange={setTitle}
-              errorMessage={undefined}
+              onChange={setTitleWithValidation}
+              errorMessage={titleErrorMessage}
               autoCapitalize={'sentences'}
               keyboardType={'default'}
               maxCharacterLength={33}
@@ -73,8 +83,8 @@ const Post = (props: {navigation: any}) => {
               inputTitle={'Description'}
               placeholderText={'Enter a description...'}
               value={description}
-              onChange={setDescription}
-              errorMessage={undefined}
+              onChange={setDescriptionWithValidation}
+              errorMessage={descriptionErrorMessage}
               autoCapitalize={'sentences'}
               maxCharacterLength={300}
             />
@@ -83,8 +93,8 @@ const Post = (props: {navigation: any}) => {
               inputTitle={'How much is your item worth?'}
               maxLength={5}
               value={itemWorth}
-              onChange={setItemWorth}
-              error={undefined}
+              onChange={setItemWorthWithValidation}
+              error={itemWorthErrorMessage}
             />
           </KeyboardAwareScrollView>
         )}
@@ -94,13 +104,7 @@ const Post = (props: {navigation: any}) => {
         <ContinueWithStepIndicatorView
           navigation={props.navigation}
           currentStepPosition={currentStepPosition}
-          onContinuePress={() => {
-            if (itemWorth === '') {
-              return;
-            }
-            const itemWorthNumber: number = Number(itemWorth);
-            props.navigation.navigate('Prices', {itemWorthNumber});
-          }}
+          onContinuePress={() => onContinuePress()}
           continuePressableText={'Continue'}
         />
       </SafeAreaView>

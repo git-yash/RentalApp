@@ -1,12 +1,12 @@
 import React from 'react';
 import {Pressable, Text, View} from 'react-native';
 import ContinueWithStepIndicatorView from '../components/ContinueWithStepIndicatorView/ContinueWithStepIndicatorView';
-import MoneyTextInput from '../../../components/MoneyTextInput/MoneyTextInput';
 import CustomCheckbox from '../../../components/CustomCheckbox/CustomCheckbox';
 import DismissKeyboardView from '../../../components/DismissKeyboardView';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import pricesStyle from './Prices.style';
 import usePrices from './usePrices';
+import CheckboxWithMoneyTextInputView from '../../../components/CheckboxWithMoneyTextInputView/CheckboxWithMoneyTextInputView';
 
 const Prices = (props: {navigation: any; route: any}) => {
   const {itemWorthNumber} = props.route.params;
@@ -36,32 +36,6 @@ const Prices = (props: {navigation: any; route: any}) => {
     onContinuePress,
     applySuggestedRates,
   } = usePrices(itemWorthNumber);
-  const CheckboxWithMoneyTextInputView = (props: {
-    checkboxOnChange: any;
-    checkboxValue: boolean;
-    checkboxTitle: string;
-    inputValue: string;
-    inputOnChange: any;
-    inputRightElement?: JSX.Element | JSX.Element[] | undefined;
-  }) => {
-    return (
-      <View style={pricesStyle.checkboxWithMoneyTextInputView}>
-        <CustomCheckbox
-          onChange={props.checkboxOnChange}
-          value={props.checkboxValue}
-          text={props.checkboxTitle}
-        />
-        <MoneyTextInput
-          value={props.inputValue}
-          onChange={props.inputOnChange}
-          maxLength={5}
-          placeholderText={'0'}
-          style={pricesStyle.moneyTextInput}
-          inputRightElement={props.inputRightElement}
-        />
-      </View>
-    );
-  };
   return (
     <DismissKeyboardView>
       <View style={pricesStyle.mainContainer}>

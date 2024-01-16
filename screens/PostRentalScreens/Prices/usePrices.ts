@@ -25,6 +25,8 @@ const usePrices = (itemWorthNumber: number) => {
     );
   };
 
+  const setValidity = () => {};
+
   const applySuggestedRates = () => {
     setHourlyRate(suggestedHourlyRate);
     setDailyRate(suggestedDailyRate);

@@ -29,7 +29,7 @@ const MoneyTextInput = (props: {
         style={{
           alignItems: 'center',
           justifyContent: 'space-between',
-          paddingBottom: 10,
+          paddingBottom: props.error ? 0 : 10,
           marginLeft: 15,
           marginRight: 10,
         }}>
