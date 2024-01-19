@@ -18,14 +18,24 @@ const usePrices = (itemWorthNumber: number) => {
   const [willPickUp, setWillPickUp] = useState<boolean>(true);
   const [deliveryRate, setDeliveryRate] = useState<string>('');
 
-  const onContinuePress = () => {
-    Alert.alert(
-      'Invalid options',
-      'You must select one rental rate option and one delivery option.',
-    );
+  const onContinuePress = (navigation: any): void => {
+    const isValid: boolean = getValidity();
+    if (isValid) {
+      navigation.navigate('Details');
+    } else {
+      Alert.alert(
+        'Invalid options',
+        'You must select one rental rate option and one delivery option.',
+      );
+    }
   };
 
-  const setValidity = () => {};
+  const getValidity = (): boolean => {
+    const isOneRentalRateSelected: boolean =
+      hourlyCheckbox || dailyCheckbox || weeklyCheckbox || monthlyCheckbox;
+    const isADeliveryOptionSelected: boolean = willDeliver || willPickUp;
+    return isOneRentalRateSelected && isADeliveryOptionSelected;
+  };
 
   const applySuggestedRates = () => {
     setHourlyRate(suggestedHourlyRate);

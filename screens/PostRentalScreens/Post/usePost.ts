@@ -2,6 +2,7 @@ import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 import {useActionSheet} from '@expo/react-native-action-sheet';
 import {useState} from 'react';
 import {Alert} from 'react-native';
+import {Rental} from '../../../modals/Rental';
 
 const usePost = (navigation: any) => {
   const [images, setImages] = useState<ImageOrVideo>();
@@ -25,15 +26,24 @@ const usePost = (navigation: any) => {
   const isTitleValid: boolean = title.trim().length > 2;
   const isDescriptionValid: boolean = description.trim().length > 4;
   const isItemWorthValid: boolean = itemWorth.length > 0;
-  const titleError: string | undefined = isTitleValid
-    ? undefined
-    : 'Title must be greater than 2 characters.';
-  const descriptionError: string | undefined = isDescriptionValid
-    ? undefined
-    : 'Description must be greater than 4 characters.';
-  const itemWorthError: string | undefined = isItemWorthValid
-    ? undefined
-    : 'You must enter a value.';
+  const rental: Rental = {
+    address: '',
+    bookedDateRanges: [],
+    category: '',
+    deliveryOption: '',
+    description: '',
+    id: '',
+    isAvailable: false,
+    location: undefined,
+    picturePaths: [],
+    priceItems: [],
+    prices: '',
+    rating: 0,
+    reviews: [],
+    title: '',
+    userEmail: '',
+    itemValue: 0,
+  };
 
   const handleCancelButton = () => {
     Alert.alert(
@@ -58,48 +68,44 @@ const usePost = (navigation: any) => {
       ],
     );
   };
+  const getTitleErrorMessage = (titleText: string): string | undefined => {
+    return titleText.trim().length > 2
+      ? undefined
+      : 'Title must be greater than 2 characters.';
+  };
+  const getDescriptionErrorMessage = (
+    descriptionText: string,
+  ): string | undefined => {
+    return descriptionText.trim().length > 4
+      ? undefined
+      : 'Description must be greater than 4 characters.';
+  };
+
+  const getItemWorthNumber = (itemWorthText: string): number => {
+    return Number(itemWorthText);
+  };
+  const getItemWorthErrorMessage = (itemWorth: string): string | undefined => {
+    return itemWorth.length > 0 && getItemWorthNumber(itemWorth) != 0
+      ? undefined
+      : 'You must enter a value.';
+  };
   const setTitleWithValidation = (newTitleText: string): void => {
     setTitle(newTitleText);
-    setTitleErrorMessage(
-      newTitleText.trim().length > 2
-        ? undefined
-        : 'Title must be greater than 2 characters.',
-    );
+    setTitleErrorMessage(getTitleErrorMessage(newTitleText));
   };
   const setDescriptionWithValidation = (newDescriptionText: string): void => {
     setDescription(newDescriptionText);
-    setDescriptionErrorMessage(
-      newDescriptionText.trim().length > 4
-        ? undefined
-        : 'Description must be greater than 4 characters.',
-    );
+    setDescriptionErrorMessage(getDescriptionErrorMessage(newDescriptionText));
   };
   const setItemWorthWithValidation = (newItemWorthText: string): void => {
-    const newItemWorthNumber: number = Number(newItemWorthText);
     setItemWorth(newItemWorthText);
-    setItemWorthErrorMessage(
-      newItemWorthText.length > 0 && newItemWorthNumber != 0
-        ? undefined
-        : 'You must enter a value.',
-    );
+    setItemWorthErrorMessage(getItemWorthErrorMessage(newItemWorthText));
   };
   const setValidity = (): boolean => {
     setAreImagesValid(!!images);
-    setTitleErrorMessage(
-      title.trim().length > 2
-        ? undefined
-        : 'Title must be greater than 2 characters.',
-    );
-    setDescriptionErrorMessage(
-      description.trim().length > 4
-        ? undefined
-        : 'Description must be greater than 4 characters.',
-    );
-    setItemWorthErrorMessage(
-      itemWorth.length > 0 && Number(itemWorth) != 0
-        ? undefined
-        : 'You must enter a value.',
-    );
+    setTitleErrorMessage(getTitleErrorMessage(title));
+    setDescriptionErrorMessage(getDescriptionErrorMessage(description));
+    setItemWorthErrorMessage(getItemWorthErrorMessage(itemWorth));
     return (
       areImagesValid && isTitleValid && isDescriptionValid && isItemWorthValid
     );
@@ -107,8 +113,12 @@ const usePost = (navigation: any) => {
   const onContinuePress = (): void => {
     const isValid: boolean = setValidity();
     if (isValid) {
-      const itemWorthNumber: number = Number(itemWorth);
-      navigation.navigate('Prices', {itemWorthNumber});
+      const itemWorthNumber: number = getItemWorthNumber(itemWorth);
+      rental.title = title;
+      rental.description = description;
+      rental.itemValue = itemWorthNumber;
+      rental.picturePaths = images.map((image: {path: string}) => image.path);
+      navigation.navigate('Prices', {itemWorthNumber, rental});
     }
   };
   const handleUploadImagesButton = () => {

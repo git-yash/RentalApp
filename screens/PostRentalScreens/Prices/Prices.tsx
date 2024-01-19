@@ -9,7 +9,7 @@ import usePrices from './usePrices';
 import CheckboxWithMoneyTextInputView from '../../../components/CheckboxWithMoneyTextInputView/CheckboxWithMoneyTextInputView';
 
 const Prices = (props: {navigation: any; route: any}) => {
-  const {itemWorthNumber} = props.route.params;
+  const {itemWorthNumber, rental} = props.route.params;
   const {
     hourlyCheckbox,
     setHourlyCheckbox,
@@ -105,7 +105,7 @@ const Prices = (props: {navigation: any; route: any}) => {
         <ContinueWithStepIndicatorView
           navigation={props.navigation}
           currentStepPosition={1}
-          onContinuePress={() => onContinuePress()}
+          onContinuePress={() => onContinuePress(props.navigation)}
           continuePressableText={'Continue'}
         />
       </View>

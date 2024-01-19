@@ -24,6 +24,7 @@ import Post from './screens/PostRentalScreens/Post/Post';
 import Messages from './screens/Messages/Messages';
 import PostTab from './screens/PostRentalScreens/Post/PostTab';
 import Prices from './screens/PostRentalScreens/Prices/Prices';
+import Details from './screens/PostRentalScreens/Details/Details';
 
 function App(): JSX.Element {
   const Tab = createBottomTabNavigator();
@@ -48,6 +49,11 @@ function App(): JSX.Element {
           <PostRentalScreensStack.Screen
             name={'Prices'}
             component={Prices}
+            options={{headerBackTitleVisible: false, animation: 'fade'}}
+          />
+          <PostRentalScreensStack.Screen
+            name={'Details'}
+            component={Details}
             options={{headerBackTitleVisible: false, animation: 'fade'}}
           />
         </PostRentalScreensStack.Group>
