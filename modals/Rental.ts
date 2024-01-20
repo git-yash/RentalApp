@@ -9,7 +9,7 @@ export interface Rental {
   title: string;
   description: string;
   isAvailable: boolean;
-  prices: string;
+  prices?: string;
   priceItems: Price[];
   rating?: number;
   address: string;
@@ -21,6 +21,7 @@ export interface Rental {
   bookedDateRanges?: DateRange[];
   isBookmarked?: boolean;
   deliveryOption: string;
+  deliveryRate?: string;
   category: string;
   itemValue: number;
 }

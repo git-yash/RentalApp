@@ -8,5 +8,5 @@ export enum TimeIncrements {
 export interface Price {
   price: number;
   timeIncrement: number;
-  isFirmOnPrice: boolean;
+  isFirmOnPrice?: boolean;
 }

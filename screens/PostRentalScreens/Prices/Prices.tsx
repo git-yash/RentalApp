@@ -35,7 +35,7 @@ const Prices = (props: {navigation: any; route: any}) => {
     setDeliveryRate,
     onContinuePress,
     applySuggestedRates,
-  } = usePrices(itemWorthNumber);
+  } = usePrices(itemWorthNumber, rental);
   return (
     <DismissKeyboardView>
       <View style={pricesStyle.mainContainer}>
@@ -92,6 +92,7 @@ const Prices = (props: {navigation: any; route: any}) => {
             checkboxTitle={'I will deliver'}
             inputValue={deliveryRate}
             inputOnChange={setDeliveryRate}
+            maxLength={3}
             inputRightElement={
               <Text style={pricesStyle.inputDistanceText}>/ mi</Text>
             }

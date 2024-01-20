@@ -1,7 +1,9 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {Alert} from 'react-native';
+import {Rental} from '../../../modals/Rental';
+import {Price, TimeIncrements} from '../../../modals/Price';
 
-const usePrices = (itemWorthNumber: number) => {
+const usePrices = (itemWorthNumber: number, rental: Rental) => {
   const suggestedHourlyRate: string = (itemWorthNumber * 0.03).toFixed(0);
   const suggestedDailyRate: string = (itemWorthNumber * 0.17).toFixed(0);
   const suggestedWeeklyRate: string = (itemWorthNumber * 0.6).toFixed(0);
@@ -21,12 +23,60 @@ const usePrices = (itemWorthNumber: number) => {
   const onContinuePress = (navigation: any): void => {
     const isValid: boolean = getValidity();
     if (isValid) {
-      navigation.navigate('Details');
+      setEmptyRateToZero(hourlyRate, setHourlyRate);
+      setEmptyRateToZero(dailyRate, setDailyRate);
+      setEmptyRateToZero(weeklyRate, setWeeklyRate);
+      setEmptyRateToZero(monthlyRate, setMonthlyRate);
+      setEmptyRateToZero(deliveryRate, setDeliveryRate);
+      setPriceItems();
+      navigation.navigate('Details', {rental});
     } else {
       Alert.alert(
         'Invalid options',
         'You must select one rental rate option and one delivery option.',
       );
+    }
+  };
+  // TODO: add is firm on price
+  const setPriceItems = (): void => {
+    const priceItems: Price[] = [];
+    if (hourlyCheckbox) {
+      const hourlyPrice: Price = {
+        price: Number(hourlyRate),
+        timeIncrement: TimeIncrements.Hour,
+      };
+      priceItems.push(hourlyPrice);
+    }
+    if (dailyCheckbox) {
+      const dailyPrice: Price = {
+        price: Number(dailyRate),
+        timeIncrement: TimeIncrements.Day,
+      };
+      priceItems.push(dailyPrice);
+    }
+    if (weeklyCheckbox) {
+      const weeklyPrice: Price = {
+        price: Number(weeklyRate),
+        timeIncrement: TimeIncrements.Week,
+      };
+      priceItems.push(weeklyPrice);
+    }
+    if (monthlyCheckbox) {
+      const monthlyPrice: Price = {
+        price: 0,
+        timeIncrement: TimeIncrements.Month,
+      };
+      priceItems.push(monthlyPrice);
+    }
+    rental.priceItems = priceItems;
+    console.log(rental.priceItems);
+  };
+  const setEmptyRateToZero = (
+    rate: string,
+    setRate: React.Dispatch<React.SetStateAction<string>>,
+  ): void => {
+    if (rate === '') {
+      setRate('0');
     }
   };
 

@@ -10,8 +10,10 @@ const CheckboxWithMoneyTextInputView = (props: {
   checkboxTitle: string;
   inputValue: string;
   inputOnChange: any;
+  maxLength?: number;
   inputRightElement?: JSX.Element | JSX.Element[] | undefined;
 }) => {
+  const defaultMaxLength: number = 5;
   return (
     <View style={pricesStyle.checkboxWithMoneyTextInputView}>
       <CustomCheckbox
@@ -22,7 +24,7 @@ const CheckboxWithMoneyTextInputView = (props: {
       <MoneyTextInput
         value={props.inputValue}
         onChange={props.inputOnChange}
-        maxLength={5}
+        maxLength={props.maxLength ? props.maxLength : defaultMaxLength}
         placeholderText={'0'}
         style={pricesStyle.moneyTextInput}
         inputRightElement={props.inputRightElement}
