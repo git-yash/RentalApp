@@ -28,7 +28,7 @@ const usePrices = (itemWorthNumber: number, rental: Rental) => {
       setEmptyRateToZero(weeklyRate, setWeeklyRate);
       setEmptyRateToZero(monthlyRate, setMonthlyRate);
       setEmptyRateToZero(deliveryRate, setDeliveryRate);
-      setPriceItems();
+      setPrices();
       navigation.navigate('Details', {rental});
     } else {
       Alert.alert(
@@ -38,7 +38,7 @@ const usePrices = (itemWorthNumber: number, rental: Rental) => {
     }
   };
   // TODO: add is firm on price
-  const setPriceItems = (): void => {
+  const setPrices = (): void => {
     const priceItems: Price[] = [];
     if (hourlyCheckbox) {
       const hourlyPrice: Price = {
@@ -63,13 +63,18 @@ const usePrices = (itemWorthNumber: number, rental: Rental) => {
     }
     if (monthlyCheckbox) {
       const monthlyPrice: Price = {
-        price: 0,
+        price: Number(monthlyRate),
         timeIncrement: TimeIncrements.Month,
       };
       priceItems.push(monthlyPrice);
     }
+    rental.deliveryOptions = {
+      deliveryRate: willDeliver ? Number(deliveryRate) : undefined,
+      distanceUnit: willDeliver ? 'mi' : undefined,
+      willDeliver: willDeliver,
+      willPickUp: willPickUp,
+    };
     rental.priceItems = priceItems;
-    console.log(rental.priceItems);
   };
   const setEmptyRateToZero = (
     rate: string,

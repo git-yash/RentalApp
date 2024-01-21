@@ -30,7 +30,6 @@ const usePost = (navigation: any) => {
     address: '',
     bookedDateRanges: [],
     category: '',
-    deliveryOption: '',
     description: '',
     id: '',
     isAvailable: false,

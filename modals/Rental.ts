@@ -2,6 +2,7 @@ import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
 import {Review} from './Review';
 import {Price} from './Price';
 import {DateRange} from './DateRange';
+import {DeliveryOptions} from './DeliveryOptions';
 import GeoPoint = FirebaseFirestoreTypes.GeoPoint;
 
 export interface Rental {
@@ -20,8 +21,7 @@ export interface Rental {
   picturePaths: string[];
   bookedDateRanges?: DateRange[];
   isBookmarked?: boolean;
-  deliveryOption: string;
-  deliveryRate?: string;
+  deliveryOptions?: DeliveryOptions;
   category: string;
   itemValue: number;
 }
