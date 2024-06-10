@@ -19,6 +19,7 @@ import {useEffect, useState} from 'react';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import BookmarkButton from '../../components/BookmarkButton/BookmarkButton';
 import {Progress} from 'native-base';
+import {Price} from '../../modals/Price';
 
 const RentalDetails = (props: {navigation: any; route: any}) => {
   const {rental, currentLatitude, currentLongitude, distance} =
@@ -90,7 +91,7 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
               {rental.description}
             </Text>
             <Text style={rentalDetailsStyle.deliveryText}>Price</Text>
-            {rental.prices.map(p => (
+            {rental.priceItems.map((p: Price) => (
               <Text style={rentalDetailsStyle.priceText}>
                 {p.price} / {Util.getTimeIncrementString(p.timeIncrement)}
               </Text>

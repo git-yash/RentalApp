@@ -2,7 +2,11 @@ import React, {useState} from 'react';
 import {Box, Input, Text} from 'native-base';
 import customTextInputStyles from './CustomTextInput.style';
 import Colors from '../../assets/Colors';
-import {KeyboardTypeOptions} from 'react-native';
+import {
+  KeyboardTypeOptions,
+  NativeSyntheticEvent,
+  TextInputKeyPressEventData,
+} from 'react-native';
 
 const CustomTextInput = (props: {
   inputTitle: string;
@@ -12,6 +16,9 @@ const CustomTextInput = (props: {
   errorMessage: string | undefined;
   autoCapitalize: 'none' | 'sentences' | 'words' | 'characters' | undefined;
   keyboardType: KeyboardTypeOptions | undefined;
+  onKeyPress?:
+    | ((e: NativeSyntheticEvent<TextInputKeyPressEventData>) => void)
+    | undefined;
   maxCharacterLength: number;
   textContentType:
     | 'none'
@@ -65,7 +72,7 @@ const CustomTextInput = (props: {
         style={{
           alignItems: 'center',
           justifyContent: 'space-between',
-          paddingBottom: 10,
+          paddingBottom: props.errorMessage ? 0 : 10,
           marginLeft: 15,
           marginRight: 15,
         }}>
@@ -90,6 +97,7 @@ const CustomTextInput = (props: {
           maxLength={props.maxCharacterLength}
           style={customTextInputStyles.input}
           isInvalid={props.errorMessage !== undefined}
+          onKeyPress={props.onKeyPress}
         />
       </Box>
       {props.errorMessage && (

@@ -16,6 +16,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import SearchView from '../../components/SearchView/SearchView';
 import CategoryTabBar from '../../components/CategoryTabBar/CategoryTabBar';
+import Collapsible from 'react-native-collapsible';
 
 const Explore = (props: {navigation: any}) => {
   const {
@@ -25,10 +26,11 @@ const Explore = (props: {navigation: any}) => {
     snapPoints,
     categoryItems,
     handleSheetChanges,
+    setAllRentals,
     setWhichCategorySelected,
-    searchResultRentals,
-    setSearchResultRentals,
     isSearchFocused,
+    showSearchResults,
+    setShowSearchResults,
     setIsSearchFocused,
     whichCategorySelected,
     isListView,
@@ -72,7 +74,7 @@ const Explore = (props: {navigation: any}) => {
                   flatListRef.current?.scrollToIndex({index: index});
                 }}>
                 <CustomMapMarker
-                  price={rental.prices[0]}
+                  price={rental.priceItems[0]}
                   isSelected={currentItemIndex === index}
                   key={index}
                 />
@@ -151,14 +153,20 @@ const Explore = (props: {navigation: any}) => {
           isSearchFocused={isSearchFocused}
           setIsSearchFocused={setIsSearchFocused}
         />
-        <CategoryTabBar
-          setWhichCategorySelected={setWhichCategorySelected}
-          whichCategorySelected={whichCategorySelected}
-          categoryItems={categoryItems}
-        />
+        <Collapsible collapsed={showSearchResults}>
+          <CategoryTabBar
+            setWhichCategorySelected={setWhichCategorySelected}
+            whichCategorySelected={whichCategorySelected}
+            categoryItems={categoryItems}
+          />
+        </Collapsible>
       </View>
       {isSearchFocused && (
-        <SearchView setIsSearchFocused={setIsSearchFocused} />
+        <SearchView
+          setIsSearchFocused={setIsSearchFocused}
+          setRentals={setAllRentals}
+          setShowSearchResults={setShowSearchResults}
+        />
       )}
       <View style={exploreStyles.flatListView}>
         <FlatList

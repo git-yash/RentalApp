@@ -1,10 +1,13 @@
 import {Rental} from '../../modals/Rental';
-import firestore from '@react-native-firebase/firestore';
+import firestore, {
+  Filter,
+  FirebaseFirestoreTypes,
+} from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import {Review} from '../../modals/Review';
 import Geocoder from 'react-native-geocoding';
-import MiniRentalExploreViewService from '../../components/MiniRentalExploreView/MiniRentalExploreView.service';
 import Util from '../../Util';
+import {DateRange} from '../../modals/DateRange';
 import LatLng = Geocoder.LatLng;
 
 export default class ExploreService {
@@ -18,6 +21,29 @@ export default class ExploreService {
           ? (documentSnapshot.data() as User)
           : undefined;
       });
+  }
+
+  async getBookedDateRanges(rentalID: string): Promise<DateRange[]> {
+    try {
+      const collectionRef = firestore()
+        .collection<Rental>('posts')
+        .doc(rentalID)
+        .collection('bookedDateRanges');
+      const querySnapshot = await collectionRef.get();
+
+      const bookedDateRanges: DateRange[] = [];
+      querySnapshot.forEach(doc => {
+        const data = doc.data();
+        bookedDateRanges.push({
+          startDate: data.startDate,
+          endDate: data.endDate,
+        });
+      });
+      return bookedDateRanges;
+    } catch (error) {
+      console.error('Error fetching documents:', error);
+      return [];
+    }
   }
 
   async getAllReviews(rentalID: string): Promise<Review[]> {
@@ -69,10 +95,38 @@ export default class ExploreService {
     }
   }
 
+  // async getQuerySnapshot(
+  //   databaseRef: FirebaseFirestoreTypes.CollectionReference<Rental>,
+  //   minLatitude: number,
+  //   minLongitude: number,
+  //   maxLatitude: number,
+  //   maxLongitude: number,
+  //   category: string,
+  //   searchText?: string,
+  //   dateRange?: DateRange,
+  // ): Promise<FirebaseFirestoreTypes.QuerySnapshot<Rental>> {
+  //   return await databaseRef
+  //     .where(
+  //       'location',
+  //       '>=',
+  //       new firestore.GeoPoint(minLatitude, minLongitude),
+  //     )
+  //     .where(
+  //       'location',
+  //       '<=',
+  //       new firestore.GeoPoint(maxLatitude, maxLongitude),
+  //     )
+  //     .where('category', '==', category)
+  //     .limit(10)
+  //     .get();
+  // }
+
   async getAllRentals(
     location: LatLng,
     radiusInMiles: number,
     category: string,
+    searchText?: string,
+    dateRange?: DateRange,
   ): Promise<Rental[]> {
     const databaseRef = firestore().collection<Rental>('posts');
     const currentLatitude = location.lat;
@@ -85,47 +139,70 @@ export default class ExploreService {
     const minLatitude = currentLatitude - (latRadian * 180) / Math.PI;
     const maxLongitude = currentLongitude + (lonRadian * 180) / Math.PI;
     const minLongitude = currentLongitude - (lonRadian * 180) / Math.PI;
-    const miniRentalExploreViewService = new MiniRentalExploreViewService();
+    // const miniRentalExploreViewService = new MiniRentalExploreViewService();
+    let querySnapshot: FirebaseFirestoreTypes.QuerySnapshot<Rental>;
 
     try {
-      const querySnapshot = await databaseRef
-        .where(
-          'location',
-          '>=',
-          new firestore.GeoPoint(minLatitude, minLongitude),
-        )
-        .where(
-          'location',
-          '<=',
-          new firestore.GeoPoint(maxLatitude, maxLongitude),
-        )
-        .where('category', '==', category)
-        .limit(10)
-        .get();
+      if (!searchText) {
+        querySnapshot = await databaseRef
+          .where(
+            'location',
+            '>=',
+            new firestore.GeoPoint(minLatitude, minLongitude),
+          )
+          .where(
+            'location',
+            '<=',
+            new firestore.GeoPoint(maxLatitude, maxLongitude),
+          )
+          .where('category', '==', category)
+          .get();
+      } else {
+        querySnapshot = await databaseRef
+          .where(
+            'location',
+            '>=',
+            new firestore.GeoPoint(minLatitude, minLongitude),
+          )
+          .where(
+            'location',
+            '<=',
+            new firestore.GeoPoint(maxLatitude, maxLongitude),
+          )
+          .where(
+            Filter.or(
+              Filter('title', 'contains', searchText),
+              Filter('description', 'contains', searchText),
+            ),
+          )
+          .get();
+      }
 
-      const rentalObjects: Rental[] = [];
+      let rentals: Rental[] = [];
       querySnapshot.forEach(doc => {
-        const data: Rental = doc.data();
+        const rental: Rental = doc.data();
 
-        rentalObjects.push({
+        rentals.push({
           user: undefined,
-          userEmail: data.userEmail,
+          userEmail: rental.userEmail,
           id: doc.id,
           reviews: [],
-          title: data.title,
-          prices: Util.getPrices(data.prices),
-          rating: data.rating,
-          address: data.address,
-          location: data.location,
-          description: data.description,
-          isAvailable: data.isAvailable,
+          title: rental.title,
+          prices: rental.prices,
+          priceItems: Util.getPriceItems(rental.prices),
+          rating: rental.rating,
+          address: rental.address,
+          bookedDateRanges: [],
+          location: rental.location,
+          description: rental.description,
+          isAvailable: rental.isAvailable,
           picturePaths: [],
-          category: data.category,
-          deliveryOption: data.deliveryOption,
+          category: rental.category,
+          deliveryOption: rental.deliveryOption,
         });
       });
 
-      for (const rental of rentalObjects) {
+      for (const rental of rentals) {
         this.getAllPicturePaths(rental.id).then(paths => {
           rental.picturePaths = paths;
         });
@@ -137,9 +214,21 @@ export default class ExploreService {
         this.getUserFromUserEmail(rental.userEmail).then(_user => {
           rental.user = _user;
         });
+        this.getBookedDateRanges(rental.id).then(
+          _bookedDateRanges => (rental.bookedDateRanges = _bookedDateRanges),
+        );
+      }
+      if (dateRange) {
+        rentals = rentals.filter(rental => {
+          return !rental.bookedDateRanges.some(
+            bookedDateRange =>
+              bookedDateRange.startDate <= dateRange.endDate &&
+              bookedDateRange.endDate >= dateRange.startDate,
+          );
+        });
       }
 
-      return rentalObjects;
+      return rentals;
     } catch (error) {
       console.error('Error fetching rental objects:', error);
       return [];

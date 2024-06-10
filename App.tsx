@@ -20,12 +20,46 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import RentalDetails from './screens/RentalDetails/RentalDetails';
 import Bookmarks from './screens/Bookmarks/Bookmarks';
 import {MyContextProvider} from './MyContext';
-import Post from './screens/Post/Post';
+import Post from './screens/PostRentalScreens/Post/Post';
 import Messages from './screens/Messages/Messages';
+import PostTab from './screens/PostRentalScreens/Post/PostTab';
+import Prices from './screens/PostRentalScreens/Prices/Prices';
+import Details from './screens/PostRentalScreens/Details/Details';
 
 function App(): JSX.Element {
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
+  const PostRentalScreensStack = createNativeStackNavigator();
+
+  const PostRentalScreens = () => {
+    return (
+      <PostRentalScreensStack.Navigator>
+        <PostRentalScreensStack.Group
+          screenOptions={{
+            headerTintColor: 'black',
+            headerTitleStyle: {fontFamily: 'Poppins-SemiBold'},
+          }}>
+          <PostRentalScreensStack.Screen
+            name={'PostModal'}
+            component={Post}
+            options={{
+              headerTitle: 'Post',
+            }}
+          />
+          <PostRentalScreensStack.Screen
+            name={'Prices'}
+            component={Prices}
+            options={{headerBackTitleVisible: false, animation: 'fade'}}
+          />
+          <PostRentalScreensStack.Screen
+            name={'Details'}
+            component={Details}
+            options={{headerBackTitleVisible: false, animation: 'fade'}}
+          />
+        </PostRentalScreensStack.Group>
+      </PostRentalScreensStack.Navigator>
+    );
+  };
   const Tabs = () => {
     return (
       <Tab.Navigator>
@@ -63,7 +97,7 @@ function App(): JSX.Element {
         />
         <Tab.Screen
           name={'Post'}
-          component={Post}
+          component={PostTab}
           options={{
             tabBarIcon: ({focused}) => (
               <TabBarIcon isFocused={focused} icon={faPlus} />
@@ -123,7 +157,19 @@ function App(): JSX.Element {
               <Stack.Screen
                 name={'Tabs'}
                 component={Tabs}
-                options={{headerShown: false}}
+                options={{
+                  headerShown: false,
+                  presentation: 'fullScreenModal',
+                }}
+              />
+              <Stack.Screen
+                name={'PostRentalScreens'}
+                component={PostRentalScreens}
+                options={{
+                  headerShown: false,
+                  gestureEnabled: false,
+                  presentation: 'containedModal',
+                }}
               />
               <Stack.Screen
                 name={'Details'}

@@ -42,7 +42,7 @@ const CustomTextArea = (props: {
         style={{
           alignItems: 'center',
           justifyContent: 'space-between',
-          paddingBottom: 10,
+          paddingBottom: props.errorMessage ? 0 : 10,
           marginLeft: 15,
           marginRight: 15,
         }}>

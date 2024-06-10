@@ -211,19 +211,19 @@ export default class Util {
     }
   }
 
-  public static getPrices(pricesString: string): Price[] {
+  public static getPriceItems(pricesString: string): Price[] {
     let pricesStringArr: string[] = pricesString.split('|');
-    let prices: Price[] = [];
+    let priceItems: Price[] = [];
     for (const priceString of pricesStringArr) {
       let priceStringArr: string[] = priceString.split(',');
       let isFirmOnPrice: boolean = priceStringArr[2] === 'F';
-      prices.push({
+      priceItems.push({
         price: parseInt(priceStringArr[0], 10),
         timeIncrement: parseInt(priceStringArr[1], 10),
         isFirmOnPrice: isFirmOnPrice,
       });
     }
-    return prices;
+    return priceItems;
   }
 
   public static getTimeIncrementString(value: number): string | undefined {

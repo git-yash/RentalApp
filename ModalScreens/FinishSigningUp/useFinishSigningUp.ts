@@ -31,7 +31,8 @@ const useFinishSigningUp = (
   const [emailError, setEmailError] = useState<string | undefined>(undefined);
 
   const [isLoading, setIsLoading] = useState(false);
-  const finishSigningUpService = new FinishSigningUpService();
+  const finishSigningUpService: FinishSigningUpService =
+    new FinishSigningUpService();
 
   const handleEmailOnChange = (text: string): void => {
     setEmailText(text);
@@ -44,12 +45,12 @@ const useFinishSigningUp = (
 
   const setFirstNameTextWithValidation = (newFirstNameText: string) => {
     setFirstNameText(newFirstNameText);
-    setNameValidity(newFirstNameText, setFirstNameError);
+    setNameValidity(newFirstNameText.trim(), setFirstNameError);
   };
 
   const setLastNameTextWithValidation = (newLastNameText: string) => {
     setLastNameText(newLastNameText);
-    setNameValidity(newLastNameText, setLastNameError);
+    setNameValidity(newLastNameText.trim(), setLastNameError);
   };
 
   const setBirthDate = (event: DateTimePickerEvent, date: Date) => {
@@ -89,16 +90,22 @@ const useFinishSigningUp = (
   };
 
   const setValidity = () => {
-    const isValidEmail = Util.isValidEmail(emailText);
+    const isValidEmail: boolean = Util.isValidEmail(emailText);
     setEmailError(isValidEmail ? undefined : 'Please enter a valid email!');
-    const isValidPassword = !Util.isPasswordInvalid(passwordText);
+    const isValidPassword: boolean = !Util.isPasswordInvalid(passwordText);
     setPasswordError(
       isValidPassword ? undefined : 'Password is required and cannot be weak!',
     );
 
-    const isValidFirstName = setNameValidity(firstNameText, setFirstNameError);
-    const isValidLastName = setNameValidity(lastNameText, setLastNameError);
-    const isValidAge = setAgeValidity();
+    const isValidFirstName: boolean = setNameValidity(
+      firstNameText,
+      setFirstNameError,
+    );
+    const isValidLastName: boolean = setNameValidity(
+      lastNameText,
+      setLastNameError,
+    );
+    const isValidAge: boolean = setAgeValidity();
 
     return (
       isValidFirstName &&
