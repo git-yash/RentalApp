@@ -10,6 +10,11 @@
       "StackName": "amplify-rentalapp-dev-4f53e",
       "StackId": "arn:aws:cloudformation:us-east-1:957937439494:stack/amplify-rentalapp-dev-4f53e/73437490-26c8-11ef-9254-0e9f59f4275b",
       "AmplifyAppId": "d2ovq5w4ddq2dw"
+    },
+    "categories": {
+      "api": {
+        "rentalapp": {}
+      }
     }
   }
 }
