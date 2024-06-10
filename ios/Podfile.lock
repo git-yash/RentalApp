@@ -628,6 +628,8 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
+  - AmplifyRTNCore (1.1.1):
+    - React-Core
   - boost (1.76.0)
   - BoringSSL-GRPC (0.0.24):
     - BoringSSL-GRPC/Implementation (= 0.0.24)
@@ -1107,11 +1109,15 @@ PODS:
     - React-Core
   - react-native-geolocation (3.0.6):
     - React-Core
+  - react-native-get-random-values (1.11.0):
+    - React-Core
   - react-native-google-maps (1.7.1):
     - Google-Maps-iOS-Utils (= 4.1.0)
     - GoogleMaps (= 7.4.0)
     - React-Core
   - react-native-maps (1.7.1):
+    - React-Core
+  - react-native-netinfo (11.3.2):
     - React-Core
   - react-native-safe-area-context (3.3.2):
     - React-Core
@@ -1225,6 +1231,8 @@ PODS:
     - React-jsi (= 0.72.1)
     - React-logger (= 0.72.1)
     - React-perflogger (= 0.72.1)
+  - RNCAsyncStorage (1.23.1):
+    - React-Core
   - RNDateTimePicker (7.4.1):
     - React-Core
   - RNFBApp (18.3.0):
@@ -1270,6 +1278,7 @@ PODS:
   - Yoga (1.14.0)
 
 DEPENDENCIES:
+  - "AmplifyRTNCore (from `../node_modules/@aws-amplify/react-native`)"
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
@@ -1296,8 +1305,10 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-date-picker (from `../node_modules/react-native-date-picker`)
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
+  - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-google-maps (from `../node_modules/react-native-maps`)
   - react-native-maps (from `../node_modules/react-native-maps`)
+  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -1316,6 +1327,7 @@ DEPENDENCIES:
   - React-runtimescheduler (from `../node_modules/react-native/ReactCommon/react/renderer/runtimescheduler`)
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
@@ -1356,6 +1368,8 @@ SPEC REPOS:
     - TOCropViewController
 
 EXTERNAL SOURCES:
+  AmplifyRTNCore:
+    :path: "../node_modules/@aws-amplify/react-native"
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
   DoubleConversion:
@@ -1406,10 +1420,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-date-picker"
   react-native-geolocation:
     :path: "../node_modules/@react-native-community/geolocation"
+  react-native-get-random-values:
+    :path: "../node_modules/react-native-get-random-values"
   react-native-google-maps:
     :path: "../node_modules/react-native-maps"
   react-native-maps:
     :path: "../node_modules/react-native-maps"
+  react-native-netinfo:
+    :path: "../node_modules/@react-native-community/netinfo"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   React-NativeModulesApple:
@@ -1446,6 +1464,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/react/utils"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNCAsyncStorage:
+    :path: "../node_modules/@react-native-async-storage/async-storage"
   RNDateTimePicker:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNFBApp:
@@ -1478,6 +1498,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   abseil: 926fb7a82dc6d2b8e1f2ed7f3a718bce691d1e46
+  AmplifyRTNCore: 7aabcf40316c2f5c853c1ef73139af3b24a5406b
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
@@ -1522,8 +1543,10 @@ SPEC CHECKSUMS:
   React-logger: b8103c9b04e707b50cdd2b1aeb382483900cbb37
   react-native-date-picker: 90d1d60802a20085125657940b944f2bb4e5c113
   react-native-geolocation: 0f7fe8a4c2de477e278b0365cce27d089a8c5903
+  react-native-get-random-values: 21325b2244dfa6b58878f51f9aa42821e7ba3d06
   react-native-google-maps: dd12cdd86b8e3fedbbb671676aedaa2f656e2ccd
   react-native-maps: 667f9b975549c6fa9b1631bf859440f68ebd3b8f
+  react-native-netinfo: 076df4f9b07f6670acf4ce9a75aac8d34c2e2ccc
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   React-NativeModulesApple: bdfd86e972ea8103941faab9c7f64ea9be7e2be6
   React-perflogger: 3d501f34c8d4b10cb75f348e43591765788525ad
@@ -1542,6 +1565,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 34e27d6db52587cf93e7d9d44d5ff2dc4948243a
   React-utils: 4324c58d17bcbcb8c49fe7f8c14b4f61d5dd4a42
   ReactCommon: e33f60179aae29423fcf4ea19fdedc038813ea3f
+  RNCAsyncStorage: 826b603ae9c0f88b5ac4e956801f755109fa4d5c
   RNDateTimePicker: 9b4091348e53f540180abdc54984d839a556f593
   RNFBApp: f0b5cf917b0b91a0ae890fbbaec0fb5d3285ea46
   RNFBAuth: e3f51b2e4acc39e4664b24117f9106af493b2dd3
