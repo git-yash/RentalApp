@@ -18,12 +18,9 @@ export const createBooking = /* GraphQL */ `mutation CreateBooking(
     endDate
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -49,12 +46,9 @@ export const updateBooking = /* GraphQL */ `mutation UpdateBooking(
     endDate
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -80,12 +74,9 @@ export const deleteBooking = /* GraphQL */ `mutation DeleteBooking(
     endDate
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -107,16 +98,13 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
 ) {
   createUser(input: $input, condition: $condition) {
     id
-    firstName
-    lastName
     dateJoined
     isOnline
-    email
     postedRentals {
       nextToken
       __typename
     }
-    birthdate
+    username
     createdAt
     updatedAt
     __typename
@@ -132,16 +120,13 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
 ) {
   updateUser(input: $input, condition: $condition) {
     id
-    firstName
-    lastName
     dateJoined
     isOnline
-    email
     postedRentals {
       nextToken
       __typename
     }
-    birthdate
+    username
     createdAt
     updatedAt
     __typename
@@ -157,16 +142,13 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
 ) {
   deleteUser(input: $input, condition: $condition) {
     id
-    firstName
-    lastName
     dateJoined
     isOnline
-    email
     postedRentals {
       nextToken
       __typename
     }
-    birthdate
+    username
     createdAt
     updatedAt
     __typename
@@ -188,12 +170,9 @@ export const createReview = /* GraphQL */ `mutation CreateReview(
     rentalID
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -221,12 +200,9 @@ export const updateReview = /* GraphQL */ `mutation UpdateReview(
     rentalID
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -254,12 +230,9 @@ export const deleteReview = /* GraphQL */ `mutation DeleteReview(
     rentalID
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -316,12 +289,9 @@ export const createRental = /* GraphQL */ `mutation CreateRental(
     userID
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -376,12 +346,9 @@ export const updateRental = /* GraphQL */ `mutation UpdateRental(
     userID
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -436,12 +403,9 @@ export const deleteRental = /* GraphQL */ `mutation DeleteRental(
     userID
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename

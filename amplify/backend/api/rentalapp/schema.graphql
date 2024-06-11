@@ -1,74 +1,68 @@
-# This "input" configures a global authorization rule to enable public access to
-# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
-input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
-
 type Booking @model @auth(rules: [{allow: public}]) {
-    id: ID!
-    startDate: AWSDateTime!
-    endDate: AWSDateTime!
-    user: User @hasOne
-    rentalID: ID! @index(name: "byRental")
+  id: ID!
+  startDate: AWSDateTime!
+  endDate: AWSDateTime!
+  user: User @hasOne
+  rentalID: ID! @index(name: "byRental")
 }
 
 type User @model @auth(rules: [{allow: public}]) {
-    id: ID!
-    firstName: String!
-    lastName: String!
-    dateJoined: AWSDate
-    isOnline: Boolean
-    email: AWSEmail!
-    postedRentals: [Rental] @hasMany(indexName: "byUser", fields: ["id"])
-    birthdate: AWSDate
+  id: ID!
+  dateJoined: AWSDate!
+  isOnline: Boolean!
+  postedRentals: [Rental] @hasMany(indexName: "byUser", fields: ["id"])
+  username: String!
 }
 
 type Review @model @auth(rules: [{allow: public}]) {
-    id: ID!
-    title: String!
-    description: String!
-    rating: Float
-    rentalID: ID! @index(name: "byRental")
-    user: User @hasOne
-    datePublished: AWSDateTime!
+  id: ID!
+  title: String!
+  description: String!
+  rating: Float
+  rentalID: ID! @index(name: "byRental")
+  user: User @hasOne
+  datePublished: AWSDateTime!
 }
 
 type Location {
-    latitude: Float!
-    longitude: Float!
+  latitude: Float!
+  longitude: Float!
 }
 
 type Address {
-    street: String!
-    street2: String
-    city: String!
-    state: String!
-    zip: String!
-    country: String!
+  street: String!
+  street2: String
+  city: String!
+  state: String!
+  zip: String!
+  country: String!
 }
 
 enum TimeIncrement {
-    HOUR
-    WEEK
-    MONTH
-    DAY
+  HOUR
+  WEEK
+  MONTH
+  DAY
 }
 
 type Price {
-    amount: Int!
-    timeIncrement: TimeIncrement!
-    isFirmOnPrice: Boolean!
+  amount: Int!
+  timeIncrement: TimeIncrement!
+  isFirmOnPrice: Boolean!
 }
 
 type Rental @model @auth(rules: [{allow: public}]) {
-    id: ID!
-    title: String!
-    description: String!
-    isAvailable: Boolean
-    prices: [Price!]!
-    rating: Float
-    address: Address!
-    location: Location!
-    reviews: [Review] @hasMany(indexName: "byRental", fields: ["id"])
-    bookings: [Booking] @hasMany(indexName: "byRental", fields: ["id"])
-    userID: ID! @index(name: "byUser")
-    user: User @belongsTo(fields: ["userID"])
+  id: ID!
+  title: String!
+  description: String!
+  isAvailable: Boolean
+  prices: [Price!]!
+  rating: Float
+  address: Address!
+  location: Location!
+  reviews: [Review] @hasMany(indexName: "byRental", fields: ["id"])
+  bookings: [Booking] @hasMany(indexName: "byRental", fields: ["id"])
+  userID: ID! @index(name: "byUser")
+  user: User @belongsTo(fields: ["userID"])
 }
+ 

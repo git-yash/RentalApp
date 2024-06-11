@@ -15,12 +15,9 @@ export const getBooking = /* GraphQL */ `query GetBooking($id: ID!) {
     endDate
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -60,19 +57,48 @@ export const listBookings = /* GraphQL */ `query ListBookings(
   APITypes.ListBookingsQueryVariables,
   APITypes.ListBookingsQuery
 >;
+export const bookingsByRentalID = /* GraphQL */ `query BookingsByRentalID(
+  $rentalID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelBookingFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  bookingsByRentalID(
+    rentalID: $rentalID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      startDate
+      endDate
+      rentalID
+      createdAt
+      updatedAt
+      bookingUserId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.BookingsByRentalIDQueryVariables,
+  APITypes.BookingsByRentalIDQuery
+>;
 export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
   getUser(id: $id) {
     id
-    firstName
-    lastName
     dateJoined
     isOnline
-    email
     postedRentals {
       nextToken
       __typename
     }
-    birthdate
+    username
     createdAt
     updatedAt
     __typename
@@ -87,12 +113,9 @@ export const listUsers = /* GraphQL */ `query ListUsers(
   listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -111,12 +134,9 @@ export const getReview = /* GraphQL */ `query GetReview($id: ID!) {
     rentalID
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -154,6 +174,40 @@ export const listReviews = /* GraphQL */ `query ListReviews(
 ` as GeneratedQuery<
   APITypes.ListReviewsQueryVariables,
   APITypes.ListReviewsQuery
+>;
+export const reviewsByRentalID = /* GraphQL */ `query ReviewsByRentalID(
+  $rentalID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelReviewFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  reviewsByRentalID(
+    rentalID: $rentalID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      description
+      rating
+      rentalID
+      datePublished
+      createdAt
+      updatedAt
+      reviewUserId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ReviewsByRentalIDQueryVariables,
+  APITypes.ReviewsByRentalIDQuery
 >;
 export const getRental = /* GraphQL */ `query GetRental($id: ID!) {
   getRental(id: $id) {
@@ -193,12 +247,9 @@ export const getRental = /* GraphQL */ `query GetRental($id: ID!) {
     userID
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -233,72 +284,6 @@ export const listRentals = /* GraphQL */ `query ListRentals(
 ` as GeneratedQuery<
   APITypes.ListRentalsQueryVariables,
   APITypes.ListRentalsQuery
->;
-export const bookingsByRentalID = /* GraphQL */ `query BookingsByRentalID(
-  $rentalID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelBookingFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  bookingsByRentalID(
-    rentalID: $rentalID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      startDate
-      endDate
-      rentalID
-      createdAt
-      updatedAt
-      bookingUserId
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.BookingsByRentalIDQueryVariables,
-  APITypes.BookingsByRentalIDQuery
->;
-export const reviewsByRentalID = /* GraphQL */ `query ReviewsByRentalID(
-  $rentalID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelReviewFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  reviewsByRentalID(
-    rentalID: $rentalID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      title
-      description
-      rating
-      rentalID
-      datePublished
-      createdAt
-      updatedAt
-      reviewUserId
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ReviewsByRentalIDQueryVariables,
-  APITypes.ReviewsByRentalIDQuery
 >;
 export const rentalsByUserID = /* GraphQL */ `query RentalsByUserID(
   $userID: ID!

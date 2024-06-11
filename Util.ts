@@ -229,4 +229,8 @@ export default class Util {
   public static getTimeIncrementString(value: number): string | undefined {
     return TimeIncrements[value as keyof typeof TimeIncrements];
   }
+
+  public static toISODateString(date: Date = new Date()): string {
+    return date.toISOString().split('T')[0];
+  }
 }

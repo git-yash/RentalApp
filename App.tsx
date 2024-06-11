@@ -25,21 +25,24 @@ import Messages from './screens/Messages/Messages';
 import PostTab from './screens/PostRentalScreens/Post/PostTab';
 import Prices from './screens/PostRentalScreens/Prices/Prices';
 import Details from './screens/PostRentalScreens/Details/Details';
-import {generateClient} from 'aws-amplify/api';
-import {createUser} from './src/graphql/mutations';
 import {Amplify} from 'aws-amplify';
+import {generateClient} from 'aws-amplify/api';
+import amplifyconfig from './src/amplifyconfiguration.json';
+import {createUser} from './src/graphql/mutations';
+import Util from './Util';
 
-Amplify.configure({
-  API: {
-    GraphQL: {
-      endpoint:
-        'https://ha2vynb4ancnjpcnsfp5ehlxia.appsync-api.us-east-1.amazonaws.com/graphql',
-      region: 'us-east-1',
-      defaultAuthMode: 'apiKey',
-      apiKey: 'da2-7j4se2tyebdzjjd4b5d7er3mva',
-    },
-  },
-});
+// Amplify.configure({
+//   API: {
+//     GraphQL: {
+//       endpoint:
+//         'https://ha2vynb4ancnjpcnsfp5ehlxia.appsync-api.us-east-1.amazonaws.com/graphql',
+//       region: 'us-east-1',
+//       defaultAuthMode: 'apiKey',
+//       apiKey: 'da2-7j4se2tyebdzjjd4b5d7er3mva',
+//     },
+//   },
+// });
+Amplify.configure(amplifyconfig);
 
 function App(): JSX.Element {
   const Tab = createBottomTabNavigator();
@@ -53,9 +56,9 @@ function App(): JSX.Element {
       query: createUser,
       variables: {
         input: {
-          firstName: 'yash',
-          lastName: 'shah',
-          email: 'yashmittalshah@gmail.com',
+          dateJoined: Util.toISODateString(),
+          isOnline: true,
+          username: 'poo',
         },
       },
     });

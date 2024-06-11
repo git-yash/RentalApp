@@ -15,12 +15,9 @@ export const onCreateBooking = /* GraphQL */ `subscription OnCreateBooking($filt
     endDate
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -43,12 +40,9 @@ export const onUpdateBooking = /* GraphQL */ `subscription OnUpdateBooking($filt
     endDate
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -71,12 +65,9 @@ export const onDeleteBooking = /* GraphQL */ `subscription OnDeleteBooking($filt
     endDate
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -95,16 +86,13 @@ export const onDeleteBooking = /* GraphQL */ `subscription OnDeleteBooking($filt
 export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
   onCreateUser(filter: $filter) {
     id
-    firstName
-    lastName
     dateJoined
     isOnline
-    email
     postedRentals {
       nextToken
       __typename
     }
-    birthdate
+    username
     createdAt
     updatedAt
     __typename
@@ -117,16 +105,13 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
 export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
   onUpdateUser(filter: $filter) {
     id
-    firstName
-    lastName
     dateJoined
     isOnline
-    email
     postedRentals {
       nextToken
       __typename
     }
-    birthdate
+    username
     createdAt
     updatedAt
     __typename
@@ -139,16 +124,13 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
 export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
   onDeleteUser(filter: $filter) {
     id
-    firstName
-    lastName
     dateJoined
     isOnline
-    email
     postedRentals {
       nextToken
       __typename
     }
-    birthdate
+    username
     createdAt
     updatedAt
     __typename
@@ -167,12 +149,9 @@ export const onCreateReview = /* GraphQL */ `subscription OnCreateReview($filter
     rentalID
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -197,12 +176,9 @@ export const onUpdateReview = /* GraphQL */ `subscription OnUpdateReview($filter
     rentalID
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -227,12 +203,9 @@ export const onDeleteReview = /* GraphQL */ `subscription OnDeleteReview($filter
     rentalID
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -286,12 +259,9 @@ export const onCreateRental = /* GraphQL */ `subscription OnCreateRental($filter
     userID
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -343,12 +313,9 @@ export const onUpdateRental = /* GraphQL */ `subscription OnUpdateRental($filter
     userID
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
@@ -400,12 +367,9 @@ export const onDeleteRental = /* GraphQL */ `subscription OnDeleteRental($filter
     userID
     user {
       id
-      firstName
-      lastName
       dateJoined
       isOnline
-      email
-      birthdate
+      username
       createdAt
       updatedAt
       __typename
