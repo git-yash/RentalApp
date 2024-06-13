@@ -52,9 +52,9 @@ const Profile = (props: {navigation: any}) => {
             title="Sign out"
             onPress={async () => {
               await profileService.handleSignOut(setModalVisible).then(() => {
-                setUserAttributes(undefined);
-                setUser(undefined);
-                setAuthUser(undefined);
+                setUserAttributes(null);
+                setUser(null);
+                setAuthUser(null);
               });
             }}
           />

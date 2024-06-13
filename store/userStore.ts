@@ -3,12 +3,14 @@ import {create} from 'zustand';
 import {type User} from '../src/API';
 
 interface UserState {
-  authUser?: AuthUser;
-  user?: User;
-  userAttributes: FetchUserAttributesOutput | undefined;
-  setAuthUser: (authUser?: AuthUser) => void;
-  setUser: (user?: User) => void;
-  setUserAttributes: (userAttributes?: FetchUserAttributesOutput) => void;
+  authUser?: AuthUser | null;
+  user?: User | null;
+  userAttributes: FetchUserAttributesOutput | undefined | null;
+  setAuthUser: (authUser?: AuthUser | null) => void;
+  setUser: (user?: User | null) => void;
+  setUserAttributes: (
+    userAttributes?: FetchUserAttributesOutput | null,
+  ) => void;
 }
 
 const useUserStore = create<UserState>(set => ({

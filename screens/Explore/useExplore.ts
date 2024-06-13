@@ -146,7 +146,7 @@ const useExplore = () => {
   // TODO: fix bookmark update issue
 
   useEffect(() => {
-    if (!user) {
+    if (user === undefined || user === null) {
       setModalVisible(true);
     }
   }, []);

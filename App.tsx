@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
@@ -26,11 +26,11 @@ import Prices from './screens/PostRentalScreens/Prices/Prices';
 import Details from './screens/PostRentalScreens/Details/Details';
 import {Amplify} from 'aws-amplify';
 import amplifyconfig from './src/amplifyconfiguration.json';
-import useUserStore from './store/userStore';
 import {fetchUserAttributes, getCurrentUser} from 'aws-amplify/auth';
 import {generateClient} from 'aws-amplify/api';
 import {getUser} from './src/graphql/queries';
 import {type User} from './src/API';
+import useUserStore from './store/userStore';
 
 Amplify.configure(amplifyconfig);
 
@@ -38,47 +38,41 @@ function App(): JSX.Element {
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
   const PostRentalScreensStack = createNativeStackNavigator();
-  const {authUser, setAuthUser, setUserAttributes, setUser} = useUserStore();
+  const {authUser, setAuthUser, setUserAttributes, setUser, userAttributes} =
+    useUserStore();
   const client = generateClient();
+  const [failedGettingCurrentUser, setFailedGettingCurrentUser] =
+    useState<boolean>(false);
 
   useEffect(() => {
-    async function initializeUser() {
-      await getCurrentUser()
-        .then(async au => {
-          // console.log(au, 'App:getUser');
-          setAuthUser(au);
+    getCurrentUser()
+      .then(au => {
+        // console.log(au, 'App:getUser');
+        setAuthUser(au);
 
-          const user = await client
-            .graphql({
-              query: getUser,
-              variables: {id: au.signInDetails?.loginId},
-            })
-            .then(response => {
-              const u = response.data.getUser;
-              // console.log(u, 'App:User');
-              return u === null ? undefined : (u as User);
-            })
-            .catch(e => {
-              console.error(e);
-              return undefined;
-            });
+        client
+          .graphql({
+            query: getUser,
+            variables: {id: au.signInDetails?.loginId},
+          })
+          .then(response => {
+            setUser(response.data.getUser as User);
+          })
+          .catch(e => {
+            console.error(e);
+          });
 
-          setUser(user);
-
-          await fetchUserAttributes()
-            .then(attributes => {
-              // console.log(attributes, 'App:attributes');
-              setUserAttributes(attributes);
-            })
-            .catch(e => console.error(e));
-        })
-        .catch(e => {
-          console.error(e);
-        });
-    }
-
-    console.log('App load');
-    initializeUser();
+        fetchUserAttributes()
+          .then(attributes => {
+            // console.log(attributes, 'App:attributes');
+            setUserAttributes(attributes);
+          })
+          .catch(e => console.error(e));
+      })
+      .catch(e => {
+        setFailedGettingCurrentUser(true);
+        console.error(e);
+      });
   }, []);
 
   const PostRentalScreens = () => {
@@ -201,39 +195,41 @@ function App(): JSX.Element {
     <MyContextProvider>
       <ActionSheetProvider>
         <NativeBaseProvider>
-          <NavigationContainer>
-            <StatusBar barStyle={'dark-content'} />
-            <Stack.Navigator>
-              <Stack.Screen
-                name={'Tabs'}
-                component={Tabs}
-                options={{
-                  headerShown: false,
-                  presentation: 'fullScreenModal',
-                }}
-              />
-              <Stack.Screen
-                name={'PostRentalScreens'}
-                component={PostRentalScreens}
-                options={{
-                  headerShown: false,
-                  gestureEnabled: false,
-                  presentation: 'containedModal',
-                }}
-              />
-              <Stack.Screen
-                name={'Details'}
-                component={RentalDetails}
-                options={{
-                  headerTitleStyle: {
-                    fontFamily: 'Poppins-Regular',
-                  },
-                  headerBackTitleVisible: false,
-                  headerTintColor: 'black',
-                }}
-              />
-            </Stack.Navigator>
-          </NavigationContainer>
+          {(failedGettingCurrentUser || userAttributes !== undefined) && (
+            <NavigationContainer>
+              <StatusBar barStyle={'dark-content'} />
+              <Stack.Navigator>
+                <Stack.Screen
+                  name={'Tabs'}
+                  component={Tabs}
+                  options={{
+                    headerShown: false,
+                    presentation: 'fullScreenModal',
+                  }}
+                />
+                <Stack.Screen
+                  name={'PostRentalScreens'}
+                  component={PostRentalScreens}
+                  options={{
+                    headerShown: false,
+                    gestureEnabled: false,
+                    presentation: 'containedModal',
+                  }}
+                />
+                <Stack.Screen
+                  name={'Details'}
+                  component={RentalDetails}
+                  options={{
+                    headerTitleStyle: {
+                      fontFamily: 'Poppins-Regular',
+                    },
+                    headerBackTitleVisible: false,
+                    headerTintColor: 'black',
+                  }}
+                />
+              </Stack.Navigator>
+            </NavigationContainer>
+          )}
         </NativeBaseProvider>
       </ActionSheetProvider>
     </MyContextProvider>
