@@ -129,7 +129,7 @@ export default class Util {
       .then(json => {
         return json.results[0].geometry.location;
       })
-      .catch(error => console.log(error));
+      .catch(error => console.error(error));
   }
 
   public static getNameWithLastNameAbbreviated(

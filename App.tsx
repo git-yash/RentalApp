@@ -45,27 +45,39 @@ function App(): JSX.Element {
     async function initializeUser() {
       await getCurrentUser()
         .then(async au => {
-          console.log(au, 'App:getUser');
+          // console.log(au, 'App:getUser');
           setAuthUser(au);
 
           const user = await client
-            .graphql({query: getUser, variables: {id: au.userId}})
+            .graphql({
+              query: getUser,
+              variables: {id: au.signInDetails?.loginId},
+            })
             .then(response => {
               const u = response.data.getUser;
+              // console.log(u, 'App:User');
               return u === null ? undefined : (u as User);
+            })
+            .catch(e => {
+              console.error(e);
+              return undefined;
             });
 
           setUser(user);
 
-          await fetchUserAttributes().then(attributes => {
-            setUserAttributes(attributes);
-          });
+          await fetchUserAttributes()
+            .then(attributes => {
+              // console.log(attributes, 'App:attributes');
+              setUserAttributes(attributes);
+            })
+            .catch(e => console.error(e));
         })
         .catch(e => {
-          console.log(e);
+          console.error(e);
         });
     }
 
+    console.log('App load');
     initializeUser();
   }, []);
 

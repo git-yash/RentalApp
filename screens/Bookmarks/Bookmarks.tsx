@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {
-  FlatList,
   RefreshControl,
   SafeAreaView,
   ScrollView,
@@ -17,6 +16,10 @@ const Bookmarks = (props: {navigation: any}) => {
   const {position, refreshing, onRefresh} = useBookmarks();
   const {bookmarkedPosts} = useMyContext();
   const doesHaveBookmarks: boolean = bookmarkedPosts.length > 0;
+
+  useEffect(() => {
+    console.log('BM');
+  }, []);
 
   return (
     <SafeAreaView>
