@@ -8,8 +8,8 @@ import {faUser as solidUser} from '@fortawesome/free-solid-svg-icons';
 import {faUser as regularUser} from '@fortawesome/free-regular-svg-icons';
 import ProfileImageNameView from '../../components/ProfileImage/ProfileImageNameView';
 import useProfile from './useProfile';
-import ProfileService from './Profile.service';
 import useUserStore from '../../store/userStore';
+import useUser from '../../hooks/useUser';
 
 const Profile = (props: {navigation: any}) => {
   const {
@@ -18,9 +18,9 @@ const Profile = (props: {navigation: any}) => {
     handleEditProfileImageActionSheetButton,
     setModalVisible,
   } = useProfile();
-  const {authUser, setUser, setUserAttributes, setAuthUser} = useUserStore();
+  const {authUser} = useUserStore();
   library.add(solidUser, regularUser);
-  const profileService = new ProfileService();
+  const {signOutUser} = useUser();
 
   // have to leave this useFocusEffect in tsx file due to it changing the tab bar property
   useFocusEffect(
@@ -51,10 +51,8 @@ const Profile = (props: {navigation: any}) => {
           <Button
             title="Sign out"
             onPress={async () => {
-              await profileService.handleSignOut(setModalVisible).then(() => {
-                setUserAttributes(null);
-                setUser(null);
-                setAuthUser(null);
+              await signOutUser().then(() => {
+                setModalVisible(true);
               });
             }}
           />

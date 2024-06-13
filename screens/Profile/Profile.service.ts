@@ -3,14 +3,8 @@ import {ImageOrVideo} from 'react-native-image-crop-picker';
 import {signOut} from 'aws-amplify/auth';
 
 export default class ProfileService {
-  async handleSignOut(setModalVisible: any) {
-    try {
-      await signOut().then(() => {
-        setModalVisible(true);
-      });
-    } catch (error) {
-      console.error('error signing out: ', error);
-    }
+  async handleSignOut() {
+    return await signOut();
   }
 
   async fetchImage(profileImageRef: string, setImageURI: any) {

@@ -26,11 +26,8 @@ import Prices from './screens/PostRentalScreens/Prices/Prices';
 import Details from './screens/PostRentalScreens/Details/Details';
 import {Amplify} from 'aws-amplify';
 import amplifyconfig from './src/amplifyconfiguration.json';
-import {fetchUserAttributes, getCurrentUser} from 'aws-amplify/auth';
-import {generateClient} from 'aws-amplify/api';
-import {getUser} from './src/graphql/queries';
-import {type User} from './src/API';
 import useUserStore from './store/userStore';
+import useUser from './hooks/useUser';
 
 Amplify.configure(amplifyconfig);
 
@@ -38,40 +35,20 @@ function App(): JSX.Element {
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
   const PostRentalScreensStack = createNativeStackNavigator();
-  const {authUser, setAuthUser, setUserAttributes, setUser, userAttributes} =
-    useUserStore();
-  const client = generateClient();
+  const {authUser, userAttributes} = useUserStore();
   const [failedGettingCurrentUser, setFailedGettingCurrentUser] =
     useState<boolean>(false);
 
+  const {initializeUser} = useUser();
+
   useEffect(() => {
-    getCurrentUser()
-      .then(au => {
-        // console.log(au, 'App:getUser');
-        setAuthUser(au);
-
-        client
-          .graphql({
-            query: getUser,
-            variables: {id: au.signInDetails?.loginId},
-          })
-          .then(response => {
-            setUser(response.data.getUser as User);
-          })
-          .catch(e => {
-            console.error(e);
-          });
-
-        fetchUserAttributes()
-          .then(attributes => {
-            // console.log(attributes, 'App:attributes');
-            setUserAttributes(attributes);
-          })
-          .catch(e => console.error(e));
+    initializeUser()
+      .then(isInitialized => {
+        console.log('isInitialized', isInitialized);
       })
       .catch(e => {
-        setFailedGettingCurrentUser(true);
         console.error(e);
+        setFailedGettingCurrentUser(true);
       });
   }, []);
 

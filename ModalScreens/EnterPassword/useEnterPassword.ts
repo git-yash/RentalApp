@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import EnterPasswordService from './EnterPassword.service';
-import useUserStore from '../../store/userStore';
-import {getCurrentUser} from 'aws-amplify/auth';
+import useUser from '../../hooks/useUser';
 
 const useEnterPassword = (
   emailText: string,
@@ -14,28 +13,20 @@ const useEnterPassword = (
     undefined,
   );
   const enterPasswordService = new EnterPasswordService();
-  const userStore = useUserStore();
+  const {initializeUser} = useUser();
 
   const signIn = async () => {
     await enterPasswordService
-      .handleSignIn(
-        {username: emailText, password: passwordText},
-        setCanHideModal,
-        setIsModalVisible,
-        setIsLoading,
-        setErrorMessage,
-      )
-      .then(async user => {
-        userStore.setUser(user);
-        if (user) {
-          await getCurrentUser()
-            .then(authUser => {
-              return userStore.setAuthUser(authUser);
-            })
-            .catch(e => {
-              console.error(e);
-            });
+      .handleSignIn({username: emailText, password: passwordText}, setIsLoading)
+      .then(async response => {
+        if (response.isSignedIn) {
+          await initializeUser();
+          setCanHideModal(true);
+          setIsModalVisible(true);
         }
+      })
+      .catch(() => {
+        setErrorMessage('Sign-in error');
       });
   };
 
