@@ -1,8 +1,6 @@
 import axios from 'axios';
 import {Platform} from 'react-native';
 import Util from '../../Util';
-import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
 
 export default class MiniRentalExploreViewService {
   async getAddressFromLocation(
@@ -46,7 +44,7 @@ export default class MiniRentalExploreViewService {
           const {status, routes} = response.data;
 
           if (status === 'OK' && routes.length > 0) {
-            const {distance, duration} = routes[0].legs[0];
+            const {distance} = routes[0].legs[0];
             return distance.text as string;
           } else {
             return 'No routes found.';
@@ -58,33 +56,33 @@ export default class MiniRentalExploreViewService {
     }
   }
 
-  async addBookmarkToBookMarks(rentalId: string): Promise<void> {
-    return firestore()
-      .collection('users')
-      .doc(auth().currentUser?.email as string)
-      .collection('bookmarkedPosts')
-      .doc(rentalId)
-      .set({});
-  }
-
-  async removeBookmarkFromBookmarks(rentalId: string): Promise<void> {
-    return firestore()
-      .collection('users')
-      .doc(auth().currentUser?.email as string)
-      .collection('bookmarkedPosts')
-      .doc(rentalId)
-      .delete();
-  }
-
-  async isInBookmarkedPosts(rentalId: string): Promise<boolean> {
-    const documentRef = firestore()
-      .collection('users')
-      .doc(auth().currentUser?.email as string)
-      .collection('bookmarkedPosts')
-      .doc(rentalId);
-
-    return documentRef.get().then(documentSnapshot => {
-      return documentSnapshot.exists;
-    });
-  }
+  // async addBookmarkToBookMarks(rentalId: string): Promise<void> {
+  //   return firestore()
+  //     .collection('users')
+  //     .doc(auth().currentUser?.email as string)
+  //     .collection('bookmarkedPosts')
+  //     .doc(rentalId)
+  //     .set({});
+  // }
+  //
+  // async removeBookmarkFromBookmarks(rentalId: string): Promise<void> {
+  //   return firestore()
+  //     .collection('users')
+  //     .doc(auth().currentUser?.email as string)
+  //     .collection('bookmarkedPosts')
+  //     .doc(rentalId)
+  //     .delete();
+  // }
+  //
+  // async isInBookmarkedPosts(rentalId: string): Promise<boolean> {
+  //   const documentRef = firestore()
+  //     .collection('users')
+  //     .doc(auth().currentUser?.email as string)
+  //     .collection('bookmarkedPosts')
+  //     .doc(rentalId);
+  //
+  //   return documentRef.get().then(documentSnapshot => {
+  //     return documentSnapshot.exists;
+  //   });
+  // }
 }

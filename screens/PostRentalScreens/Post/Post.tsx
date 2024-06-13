@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {Pressable, SafeAreaView, Text, TouchableOpacity} from 'react-native';
-import auth from '@react-native-firebase/auth';
 import LogInToViewScreen from '../../../components/LogInToViewScreen/LogInToViewScreen';
 import Colors from '../../../assets/Colors';
 import {faArrowUpFromBracket, faXmark} from '@fortawesome/free-solid-svg-icons';
@@ -13,6 +12,7 @@ import ContinueWithStepIndicatorView from '../components/ContinueWithStepIndicat
 import DismissKeyboardView from '../../../components/DismissKeyboardView';
 import MoneyTextInput from '../../../components/MoneyTextInput/MoneyTextInput';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import useUserStore from '../../../store/userStore';
 
 const Post = (props: {navigation: any}) => {
   const {
@@ -33,6 +33,8 @@ const Post = (props: {navigation: any}) => {
     onContinuePress,
   } = usePost(props.navigation);
 
+  const {user} = useUserStore();
+
   // set header left to x mark
   useEffect(() => {
     props.navigation.setOptions({
@@ -47,7 +49,7 @@ const Post = (props: {navigation: any}) => {
   return (
     <DismissKeyboardView>
       <SafeAreaView style={{flex: 1}}>
-        {auth().currentUser && (
+        {user && (
           <KeyboardAwareScrollView extraScrollHeight={25}>
             <TouchableOpacity
               style={postStyle.uploadImagesButton}
@@ -98,9 +100,7 @@ const Post = (props: {navigation: any}) => {
             />
           </KeyboardAwareScrollView>
         )}
-        {!auth().currentUser && (
-          <LogInToViewScreen message={'Log in to make a post'} />
-        )}
+        {!user && <LogInToViewScreen message={'Log in to make a post'} />}
         <ContinueWithStepIndicatorView
           navigation={props.navigation}
           currentStepPosition={currentStepPosition}

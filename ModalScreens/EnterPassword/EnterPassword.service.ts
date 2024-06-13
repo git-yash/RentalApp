@@ -1,41 +1,42 @@
-import auth from '@react-native-firebase/auth';
+import {signIn, type SignInInput} from 'aws-amplify/auth';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import Util from '../../Util';
-import firestore from '@react-native-firebase/firestore';
+import {generateClient} from 'aws-amplify/api';
+import {getUser} from '../../src/graphql/queries';
+import {type User} from '../../src/API';
 
 export default class EnterPasswordService {
   async handleSignIn(
-    emailText: string,
-    passwordText: string,
+    {username, password}: SignInInput,
     setCanHideModal: any,
     setIsModalVisible: any,
     setIsLoading: any,
     setErrorMessage: any,
   ) {
     setIsLoading(true);
-    try {
-      await auth()
-        .signInWithEmailAndPassword(emailText, passwordText)
-        .then(() => {
-          ReactNativeHapticFeedback.trigger(
-            'notificationSuccess',
-            Util.options,
-          );
-          setCanHideModal(true);
-          setIsModalVisible(false);
-          firestore()
-            .collection('users')
-            .doc(emailText)
-            .update({isOnline: true});
-          setIsLoading(false);
-        });
-      // Handle successful sign-in
-    } catch (error) {
-      // Handle sign-in error
-      ReactNativeHapticFeedback.trigger('notificationError', Util.options);
-      console.error('Sign-in error:', error);
-      setIsLoading(false);
-      setErrorMessage('Incorrect Password');
-    }
+    const client = generateClient();
+
+    return signIn({username, password})
+      .then(async ({isSignedIn, nextStep}) => {
+        ReactNativeHapticFeedback.trigger('notificationSuccess', Util.options);
+        console.log('is signed in: ', isSignedIn);
+
+        const user = await client
+          .graphql({query: getUser, variables: {id: username}})
+          .then(response => {
+            return response.data.getUser as User;
+          });
+
+        setCanHideModal(isSignedIn);
+        setIsModalVisible(isSignedIn);
+        return Promise.resolve(isSignedIn ? user : undefined);
+      })
+      .finally(() => setIsLoading(false))
+      .catch(error => {
+        console.error('EnterPassword.service.signIn: error signing in', error);
+        ReactNativeHapticFeedback.trigger('notificationError', Util.options);
+        setErrorMessage('Sign-in error');
+        return Promise.resolve(undefined);
+      });
   }
 }

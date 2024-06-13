@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react';
-import auth from '@react-native-firebase/auth';
 import Util from '../../Util';
 import LogInOrSignUpService from './LogInOrSignUp.service';
+import useUserStore from '../../store/userStore';
 
 const useLogInOrSignUp = () => {
-  const [emailText, setEmailText] = useState('');
+  const [emailText, setEmailText] = useState('yash1@gmail.com');
   const [emailError, setEmailError] = useState<string | undefined>(undefined);
   const [modalScreenName, setModalScreenName] = useState<
     'LogInOrSignUp' | 'FinishSigningUp' | 'EnterPassword'
@@ -12,16 +12,20 @@ const useLogInOrSignUp = () => {
   const [canHideModal, setCanHideModal] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const logInOrSignUpService = new LogInOrSignUpService();
+  const {user} = useUserStore();
 
   const isDisabled: boolean =
     emailText.length === 0 || emailError !== undefined;
 
   useEffect(() => {
+    if (!user) {
+      return;
+    }
+
     setModalScreenName('LogInOrSignUp');
     setEmailText('yash1@gmail.com');
     setCanHideModal(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth().currentUser]);
+  }, [user]);
 
   useEffect(() => {
     if (modalScreenName === 'LogInOrSignUp') {
@@ -40,11 +44,11 @@ const useLogInOrSignUp = () => {
     );
   };
 
-  const handleContinuePress = async (documentId: string) => {
+  const handleContinuePress = async (email: string) => {
     setIsLoading(true);
     try {
       await logInOrSignUpService.handleDocumentExists(
-        documentId,
+        email,
         setModalScreenName,
       );
       setIsLoading(false);
@@ -65,6 +69,7 @@ const useLogInOrSignUp = () => {
     handleEmailOnChange,
     isDisabled,
     modalScreenName,
+    user,
     setModalScreenName,
     handleContinuePress,
   };

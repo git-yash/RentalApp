@@ -4,7 +4,6 @@ import Util from '../../Util';
 import {DateTimePickerEvent} from '@react-native-community/datetimepicker';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import FinishSigningUpService from './FinishSigningUp.service';
-import {signUp} from 'aws-amplify/auth';
 
 const useFinishSigningUp = (
   initialEmailText: string,
@@ -122,7 +121,7 @@ const useFinishSigningUp = (
     setIsLoading(true);
 
     if (isFormValid) {
-      finishSigningUpService.signUp(
+      await finishSigningUpService.signUp(
         emailText,
         passwordText,
         firstNameText,
@@ -133,23 +132,6 @@ const useFinishSigningUp = (
         setIsLoading,
         setEmailError,
       );
-      try {
-        await signUp({
-          username: emailText,
-          password: passwordText,
-          options: {
-            userAttributes: {
-              email: emailText,
-              name: firstNameText + ' ' + lastNameText,
-              birthdate: birthdate.toISOString().split('T')[0],
-            },
-          },
-        }).then(() => {
-          console.log('user created');
-        });
-      } catch (e) {
-        console.log(e);
-      }
     } else {
       ReactNativeHapticFeedback.trigger('notificationError', Util.options);
       setIsLoading(false);

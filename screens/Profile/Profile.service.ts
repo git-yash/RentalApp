@@ -1,14 +1,16 @@
-import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 import {ImageOrVideo} from 'react-native-image-crop-picker';
+import {signOut} from 'aws-amplify/auth';
 
 export default class ProfileService {
-  handleSignOut(setModalVisible: any) {
-    auth()
-      .signOut()
-      .then(() => {
+  async handleSignOut(setModalVisible: any) {
+    try {
+      await signOut().then(() => {
         setModalVisible(true);
       });
+    } catch (error) {
+      console.error('error signing out: ', error);
+    }
   }
 
   async fetchImage(profileImageRef: string, setImageURI: any) {

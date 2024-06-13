@@ -20,7 +20,6 @@ export const createBooking = /* GraphQL */ `mutation CreateBooking(
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -48,7 +47,6 @@ export const updateBooking = /* GraphQL */ `mutation UpdateBooking(
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -76,7 +74,6 @@ export const deleteBooking = /* GraphQL */ `mutation DeleteBooking(
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -104,7 +101,6 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
       nextToken
       __typename
     }
-    username
     createdAt
     updatedAt
     __typename
@@ -126,7 +122,6 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
       nextToken
       __typename
     }
-    username
     createdAt
     updatedAt
     __typename
@@ -148,7 +143,6 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
       nextToken
       __typename
     }
-    username
     createdAt
     updatedAt
     __typename
@@ -172,7 +166,6 @@ export const createReview = /* GraphQL */ `mutation CreateReview(
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -202,7 +195,6 @@ export const updateReview = /* GraphQL */ `mutation UpdateReview(
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -232,7 +224,6 @@ export const deleteReview = /* GraphQL */ `mutation DeleteReview(
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -291,7 +282,6 @@ export const createRental = /* GraphQL */ `mutation CreateRental(
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -348,7 +338,6 @@ export const updateRental = /* GraphQL */ `mutation UpdateRental(
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -405,7 +394,6 @@ export const deleteRental = /* GraphQL */ `mutation DeleteRental(
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename

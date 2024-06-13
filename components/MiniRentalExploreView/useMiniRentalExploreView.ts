@@ -18,9 +18,9 @@ const useMiniRentalExploreView = (
 
   useEffect(() => {
     async function setIsInBookmarks() {
-      setIsBookmarked(
-        await miniRentalExploreViewService.isInBookmarkedPosts(rental.id),
-      );
+      // setIsBookmarked(
+      //   await miniRentalExploreViewService.isInBookmarkedPosts(rental.id),
+      // );
     }
 
     void setIsInBookmarks();
@@ -40,11 +40,11 @@ const useMiniRentalExploreView = (
     if (isBookmarked === null) {
       return;
     }
-    if (isBookmarked) {
-      void miniRentalExploreViewService.addBookmarkToBookMarks(rental.id);
-    } else {
-      void miniRentalExploreViewService.removeBookmarkFromBookmarks(rental.id);
-    }
+    // if (isBookmarked) {
+    //   void miniRentalExploreViewService.addBookmarkToBookMarks(rental.id);
+    // } else {
+    //   void miniRentalExploreViewService.removeBookmarkFromBookmarks(rental.id);
+    // }
   }, [isBookmarked]);
 
   const handleRentalPress = (

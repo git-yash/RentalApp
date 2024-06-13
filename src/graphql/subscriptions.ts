@@ -17,7 +17,6 @@ export const onCreateBooking = /* GraphQL */ `subscription OnCreateBooking($filt
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -42,7 +41,6 @@ export const onUpdateBooking = /* GraphQL */ `subscription OnUpdateBooking($filt
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -67,7 +65,6 @@ export const onDeleteBooking = /* GraphQL */ `subscription OnDeleteBooking($filt
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -92,7 +89,6 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
       nextToken
       __typename
     }
-    username
     createdAt
     updatedAt
     __typename
@@ -111,7 +107,6 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
       nextToken
       __typename
     }
-    username
     createdAt
     updatedAt
     __typename
@@ -130,7 +125,6 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
       nextToken
       __typename
     }
-    username
     createdAt
     updatedAt
     __typename
@@ -151,7 +145,6 @@ export const onCreateReview = /* GraphQL */ `subscription OnCreateReview($filter
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -178,7 +171,6 @@ export const onUpdateReview = /* GraphQL */ `subscription OnUpdateReview($filter
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -205,7 +197,6 @@ export const onDeleteReview = /* GraphQL */ `subscription OnDeleteReview($filter
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -261,7 +252,6 @@ export const onCreateRental = /* GraphQL */ `subscription OnCreateRental($filter
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -315,7 +305,6 @@ export const onUpdateRental = /* GraphQL */ `subscription OnUpdateRental($filter
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -369,7 +358,6 @@ export const onDeleteRental = /* GraphQL */ `subscription OnDeleteRental($filter
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename

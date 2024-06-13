@@ -1,15 +1,15 @@
 import {useEffect, useState} from 'react';
-import auth from '@react-native-firebase/auth';
 import {useActionSheet} from '@expo/react-native-action-sheet';
 import ImagePicker from 'react-native-image-crop-picker';
 import Colors from '../../assets/Colors';
 import ProfileService from './Profile.service';
+import useUserStore from '../../store/userStore';
 
 const useProfile = () => {
+  const {user} = useUserStore();
   const [isModalVisible, setModalVisible] = useState(false);
   const [imageURI, setImageURI] = useState<string | undefined>(undefined);
-  const profileImageRef: string =
-    'userProfilePictures/' + auth().currentUser?.email;
+  const profileImageRef: string = 'userProfilePictures/' + user?.id;
   const {showActionSheetWithOptions} = useActionSheet();
   const profileService = new ProfileService();
 
@@ -26,7 +26,7 @@ const useProfile = () => {
 
   useEffect(() => {
     void profileService.fetchImage(profileImageRef, setImageURI);
-  }, [auth().currentUser]);
+  }, [user]);
 
   const handleEditProfileImageActionSheetButton = () => {
     const optionsWithoutImage = ['Choose Photo', 'Take Photo', 'Cancel'];

@@ -8,7 +8,6 @@ import CustomSecureTextInput from '../../components/CustomSecureTextInput/Custom
 import ContinuePressable from '../../components/ContinuePressable/ContinuePressable';
 import enterPasswordStyles from './EnterPassword.style';
 import useEnterPassword from './useEnterPassword';
-import EnterPasswordService from './EnterPassword.service';
 
 const EnterPassword = (props: {
   setModalScreenName: any;
@@ -16,15 +15,12 @@ const EnterPassword = (props: {
   emailText: string;
   setCanHideModal: any;
 }) => {
-  const {
-    passwordText,
-    setPasswordText,
-    isLoading,
-    setIsLoading,
-    errorMessage,
-    setErrorMessage,
-  } = useEnterPassword();
-  const enterPasswordService = new EnterPasswordService();
+  const {passwordText, setPasswordText, isLoading, errorMessage, signIn} =
+    useEnterPassword(
+      props.emailText,
+      props.setIsModalVisible,
+      props.setCanHideModal,
+    );
 
   return (
     <View style={exploreStyles.modalView}>
@@ -58,14 +54,7 @@ const EnterPassword = (props: {
         />
         <ContinuePressable
           onPress={() => {
-            void enterPasswordService.handleSignIn(
-              props.emailText,
-              passwordText,
-              props.setCanHideModal,
-              props.setIsModalVisible,
-              setIsLoading,
-              setErrorMessage,
-            );
+            signIn();
           }}
           isDisabled={passwordText.length < 1}
           text={'Continue'}

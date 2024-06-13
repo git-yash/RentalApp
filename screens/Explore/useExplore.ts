@@ -4,7 +4,6 @@ import Geolocation, {
   GeolocationResponse,
 } from '@react-native-community/geolocation';
 import {Rental} from '../../modals/Rental';
-import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import ExploreService from './Explore.service';
 import {useMyContext} from '../../MyContext';
@@ -13,6 +12,7 @@ import Util from '../../Util';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {DateRange} from '../../modals/DateRange';
+import useUserStore from '../../store/userStore';
 
 const useExplore = () => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -29,11 +29,12 @@ const useExplore = () => {
   const appState = useRef(AppState.currentState);
   const [refreshing, setRefreshing] = React.useState(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
+  const {user} = useUserStore();
   const snapPoints = useMemo(
     () => ['10%', showSearchResults ? '95%' : '85%'],
     [],
   );
-  const handleSheetChanges = useCallback((index: number) => {
+  const handleSheetChanges = useCallback(() => {
     setIsListView(prevState => !prevState);
   }, []);
   const [isSearchFocused, setIsSearchFocused] = useState<boolean>(false);
@@ -145,12 +146,17 @@ const useExplore = () => {
   // TODO: fix bookmark update issue
 
   useEffect(() => {
-    if (!auth().currentUser) {
+    if (!user) {
       setModalVisible(true);
     }
-
-    void setCurrentPosition();
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      setModalVisible(false);
+      void setCurrentGeoPosition();
+    }
+  }, [user]);
 
   useEffect(() => {
     if (!position) {
@@ -166,15 +172,9 @@ const useExplore = () => {
         appState.current.match(/inactive|background/) &&
         nextAppState === 'active'
       ) {
-        firestore()
-          .collection('users')
-          .doc(auth().currentUser?.email as string)
-          .update({isOnline: true});
+        firestore().collection('users').doc(user?.id).update({isOnline: true});
       } else if (nextAppState === 'inactive') {
-        firestore()
-          .collection('users')
-          .doc(auth().currentUser?.email as string)
-          .update({isOnline: false});
+        firestore().collection('users').doc(user?.id).update({isOnline: false});
       }
 
       appState.current = nextAppState;
@@ -185,7 +185,7 @@ const useExplore = () => {
     };
   }, []);
 
-  const setCurrentPosition = async () => {
+  const setCurrentGeoPosition = async () => {
     Geolocation.getCurrentPosition(
       pos => {
         setPosition(pos);

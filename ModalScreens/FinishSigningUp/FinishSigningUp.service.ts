@@ -1,10 +1,11 @@
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
-import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import Util from '../../Util';
+import {signUp} from 'aws-amplify/auth';
+import {generateClient} from 'aws-amplify/api';
+import {createUser} from '../../src/graphql/mutations';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 
 export default class FinishSigningUpService {
-  signUp(
+  async signUp(
     emailText: string,
     passwordText: string,
     firstNameText: string,
@@ -15,57 +16,48 @@ export default class FinishSigningUpService {
     setIsLoading: any,
     setEmailError: any,
   ) {
-    auth()
-      .createUserWithEmailAndPassword(emailText, passwordText)
-      .then(() => {
-        auth()
-          .currentUser?.updateProfile({
-            displayName: firstNameText + ' ' + lastNameText,
-          })
-          .then(() => {
-            firestore()
-              .collection('users')
-              .doc(emailText)
-              .set({
-                birthdate: birthdate,
-                dateJoined: Date.now(),
-                isOnline: true,
-                name: firstNameText + ' ' + lastNameText,
-              })
-              .then(() => {
-                const parentDocRef = firestore()
-                  .collection('users')
-                  .doc(emailText);
-                const subcollectionRef =
-                  parentDocRef.collection('bookmarkedPosts');
-                subcollectionRef
-                  .add({})
-                  .then(() => {
-                    setCanHideModal(true);
-                    setIsModalVisible(false);
-                    ReactNativeHapticFeedback.trigger(
-                      'notificationSuccess',
-                      Util.options,
-                    );
-                    setIsLoading(false);
-                  })
-                  .catch(error => {
-                    console.error(
-                      'Error adding document to subcollection:',
-                      error,
-                    );
-                  });
-              });
-          });
+    const client = generateClient();
+
+    try {
+      setIsLoading(true);
+      await signUp({
+        username: emailText,
+        password: passwordText,
+        options: {
+          userAttributes: {
+            email: emailText,
+            name: firstNameText + ' ' + lastNameText,
+            birthdate: Util.toISODateString(birthdate),
+          },
+        },
       })
-      .catch(error => {
-        if (error.code === 'auth/invalid-email') {
+        .then(async () => {
+          await client
+            .graphql({
+              query: createUser,
+              variables: {
+                input: {
+                  id: emailText,
+                  isOnline: true,
+                  dateJoined: Util.toISODateString(),
+                },
+              },
+            })
+            .then(() => {
+              setCanHideModal(true);
+              setIsModalVisible(false);
+              ReactNativeHapticFeedback.trigger(
+                'notificationSuccess',
+                Util.options,
+              );
+            });
+        })
+        .finally(() => {
           setIsLoading(false);
-        }
-        if (error.code === 'auth/email-already-in-use') {
-          setEmailError('This email is already in use, try logging in.');
-        }
-        setIsLoading(false);
-      });
+        });
+    } catch (e) {
+      console.error(e);
+      setEmailError(e);
+    }
   }
 }

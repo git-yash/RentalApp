@@ -17,7 +17,6 @@ export const getBooking = /* GraphQL */ `query GetBooking($id: ID!) {
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -98,7 +97,6 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
       nextToken
       __typename
     }
-    username
     createdAt
     updatedAt
     __typename
@@ -115,7 +113,6 @@ export const listUsers = /* GraphQL */ `query ListUsers(
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -136,7 +133,6 @@ export const getReview = /* GraphQL */ `query GetReview($id: ID!) {
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename
@@ -249,7 +245,6 @@ export const getRental = /* GraphQL */ `query GetRental($id: ID!) {
       id
       dateJoined
       isOnline
-      username
       createdAt
       updatedAt
       __typename

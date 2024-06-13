@@ -3,9 +3,11 @@ import {Avatar} from 'native-base';
 import Colors from '../../assets/Colors';
 import {Text, View} from 'react-native';
 import Util from '../../Util';
-import auth from '@react-native-firebase/auth';
+import useUserStore from '../../store/userStore';
 
 const ProfileImageNameView = (props: {uri: string | undefined}) => {
+  const {authUser, userAttributes} = useUserStore();
+
   return (
     <View style={{padding: 15, flexDirection: 'row'}}>
       <Avatar
@@ -14,7 +16,9 @@ const ProfileImageNameView = (props: {uri: string | undefined}) => {
         source={{
           uri: props.uri,
         }}>
-        {auth().currentUser ? Util.getUserInitials() : ''}
+        {authUser?.username
+          ? Util.getUserInitials(userAttributes?.name as string)
+          : ''}
       </Avatar>
       <Text
         style={{
@@ -23,7 +27,7 @@ const ProfileImageNameView = (props: {uri: string | undefined}) => {
           fontFamily: 'Poppins-SemiBold',
           fontSize: 25,
         }}>
-        {auth().currentUser?.displayName}
+        {userAttributes?.name as string}
       </Text>
     </View>
   );

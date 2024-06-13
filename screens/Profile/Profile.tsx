@@ -1,6 +1,5 @@
 import React, {useCallback} from 'react';
 import {Button, SafeAreaView, ScrollView} from 'react-native';
-import auth from '@react-native-firebase/auth';
 import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import {useFocusEffect} from '@react-navigation/native';
 import TabBarIcon from '../../components/TabBarIcon/TabBarIcon';
@@ -10,7 +9,7 @@ import {faUser as regularUser} from '@fortawesome/free-regular-svg-icons';
 import ProfileImageNameView from '../../components/ProfileImage/ProfileImageNameView';
 import useProfile from './useProfile';
 import ProfileService from './Profile.service';
-import CategoryTabBar from '../../components/CategoryTabBar/CategoryTabBar';
+import useUserStore from '../../store/userStore';
 
 const Profile = (props: {navigation: any}) => {
   const {
@@ -19,20 +18,19 @@ const Profile = (props: {navigation: any}) => {
     handleEditProfileImageActionSheetButton,
     setModalVisible,
   } = useProfile();
+  const {authUser, setUser, setUserAttributes, setAuthUser} = useUserStore();
   library.add(solidUser, regularUser);
   const profileService = new ProfileService();
 
   // have to leave this useFocusEffect in tsx file due to it changing the tab bar property
   useFocusEffect(
     useCallback(() => {
-      const isLoggedIn = auth().currentUser;
-
       props.navigation.setOptions({
-        tabBarLabel: isLoggedIn ? 'Profile' : 'Log in',
+        tabBarLabel: authUser ? 'Profile' : 'Log in',
         tabBarIcon: ({focused}) => (
           <TabBarIcon
             isFocused={focused}
-            icon={isLoggedIn ? solidUser : regularUser}
+            icon={authUser ? solidUser : regularUser}
           />
         ),
       });
@@ -41,7 +39,7 @@ const Profile = (props: {navigation: any}) => {
 
   return (
     <SafeAreaView>
-      {auth().currentUser && (
+      {authUser && (
         <ScrollView>
           <ProfileImageNameView uri={imageURI} />
           <Button
@@ -52,13 +50,17 @@ const Profile = (props: {navigation: any}) => {
           />
           <Button
             title="Sign out"
-            onPress={() => {
-              profileService.handleSignOut(setModalVisible);
+            onPress={async () => {
+              await profileService.handleSignOut(setModalVisible).then(() => {
+                setUserAttributes(undefined);
+                setUser(undefined);
+                setAuthUser(undefined);
+              });
             }}
           />
         </ScrollView>
       )}
-      {!auth().currentUser && (
+      {!authUser && (
         <Button
           title={'Log in or Sign up'}
           onPress={() => setModalVisible(true)}

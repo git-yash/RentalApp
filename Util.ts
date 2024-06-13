@@ -1,6 +1,5 @@
 import {ImageSourcePropType, Platform} from 'react-native';
 import Colors from './assets/Colors';
-import auth from '@react-native-firebase/auth';
 import Geocoder from 'react-native-geocoding';
 import {Rental} from './modals/Rental';
 import {Price, TimeIncrements} from './modals/Price';
@@ -99,8 +98,7 @@ export default class Util {
     ignoreAndroidSystemSettings: false,
   };
 
-  public static getUserInitials(): string {
-    let name = auth().currentUser?.displayName;
+  public static getUserInitials(name: string): string {
     if (typeof name === 'string') {
       const nameArray = name.split(' ');
       const firstNameIn = nameArray[0].charAt(0).toUpperCase();
@@ -157,7 +155,10 @@ export default class Util {
     }
   }
 
-  public static getIndexFromRentalID(rentals: Rental[], id: string): number {
+  public static getIndexFromRentalID(
+    rentals: Rental[],
+    id: string | undefined,
+  ): number {
     return rentals.findIndex(rental => rental.id === id);
   }
 

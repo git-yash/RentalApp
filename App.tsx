@@ -14,7 +14,6 @@ import Colors from './assets/Colors';
 import {NativeBaseProvider} from 'native-base';
 import {StatusBar} from 'react-native';
 import Profile from './screens/Profile/Profile';
-import auth from '@react-native-firebase/auth';
 import {ActionSheetProvider} from '@expo/react-native-action-sheet';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import RentalDetails from './screens/RentalDetails/RentalDetails';
@@ -26,43 +25,49 @@ import PostTab from './screens/PostRentalScreens/Post/PostTab';
 import Prices from './screens/PostRentalScreens/Prices/Prices';
 import Details from './screens/PostRentalScreens/Details/Details';
 import {Amplify} from 'aws-amplify';
-import {generateClient} from 'aws-amplify/api';
 import amplifyconfig from './src/amplifyconfiguration.json';
-import {createUser} from './src/graphql/mutations';
-import Util from './Util';
+import useUserStore from './store/userStore';
+import {fetchUserAttributes, getCurrentUser} from 'aws-amplify/auth';
+import {generateClient} from 'aws-amplify/api';
+import {getUser} from './src/graphql/queries';
+import {type User} from './src/API';
 
-// Amplify.configure({
-//   API: {
-//     GraphQL: {
-//       endpoint:
-//         'https://ha2vynb4ancnjpcnsfp5ehlxia.appsync-api.us-east-1.amazonaws.com/graphql',
-//       region: 'us-east-1',
-//       defaultAuthMode: 'apiKey',
-//       apiKey: 'da2-7j4se2tyebdzjjd4b5d7er3mva',
-//     },
-//   },
-// });
 Amplify.configure(amplifyconfig);
 
 function App(): JSX.Element {
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
   const PostRentalScreensStack = createNativeStackNavigator();
+  const {authUser, setAuthUser, setUserAttributes, setUser} = useUserStore();
+  const client = generateClient();
 
   useEffect(() => {
-    const client = generateClient();
-    console.log('in');
-    client.graphql({
-      query: createUser,
-      variables: {
-        input: {
-          dateJoined: Util.toISODateString(),
-          isOnline: true,
-          username: 'poo',
-        },
-      },
-    });
-  });
+    async function initializeUser() {
+      await getCurrentUser()
+        .then(async au => {
+          console.log(au, 'App:getUser');
+          setAuthUser(au);
+
+          const user = await client
+            .graphql({query: getUser, variables: {id: au.userId}})
+            .then(response => {
+              const u = response.data.getUser;
+              return u === null ? undefined : (u as User);
+            });
+
+          setUser(user);
+
+          await fetchUserAttributes().then(attributes => {
+            setUserAttributes(attributes);
+          });
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+
+    initializeUser();
+  }, []);
 
   const PostRentalScreens = () => {
     return (
@@ -161,7 +166,7 @@ function App(): JSX.Element {
           }}
         />
         <Tab.Screen
-          name={auth().currentUser ? 'Profile' : 'Log in'}
+          name={authUser ? 'Profile' : 'Log in'}
           component={Profile}
           options={{
             tabBarIcon: ({focused}) => (
