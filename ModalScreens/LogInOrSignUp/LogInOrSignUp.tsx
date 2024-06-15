@@ -15,6 +15,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import EnterPassword from '../EnterPassword/EnterPassword';
 import ContinuePressable from '../../components/ContinuePressable/ContinuePressable';
 import useLogInOrSignUp from './useLogInOrSignUp';
+import EnterVerificationCode from '../EnterVerificationCode/EnterVerificationCode';
 
 const LogInOrSignUp = (props: {
   isModalVisible: boolean;
@@ -114,6 +115,16 @@ const LogInOrSignUp = (props: {
             emailText={emailText}
             setModalScreenName={setModalScreenName}
             setIsModalVisible={props.setIsModalVisible}
+            setCanHideModal={setCanHideModal}
+          />
+        </View>
+      )}
+      {modalScreenName === 'EnterVerificationCode' && (
+        <View style={exploreStyles.modalView}>
+          <EnterVerificationCode
+            setModalScreenName={setModalScreenName}
+            setIsModalVisible={props.setIsModalVisible}
+            emailText={emailText}
             setCanHideModal={setCanHideModal}
           />
         </View>

@@ -9,6 +9,7 @@ const useFinishSigningUp = (
   initialEmailText: string,
   setCanHideModal: any,
   setIsModalVisible: any,
+  setModalScreenName: any,
 ) => {
   const [firstNameText, setFirstNameText] = useState('');
   const [firstNameError, setFirstNameError] = useState<string | undefined>(
@@ -121,17 +122,19 @@ const useFinishSigningUp = (
     setIsLoading(true);
 
     if (isFormValid) {
-      await finishSigningUpService.signUp(
-        emailText,
-        passwordText,
-        firstNameText,
-        lastNameText,
-        birthdate,
-        setCanHideModal,
-        setIsModalVisible,
-        setIsLoading,
-        setEmailError,
-      );
+      await finishSigningUpService
+        .signUp(
+          emailText,
+          passwordText,
+          firstNameText,
+          lastNameText,
+          birthdate,
+          setIsLoading,
+          setEmailError,
+        )
+        .then(() => {
+          setModalScreenName('EnterVerificationCode');
+        });
     } else {
       ReactNativeHapticFeedback.trigger('notificationError', Util.options);
       setIsLoading(false);

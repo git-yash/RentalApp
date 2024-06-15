@@ -7,7 +7,10 @@ const useLogInOrSignUp = () => {
   const [emailText, setEmailText] = useState('yash1@gmail.com');
   const [emailError, setEmailError] = useState<string | undefined>(undefined);
   const [modalScreenName, setModalScreenName] = useState<
-    'LogInOrSignUp' | 'FinishSigningUp' | 'EnterPassword'
+    | 'LogInOrSignUp'
+    | 'FinishSigningUp'
+    | 'EnterPassword'
+    | 'EnterVerificationCode'
   >('LogInOrSignUp');
   const [canHideModal, setCanHideModal] = useState(true);
   const [isLoading, setIsLoading] = useState(false);

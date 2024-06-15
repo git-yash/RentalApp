@@ -11,8 +11,6 @@ export default class FinishSigningUpService {
     firstNameText: string,
     lastNameText: string,
     birthdate: Date,
-    setCanHideModal: any,
-    setIsModalVisible: any,
     setIsLoading: any,
     setEmailError: any,
   ) {
@@ -29,6 +27,7 @@ export default class FinishSigningUpService {
             name: firstNameText + ' ' + lastNameText,
             birthdate: Util.toISODateString(birthdate),
           },
+          autoSignIn: true,
         },
       })
         .then(async () => {
@@ -44,8 +43,8 @@ export default class FinishSigningUpService {
               },
             })
             .then(() => {
-              setCanHideModal(true);
-              setIsModalVisible(false);
+              // setCanHideModal(true);
+              // setIsModalVisible(false);
               ReactNativeHapticFeedback.trigger(
                 'notificationSuccess',
                 Util.options,

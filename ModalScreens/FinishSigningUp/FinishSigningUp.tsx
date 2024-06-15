@@ -14,7 +14,14 @@ import finishSigningUpStyle from './FinishSigningUp.style';
 
 const FinishSigningUp = (props: {
   email: string;
-  setModalScreenName: any;
+  setModalScreenName: React.Dispatch<
+    React.SetStateAction<
+      | 'LogInOrSignUp'
+      | 'FinishSigningUp'
+      | 'EnterPassword'
+      | 'EnterVerificationCode'
+    >
+  >;
   setIsModalVisible: any;
   setCanHideModal: any;
   emailText: string;
@@ -42,6 +49,7 @@ const FinishSigningUp = (props: {
     props.emailText,
     props.setCanHideModal,
     props.setIsModalVisible,
+    props.setModalScreenName,
   );
 
   return (
@@ -119,6 +127,7 @@ const FinishSigningUp = (props: {
         </View>
         <ContinuePressable
           onPress={handleAgreeAndContinue}
+          // onPress={() => props.setModalScreenName('EnterVerificationCode')}
           isDisabled={false}
           text={'Agree and Continue'}
           isLoading={isLoading}
