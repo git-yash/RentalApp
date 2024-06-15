@@ -8,6 +8,7 @@ import OTPTextView from 'react-native-otp-textinput';
 import Colors from '../../assets/Colors';
 import {Spinner} from 'native-base';
 import useEnterVerificationCode from './useEnterVerificationCode';
+import enterVerificationCodeStyle from './EnterVerificationCode.style';
 
 const EnterVerificationCode = (props: {
   setModalScreenName: React.Dispatch<
@@ -22,7 +23,7 @@ const EnterVerificationCode = (props: {
   emailText: string;
   setCanHideModal: any;
 }) => {
-  const {setCode, isLoading} = useEnterVerificationCode(
+  const {setCode, isLoading, errorMessage} = useEnterVerificationCode(
     props.emailText,
     props.setCanHideModal,
     props.setIsModalVisible,
@@ -56,12 +57,12 @@ const EnterVerificationCode = (props: {
             justifyContent: 'center',
           }}
         />
-        <Text
-          style={{
-            textAlign: 'center',
-            marginTop: 15,
-            fontFamily: 'Poppins-Regular',
-          }}>
+        {errorMessage && (
+          <Text style={enterVerificationCodeStyle.errorMessage}>
+            Invalid Code
+          </Text>
+        )}
+        <Text style={enterVerificationCodeStyle.message}>
           A verification code was just sent to your email. Make sure to also
           check your spam folder!
         </Text>

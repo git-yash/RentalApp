@@ -11,6 +11,9 @@ const useEnterVerificationCode = (
   const enterVerificationCodeService = new EnterVerificationCodeService();
   const [code, setCode] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined,
+  );
   const {initializeUser} = useUser();
 
   useEffect(() => {
@@ -38,13 +41,15 @@ const useEnterVerificationCode = (
               setIsModalVisible(true);
             });
           }
-        });
+        })
+        .catch(errorMessage => setErrorMessage(errorMessage));
     }
   };
 
   return {
     setCode,
     isLoading,
+    errorMessage,
   };
 };
 
