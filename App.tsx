@@ -83,7 +83,7 @@ function App(): JSX.Element {
             options={{headerBackTitleVisible: false, animation: 'fade'}}
           />
           <PostRentalScreensStack.Screen
-            name={ScreenNameConstants.Details}
+            name={ScreenNameConstants.RentalDetails}
             component={Details}
             options={{headerBackTitleVisible: false, animation: 'fade'}}
           />
