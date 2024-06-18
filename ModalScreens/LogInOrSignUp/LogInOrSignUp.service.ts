@@ -2,7 +2,7 @@ import {generateClient} from 'aws-amplify/api';
 import {getUser} from '../../src/graphql/queries';
 
 export default class LogInOrSignUpService {
-  async handleDocumentExists(email: string, setModalScreenName: any) {
+  async handleDocumentExists(email: string) {
     const client = generateClient();
 
     const user = await client.graphql({
@@ -12,6 +12,6 @@ export default class LogInOrSignUpService {
       },
     });
 
-    setModalScreenName(user.data.getUser ? 'EnterPassword' : 'FinishSigningUp');
+    return !!user.data.getUser;
   }
 }

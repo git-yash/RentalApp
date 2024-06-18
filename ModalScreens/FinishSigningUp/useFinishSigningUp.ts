@@ -5,12 +5,7 @@ import {DateTimePickerEvent} from '@react-native-community/datetimepicker';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import FinishSigningUpService from './FinishSigningUp.service';
 
-const useFinishSigningUp = (
-  initialEmailText: string,
-  setCanHideModal: any,
-  setIsModalVisible: any,
-  setModalScreenName: any,
-) => {
+const useFinishSigningUp = (initialEmailText: string, navigation: any) => {
   const [firstNameText, setFirstNameText] = useState('');
   const [firstNameError, setFirstNameError] = useState<string | undefined>(
     undefined,
@@ -91,8 +86,10 @@ const useFinishSigningUp = (
   };
 
   const setValidity = () => {
-    const isValidEmail: boolean = Util.isValidEmail(emailText);
-    setEmailError(isValidEmail ? undefined : 'Please enter a valid email!');
+    const isValidEmail: boolean = Util.isValidEmail(emailText) && !emailError;
+    if (!emailError) {
+      setEmailError(isValidEmail ? undefined : 'Please enter a valid email!');
+    }
     const isValidPassword: boolean = !Util.isPasswordInvalid(passwordText);
     setPasswordError(
       isValidPassword ? undefined : 'Password is required and cannot be weak!',
@@ -130,10 +127,12 @@ const useFinishSigningUp = (
           lastNameText,
           birthdate,
           setIsLoading,
-          setEmailError,
         )
         .then(() => {
-          setModalScreenName('EnterVerificationCode');
+          navigation.navigate('Enter Verification Code', {emailText});
+        })
+        .catch(e => {
+          setEmailError(String(e.message));
         });
     } else {
       ReactNativeHapticFeedback.trigger('notificationError', Util.options);

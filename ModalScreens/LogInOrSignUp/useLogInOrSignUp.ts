@@ -1,18 +1,11 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import Util from '../../Util';
 import LogInOrSignUpService from './LogInOrSignUp.service';
 import useUserStore from '../../store/userStore';
 
 const useLogInOrSignUp = () => {
-  const [emailText, setEmailText] = useState('yash1@gmail.com');
+  const [emailText, setEmailText] = useState('yashmittalshah@gmail.com');
   const [emailError, setEmailError] = useState<string | undefined>(undefined);
-  const [modalScreenName, setModalScreenName] = useState<
-    | 'LogInOrSignUp'
-    | 'FinishSigningUp'
-    | 'EnterPassword'
-    | 'EnterVerificationCode'
-  >('LogInOrSignUp');
-  const [canHideModal, setCanHideModal] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const logInOrSignUpService = new LogInOrSignUpService();
   const {user} = useUserStore();
@@ -20,23 +13,15 @@ const useLogInOrSignUp = () => {
   const isDisabled: boolean =
     emailText.length === 0 || emailError !== undefined;
 
-  useEffect(() => {
-    if (!user) {
-      return;
-    }
-
-    setModalScreenName('LogInOrSignUp');
-    setEmailText('yash1@gmail.com');
-    setCanHideModal(true);
-  }, [user]);
-
-  useEffect(() => {
-    if (modalScreenName === 'LogInOrSignUp') {
-      setCanHideModal(true);
-    } else {
-      setCanHideModal(false);
-    }
-  }, [modalScreenName]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     return;
+  //   }
+  //
+  //   // setModalScreenName('LogInOrSignUp');
+  //   setEmailText('yashmittalshah');
+  //   // setCanHideModal(true);
+  // }, [user]);
 
   const handleEmailOnChange = (text: string): void => {
     setEmailText(text);
@@ -47,15 +32,19 @@ const useLogInOrSignUp = () => {
     );
   };
 
-  const handleContinuePress = async (email: string) => {
+  const handleContinuePress = async (email: string, navigation: any) => {
     setIsLoading(true);
     try {
-      await logInOrSignUpService.handleDocumentExists(
-        email,
-        setModalScreenName,
-      );
-      setIsLoading(false);
-      setCanHideModal(false);
+      logInOrSignUpService
+        .handleDocumentExists(email)
+        .then(doesDocumentExist => {
+          navigation.navigate(
+            doesDocumentExist ? 'Enter Password' : 'Finish Signing Up',
+            {email},
+          );
+          setIsLoading(false);
+        });
+      // setCanHideModal(false);
     } catch (error) {
       console.error('Error checking document existence:', error);
       setIsLoading(false);
@@ -65,15 +54,11 @@ const useLogInOrSignUp = () => {
   return {
     emailText,
     emailError,
-    canHideModal,
-    setCanHideModal,
     isLoading,
     setIsLoading,
     handleEmailOnChange,
     isDisabled,
-    modalScreenName,
     user,
-    setModalScreenName,
     handleContinuePress,
   };
 };

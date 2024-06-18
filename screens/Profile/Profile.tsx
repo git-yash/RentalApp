@@ -1,6 +1,5 @@
 import React, {useCallback} from 'react';
 import {Button, SafeAreaView, ScrollView} from 'react-native';
-import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import {useFocusEffect} from '@react-navigation/native';
 import TabBarIcon from '../../components/TabBarIcon/TabBarIcon';
 import {library} from '@fortawesome/fontawesome-svg-core';
@@ -52,7 +51,7 @@ const Profile = (props: {navigation: any}) => {
             title="Sign out"
             onPress={async () => {
               await signOutUser().then(() => {
-                setModalVisible(true);
+                props.navigation.navigate('LogInOrSignUpScreens');
               });
             }}
           />
@@ -64,10 +63,10 @@ const Profile = (props: {navigation: any}) => {
           onPress={() => setModalVisible(true)}
         />
       )}
-      <LogInOrSignUp
-        isModalVisible={isModalVisible}
-        setIsModalVisible={setModalVisible}
-      />
+      {/*<LogInOrSignUp*/}
+      {/*  isModalVisible={isModalVisible}*/}
+      {/*  setIsModalVisible={setModalVisible}*/}
+      {/*/>*/}
       {/*<View>*/}
       {/*  <GooglePlacesAutocomplete*/}
       {/*    placeholder="Type a place"*/}

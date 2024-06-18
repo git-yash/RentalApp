@@ -1,6 +1,5 @@
 import React from 'react';
 import {Dimensions, FlatList, Text, TouchableOpacity, View} from 'react-native';
-import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import MapView, {MapMarker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {faMap} from '@fortawesome/free-solid-svg-icons';
 import {Spinner} from 'native-base';
@@ -17,11 +16,11 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import SearchView from '../../components/SearchView/SearchView';
 import CategoryTabBar from '../../components/CategoryTabBar/CategoryTabBar';
 import Collapsible from 'react-native-collapsible';
+import {useNavigation} from '@react-navigation/native';
 
-const Explore = (props: {navigation: any}) => {
+const Explore = () => {
+  const navigation = useNavigation();
   const {
-    isModalVisible,
-    setModalVisible,
     position,
     snapPoints,
     categoryItems,
@@ -42,14 +41,14 @@ const Explore = (props: {navigation: any}) => {
     mapStyle,
     mapRef,
     flatListRef,
-  } = useExplore();
+  } = useExplore(navigation);
 
   return (
     <View>
-      <LogInOrSignUp
-        isModalVisible={isModalVisible}
-        setIsModalVisible={setModalVisible}
-      />
+      {/*<LogInOrSignUp*/}
+      {/*  isModalVisible={isModalVisible}*/}
+      {/*  setIsModalVisible={setModalVisible}*/}
+      {/*/>*/}
       {canShowMap && (
         <>
           <MapView
@@ -111,7 +110,7 @@ const Explore = (props: {navigation: any}) => {
                       rental={item}
                       currentLongitude={position?.coords.longitude as number}
                       currentLatitude={position?.coords.latitude as number}
-                      navigation={props.navigation}
+                      navigation={navigation}
                     />
                   )}
                 />
@@ -152,6 +151,7 @@ const Explore = (props: {navigation: any}) => {
         <SearchBar
           isSearchFocused={isSearchFocused}
           setIsSearchFocused={setIsSearchFocused}
+          navigation={navigation}
         />
         <Collapsible collapsed={showSearchResults}>
           <CategoryTabBar
@@ -185,7 +185,7 @@ const Explore = (props: {navigation: any}) => {
               rental={item}
               currentLongitude={position?.coords.longitude as number}
               currentLatitude={position?.coords.latitude as number}
-              navigation={props.navigation}
+              navigation={navigation}
             />
           )}
         />

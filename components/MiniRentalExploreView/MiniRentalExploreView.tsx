@@ -38,7 +38,6 @@ const MiniRentalExploreView = (props: {
               props.navigation,
               props.currentLatitude,
               props.currentLongitude,
-              distance,
             )
           }>
           <View style={miniRentalExploreViewStyle.mainContainer}>

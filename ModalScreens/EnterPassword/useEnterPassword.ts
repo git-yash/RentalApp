@@ -2,11 +2,7 @@ import {useState} from 'react';
 import EnterPasswordService from './EnterPassword.service';
 import useUser from '../../hooks/useUser';
 
-const useEnterPassword = (
-  emailText: string,
-  setIsModalVisible: any,
-  setCanHideModal: any,
-) => {
+const useEnterPassword = (emailText: string) => {
   const [passwordText, setPasswordText] = useState('Yoshi@05');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
@@ -15,14 +11,13 @@ const useEnterPassword = (
   const enterPasswordService = new EnterPasswordService();
   const {initializeUser} = useUser();
 
-  const signIn = async () => {
+  const signIn = async (navigation: any) => {
     await enterPasswordService
       .handleSignIn({username: emailText, password: passwordText}, setIsLoading)
       .then(async response => {
         if (response.isSignedIn) {
           await initializeUser();
-          setCanHideModal(true);
-          setIsModalVisible(true);
+          navigation.navigate('Tabs');
         }
       })
       .catch(() => {

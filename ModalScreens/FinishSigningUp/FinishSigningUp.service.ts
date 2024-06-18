@@ -1,8 +1,8 @@
-import Util from '../../Util';
 import {signUp} from 'aws-amplify/auth';
 import {generateClient} from 'aws-amplify/api';
-import {createUser} from '../../src/graphql/mutations';
+import Util from '../../Util';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+import {createUser} from '../../src/graphql/mutations';
 
 export default class FinishSigningUpService {
   async signUp(
@@ -12,7 +12,6 @@ export default class FinishSigningUpService {
     lastNameText: string,
     birthdate: Date,
     setIsLoading: any,
-    setEmailError: any,
   ) {
     const client = generateClient();
 
@@ -43,8 +42,6 @@ export default class FinishSigningUpService {
               },
             })
             .then(() => {
-              // setCanHideModal(true);
-              // setIsModalVisible(false);
               ReactNativeHapticFeedback.trigger(
                 'notificationSuccess',
                 Util.options,
@@ -56,7 +53,7 @@ export default class FinishSigningUpService {
         });
     } catch (e) {
       console.error(e);
-      setEmailError(e);
+      throw e;
     }
   }
 }

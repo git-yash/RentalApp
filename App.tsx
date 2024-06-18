@@ -12,7 +12,6 @@ import Explore from './screens/Explore/Explore';
 import TabBarIcon from './components/TabBarIcon/TabBarIcon';
 import Colors from './assets/Colors';
 import {NativeBaseProvider} from 'native-base';
-import {StatusBar} from 'react-native';
 import Profile from './screens/Profile/Profile';
 import {ActionSheetProvider} from '@expo/react-native-action-sheet';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -27,7 +26,13 @@ import Details from './screens/PostRentalScreens/Details/Details';
 import {Amplify} from 'aws-amplify';
 import amplifyconfig from './src/amplifyconfiguration.json';
 import useUserStore from './store/userStore';
+import LogInOrSignUp from './ModalScreens/LogInOrSignUp/LogInOrSignUp';
+import EnterPassword from './ModalScreens/EnterPassword/EnterPassword';
+import FinishSigningUp from './ModalScreens/FinishSigningUp/FinishSigningUp';
+import EnterVerificationCode from './ModalScreens/EnterVerificationCode/EnterVerificationCode';
+import {Hub} from 'aws-amplify/utils';
 import useUser from './hooks/useUser';
+import FilterResults from './ModalScreens/FilterResults/FilterResults';
 
 Amplify.configure(amplifyconfig);
 
@@ -35,20 +40,24 @@ function App(): JSX.Element {
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
   const PostRentalScreensStack = createNativeStackNavigator();
+  const LogInOrSignUpStack = createNativeStackNavigator();
   const {authUser, userAttributes} = useUserStore();
-  const [failedGettingCurrentUser, setFailedGettingCurrentUser] =
-    useState<boolean>(false);
-
+  const [isUserFetched, setIsUserFetched] = useState<boolean>(false);
   const {initializeUser} = useUser();
 
   useEffect(() => {
     initializeUser()
       .then(isInitialized => {
-        console.log('isInitialized', isInitialized);
+        console.log('useExplore: load: isInitialized', isInitialized);
+        setIsUserFetched(true);
+        Hub.dispatch('user', {event: 'UserRetrieved', data: authUser});
       })
       .catch(e => {
-        console.error(e);
-        setFailedGettingCurrentUser(true);
+        console.error('App: load: user fetched error', e);
+        setIsUserFetched(true);
+        setTimeout(function () {
+          Hub.dispatch('user', {event: 'UserRetrievedError', data: e});
+        }, 0);
       });
   }, []);
 
@@ -168,13 +177,44 @@ function App(): JSX.Element {
     );
   };
 
+  const LogInOrSignUpScreens = () => {
+    return (
+      <LogInOrSignUpStack.Navigator>
+        <LogInOrSignUpStack.Group
+          screenOptions={{
+            headerTitleStyle: {
+              fontFamily: 'Poppins-Regular',
+            },
+            headerBackTitleVisible: false,
+            headerTintColor: 'black',
+          }}>
+          <LogInOrSignUpStack.Screen
+            name={'Log In Or Sign Up'}
+            component={LogInOrSignUp}
+          />
+          <LogInOrSignUpStack.Screen
+            name={'Enter Password'}
+            component={EnterPassword}
+          />
+          <LogInOrSignUpStack.Screen
+            name={'Finish Signing Up'}
+            component={FinishSigningUp}
+          />
+          <LogInOrSignUpStack.Screen
+            name={'Enter Verification Code'}
+            component={EnterVerificationCode}
+          />
+        </LogInOrSignUpStack.Group>
+      </LogInOrSignUpStack.Navigator>
+    );
+  };
+
   return (
     <MyContextProvider>
       <ActionSheetProvider>
         <NativeBaseProvider>
-          {(failedGettingCurrentUser || userAttributes !== undefined) && (
+          {isUserFetched && (
             <NavigationContainer>
-              <StatusBar barStyle={'dark-content'} />
               <Stack.Navigator>
                 <Stack.Screen
                   name={'Tabs'}
@@ -183,6 +223,19 @@ function App(): JSX.Element {
                     headerShown: false,
                     presentation: 'fullScreenModal',
                   }}
+                />
+                <Stack.Screen
+                  name={'LogInOrSignUpScreens'}
+                  component={LogInOrSignUpScreens}
+                  options={{
+                    presentation: 'modal',
+                    headerShown: false,
+                  }}
+                />
+                <Stack.Screen
+                  name={'Filter Results'}
+                  component={FilterResults}
+                  options={{presentation: 'modal'}}
                 />
                 <Stack.Screen
                   name={'PostRentalScreens'}

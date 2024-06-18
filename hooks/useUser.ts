@@ -13,7 +13,7 @@ const useUser = () => {
   const initializeUser = async () => {
     try {
       const au = await getCurrentUser();
-      // console.log(au, 'App:getUser');
+      console.log(au.userId, 'InitializeUser:getCurrentUser');
       setAuthUser(au);
 
       client
@@ -22,6 +22,7 @@ const useUser = () => {
           variables: {id: au.signInDetails?.loginId},
         })
         .then(response => {
+          console.log('set user:', response.data.getUser?.id);
           setUser(response.data.getUser as User);
         })
         .catch(e => {
@@ -51,6 +52,7 @@ const useUser = () => {
     setUserAttributes(null);
     setUser(null);
     setAuthUser(null);
+    console.log('useUser: set user null');
   };
 
   return {

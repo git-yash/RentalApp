@@ -1,17 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Pressable, View} from 'react-native';
 import searchBarStyles from './SearchBar.style';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import Colors from '../../assets/Colors';
 import {faFilter, faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
-import FilterResults from '../../ModalScreens/FilterResults/FilterResults';
 import {Text} from 'native-base';
 
 const SearchBar = (props: {
   isSearchFocused: boolean;
   setIsSearchFocused: any;
+  navigation: any;
 }) => {
-  const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
   return (
     <View style={searchBarStyles.searchBarContainer}>
       <Pressable
@@ -27,15 +26,11 @@ const SearchBar = (props: {
       </Pressable>
       {!props.isSearchFocused && (
         <Pressable
-          onPress={() => setIsFilterModalVisible(true)}
+          onPress={() => props.navigation.navigate('Filter Results')}
           style={searchBarStyles.filterPressable}>
           <FontAwesomeIcon icon={faFilter} size={20} color={Colors.gray600} />
         </Pressable>
       )}
-      <FilterResults
-        isModalVisible={isFilterModalVisible}
-        setIsModalVisible={setIsFilterModalVisible}
-      />
     </View>
   );
 };

@@ -1,9 +1,6 @@
 import React from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Text, View} from 'react-native';
 import exploreStyles from '../../screens/Explore/Explore.style';
-import logInOrSignUpStyles from '../LogInOrSignUp/LogInOrSignUp.style';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faAngleLeft} from '@fortawesome/free-solid-svg-icons';
 import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
 import CustomSecurePasswordCheckerTextInput from '../../components/CustomSecurePasswordCheckerTextInput/CustomSecurePasswordCheckerTextInput';
 import CustomDateTimePicker from '../../components/CustomDateTimePicker/CustomDateTimePicker';
@@ -11,21 +8,26 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import ContinuePressable from '../../components/ContinuePressable/ContinuePressable';
 import useFinishSigningUp from './useFinishSigningUp';
 import finishSigningUpStyle from './FinishSigningUp.style';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 const FinishSigningUp = (props: {
-  email: string;
-  setModalScreenName: React.Dispatch<
-    React.SetStateAction<
-      | 'LogInOrSignUp'
-      | 'FinishSigningUp'
-      | 'EnterPassword'
-      | 'EnterVerificationCode'
-    >
-  >;
-  setIsModalVisible: any;
-  setCanHideModal: any;
-  emailText: string;
+  // email: string;
+  // setModalScreenName: React.Dispatch<
+  //   React.SetStateAction<
+  //     | 'LogInOrSignUp'
+  //     | 'FinishSigningUp'
+  //     | 'EnterPassword'
+  //     | 'EnterVerificationCode'
+  //   >
+  // >;
+  // setIsModalVisible: any;
+  // setCanHideModal: any;
+  // emailText: string;
 }) => {
+  const navigation = useNavigation();
+  const route = useRoute();
+  const {email} = route.params;
+
   const {
     firstNameText,
     firstNameError,
@@ -45,30 +47,10 @@ const FinishSigningUp = (props: {
     setLastNameTextWithValidation,
     setBirthDate,
     handleAgreeAndContinue,
-  } = useFinishSigningUp(
-    props.emailText,
-    props.setCanHideModal,
-    props.setIsModalVisible,
-    props.setModalScreenName,
-  );
+  } = useFinishSigningUp(email, navigation);
 
   return (
     <View style={exploreStyles.modalView}>
-      <View style={logInOrSignUpStyles.headerContainer}>
-        <View style={logInOrSignUpStyles.iconContainer}>
-          <TouchableOpacity
-            style={logInOrSignUpStyles.dismissPressable}
-            onPress={() => {
-              props.setModalScreenName('LogInOrSignUp');
-              props.setCanHideModal(true);
-            }}>
-            <FontAwesomeIcon icon={faAngleLeft} size={20} />
-          </TouchableOpacity>
-        </View>
-        <View style={logInOrSignUpStyles.textContainer}>
-          <Text style={logInOrSignUpStyles.text}>Finish Signing Up</Text>
-        </View>
-      </View>
       <KeyboardAwareScrollView style={{paddingTop: 15}} extraScrollHeight={60}>
         <CustomTextInput
           inputTitle={'First Name'}
@@ -127,7 +109,6 @@ const FinishSigningUp = (props: {
         </View>
         <ContinuePressable
           onPress={handleAgreeAndContinue}
-          // onPress={() => props.setModalScreenName('EnterVerificationCode')}
           isDisabled={false}
           text={'Agree and Continue'}
           isLoading={isLoading}

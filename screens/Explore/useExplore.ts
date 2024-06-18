@@ -13,8 +13,9 @@ import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {DateRange} from '../../modals/DateRange';
 import useUserStore from '../../store/userStore';
+import {Hub} from 'aws-amplify/utils';
 
-const useExplore = () => {
+const useExplore = (navigation: any) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [canShowMap, setCanShowMap] = useState(false);
   const [position, setPosition] = useState<GeolocationResponse>();
@@ -77,6 +78,7 @@ const useExplore = () => {
       name: 'Other',
     },
   ];
+
   const [whichCategorySelected, setWhichCategorySelected] = useState(
     categoryItems[0].name,
   );
@@ -146,12 +148,6 @@ const useExplore = () => {
   // TODO: fix bookmark update issue
 
   useEffect(() => {
-    if (user === undefined || user === null) {
-      setModalVisible(true);
-    }
-  }, []);
-
-  useEffect(() => {
     if (user) {
       setModalVisible(false);
       void setCurrentGeoPosition();
@@ -180,8 +176,46 @@ const useExplore = () => {
       appState.current = nextAppState;
     });
 
+    // const authListener = (data: {payload: {event: any}}) => {
+    //   console.log('authListener', data.payload.event);
+    //   switch (data.payload.event) {
+    //     case 'signIn':
+    //       console.log('user signed in');
+    //       // navigation.navigate('LogInOrSignUpScreens');
+    //       break;
+    //     case 'signOut':
+    //       console.log('user signed out');
+    //       break;
+    //     case 'signUp':
+    //       console.log('user signed up');
+    //       break;
+    //     case 'signIn_failure':
+    //       console.log('user sign in failed');
+    //       break;
+    //     case 'configured':
+    //       console.log('the Auth module is configured');
+    //       break;
+    //     default:
+    //       console.log('Unhandled event: ', data.payload.event);
+    //       break;
+    //   }
+    // };
+    const userListener = (data: {payload: {event: any}}) => {
+      console.log('userListener: ', data.payload.event);
+      if (data.payload.event === 'UserRetrievedError') {
+        navigation.navigate('LogInOrSignUpScreens');
+      }
+    };
+
+    // const authListenerCancel = Hub.listen('auth', authListener);
+    const userListenerCancel = Hub.listen('user', userListener);
+    console.log('listeners registered. useExplore, load');
+
+    // Cleanup on unmount
     return () => {
       subscription.remove();
+      // authListenerCancel();
+      userListenerCancel();
     };
   }, []);
 

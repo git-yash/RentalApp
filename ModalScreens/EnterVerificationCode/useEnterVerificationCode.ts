@@ -3,11 +3,7 @@ import {useEffect, useState} from 'react';
 import useUser from '../../hooks/useUser';
 import {autoSignIn, fetchAuthSession} from 'aws-amplify/auth';
 
-const useEnterVerificationCode = (
-  emailText: string,
-  setCanHideModal: any,
-  setIsModalVisible: any,
-) => {
+const useEnterVerificationCode = (emailText: string, navigation: any) => {
   const enterVerificationCodeService = new EnterVerificationCodeService();
   const [code, setCode] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -21,6 +17,7 @@ const useEnterVerificationCode = (
   }, [code]);
 
   const completeSignUpWithVerificationCode = async () => {
+    console.log(emailText);
     const verificationCodeLength = 6;
     if (code?.length === verificationCodeLength) {
       await enterVerificationCodeService
@@ -37,12 +34,11 @@ const useEnterVerificationCode = (
               .catch(error => console.log('auto:', error));
             await fetchAuthSession({forceRefresh: true}).then(() => {
               setIsLoading(false);
-              setCanHideModal(true);
-              setIsModalVisible(true);
+              navigation.navigate('Tabs');
             });
           }
         })
-        .catch(errorMessage => setErrorMessage(errorMessage));
+        .catch(e => setErrorMessage(e));
     }
   };
 

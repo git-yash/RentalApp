@@ -1,50 +1,23 @@
 import React from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Text, View} from 'react-native';
 import exploreStyles from '../../screens/Explore/Explore.style';
-import logInOrSignUpStyles from '../LogInOrSignUp/LogInOrSignUp.style';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faAngleLeft} from '@fortawesome/free-solid-svg-icons';
 import OTPTextView from 'react-native-otp-textinput';
 import Colors from '../../assets/Colors';
 import {Spinner} from 'native-base';
 import useEnterVerificationCode from './useEnterVerificationCode';
 import enterVerificationCodeStyle from './EnterVerificationCode.style';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
-const EnterVerificationCode = (props: {
-  setModalScreenName: React.Dispatch<
-    React.SetStateAction<
-      | 'LogInOrSignUp'
-      | 'FinishSigningUp'
-      | 'EnterPassword'
-      | 'EnterVerificationCode'
-    >
-  >;
-  setIsModalVisible: any;
-  emailText: string;
-  setCanHideModal: any;
-}) => {
+const EnterVerificationCode = () => {
+  const navigation = useNavigation();
+  const route = useRoute();
+  const {emailText} = route.params;
   const {setCode, isLoading, errorMessage} = useEnterVerificationCode(
-    props.emailText,
-    props.setCanHideModal,
-    props.setIsModalVisible,
+    emailText,
+    navigation,
   );
   return (
     <View style={exploreStyles.modalView}>
-      <View style={logInOrSignUpStyles.headerContainer}>
-        <View style={logInOrSignUpStyles.iconContainer}>
-          <TouchableOpacity
-            style={logInOrSignUpStyles.dismissPressable}
-            onPress={() => {
-              props.setModalScreenName('FinishSigningUp');
-              props.setCanHideModal(true);
-            }}>
-            <FontAwesomeIcon icon={faAngleLeft} size={20} />
-          </TouchableOpacity>
-        </View>
-        <View style={logInOrSignUpStyles.textContainer}>
-          <Text style={logInOrSignUpStyles.text}>Verification Code</Text>
-        </View>
-      </View>
       <View style={{paddingTop: 15}}>
         <OTPTextView
           inputCellLength={1}

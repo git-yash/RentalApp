@@ -1,7 +1,6 @@
 import React from 'react';
 import {Pressable, Text, View} from 'react-native';
 import useProfile from '../../screens/Profile/useProfile';
-import LogInOrSignUp from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp';
 import Colors from '../../assets/Colors';
 
 const LogInToViewScreen = (props: {message: string}) => {
@@ -38,10 +37,10 @@ const LogInToViewScreen = (props: {message: string}) => {
           Log In
         </Text>
       </Pressable>
-      <LogInOrSignUp
-        isModalVisible={isModalVisible}
-        setIsModalVisible={setModalVisible}
-      />
+      {/*<LogInOrSignUp*/}
+      {/*  isModalVisible={isModalVisible}*/}
+      {/*  setIsModalVisible={setModalVisible}*/}
+      {/*/>*/}
     </View>
   );
 };
