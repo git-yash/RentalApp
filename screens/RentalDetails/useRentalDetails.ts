@@ -1,9 +1,9 @@
 import {Linking, Platform} from 'react-native';
 import {createMapLink} from 'react-native-open-maps';
 import {useActionSheet} from '@expo/react-native-action-sheet';
-import {Rental} from '../../modals/Rental';
+import {Rental} from '../../models/Rental';
 import {useEffect} from 'react';
-import {Review} from '../../modals/Review';
+import {Review} from '../../models/Review';
 
 const useRentalDetails = (navigation: any, rental: Rental) => {
   const {showActionSheetWithOptions} = useActionSheet();

@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import EnterPasswordService from './EnterPassword.service';
 import useUser from '../../hooks/useUser';
+import ScreenNameConstants from '../ScreenNameConstants';
 
 const useEnterPassword = (emailText: string) => {
   const [passwordText, setPasswordText] = useState('Yoshi@05');
@@ -17,7 +18,7 @@ const useEnterPassword = (emailText: string) => {
       .then(async response => {
         if (response.isSignedIn) {
           await initializeUser();
-          navigation.navigate('Tabs');
+          navigation.navigate(ScreenNameConstants.Tabs);
         }
       })
       .catch(() => {

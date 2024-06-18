@@ -2,6 +2,7 @@ import EnterVerificationCodeService from './EnterVerificationCode.service';
 import {useEffect, useState} from 'react';
 import useUser from '../../hooks/useUser';
 import {autoSignIn, fetchAuthSession} from 'aws-amplify/auth';
+import ScreenNameConstants from '../ScreenNameConstants';
 
 const useEnterVerificationCode = (emailText: string, navigation: any) => {
   const enterVerificationCodeService = new EnterVerificationCodeService();
@@ -34,7 +35,7 @@ const useEnterVerificationCode = (emailText: string, navigation: any) => {
               .catch(error => console.log('auto:', error));
             await fetchAuthSession({forceRefresh: true}).then(() => {
               setIsLoading(false);
-              navigation.navigate('Tabs');
+              navigation.navigate(ScreenNameConstants.Tabs);
             });
           }
         })

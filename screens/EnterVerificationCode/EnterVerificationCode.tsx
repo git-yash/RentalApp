@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import exploreStyles from '../../screens/Explore/Explore.style';
+import exploreStyles from '../Explore/Explore.style';
 import OTPTextView from 'react-native-otp-textinput';
 import Colors from '../../assets/Colors';
 import {Spinner} from 'native-base';

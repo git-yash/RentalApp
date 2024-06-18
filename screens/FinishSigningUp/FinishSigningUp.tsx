@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import exploreStyles from '../../screens/Explore/Explore.style';
+import exploreStyles from '../Explore/Explore.style';
 import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
 import CustomSecurePasswordCheckerTextInput from '../../components/CustomSecurePasswordCheckerTextInput/CustomSecurePasswordCheckerTextInput';
 import CustomDateTimePicker from '../../components/CustomDateTimePicker/CustomDateTimePicker';

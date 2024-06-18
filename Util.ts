@@ -1,8 +1,8 @@
 import {ImageSourcePropType, Platform} from 'react-native';
 import Colors from './assets/Colors';
 import Geocoder from 'react-native-geocoding';
-import {Rental} from './modals/Rental';
-import {Price, TimeIncrements} from './modals/Price';
+import {Rental} from './models/Rental';
+import {Price, TimeIncrements} from './models/Price';
 import LatLng = Geocoder.LatLng;
 
 export default class Util {

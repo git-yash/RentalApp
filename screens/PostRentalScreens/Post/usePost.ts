@@ -2,7 +2,8 @@ import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 import {useActionSheet} from '@expo/react-native-action-sheet';
 import {useState} from 'react';
 import {Alert} from 'react-native';
-import {Rental} from '../../../modals/Rental';
+import {Rental} from '../../../models/Rental';
+import ScreenNameConstants from '../../ScreenNameConstants';
 
 const usePost = (navigation: any) => {
   const [images, setImages] = useState<ImageOrVideo>();
@@ -57,12 +58,12 @@ const usePost = (navigation: any) => {
         {
           text: 'Save Draft',
           style: 'default',
-          onPress: () => navigation.navigate('Explore'),
+          onPress: () => navigation.navigate(ScreenNameConstants.Explore),
         },
         {
           text: 'Discard',
           style: 'destructive',
-          onPress: () => navigation.navigate('Explore'),
+          onPress: () => navigation.navigate(ScreenNameConstants.Explore),
         },
       ],
     );
@@ -117,7 +118,10 @@ const usePost = (navigation: any) => {
       rental.description = description;
       rental.itemValue = itemWorthNumber;
       rental.picturePaths = images.map((image: {path: string}) => image.path);
-      navigation.navigate('Prices', {itemWorthNumber, rental});
+      navigation.navigate(ScreenNameConstants.Prices, {
+        itemWorthNumber,
+        rental,
+      });
     }
   };
   const handleUploadImagesButton = () => {

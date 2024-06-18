@@ -26,13 +26,14 @@ import Details from './screens/PostRentalScreens/Details/Details';
 import {Amplify} from 'aws-amplify';
 import amplifyconfig from './src/amplifyconfiguration.json';
 import useUserStore from './store/userStore';
-import LogInOrSignUp from './ModalScreens/LogInOrSignUp/LogInOrSignUp';
-import EnterPassword from './ModalScreens/EnterPassword/EnterPassword';
-import FinishSigningUp from './ModalScreens/FinishSigningUp/FinishSigningUp';
-import EnterVerificationCode from './ModalScreens/EnterVerificationCode/EnterVerificationCode';
+import LogInOrSignUp from './screens/LogInOrSignUp/LogInOrSignUp';
+import EnterPassword from './screens/EnterPassword/EnterPassword';
+import FinishSigningUp from './screens/FinishSigningUp/FinishSigningUp';
+import EnterVerificationCode from './screens/EnterVerificationCode/EnterVerificationCode';
 import {Hub} from 'aws-amplify/utils';
 import useUser from './hooks/useUser';
-import FilterResults from './ModalScreens/FilterResults/FilterResults';
+import FilterResults from './screens/FilterResults/FilterResults';
+import ScreenNameConstants from './screens/ScreenNameConstants';
 
 Amplify.configure(amplifyconfig);
 
@@ -70,19 +71,19 @@ function App(): JSX.Element {
             headerTitleStyle: {fontFamily: 'Poppins-SemiBold'},
           }}>
           <PostRentalScreensStack.Screen
-            name={'PostModal'}
+            name={ScreenNameConstants.PostModal}
             component={Post}
             options={{
               headerTitle: 'Post',
             }}
           />
           <PostRentalScreensStack.Screen
-            name={'Prices'}
+            name={ScreenNameConstants.Prices}
             component={Prices}
             options={{headerBackTitleVisible: false, animation: 'fade'}}
           />
           <PostRentalScreensStack.Screen
-            name={'Details'}
+            name={ScreenNameConstants.Details}
             component={Details}
             options={{headerBackTitleVisible: false, animation: 'fade'}}
           />
@@ -94,7 +95,7 @@ function App(): JSX.Element {
     return (
       <Tab.Navigator>
         <Tab.Screen
-          name={'Explore'}
+          name={ScreenNameConstants.Explore}
           component={Explore}
           options={{
             tabBarIcon: ({focused}) => (
@@ -110,7 +111,7 @@ function App(): JSX.Element {
           }}
         />
         <Tab.Screen
-          name={'Bookmarks'}
+          name={ScreenNameConstants.Bookmarks}
           component={Bookmarks}
           options={{
             tabBarIcon: ({focused}) => (
@@ -126,7 +127,7 @@ function App(): JSX.Element {
           }}
         />
         <Tab.Screen
-          name={'Post'}
+          name={ScreenNameConstants.Post}
           component={PostTab}
           options={{
             tabBarIcon: ({focused}) => (
@@ -142,7 +143,7 @@ function App(): JSX.Element {
           }}
         />
         <Tab.Screen
-          name={'Messages'}
+          name={ScreenNameConstants.Messages}
           component={Messages}
           options={{
             tabBarIcon: ({focused}) => (
@@ -158,7 +159,9 @@ function App(): JSX.Element {
           }}
         />
         <Tab.Screen
-          name={authUser ? 'Profile' : 'Log in'}
+          name={
+            authUser ? ScreenNameConstants.Profile : ScreenNameConstants.Login
+          }
           component={Profile}
           options={{
             tabBarIcon: ({focused}) => (
@@ -189,19 +192,19 @@ function App(): JSX.Element {
             headerTintColor: 'black',
           }}>
           <LogInOrSignUpStack.Screen
-            name={'Log In Or Sign Up'}
+            name={ScreenNameConstants.LogInOrSignUp}
             component={LogInOrSignUp}
           />
           <LogInOrSignUpStack.Screen
-            name={'Enter Password'}
+            name={ScreenNameConstants.EnterPassword}
             component={EnterPassword}
           />
           <LogInOrSignUpStack.Screen
-            name={'Finish Signing Up'}
+            name={ScreenNameConstants.FinishSigningUp}
             component={FinishSigningUp}
           />
           <LogInOrSignUpStack.Screen
-            name={'Enter Verification Code'}
+            name={ScreenNameConstants.EnterVerificationCode}
             component={EnterVerificationCode}
           />
         </LogInOrSignUpStack.Group>
@@ -217,7 +220,7 @@ function App(): JSX.Element {
             <NavigationContainer>
               <Stack.Navigator>
                 <Stack.Screen
-                  name={'Tabs'}
+                  name={ScreenNameConstants.Tabs}
                   component={Tabs}
                   options={{
                     headerShown: false,
@@ -225,7 +228,7 @@ function App(): JSX.Element {
                   }}
                 />
                 <Stack.Screen
-                  name={'LogInOrSignUpScreens'}
+                  name={ScreenNameConstants.LogInOrSignUpScreens}
                   component={LogInOrSignUpScreens}
                   options={{
                     presentation: 'modal',
@@ -233,12 +236,19 @@ function App(): JSX.Element {
                   }}
                 />
                 <Stack.Screen
-                  name={'Filter Results'}
+                  name={ScreenNameConstants.FilterResults}
                   component={FilterResults}
-                  options={{presentation: 'modal'}}
+                  options={{
+                    presentation: 'modal',
+                    headerTitleStyle: {
+                      fontFamily: 'Poppins-Regular',
+                    },
+                    headerBackTitleVisible: false,
+                    headerTintColor: 'black',
+                  }}
                 />
                 <Stack.Screen
-                  name={'PostRentalScreens'}
+                  name={ScreenNameConstants.PostRentalScreens}
                   component={PostRentalScreens}
                   options={{
                     headerShown: false,
@@ -247,7 +257,7 @@ function App(): JSX.Element {
                   }}
                 />
                 <Stack.Screen
-                  name={'Details'}
+                  name={ScreenNameConstants.RentalDetails}
                   component={RentalDetails}
                   options={{
                     headerTitleStyle: {

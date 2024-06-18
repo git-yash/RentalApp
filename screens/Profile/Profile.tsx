@@ -9,14 +9,11 @@ import ProfileImageNameView from '../../components/ProfileImage/ProfileImageName
 import useProfile from './useProfile';
 import useUserStore from '../../store/userStore';
 import useUser from '../../hooks/useUser';
+import ScreenNameConstants from '../ScreenNameConstants';
 
 const Profile = (props: {navigation: any}) => {
-  const {
-    isModalVisible,
-    imageURI,
-    handleEditProfileImageActionSheetButton,
-    setModalVisible,
-  } = useProfile();
+  const {isModalVisible, imageURI, handleEditProfileImageActionSheetButton} =
+    useProfile();
   const {authUser} = useUserStore();
   library.add(solidUser, regularUser);
   const {signOutUser} = useUser();
@@ -51,7 +48,9 @@ const Profile = (props: {navigation: any}) => {
             title="Sign out"
             onPress={async () => {
               await signOutUser().then(() => {
-                props.navigation.navigate('LogInOrSignUpScreens');
+                props.navigation.navigate(
+                  ScreenNameConstants.LogInOrSignUpScreens,
+                );
               });
             }}
           />
@@ -60,7 +59,9 @@ const Profile = (props: {navigation: any}) => {
       {!authUser && (
         <Button
           title={'Log in or Sign up'}
-          onPress={() => setModalVisible(true)}
+          onPress={() => {
+            props.navigation.navigate(ScreenNameConstants.LogInOrSignUpScreens);
+          }}
         />
       )}
       {/*<LogInOrSignUp*/}

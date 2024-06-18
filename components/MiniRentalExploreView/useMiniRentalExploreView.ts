@@ -1,9 +1,10 @@
 import {useEffect, useState} from 'react';
 import MiniRentalExploreViewService from './MiniRentalExploreView.service';
-import {Rental} from '../../modals/Rental';
+import {Rental} from '../../models/Rental';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import Util from '../../Util';
 import {useMyContext} from '../../MyContext';
+import ScreenNameConstants from '../../screens/ScreenNameConstants';
 
 const useMiniRentalExploreView = (
   currentLatitude: number,
@@ -52,7 +53,7 @@ const useMiniRentalExploreView = (
     userLatitude: number,
     userLongitude: number,
   ) => {
-    navigation.navigate('Details', {
+    navigation.navigate(ScreenNameConstants.RentalDetails, {
       rental: rental,
       currentLatitude: userLatitude,
       currentLongitude: userLongitude,

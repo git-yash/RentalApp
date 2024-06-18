@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {Alert} from 'react-native';
-import {Rental} from '../../../modals/Rental';
-import {Price, TimeIncrements} from '../../../modals/Price';
+import {Rental} from '../../../models/Rental';
+import {Price, TimeIncrements} from '../../../models/Price';
+import ScreenNameConstants from '../../ScreenNameConstants';
 
 const usePrices = (itemWorthNumber: number, rental: Rental) => {
   const suggestedHourlyRate: string = (itemWorthNumber * 0.03).toFixed(0);
@@ -29,7 +30,7 @@ const usePrices = (itemWorthNumber: number, rental: Rental) => {
       setEmptyRateToZero(monthlyRate, setMonthlyRate);
       setEmptyRateToZero(deliveryRate, setDeliveryRate);
       setPrices();
-      navigation.navigate('Details', {rental});
+      navigation.navigate(ScreenNameConstants.RentalDetails, {rental});
     } else {
       Alert.alert(
         'Invalid options',

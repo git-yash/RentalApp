@@ -2,6 +2,7 @@ import {useState} from 'react';
 import Util from '../../Util';
 import LogInOrSignUpService from './LogInOrSignUp.service';
 import useUserStore from '../../store/userStore';
+import ScreenNameConstants from '../ScreenNameConstants';
 
 const useLogInOrSignUp = () => {
   const [emailText, setEmailText] = useState('yashmittalshah@gmail.com');
@@ -39,7 +40,9 @@ const useLogInOrSignUp = () => {
         .handleDocumentExists(email)
         .then(doesDocumentExist => {
           navigation.navigate(
-            doesDocumentExist ? 'Enter Password' : 'Finish Signing Up',
+            doesDocumentExist
+              ? ScreenNameConstants.EnterPassword
+              : ScreenNameConstants.FinishSigningUp,
             {email},
           );
           setIsLoading(false);

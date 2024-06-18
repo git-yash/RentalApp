@@ -4,6 +4,7 @@ import Util from '../../Util';
 import {DateTimePickerEvent} from '@react-native-community/datetimepicker';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import FinishSigningUpService from './FinishSigningUp.service';
+import ScreenNameConstants from '../ScreenNameConstants';
 
 const useFinishSigningUp = (initialEmailText: string, navigation: any) => {
   const [firstNameText, setFirstNameText] = useState('');
@@ -129,7 +130,9 @@ const useFinishSigningUp = (initialEmailText: string, navigation: any) => {
           setIsLoading,
         )
         .then(() => {
-          navigation.navigate('Enter Verification Code', {emailText});
+          navigation.navigate(ScreenNameConstants.EnterVerificationCode, {
+            emailText,
+          });
         })
         .catch(e => {
           setEmailError(String(e.message));

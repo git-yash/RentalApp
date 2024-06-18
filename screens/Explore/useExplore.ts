@@ -3,7 +3,7 @@ import {Alert, AppState} from 'react-native';
 import Geolocation, {
   GeolocationResponse,
 } from '@react-native-community/geolocation';
-import {Rental} from '../../modals/Rental';
+import {Rental} from '../../models/Rental';
 import firestore from '@react-native-firebase/firestore';
 import ExploreService from './Explore.service';
 import {useMyContext} from '../../MyContext';
@@ -11,9 +11,10 @@ import {useIsFocused} from '@react-navigation/native';
 import Util from '../../Util';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import BottomSheet from '@gorhom/bottom-sheet';
-import {DateRange} from '../../modals/DateRange';
+import {DateRange} from '../../models/DateRange';
 import useUserStore from '../../store/userStore';
 import {Hub} from 'aws-amplify/utils';
+import ScreenNameConstants from '../ScreenNameConstants';
 
 const useExplore = (navigation: any) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -203,7 +204,7 @@ const useExplore = (navigation: any) => {
     const userListener = (data: {payload: {event: any}}) => {
       console.log('userListener: ', data.payload.event);
       if (data.payload.event === 'UserRetrievedError') {
-        navigation.navigate('LogInOrSignUpScreens');
+        navigation.navigate(ScreenNameConstants.LogInOrSignUpScreens);
       }
     };
 

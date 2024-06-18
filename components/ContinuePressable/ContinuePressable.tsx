@@ -1,6 +1,6 @@
 import React from 'react';
 import {Pressable, Text, View} from 'react-native';
-import logInOrSignUpStyles from '../../ModalScreens/LogInOrSignUp/LogInOrSignUp.style';
+import logInOrSignUpStyles from '../../screens/LogInOrSignUp/LogInOrSignUp.style';
 import {Spinner} from 'native-base';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Bounceable} from 'rn-bounceable';

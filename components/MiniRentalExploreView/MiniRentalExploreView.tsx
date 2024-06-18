@@ -1,5 +1,5 @@
 import React from 'react';
-import {Rental} from '../../modals/Rental';
+import {Rental} from '../../models/Rental';
 import {Image, Pressable, Text, View} from 'react-native';
 import Colors from '../../assets/Colors';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';

@@ -1,6 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
-import exploreStyles from '../../screens/Explore/Explore.style';
+import exploreStyles from '../Explore/Explore.style';
 import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
 import OrDivider from '../../components/OrDivider/OrDivider';
 import SocialLoginButton from '../../components/SocialLoginButton/SocialLoginButton';

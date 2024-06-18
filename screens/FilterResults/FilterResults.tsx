@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Text, View} from 'react-native';
-import exploreStyles from '../../screens/Explore/Explore.style';
+import exploreStyles from '../Explore/Explore.style';
 import {Slider} from '@miblanchard/react-native-slider';
 import Colors from '../../assets/Colors';
 import {Dropdown} from 'react-native-element-dropdown';

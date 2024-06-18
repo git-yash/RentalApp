@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import exploreStyles from '../../screens/Explore/Explore.style';
+import exploreStyles from '../Explore/Explore.style';
 import CustomSecureTextInput from '../../components/CustomSecureTextInput/CustomSecureTextInput';
 import ContinuePressable from '../../components/ContinuePressable/ContinuePressable';
 import enterPasswordStyles from './EnterPassword.style';

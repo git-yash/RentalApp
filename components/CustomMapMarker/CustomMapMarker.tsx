@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 import customMapMarkerStyles from './CustomMapMarker.style';
-import {Price} from '../../modals/Price';
+import {Price} from '../../models/Price';
 import Util from '../../Util';
 
 const CustomMapMarker = (props: {

@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useState} from 'react';
-import {Rental} from './modals/Rental';
+import {Rental} from './models/Rental';
 
 interface MyContextValue {
   bookmarkedPosts: Rental[];

@@ -3,6 +3,7 @@ import {View} from 'react-native';
 import CustomStepIndicator from '../../../../components/CustomStepIndicator/CustomStepIndicator';
 import ContinuePressable from '../../../../components/ContinuePressable/ContinuePressable';
 import continueWithStepIndicatorViewStyle from './ContinueWithStepIndicatorView.style';
+import ScreenNameConstants from '../../../ScreenNameConstants';
 
 const ContinueWithStepIndicatorView = (props: {
   navigation: any;
@@ -21,7 +22,7 @@ const ContinueWithStepIndicatorView = (props: {
             return;
           }
           if (step === 0) {
-            props.navigation.navigate('PostModal');
+            props.navigation.navigate(ScreenNameConstants.PostModal);
           } else {
             props.navigation.navigate(labels[step]);
           }

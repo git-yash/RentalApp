@@ -19,7 +19,7 @@ import {useEffect, useState} from 'react';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import BookmarkButton from '../../components/BookmarkButton/BookmarkButton';
 import {Progress} from 'native-base';
-import {Price} from '../../modals/Price';
+import {Price} from '../../models/Price';
 
 const RentalDetails = (props: {navigation: any; route: any}) => {
   const {rental, currentLatitude, currentLongitude, distance} =

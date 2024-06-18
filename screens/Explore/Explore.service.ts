@@ -1,13 +1,13 @@
-import {Rental} from '../../modals/Rental';
+import {Rental} from '../../models/Rental';
 import firestore, {
   Filter,
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
-import {Review} from '../../modals/Review';
+import {Review} from '../../models/Review';
 import Geocoder from 'react-native-geocoding';
 import Util from '../../Util';
-import {DateRange} from '../../modals/DateRange';
+import {DateRange} from '../../models/DateRange';
 import LatLng = Geocoder.LatLng;
 
 export default class ExploreService {

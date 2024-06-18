@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHeart as solidHeart} from '@fortawesome/free-solid-svg-icons';
 import {faHeart as regularHeart} from '@fortawesome/free-regular-svg-icons';
 import Colors from '../../assets/Colors';
-import {Rental} from '../../modals/Rental';
+import {Rental} from '../../models/Rental';
 import useMiniRentalExploreView from '../MiniRentalExploreView/useMiniRentalExploreView';
 import MiniRentalExploreViewService from '../MiniRentalExploreView/MiniRentalExploreView.service';
 
