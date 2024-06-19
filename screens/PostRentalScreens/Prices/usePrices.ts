@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Alert} from 'react-native';
 import {Rental} from '../../../models/Rental';
-import {Price, TimeIncrements} from '../../../models/Price';
 import ScreenNameConstants from '../../ScreenNameConstants';
+import {Price, TimeIncrement} from '../../../src/API';
 
 const usePrices = (itemWorthNumber: number, rental: Rental) => {
   const suggestedHourlyRate: string = (itemWorthNumber * 0.03).toFixed(0);
@@ -43,38 +43,40 @@ const usePrices = (itemWorthNumber: number, rental: Rental) => {
     const priceItems: Price[] = [];
     if (hourlyCheckbox) {
       const hourlyPrice: Price = {
-        price: Number(hourlyRate),
-        timeIncrement: TimeIncrements.Hour,
+        __typename: 'Price',
+        isFirmOnPrice: false,
+        amount: Number(hourlyRate),
+        timeIncrement: TimeIncrement.HOUR,
       };
       priceItems.push(hourlyPrice);
     }
     if (dailyCheckbox) {
       const dailyPrice: Price = {
-        price: Number(dailyRate),
-        timeIncrement: TimeIncrements.Day,
+        __typename: 'Price',
+        isFirmOnPrice: false,
+        amount: Number(dailyRate),
+        timeIncrement: TimeIncrement.DAY,
       };
       priceItems.push(dailyPrice);
     }
     if (weeklyCheckbox) {
       const weeklyPrice: Price = {
-        price: Number(weeklyRate),
-        timeIncrement: TimeIncrements.Week,
+        __typename: 'Price',
+        isFirmOnPrice: false,
+        amount: Number(weeklyRate),
+        timeIncrement: TimeIncrement.WEEK,
       };
       priceItems.push(weeklyPrice);
     }
     if (monthlyCheckbox) {
       const monthlyPrice: Price = {
-        price: Number(monthlyRate),
-        timeIncrement: TimeIncrements.Month,
+        __typename: 'Price',
+        isFirmOnPrice: false,
+        amount: Number(monthlyRate),
+        timeIncrement: TimeIncrement.MONTH,
       };
       priceItems.push(monthlyPrice);
     }
-    rental.deliveryOptions = {
-      deliveryRate: willDeliver ? Number(deliveryRate) : undefined,
-      distanceUnit: willDeliver ? 'mi' : undefined,
-      willDeliver: willDeliver,
-      willPickUp: willPickUp,
-    };
     rental.priceItems = priceItems;
   };
   const setEmptyRateToZero = (

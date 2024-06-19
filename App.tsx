@@ -60,6 +60,36 @@ function App(): JSX.Element {
           Hub.dispatch('user', {event: 'UserRetrievedError', data: e});
         }, 0);
       });
+    // const client = generateClient();
+    // client
+    //   .graphql({
+    //     query: createRental,
+    //     variables: {
+    //       input: {
+    //         category: 0,
+    //         title: 'Lawnmower',
+    //         description: 'green',
+    //         isAvailable: true,
+    //         address: {
+    //           street: '1112 Stillwell Ridge',
+    //           city: 'Cedar Park',
+    //           state: 'TX',
+    //           country: 'USA',
+    //           zip: '78613',
+    //         } as Address,
+    //         location: {latitude: 30.48046, longitude: -97.81778} as Location,
+    //         userID: 'yashmittalshah@gmail.com',
+    //         prices: [
+    //           {
+    //             isFirmOnPrice: true,
+    //             amount: 4,
+    //             timeIncrement: TimeIncrement.DAY,
+    //           },
+    //         ] as Price[],
+    //       } as Rental,
+    //     },
+    //   })
+    //   .catch(e => console.error(e));
   }, []);
 
   const PostRentalScreens = () => {

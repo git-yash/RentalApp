@@ -1,8 +1,7 @@
 import {ImageSourcePropType, Platform} from 'react-native';
 import Colors from './assets/Colors';
 import Geocoder from 'react-native-geocoding';
-import {Rental} from './models/Rental';
-import {Price, TimeIncrements} from './models/Price';
+import {Address, Price, Rental, TimeIncrement} from './src/API';
 import LatLng = Geocoder.LatLng;
 
 export default class Util {
@@ -142,19 +141,6 @@ export default class Util {
     return nameArray[0] + ' ' + nameArray[1][0] + '.';
   }
 
-  public static getCityAndState(address: string): string | null {
-    const regex = /,\s*([^,]+),\s*([^,]+),\s*USA$/;
-    const match = address.match(regex);
-
-    if (match) {
-      const city = match[1].trim();
-      const state = match[2].trim();
-      return `${city}, ${state}`;
-    } else {
-      return null;
-    }
-  }
-
   public static getIndexFromRentalID(
     rentals: Rental[],
     id: string | undefined,
@@ -162,7 +148,7 @@ export default class Util {
     return rentals.findIndex(rental => rental.id === id);
   }
 
-  public static getFormattedNumberText(num: number, word: string): string {
+  public static getFormattedNumberText(num = 0, word: string): string {
     let formattedNum: string;
     if (num === 1) {
       return num + ' ' + word;
@@ -219,19 +205,20 @@ export default class Util {
       let priceStringArr: string[] = priceString.split(',');
       let isFirmOnPrice: boolean = priceStringArr[2] === 'F';
       priceItems.push({
-        price: parseInt(priceStringArr[0], 10),
-        timeIncrement: parseInt(priceStringArr[1], 10),
+        __typename: 'Price',
+        amount: parseInt(priceStringArr[0], 10),
+        timeIncrement: TimeIncrement.DAY,
         isFirmOnPrice: isFirmOnPrice,
       });
     }
     return priceItems;
   }
 
-  public static getTimeIncrementString(value: number): string | undefined {
-    return TimeIncrements[value as keyof typeof TimeIncrements];
-  }
-
   public static toISODateString(date: Date = new Date()): string {
     return date.toISOString().split('T')[0];
+  }
+
+  public static addressToString(address: Address) {
+    return `${address.street} ${address.street2}, ${address.city}, ${address.state} ${address.zip}, ${address.country}`;
   }
 }

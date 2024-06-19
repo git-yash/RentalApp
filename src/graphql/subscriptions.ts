@@ -256,6 +256,7 @@ export const onCreateRental = /* GraphQL */ `subscription OnCreateRental($filter
       updatedAt
       __typename
     }
+    category
     createdAt
     updatedAt
     __typename
@@ -309,6 +310,7 @@ export const onUpdateRental = /* GraphQL */ `subscription OnUpdateRental($filter
       updatedAt
       __typename
     }
+    category
     createdAt
     updatedAt
     __typename
@@ -362,6 +364,7 @@ export const onDeleteRental = /* GraphQL */ `subscription OnDeleteRental($filter
       updatedAt
       __typename
     }
+    category
     createdAt
     updatedAt
     __typename

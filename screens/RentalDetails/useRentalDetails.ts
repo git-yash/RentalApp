@@ -1,12 +1,13 @@
 import {Linking, Platform} from 'react-native';
 import {createMapLink} from 'react-native-open-maps';
 import {useActionSheet} from '@expo/react-native-action-sheet';
-import {Rental} from '../../models/Rental';
 import {useEffect} from 'react';
-import {Review} from '../../models/Review';
+import {Rental} from '../../src/API';
+import Util from '../../Util';
 
 const useRentalDetails = (navigation: any, rental: Rental) => {
   const {showActionSheetWithOptions} = useActionSheet();
+  const addressString: string = Util.addressToString(rental.address);
 
   useEffect(() => {
     navigation.setOptions({
@@ -14,12 +15,16 @@ const useRentalDetails = (navigation: any, rental: Rental) => {
     });
   }, []);
 
-  const getReviewRatingPercentages = () => {
-    const reviews: Review[] = rental.reviews;
+  const getReviewRatingPercentages = (): number[] => {
+    if (!rental.reviews?.items) {
+      return [];
+    }
+
+    const reviews = rental.reviews.items;
     const reviewRatings: number[] = [0, 0, 0, 0, 0];
     const reviewRatingPercentages: number[] = [0, 0, 0, 0, 0];
     for (const review of reviews) {
-      reviewRatings[review.rating - 1]++;
+      reviewRatings[review?.rating || 0 - 1]++;
     }
     for (let i = 0; i < reviewRatings.length; i++) {
       reviewRatingPercentages[i] = (reviewRatings[i] / reviews.length) * 100;
@@ -28,13 +33,17 @@ const useRentalDetails = (navigation: any, rental: Rental) => {
     return reviewRatingPercentages.reverse();
   };
 
-  const getAverageRating = () => {
-    const reviews: Review[] = rental.reviews;
+  const getAverageRating = (): number => {
+    if (!rental.reviews || !rental.reviews.items) {
+      return 0;
+    }
+
+    const reviews = rental.reviews.items;
     let total: number = 0;
     for (const review of reviews) {
-      total += review.rating;
+      total += review?.rating || 0;
     }
-    return (total / reviews.length).toFixed(1);
+    return Number((total / reviews?.length).toFixed(1));
   };
 
   const handleMapViewPressablePress = () => {
@@ -76,7 +85,7 @@ const useRentalDetails = (navigation: any, rental: Rental) => {
       void Linking.openURL(
         createMapLink({
           provider: 'google',
-          end: rental.address,
+          end: addressString,
         }),
       );
     }

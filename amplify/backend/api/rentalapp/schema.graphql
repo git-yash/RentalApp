@@ -63,5 +63,6 @@ type Rental @model @auth(rules: [{allow: public}]) {
   bookings: [Booking] @hasMany(indexName: "byRental", fields: ["id"])
   userID: ID! @index(name: "byUser")
   user: User @belongsTo(fields: ["userID"])
+  category: Int!
 }
  

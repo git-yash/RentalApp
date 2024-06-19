@@ -1,5 +1,4 @@
 import React from 'react';
-import {Rental} from '../../models/Rental';
 import {Image, Pressable, Text, View} from 'react-native';
 import Colors from '../../assets/Colors';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -10,9 +9,9 @@ import useMiniRentalExploreView from './useMiniRentalExploreView';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import miniRentalExploreViewStyle from './MiniRentalExploreView.style';
 import BookmarkButton from '../BookmarkButton/BookmarkButton';
-import Util from '../../Util';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Bounceable} from 'rn-bounceable';
+import {Rental} from '../../src/API';
 
 const MiniRentalExploreView = (props: {
   rental: Rental;
@@ -42,7 +41,8 @@ const MiniRentalExploreView = (props: {
           }>
           <View style={miniRentalExploreViewStyle.mainContainer}>
             <Image
-              source={{uri: props.rental.picturePaths[0]}}
+              // source={{uri: props.rental.picturePaths[0]}}
+              source={{uri: ''}}
               style={miniRentalExploreViewStyle.image}
             />
             <View style={miniRentalExploreViewStyle.rightContainer}>
@@ -57,13 +57,10 @@ const MiniRentalExploreView = (props: {
                 </View>
                 <View style={miniRentalExploreViewStyle.pricePerHourContainer}>
                   <Text style={miniRentalExploreViewStyle.priceText}>
-                    ${props.rental.priceItems[0].price}
+                    ${props.rental.prices[0].amount}
                   </Text>
                   <Text style={miniRentalExploreViewStyle.hourText}>
-                    /{' '}
-                    {Util.getTimeIncrementString(
-                      props.rental.priceItems[0].timeIncrement,
-                    )}
+                    / {props.rental.prices[0].timeIncrement}
                   </Text>
                 </View>
               </View>

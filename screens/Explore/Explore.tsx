@@ -65,15 +65,15 @@ const Explore = () => {
             {rentals?.map((rental, index) => (
               <MapMarker
                 coordinate={{
-                  latitude: rental.location.latitude as number,
-                  longitude: rental.location.longitude as number,
+                  latitude: rental.location.latitude,
+                  longitude: rental.location.longitude,
                 }}
                 key={index}
                 onPress={() => {
                   flatListRef.current?.scrollToIndex({index: index});
                 }}>
                 <CustomMapMarker
-                  price={rental.priceItems[0]}
+                  price={rental.prices[0]}
                   isSelected={currentItemIndex === index}
                   key={index}
                 />

@@ -1,15 +1,15 @@
 import {useEffect, useState} from 'react';
 import MiniRentalExploreViewService from './MiniRentalExploreView.service';
-import {Rental} from '../../models/Rental';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import Util from '../../Util';
 import {useMyContext} from '../../MyContext';
 import ScreenNameConstants from '../../screens/ScreenNameConstants';
+import {Address, Rental} from '../../src/API';
 
 const useMiniRentalExploreView = (
   currentLatitude: number,
   currentLongitude: number,
-  address: string,
+  address: Address,
   rental: Rental,
   miniRentalExploreViewService: MiniRentalExploreViewService,
 ) => {

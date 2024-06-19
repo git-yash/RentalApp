@@ -286,6 +286,7 @@ export const createRental = /* GraphQL */ `mutation CreateRental(
       updatedAt
       __typename
     }
+    category
     createdAt
     updatedAt
     __typename
@@ -342,6 +343,7 @@ export const updateRental = /* GraphQL */ `mutation UpdateRental(
       updatedAt
       __typename
     }
+    category
     createdAt
     updatedAt
     __typename
@@ -398,6 +400,7 @@ export const deleteRental = /* GraphQL */ `mutation DeleteRental(
       updatedAt
       __typename
     }
+    category
     createdAt
     updatedAt
     __typename

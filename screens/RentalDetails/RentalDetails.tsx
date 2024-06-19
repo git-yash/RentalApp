@@ -14,16 +14,15 @@ import {faHeart as regularHeart} from '@fortawesome/free-regular-svg-icons';
 import Colors from '../../assets/Colors';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import useRentalDetails from './useRentalDetails';
-import RentalDetailsImagesSlider from '../../components/RentalDetailsImagesSlider/RentalDetailsImagesSlider';
 import {useEffect, useState} from 'react';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import BookmarkButton from '../../components/BookmarkButton/BookmarkButton';
 import {Progress} from 'native-base';
-import {Price} from '../../models/Price';
+import {Price, Rental} from '../../src/API';
 
 const RentalDetails = (props: {navigation: any; route: any}) => {
-  const {rental, currentLatitude, currentLongitude, distance} =
-    props.route.params;
+  const rental: Rental = props.route.params.rental;
+  const {currentLatitude, currentLongitude, distance} = props.route.params;
   const noReviews: string = 'No reviews';
   const readMoreMaxCharLength: number = 113;
   const shouldShowReadMore: boolean =
@@ -68,7 +67,7 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
           </View>
           <View style={rentalDetailsStyle.cityReviewContainer}>
             <Text style={rentalDetailsStyle.cityText}>
-              {Util.getCityAndState(rental.address)} ({distance})
+              {rental.address.city}, {rental.address.state} ({distance})
             </Text>
             <View style={rentalDetailsStyle.reviewContainer}>
               <FontAwesomeIcon
@@ -77,23 +76,25 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
                 style={rentalDetailsStyle.starIcon}
               />
               <Text style={rentalDetailsStyle.ratingText}>
-                {rental.reviews.length === 0 ? noReviews : rental.rating}
+                {rental.reviews?.items?.length === 0
+                  ? noReviews
+                  : rental.rating}
               </Text>
               <Text style={rentalDetailsStyle.reviewLengthText}>
-                ({rental.reviews.length})
+                ({rental.reviews?.items?.length})
               </Text>
             </View>
           </View>
-          <RentalDetailsImagesSlider picturePaths={rental.picturePaths} />
+          {/*<RentalDetailsImagesSlider picturePaths={rental.picturePaths} />*/}
           <View style={rentalDetailsStyle.mainContainer}>
             <Text style={rentalDetailsStyle.descriptionText}>Description</Text>
             <Text style={rentalDetailsStyle.subtitleDescriptionText}>
               {rental.description}
             </Text>
             <Text style={rentalDetailsStyle.deliveryText}>Price</Text>
-            {rental.priceItems.map((p: Price) => (
+            {rental.prices.map((p: Price) => (
               <Text style={rentalDetailsStyle.priceText}>
-                {p.price} / {Util.getTimeIncrementString(p.timeIncrement)}
+                {p.amount} / {p.timeIncrement}
               </Text>
             ))}
             {shouldShowReadMore && (
@@ -133,7 +134,7 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
                 <Text style={rentalDetailsStyle.outOfFiveText}>Out of 5</Text>
               </View>
               <View style={rentalDetailsStyle.ratingsChartContainer}>
-                {reviewRatingPercentages.map((percentage, index) => (
+                {reviewRatingPercentages?.map((percentage, index) => (
                   <View style={rentalDetailsStyle.ratingProgressBar}>
                     <Text style={rentalDetailsStyle.ratingProgressBarText}>
                       {reviewRatingPercentages.length - index}
@@ -151,14 +152,17 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
             </View>
             <View style={rentalDetailsStyle.reviewsContainer}>
               <Text style={rentalDetailsStyle.reviewText}>
-                {Util.getFormattedNumberText(rental.reviews.length, 'Review')}
+                {Util.getFormattedNumberText(
+                  rental.reviews?.items?.length,
+                  'Review',
+                )}
               </Text>
             </View>
             <View style={rentalDetailsStyle.reviewConatiner}>
               <View style={rentalDetailsStyle.topReviewContainer}>
                 <View>
                   <Text style={rentalDetailsStyle.reviewTitle}>
-                    {rental.reviews[0].title}
+                    {/*{rental.reviews?.items[0].title}*/}
                   </Text>
                   <View style={rentalDetailsStyle.starContainer}>
                     {[1, 2, 3, 4, 5].map(starNumber => (
@@ -166,26 +170,22 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
                         icon={faStar}
                         style={rentalDetailsStyle.ratingStarIcon}
                         size={14}
-                        color={
-                          starNumber <= rental.reviews[0].rating
-                            ? Colors.green
-                            : Colors.gray300
-                        }
+                        // color={ starNumber <= rental.reviews[0].rating ? Colors.green : Colors.gray300 }
                       />
                     ))}
                   </View>
                 </View>
                 <View>
                   <Text style={rentalDetailsStyle.reviewDateText}>
-                    {Util.formatCustomDate(rental.reviews[0].date)}
+                    {/*{Util.formatCustomDate(rental.reviews[0].date)}*/}
                   </Text>
                   <Text style={rentalDetailsStyle.reviewUserNameText}>
-                    {rental.reviews[0].user.name}
+                    {/*{rental.reviews[0].user.name}*/}
                   </Text>
                 </View>
               </View>
               <Text style={rentalDetailsStyle.reviewDescriptionText}>
-                {rental.reviews[0].description}
+                {/*{rental.reviews[0].description}*/}
               </Text>
             </View>
 

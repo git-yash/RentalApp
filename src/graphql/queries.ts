@@ -249,6 +249,7 @@ export const getRental = /* GraphQL */ `query GetRental($id: ID!) {
       updatedAt
       __typename
     }
+    category
     createdAt
     updatedAt
     __typename
@@ -268,6 +269,7 @@ export const listRentals = /* GraphQL */ `query ListRentals(
       isAvailable
       rating
       userID
+      category
       createdAt
       updatedAt
       __typename
@@ -301,6 +303,7 @@ export const rentalsByUserID = /* GraphQL */ `query RentalsByUserID(
       isAvailable
       rating
       userID
+      category
       createdAt
       updatedAt
       __typename

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {Platform} from 'react-native';
+import {Address} from '../../src/API';
 import Util from '../../Util';
 
 export default class MiniRentalExploreViewService {
@@ -29,15 +30,16 @@ export default class MiniRentalExploreViewService {
   async getDistanceAndTimeFromAddresses(
     latitude: number,
     longitude: number,
-    destinationAddress: string,
+    destinationAddress: Address,
   ): Promise<string | undefined> {
+    const addressString: string = Util.addressToString(destinationAddress);
     try {
       let address: string;
       return this.getAddressFromLocation(latitude, longitude).then(
         async _address => {
           address = _address;
           const response = await axios.get(
-            `https://maps.googleapis.com/maps/api/directions/json?origin=${address}&destination=${destinationAddress}&key=${Util.getAPIKeyForPlatform(
+            `https://maps.googleapis.com/maps/api/directions/json?origin=${address}&destination=${addressString}&key=${Util.getAPIKeyForPlatform(
               Platform.OS,
             )}`,
           );

@@ -3,7 +3,6 @@ import {Alert, AppState} from 'react-native';
 import Geolocation, {
   GeolocationResponse,
 } from '@react-native-community/geolocation';
-import {Rental} from '../../models/Rental';
 import firestore from '@react-native-firebase/firestore';
 import ExploreService from './Explore.service';
 import {useMyContext} from '../../MyContext';
@@ -11,10 +10,10 @@ import {useIsFocused} from '@react-navigation/native';
 import Util from '../../Util';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import BottomSheet from '@gorhom/bottom-sheet';
-import {DateRange} from '../../models/DateRange';
 import useUserStore from '../../store/userStore';
 import {Hub} from 'aws-amplify/utils';
 import ScreenNameConstants from '../ScreenNameConstants';
+import {Rental} from '../../src/API';
 
 const useExplore = (navigation: any) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -80,11 +79,27 @@ const useExplore = (navigation: any) => {
     },
   ];
 
-  const [whichCategorySelected, setWhichCategorySelected] = useState(
-    categoryItems[0].name,
-  );
+  // useEffect(() => {
+  //   const client = generateClient();
+  //   client
+  //     .graphql({
+  //       query: getRental,
+  //       variables: {
+  //         id: 'jjdlksd',
+  //       },
+  //     })
+  //     .then(response => {
+  //       console.log(response);
+  //     });
+  // }, []);
 
-  const setAllRentals = (searchText?: string, dateRange?: DateRange) => {
+  const [selectedCategory, setSelectedCategory] = useState<number>(0);
+
+  const setAllRentals = (
+    searchText?: string,
+    startDate?: Date,
+    endDate?: Date,
+  ) => {
     if (!position) {
       return;
     }
@@ -96,12 +111,16 @@ const useExplore = (navigation: any) => {
           lng: position.coords.longitude as number,
         },
         5,
-        whichCategorySelected,
+        selectedCategory,
         searchText,
-        dateRange,
+        startDate,
+        endDate,
       )
       .then(r => {
-        setRentals(r);
+        return setRentals(r);
+      })
+      .catch(() => {
+        setRentals([]);
       });
   };
 
@@ -140,11 +159,11 @@ const useExplore = (navigation: any) => {
   const isScreenFocused = useIsFocused();
 
   useEffect(() => {
-    if (!whichCategorySelected) {
+    if (!selectedCategory) {
       return;
     }
     setAllRentals();
-  }, [whichCategorySelected]);
+  }, [selectedCategory]);
 
   // TODO: fix bookmark update issue
 
@@ -234,8 +253,8 @@ const useExplore = (navigation: any) => {
     isModalVisible,
     setModalVisible,
     position,
-    whichCategorySelected,
-    setWhichCategorySelected,
+    whichCategorySelected: selectedCategory,
+    setWhichCategorySelected: setSelectedCategory,
     bottomSheetRef,
     rentals,
     setAllRentals,

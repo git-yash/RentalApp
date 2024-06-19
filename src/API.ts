@@ -120,6 +120,7 @@ export type Rental = {
   bookings?: ModelBookingConnection | null,
   userID: string,
   user?: User | null,
+  category: number,
   createdAt: string,
   updatedAt: string,
 };
@@ -286,6 +287,7 @@ export type CreateRentalInput = {
   address: AddressInput,
   location: LocationInput,
   userID: string,
+  category: number,
 };
 
 export type PriceInput = {
@@ -314,11 +316,24 @@ export type ModelRentalConditionInput = {
   isAvailable?: ModelBooleanInput | null,
   rating?: ModelFloatInput | null,
   userID?: ModelIDInput | null,
+  category?: ModelIntInput | null,
   and?: Array< ModelRentalConditionInput | null > | null,
   or?: Array< ModelRentalConditionInput | null > | null,
   not?: ModelRentalConditionInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
+};
+
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
 };
 
 export type UpdateRentalInput = {
@@ -331,6 +346,7 @@ export type UpdateRentalInput = {
   address?: AddressInput | null,
   location?: LocationInput | null,
   userID?: string | null,
+  category?: number | null,
 };
 
 export type DeleteRentalInput = {
@@ -395,6 +411,7 @@ export type ModelRentalFilterInput = {
   isAvailable?: ModelBooleanInput | null,
   rating?: ModelFloatInput | null,
   userID?: ModelIDInput | null,
+  category?: ModelIntInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelRentalFilterInput | null > | null,
@@ -492,10 +509,23 @@ export type ModelSubscriptionRentalFilterInput = {
   isAvailable?: ModelSubscriptionBooleanInput | null,
   rating?: ModelSubscriptionFloatInput | null,
   userID?: ModelSubscriptionIDInput | null,
+  category?: ModelSubscriptionIntInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionRentalFilterInput | null > | null,
   or?: Array< ModelSubscriptionRentalFilterInput | null > | null,
+};
+
+export type ModelSubscriptionIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  in?: Array< number | null > | null,
+  notIn?: Array< number | null > | null,
 };
 
 export type CreateBookingMutationVariables = {
@@ -770,6 +800,7 @@ export type CreateRentalMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    category: number,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -825,6 +856,7 @@ export type UpdateRentalMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    category: number,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -880,6 +912,7 @@ export type DeleteRentalMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    category: number,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1126,6 +1159,7 @@ export type GetRentalQuery = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    category: number,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1148,6 +1182,7 @@ export type ListRentalsQuery = {
       isAvailable?: boolean | null,
       rating?: number | null,
       userID: string,
+      category: number,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1174,6 +1209,7 @@ export type RentalsByUserIDQuery = {
       isAvailable?: boolean | null,
       rating?: number | null,
       userID: string,
+      category: number,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1443,6 +1479,7 @@ export type OnCreateRentalSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    category: number,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1497,6 +1534,7 @@ export type OnUpdateRentalSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    category: number,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1551,6 +1589,7 @@ export type OnDeleteRentalSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
+    category: number,
     createdAt: string,
     updatedAt: string,
   } | null,
