@@ -1,9 +1,9 @@
 import {fetchUserAttributes, getCurrentUser} from 'aws-amplify/auth';
-import type {User} from '../src/API';
-import {getUser} from '../src/graphql/queries';
 import useUserStore from '../store/userStore';
 import {generateClient} from 'aws-amplify/api';
 import ProfileService from '../screens/Profile/Profile.service';
+import {getUser} from '../src/graphql/queries';
+import {User} from '../src/API';
 
 const useUser = () => {
   const {setAuthUser, setUserAttributes, setUser} = useUserStore();
@@ -15,32 +15,19 @@ const useUser = () => {
       const au = await getCurrentUser();
       setAuthUser(au);
 
-      client
-        .graphql({
-          query: getUser,
-          variables: {id: au.signInDetails?.loginId},
-        })
-        .then(response => {
-          setUser(response.data.getUser as User);
-        })
-        .catch(e => {
-          console.error(e);
-          return false;
-        });
+      const response = await client.graphql({
+        query: getUser,
+        variables: {id: au.signInDetails?.loginId},
+      });
+      setUser(response.data.getUser as User);
 
-      fetchUserAttributes()
-        .then(attributes => {
-          setUserAttributes(attributes);
-        })
-        .catch(e_1 => {
-          console.error(e_1);
-          return false;
-        });
+      const attributes = await fetchUserAttributes();
+      setUserAttributes(attributes);
 
       return true;
-    } catch (e_2) {
-      console.error('useUser: ', e_2);
-      throw e_2;
+    } catch (e) {
+      console.error('useUser: ', e);
+      throw e;
     }
   };
 

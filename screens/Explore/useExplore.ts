@@ -6,7 +6,6 @@ import Geolocation, {
 import firestore from '@react-native-firebase/firestore';
 import ExploreService from './Explore.service';
 import {useMyContext} from '../../MyContext';
-import {useIsFocused} from '@react-navigation/native';
 import Util from '../../Util';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import BottomSheet from '@gorhom/bottom-sheet';
@@ -14,6 +13,7 @@ import useUserStore from '../../store/userStore';
 import {Hub} from 'aws-amplify/utils';
 import ScreenNameConstants from '../ScreenNameConstants';
 import {Rental} from '../../src/API';
+import {useIsFocused} from '@react-navigation/native';
 
 const useExplore = (navigation: any) => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -78,21 +78,6 @@ const useExplore = (navigation: any) => {
       name: 'Other',
     },
   ];
-
-  // useEffect(() => {
-  //   const client = generateClient();
-  //   client
-  //     .graphql({
-  //       query: getRental,
-  //       variables: {
-  //         id: 'jjdlksd',
-  //       },
-  //     })
-  //     .then(response => {
-  //       console.log(response);
-  //     });
-  // }, []);
-
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
 
   const setAllRentals = (
@@ -196,30 +181,6 @@ const useExplore = (navigation: any) => {
       appState.current = nextAppState;
     });
 
-    // const authListener = (data: {payload: {event: any}}) => {
-    //   console.log('authListener', data.payload.event);
-    //   switch (data.payload.event) {
-    //     case 'signIn':
-    //       console.log('user signed in');
-    //       // navigation.navigate('LogInOrSignUpScreens');
-    //       break;
-    //     case 'signOut':
-    //       console.log('user signed out');
-    //       break;
-    //     case 'signUp':
-    //       console.log('user signed up');
-    //       break;
-    //     case 'signIn_failure':
-    //       console.log('user sign in failed');
-    //       break;
-    //     case 'configured':
-    //       console.log('the Auth module is configured');
-    //       break;
-    //     default:
-    //       console.log('Unhandled event: ', data.payload.event);
-    //       break;
-    //   }
-    // };
     const userListener = (data: {payload: {event: any}}) => {
       if (data.payload.event === 'UserRetrievedError') {
         navigation.navigate(ScreenNameConstants.LogInOrSignUpScreens);

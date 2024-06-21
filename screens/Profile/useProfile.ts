@@ -24,10 +24,7 @@ const useProfile = () => {
   //   Util.getAllRentals(location, 5).then(r => console.log(r));
   // }, []);
   useEffect(() => {
-    console.log('use effect');
-    setImage()
-      .then(r => console.log(r))
-      .catch(e => console.error(e));
+    setImage().catch(e => console.error(e));
   }, []);
 
   const setImage = async () => {
