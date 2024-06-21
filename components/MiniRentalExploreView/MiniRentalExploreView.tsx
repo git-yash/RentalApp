@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Pressable, Text, View} from 'react-native';
+import {Pressable, Text, View} from 'react-native';
 import Colors from '../../assets/Colors';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHeart as solidHeart, faStar} from '@fortawesome/free-solid-svg-icons';
@@ -40,11 +40,11 @@ const MiniRentalExploreView = (props: {
             )
           }>
           <View style={miniRentalExploreViewStyle.mainContainer}>
-            <Image
-              // source={{uri: props.rental.picturePaths[0]}}
-              source={{uri: ''}}
-              style={miniRentalExploreViewStyle.image}
-            />
+            {/*<Image*/}
+            {/*  // source={{uri: props.rental.picturePaths[0]}}*/}
+            {/*  source={{uri: ''}}*/}
+            {/*  style={miniRentalExploreViewStyle.image}*/}
+            {/*/>*/}
             <View style={miniRentalExploreViewStyle.rightContainer}>
               <View style={miniRentalExploreViewStyle.titlePriceContainer}>
                 <View>

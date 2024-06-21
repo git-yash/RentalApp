@@ -2,27 +2,22 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateBookingInput = {
-  id?: string | null,
-  startDate: string,
-  endDate: string,
-  rentalID: string,
-  bookingUserId?: string | null,
-};
-
-export type ModelBookingConditionInput = {
-  startDate?: ModelStringInput | null,
-  endDate?: ModelStringInput | null,
-  rentalID?: ModelIDInput | null,
-  and?: Array< ModelBookingConditionInput | null > | null,
-  or?: Array< ModelBookingConditionInput | null > | null,
-  not?: ModelBookingConditionInput | null,
+export type ModelRentalFilterInput = {
+  id?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  isAvailable?: ModelBooleanInput | null,
+  rating?: ModelFloatInput | null,
+  userID?: ModelIDInput | null,
+  category?: ModelIntInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  bookingUserId?: ModelIDInput | null,
+  and?: Array< ModelRentalFilterInput | null > | null,
+  or?: Array< ModelRentalFilterInput | null > | null,
+  not?: ModelRentalFilterInput | null,
 };
 
-export type ModelStringInput = {
+export type ModelIDInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -62,7 +57,7 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type ModelIDInput = {
+export type ModelStringInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -78,26 +73,35 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type Booking = {
-  __typename: "Booking",
-  id: string,
-  startDate: string,
-  endDate: string,
-  user?: User | null,
-  rentalID: string,
-  createdAt: string,
-  updatedAt: string,
-  bookingUserId?: string | null,
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
 };
 
-export type User = {
-  __typename: "User",
-  id: string,
-  dateJoined: string,
-  isOnline: boolean,
-  postedRentals?: ModelRentalConnection | null,
-  createdAt: string,
-  updatedAt: string,
+export type ModelFloatInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
 };
 
 export type ModelRentalConnection = {
@@ -176,10 +180,52 @@ export type Review = {
   reviewUserId?: string | null,
 };
 
+export type User = {
+  __typename: "User",
+  id: string,
+  dateJoined: string,
+  isOnline: boolean,
+  postedRentals?: ModelRentalConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
 export type ModelBookingConnection = {
   __typename: "ModelBookingConnection",
   items:  Array<Booking | null >,
   nextToken?: string | null,
+};
+
+export type Booking = {
+  __typename: "Booking",
+  id: string,
+  startDate: string,
+  endDate: string,
+  user?: User | null,
+  rentalID: string,
+  createdAt: string,
+  updatedAt: string,
+  bookingUserId?: string | null,
+};
+
+export type CreateBookingInput = {
+  id?: string | null,
+  startDate: string,
+  endDate: string,
+  rentalID: string,
+  bookingUserId?: string | null,
+};
+
+export type ModelBookingConditionInput = {
+  startDate?: ModelStringInput | null,
+  endDate?: ModelStringInput | null,
+  rentalID?: ModelIDInput | null,
+  and?: Array< ModelBookingConditionInput | null > | null,
+  or?: Array< ModelBookingConditionInput | null > | null,
+  not?: ModelBookingConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  bookingUserId?: ModelIDInput | null,
 };
 
 export type UpdateBookingInput = {
@@ -208,13 +254,6 @@ export type ModelUserConditionInput = {
   not?: ModelUserConditionInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-};
-
-export type ModelBooleanInput = {
-  ne?: boolean | null,
-  eq?: boolean | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
 };
 
 export type UpdateUserInput = {
@@ -249,18 +288,6 @@ export type ModelReviewConditionInput = {
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   reviewUserId?: ModelIDInput | null,
-};
-
-export type ModelFloatInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
 };
 
 export type UpdateReviewInput = {
@@ -322,18 +349,6 @@ export type ModelRentalConditionInput = {
   not?: ModelRentalConditionInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-};
-
-export type ModelIntInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
 };
 
 export type UpdateRentalInput = {
@@ -402,21 +417,6 @@ export type ModelReviewFilterInput = {
   or?: Array< ModelReviewFilterInput | null > | null,
   not?: ModelReviewFilterInput | null,
   reviewUserId?: ModelIDInput | null,
-};
-
-export type ModelRentalFilterInput = {
-  id?: ModelIDInput | null,
-  title?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  isAvailable?: ModelBooleanInput | null,
-  rating?: ModelFloatInput | null,
-  userID?: ModelIDInput | null,
-  category?: ModelIntInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-  and?: Array< ModelRentalFilterInput | null > | null,
-  or?: Array< ModelRentalFilterInput | null > | null,
-  not?: ModelRentalFilterInput | null,
 };
 
 export type ModelSubscriptionBookingFilterInput = {
@@ -526,6 +526,53 @@ export type ModelSubscriptionIntInput = {
   between?: Array< number | null > | null,
   in?: Array< number | null > | null,
   notIn?: Array< number | null > | null,
+};
+
+export type ListRentalsWithAllDetailsQueryVariables = {
+  filter?: ModelRentalFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListRentalsWithAllDetailsQuery = {
+  listRentals?:  {
+    __typename: "ModelRentalConnection",
+    items:  Array< {
+      __typename: "Rental",
+      id: string,
+      title: string,
+      prices:  Array< {
+        __typename: "Price",
+        amount: number,
+        timeIncrement: TimeIncrement,
+        isFirmOnPrice: boolean,
+      } >,
+      rating?: number | null,
+      address:  {
+        __typename: "Address",
+        street: string,
+        street2?: string | null,
+        city: string,
+        state: string,
+        zip: string,
+        country: string,
+      },
+      location:  {
+        __typename: "Location",
+        latitude: number,
+        longitude: number,
+      },
+      reviews?:  {
+        __typename: "ModelReviewConnection",
+        nextToken?: string | null,
+      } | null,
+      userID: string,
+      category: number,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
 };
 
 export type CreateBookingMutationVariables = {

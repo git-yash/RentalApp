@@ -18,6 +18,15 @@
       "auth": {
         "RentalApp": {},
         "userPoolGroups": {}
+      },
+      "function": {
+        "S3Trigger6b42ae79": {
+          "deploymentBucketName": "amplify-rentalapp-dev-4f53e-deployment",
+          "s3Key": "amplify-builds/S3Trigger6b42ae79-427a2f636874467a326e-build.zip"
+        }
+      },
+      "storage": {
+        "productContent": {}
       }
     }
   }

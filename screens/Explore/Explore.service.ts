@@ -191,7 +191,6 @@ export default class ExploreService {
         },
       })
       .then(response => {
-        console.log(response.data.listRentals);
         return response.data.listRentals.items as Rental[];
       })
       .catch(e => {

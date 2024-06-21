@@ -221,7 +221,6 @@ const useExplore = (navigation: any) => {
     //   }
     // };
     const userListener = (data: {payload: {event: any}}) => {
-      console.log('userListener: ', data.payload.event);
       if (data.payload.event === 'UserRetrievedError') {
         navigation.navigate(ScreenNameConstants.LogInOrSignUpScreens);
       }
@@ -229,7 +228,6 @@ const useExplore = (navigation: any) => {
 
     // const authListenerCancel = Hub.listen('auth', authListener);
     const userListenerCancel = Hub.listen('user', userListener);
-    console.log('listeners registered. useExplore, load');
 
     // Cleanup on unmount
     return () => {

@@ -1,28 +1,37 @@
-import storage from '@react-native-firebase/storage';
-import {ImageOrVideo} from 'react-native-image-crop-picker';
 import {signOut} from 'aws-amplify/auth';
+import {getUrl, remove, uploadData} from 'aws-amplify/storage';
+import {ImageOrVideo} from 'react-native-image-crop-picker';
 
 export default class ProfileService {
   async handleSignOut() {
     return await signOut();
   }
 
-  async fetchImage(profileImageRef: string, setImageURI: any) {
-    try {
-      const url = await storage().ref(profileImageRef).getDownloadURL();
-      setImageURI(url);
-    } catch (error) {
-      console.error('Error fetching image URI: ', error);
-      setImageURI(undefined);
-    }
+  async fetchImage(path: string) {
+    return await getUrl({
+      path: path,
+      options: {
+        validateObjectExistence: true,
+      },
+    });
   }
 
-  async uploadProfileImage(profileImageRef: string, image: ImageOrVideo) {
-    const reference = storage().ref(profileImageRef);
-    await reference.putFile(image.path as string);
+  async uploadProfileImage(path: string, image: ImageOrVideo) {
+    const response = await fetch(image.path);
+    const imageData = await response.blob();
+    return uploadData({
+      path: path,
+      data: imageData,
+      options: {
+        contentEncoding: 'compress',
+        contentType: 'image/jpeg',
+      },
+    }).result;
   }
 
-  removeImage(profileImageRef: string) {
-    void storage().ref(profileImageRef).delete();
+  removeImage(path: string) {
+    return remove({
+      path: path,
+    });
   }
 }

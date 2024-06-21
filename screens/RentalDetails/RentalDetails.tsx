@@ -94,7 +94,7 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
             <Text style={rentalDetailsStyle.deliveryText}>Price</Text>
             {rental.prices.map((p: Price) => (
               <Text style={rentalDetailsStyle.priceText}>
-                {p.amount} / {p.timeIncrement}
+                ${p.amount} / {p.timeIncrement}
               </Text>
             ))}
             {shouldShowReadMore && (

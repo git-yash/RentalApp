@@ -49,7 +49,6 @@ function App(): JSX.Element {
   useEffect(() => {
     initializeUser()
       .then(isInitialized => {
-        console.log('useExplore: load: isInitialized', isInitialized);
         setIsUserFetched(true);
         Hub.dispatch('user', {event: 'UserRetrieved', data: authUser});
       })

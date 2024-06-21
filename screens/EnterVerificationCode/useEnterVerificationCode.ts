@@ -18,7 +18,6 @@ const useEnterVerificationCode = (emailText: string, navigation: any) => {
   }, [code]);
 
   const completeSignUpWithVerificationCode = async () => {
-    console.log(emailText);
     const verificationCodeLength = 6;
     if (code?.length === verificationCodeLength) {
       await enterVerificationCodeService
@@ -32,7 +31,9 @@ const useEnterVerificationCode = (emailText: string, navigation: any) => {
               .then(async () => {
                 await initializeUser();
               })
-              .catch(error => console.log('auto:', error));
+              .catch(error =>
+                console.error('signup verification code:', error),
+              );
             await fetchAuthSession({forceRefresh: true}).then(() => {
               setIsLoading(false);
               navigation.navigate(ScreenNameConstants.Tabs);

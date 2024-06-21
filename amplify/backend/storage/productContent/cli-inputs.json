@@ -1,0 +1,15 @@
+{
+  "resourceName": "productContent",
+  "policyUUID": "67bc8041",
+  "bucketName": "rentalapp6a0f1ce1d4084c45ba2a66ba11280d1c",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "S3Trigger6b42ae79"
+}

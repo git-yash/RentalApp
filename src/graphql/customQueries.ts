@@ -5,7 +5,8 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
-export const listRentalsWithAllDetails = /* GraphQL */ `query ListRentals(
+export const listRentalsWithAllDetails =
+  /* GraphQL */ `query ListRentalsWithAllDetails(
   $filter: ModelRentalFilterInput
   $limit: Int
   $nextToken: String
@@ -14,8 +15,6 @@ export const listRentalsWithAllDetails = /* GraphQL */ `query ListRentals(
     items {
     id
     title
-    description
-    isAvailable
     prices {
       amount
       timeIncrement
@@ -41,19 +40,7 @@ export const listRentalsWithAllDetails = /* GraphQL */ `query ListRentals(
       nextToken
       __typename
     }
-    bookings {
-      nextToken
-      __typename
-    }
     userID
-    user {
-      id
-      dateJoined
-      isOnline
-      createdAt
-      updatedAt
-      __typename
-    }
     category
     createdAt
     updatedAt
@@ -64,6 +51,7 @@ export const listRentalsWithAllDetails = /* GraphQL */ `query ListRentals(
   }
 }
 ` as GeneratedQuery<
-  APITypes.ListRentalsQueryVariables,
-  APITypes.ListRentalsQuery
->;
+    APITypes.ListRentalsQueryVariables,
+    APITypes.ListRentalsQuery
+  >;
+// TODO: remove unused nested queries

@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {useActionSheet} from '@expo/react-native-action-sheet';
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker, {Options} from 'react-native-image-crop-picker';
 import Colors from '../../assets/Colors';
 import ProfileService from './Profile.service';
 import useUserStore from '../../store/userStore';
@@ -9,7 +9,7 @@ const useProfile = () => {
   const {user} = useUserStore();
   const [isModalVisible, setModalVisible] = useState(false);
   const [imageURI, setImageURI] = useState<string | undefined>(undefined);
-  const profileImageRef: string = 'userProfilePictures/' + user?.id;
+  const profileImagePath: string = `public/userProfilePictures/${user?.id}.jpeg`;
   const {showActionSheetWithOptions} = useActionSheet();
   const profileService = new ProfileService();
 
@@ -23,10 +23,27 @@ const useProfile = () => {
   //     .catch(error => console.warn(error));
   //   Util.getAllRentals(location, 5).then(r => console.log(r));
   // }, []);
-
   useEffect(() => {
-    void profileService.fetchImage(profileImageRef, setImageURI);
-  }, [user]);
+    console.log('use effect');
+    setImage()
+      .then(r => console.log(r))
+      .catch(e => console.error(e));
+  }, []);
+
+  const setImage = async () => {
+    if (!profileImagePath) {
+      return;
+    }
+
+    try {
+      const urlOutput = await profileService.fetchImage(profileImagePath);
+      setImageURI(urlOutput.url.href || undefined);
+      return urlOutput;
+    } catch (e) {
+      setImageURI(undefined);
+      throw e;
+    }
+  };
 
   const handleEditProfileImageActionSheetButton = () => {
     const optionsWithoutImage = ['Choose Photo', 'Take Photo', 'Cancel'];
@@ -42,8 +59,12 @@ const useProfile = () => {
     const destructiveButtonIndex = imageURI !== undefined ? 2 : undefined;
 
     let imagePickerOptions = {
+      mediaType: 'photo',
       width: 300,
       height: 300,
+      cropping: true,
+      includeBase64: false,
+      forceJpg: true,
       cropperActiveWidgetColor: Colors.green,
       cropperCancelColor: Colors.invalidRed,
       cropperChooseColor: Colors.green,
@@ -52,8 +73,7 @@ const useProfile = () => {
       cropperToolbarColor: Colors.green,
       cropperToolbarWidgetColor: Colors.green,
       cropperCircleOverlay: true,
-      cropping: true,
-    };
+    } as Options;
 
     showActionSheetWithOptions(
       {
@@ -65,31 +85,32 @@ const useProfile = () => {
         switch (selectedIndex) {
           case 0:
             // Choose photo
-            ImagePicker.openPicker(imagePickerOptions).then(image => {
-              setImageURI(image.path);
+            ImagePicker.openPicker(imagePickerOptions).then(async image => {
               profileService
-                .uploadProfileImage(profileImageRef, image)
+                .uploadProfileImage(profileImagePath, image)
                 .then(() => {
-                  void profileService.fetchImage(profileImageRef, setImageURI);
-                });
+                  setImage().catch(e => console.error(e));
+                })
+                .catch(e => console.error('error uploading profile image', e));
             });
             break;
           case 1:
             // Take photo
             ImagePicker.openCamera(imagePickerOptions).then(image => {
-              setImageURI(image.path);
               profileService
-                .uploadProfileImage(profileImageRef, image)
+                .uploadProfileImage(profileImagePath, image)
                 .then(() => {
-                  void profileService.fetchImage(profileImageRef, setImageURI);
-                });
+                  setImage().catch(e => console.error(e));
+                })
+                .catch(e => console.error('error uploading profile image', e));
             });
             break;
           case 2:
-            setImageURI(undefined);
-            profileService.removeImage(profileImageRef);
+            profileService
+              .removeImage(profileImagePath)
+              .then(() => setImageURI(undefined))
+              .catch(e => console.error('error removing an image', e));
             break;
-
           case cancelButtonIndex:
           // Canceled
         }

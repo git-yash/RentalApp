@@ -19,5 +19,20 @@ export type AmplifyDependentResourcesAttributes = {
     "userPoolGroups": {
       "userGroup1GroupRole": "string"
     }
+  },
+  "function": {
+    "S3Trigger6b42ae79": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    }
+  },
+  "storage": {
+    "productContent": {
+      "BucketName": "string",
+      "Region": "string"
+    }
   }
 }
