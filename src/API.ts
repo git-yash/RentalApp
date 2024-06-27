@@ -173,19 +173,8 @@ export type Review = {
   description: string,
   rating?: number | null,
   rentalID: string,
-  user?: User | null,
   datePublished: string,
-  createdAt: string,
-  updatedAt: string,
-  reviewUserId?: string | null,
-};
-
-export type User = {
-  __typename: "User",
-  id: string,
-  dateJoined: string,
-  isOnline: boolean,
-  postedRentals?: ModelRentalConnection | null,
+  userID: string,
   createdAt: string,
   updatedAt: string,
 };
@@ -201,11 +190,76 @@ export type Booking = {
   id: string,
   startDate: string,
   endDate: string,
-  user?: User | null,
   rentalID: string,
+  userID: string,
   createdAt: string,
   updatedAt: string,
-  bookingUserId?: string | null,
+};
+
+export type User = {
+  __typename: "User",
+  id: string,
+  dateJoined: string,
+  isOnline: boolean,
+  postedRentals?: ModelRentalConnection | null,
+  bookings?: ModelBookingConnection | null,
+  reviews?: ModelReviewConnection | null,
+  bookmarks?: ModelBookmarkedRentalConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelBookmarkedRentalConnection = {
+  __typename: "ModelBookmarkedRentalConnection",
+  items:  Array<BookmarkedRental | null >,
+  nextToken?: string | null,
+};
+
+export type BookmarkedRental = {
+  __typename: "BookmarkedRental",
+  id: string,
+  rental?: Rental | null,
+  userID: string,
+  createdAt: string,
+  updatedAt: string,
+  bookmarkedRentalRentalId?: string | null,
+};
+
+export type ModelBookmarkedRentalFilterInput = {
+  id?: ModelIDInput | null,
+  userID?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  and?: Array< ModelBookmarkedRentalFilterInput | null > | null,
+  or?: Array< ModelBookmarkedRentalFilterInput | null > | null,
+  not?: ModelBookmarkedRentalFilterInput | null,
+  bookmarkedRentalRentalId?: ModelIDInput | null,
+};
+
+export type CreateBookmarkedRentalInput = {
+  id?: string | null,
+  userID: string,
+  bookmarkedRentalRentalId?: string | null,
+};
+
+export type ModelBookmarkedRentalConditionInput = {
+  userID?: ModelIDInput | null,
+  and?: Array< ModelBookmarkedRentalConditionInput | null > | null,
+  or?: Array< ModelBookmarkedRentalConditionInput | null > | null,
+  not?: ModelBookmarkedRentalConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  bookmarkedRentalRentalId?: ModelIDInput | null,
+};
+
+export type UpdateBookmarkedRentalInput = {
+  id: string,
+  userID?: string | null,
+  bookmarkedRentalRentalId?: string | null,
+};
+
+export type DeleteBookmarkedRentalInput = {
+  id: string,
 };
 
 export type CreateBookingInput = {
@@ -213,19 +267,19 @@ export type CreateBookingInput = {
   startDate: string,
   endDate: string,
   rentalID: string,
-  bookingUserId?: string | null,
+  userID: string,
 };
 
 export type ModelBookingConditionInput = {
   startDate?: ModelStringInput | null,
   endDate?: ModelStringInput | null,
   rentalID?: ModelIDInput | null,
+  userID?: ModelIDInput | null,
   and?: Array< ModelBookingConditionInput | null > | null,
   or?: Array< ModelBookingConditionInput | null > | null,
   not?: ModelBookingConditionInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  bookingUserId?: ModelIDInput | null,
 };
 
 export type UpdateBookingInput = {
@@ -233,7 +287,7 @@ export type UpdateBookingInput = {
   startDate?: string | null,
   endDate?: string | null,
   rentalID?: string | null,
-  bookingUserId?: string | null,
+  userID?: string | null,
 };
 
 export type DeleteBookingInput = {
@@ -273,7 +327,7 @@ export type CreateReviewInput = {
   rating?: number | null,
   rentalID: string,
   datePublished: string,
-  reviewUserId?: string | null,
+  userID: string,
 };
 
 export type ModelReviewConditionInput = {
@@ -282,12 +336,12 @@ export type ModelReviewConditionInput = {
   rating?: ModelFloatInput | null,
   rentalID?: ModelIDInput | null,
   datePublished?: ModelStringInput | null,
+  userID?: ModelIDInput | null,
   and?: Array< ModelReviewConditionInput | null > | null,
   or?: Array< ModelReviewConditionInput | null > | null,
   not?: ModelReviewConditionInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  reviewUserId?: ModelIDInput | null,
 };
 
 export type UpdateReviewInput = {
@@ -297,7 +351,7 @@ export type UpdateReviewInput = {
   rating?: number | null,
   rentalID?: string | null,
   datePublished?: string | null,
-  reviewUserId?: string | null,
+  userID?: string | null,
 };
 
 export type DeleteReviewInput = {
@@ -368,24 +422,24 @@ export type DeleteRentalInput = {
   id: string,
 };
 
-export type ModelBookingFilterInput = {
-  id?: ModelIDInput | null,
-  startDate?: ModelStringInput | null,
-  endDate?: ModelStringInput | null,
-  rentalID?: ModelIDInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-  and?: Array< ModelBookingFilterInput | null > | null,
-  or?: Array< ModelBookingFilterInput | null > | null,
-  not?: ModelBookingFilterInput | null,
-  bookingUserId?: ModelIDInput | null,
-};
-
 export enum ModelSortDirection {
   ASC = "ASC",
   DESC = "DESC",
 }
 
+
+export type ModelBookingFilterInput = {
+  id?: ModelIDInput | null,
+  startDate?: ModelStringInput | null,
+  endDate?: ModelStringInput | null,
+  rentalID?: ModelIDInput | null,
+  userID?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  and?: Array< ModelBookingFilterInput | null > | null,
+  or?: Array< ModelBookingFilterInput | null > | null,
+  not?: ModelBookingFilterInput | null,
+};
 
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
@@ -411,24 +465,22 @@ export type ModelReviewFilterInput = {
   rating?: ModelFloatInput | null,
   rentalID?: ModelIDInput | null,
   datePublished?: ModelStringInput | null,
+  userID?: ModelIDInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelReviewFilterInput | null > | null,
   or?: Array< ModelReviewFilterInput | null > | null,
   not?: ModelReviewFilterInput | null,
-  reviewUserId?: ModelIDInput | null,
 };
 
-export type ModelSubscriptionBookingFilterInput = {
+export type ModelSubscriptionBookmarkedRentalFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  startDate?: ModelSubscriptionStringInput | null,
-  endDate?: ModelSubscriptionStringInput | null,
-  rentalID?: ModelSubscriptionIDInput | null,
+  userID?: ModelSubscriptionIDInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionBookingFilterInput | null > | null,
-  or?: Array< ModelSubscriptionBookingFilterInput | null > | null,
-  bookingUserId?: ModelSubscriptionIDInput | null,
+  and?: Array< ModelSubscriptionBookmarkedRentalFilterInput | null > | null,
+  or?: Array< ModelSubscriptionBookmarkedRentalFilterInput | null > | null,
+  bookmarkedRentalRentalId?: ModelSubscriptionIDInput | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -461,6 +513,18 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
+export type ModelSubscriptionBookingFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  startDate?: ModelSubscriptionStringInput | null,
+  endDate?: ModelSubscriptionStringInput | null,
+  rentalID?: ModelSubscriptionIDInput | null,
+  userID?: ModelSubscriptionIDInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionBookingFilterInput | null > | null,
+  or?: Array< ModelSubscriptionBookingFilterInput | null > | null,
+};
+
 export type ModelSubscriptionUserFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   dateJoined?: ModelSubscriptionStringInput | null,
@@ -483,11 +547,11 @@ export type ModelSubscriptionReviewFilterInput = {
   rating?: ModelSubscriptionFloatInput | null,
   rentalID?: ModelSubscriptionIDInput | null,
   datePublished?: ModelSubscriptionStringInput | null,
+  userID?: ModelSubscriptionIDInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionReviewFilterInput | null > | null,
   or?: Array< ModelSubscriptionReviewFilterInput | null > | null,
-  reviewUserId?: ModelSubscriptionIDInput | null,
 };
 
 export type ModelSubscriptionFloatInput = {
@@ -541,13 +605,19 @@ export type ListRentalsWithAllDetailsQuery = {
       __typename: "Rental",
       id: string,
       title: string,
+      description: string,
+      isAvailable?: boolean | null,
+      rating?: number | null,
+      userID: string,
+      category: number,
+      createdAt: string,
+      updatedAt: string,
       prices:  Array< {
         __typename: "Price",
         amount: number,
         timeIncrement: TimeIncrement,
         isFirmOnPrice: boolean,
       } >,
-      rating?: number | null,
       address:  {
         __typename: "Address",
         street: string,
@@ -562,16 +632,141 @@ export type ListRentalsWithAllDetailsQuery = {
         latitude: number,
         longitude: number,
       },
-      reviews?:  {
-        __typename: "ModelReviewConnection",
-        nextToken?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ListBookmarkedRentalsWithDetailsQueryVariables = {
+  filter?: ModelBookmarkedRentalFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListBookmarkedRentalsWithDetailsQuery = {
+  listBookmarkedRentals?:  {
+    __typename: "ModelBookmarkedRentalConnection",
+    items:  Array< {
+      __typename: "BookmarkedRental",
+      id: string,
+      userID: string,
+      createdAt: string,
+      updatedAt: string,
+      bookmarkedRentalRentalId?: string | null,
+      rental?:  {
+        __typename: "Rental",
+        address:  {
+          __typename: "Address",
+          city: string,
+          country: string,
+          state: string,
+          street2?: string | null,
+          zip: string,
+          street: string,
+        },
+        location:  {
+          __typename: "Location",
+          latitude: number,
+          longitude: number,
+        },
+        category: number,
+        id: string,
+        isAvailable?: boolean | null,
+        prices:  Array< {
+          __typename: "Price",
+          amount: number,
+          isFirmOnPrice: boolean,
+          timeIncrement: TimeIncrement,
+        } >,
+        rating?: number | null,
+        title: string,
+        userID: string,
       } | null,
+    } | null >,
+  } | null,
+};
+
+export type CreateBookmarkedRentalMutationVariables = {
+  input: CreateBookmarkedRentalInput,
+  condition?: ModelBookmarkedRentalConditionInput | null,
+};
+
+export type CreateBookmarkedRentalMutation = {
+  createBookmarkedRental?:  {
+    __typename: "BookmarkedRental",
+    id: string,
+    rental?:  {
+      __typename: "Rental",
+      id: string,
+      title: string,
+      description: string,
+      isAvailable?: boolean | null,
+      rating?: number | null,
       userID: string,
       category: number,
       createdAt: string,
       updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
+    } | null,
+    userID: string,
+    createdAt: string,
+    updatedAt: string,
+    bookmarkedRentalRentalId?: string | null,
+  } | null,
+};
+
+export type UpdateBookmarkedRentalMutationVariables = {
+  input: UpdateBookmarkedRentalInput,
+  condition?: ModelBookmarkedRentalConditionInput | null,
+};
+
+export type UpdateBookmarkedRentalMutation = {
+  updateBookmarkedRental?:  {
+    __typename: "BookmarkedRental",
+    id: string,
+    rental?:  {
+      __typename: "Rental",
+      id: string,
+      title: string,
+      description: string,
+      isAvailable?: boolean | null,
+      rating?: number | null,
+      userID: string,
+      category: number,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string,
+    createdAt: string,
+    updatedAt: string,
+    bookmarkedRentalRentalId?: string | null,
+  } | null,
+};
+
+export type DeleteBookmarkedRentalMutationVariables = {
+  input: DeleteBookmarkedRentalInput,
+  condition?: ModelBookmarkedRentalConditionInput | null,
+};
+
+export type DeleteBookmarkedRentalMutation = {
+  deleteBookmarkedRental?:  {
+    __typename: "BookmarkedRental",
+    id: string,
+    rental?:  {
+      __typename: "Rental",
+      id: string,
+      title: string,
+      description: string,
+      isAvailable?: boolean | null,
+      rating?: number | null,
+      userID: string,
+      category: number,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string,
+    createdAt: string,
+    updatedAt: string,
+    bookmarkedRentalRentalId?: string | null,
   } | null,
 };
 
@@ -586,18 +781,10 @@ export type CreateBookingMutation = {
     id: string,
     startDate: string,
     endDate: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      dateJoined: string,
-      isOnline: boolean,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     rentalID: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    bookingUserId?: string | null,
   } | null,
 };
 
@@ -612,18 +799,10 @@ export type UpdateBookingMutation = {
     id: string,
     startDate: string,
     endDate: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      dateJoined: string,
-      isOnline: boolean,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     rentalID: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    bookingUserId?: string | null,
   } | null,
 };
 
@@ -638,18 +817,10 @@ export type DeleteBookingMutation = {
     id: string,
     startDate: string,
     endDate: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      dateJoined: string,
-      isOnline: boolean,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     rentalID: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    bookingUserId?: string | null,
   } | null,
 };
 
@@ -666,6 +837,18 @@ export type CreateUserMutation = {
     isOnline: boolean,
     postedRentals?:  {
       __typename: "ModelRentalConnection",
+      nextToken?: string | null,
+    } | null,
+    bookings?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
+    reviews?:  {
+      __typename: "ModelReviewConnection",
+      nextToken?: string | null,
+    } | null,
+    bookmarks?:  {
+      __typename: "ModelBookmarkedRentalConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -688,6 +871,18 @@ export type UpdateUserMutation = {
       __typename: "ModelRentalConnection",
       nextToken?: string | null,
     } | null,
+    bookings?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
+    reviews?:  {
+      __typename: "ModelReviewConnection",
+      nextToken?: string | null,
+    } | null,
+    bookmarks?:  {
+      __typename: "ModelBookmarkedRentalConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -708,6 +903,18 @@ export type DeleteUserMutation = {
       __typename: "ModelRentalConnection",
       nextToken?: string | null,
     } | null,
+    bookings?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
+    reviews?:  {
+      __typename: "ModelReviewConnection",
+      nextToken?: string | null,
+    } | null,
+    bookmarks?:  {
+      __typename: "ModelBookmarkedRentalConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -726,18 +933,10 @@ export type CreateReviewMutation = {
     description: string,
     rating?: number | null,
     rentalID: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      dateJoined: string,
-      isOnline: boolean,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     datePublished: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    reviewUserId?: string | null,
   } | null,
 };
 
@@ -754,18 +953,10 @@ export type UpdateReviewMutation = {
     description: string,
     rating?: number | null,
     rentalID: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      dateJoined: string,
-      isOnline: boolean,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     datePublished: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    reviewUserId?: string | null,
   } | null,
 };
 
@@ -782,18 +973,10 @@ export type DeleteReviewMutation = {
     description: string,
     rating?: number | null,
     rentalID: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      dateJoined: string,
-      isOnline: boolean,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     datePublished: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    reviewUserId?: string | null,
   } | null,
 };
 
@@ -965,6 +1148,77 @@ export type DeleteRentalMutation = {
   } | null,
 };
 
+export type GetBookmarkedRentalQueryVariables = {
+  id: string,
+};
+
+export type GetBookmarkedRentalQuery = {
+  getBookmarkedRental?:  {
+    __typename: "BookmarkedRental",
+    id: string,
+    rental?:  {
+      __typename: "Rental",
+      id: string,
+      title: string,
+      description: string,
+      isAvailable?: boolean | null,
+      rating?: number | null,
+      userID: string,
+      category: number,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string,
+    createdAt: string,
+    updatedAt: string,
+    bookmarkedRentalRentalId?: string | null,
+  } | null,
+};
+
+export type ListBookmarkedRentalsQueryVariables = {
+  filter?: ModelBookmarkedRentalFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListBookmarkedRentalsQuery = {
+  listBookmarkedRentals?:  {
+    __typename: "ModelBookmarkedRentalConnection",
+    items:  Array< {
+      __typename: "BookmarkedRental",
+      id: string,
+      userID: string,
+      createdAt: string,
+      updatedAt: string,
+      bookmarkedRentalRentalId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type BookmarkedRentalsByUserIDQueryVariables = {
+  userID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelBookmarkedRentalFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type BookmarkedRentalsByUserIDQuery = {
+  bookmarkedRentalsByUserID?:  {
+    __typename: "ModelBookmarkedRentalConnection",
+    items:  Array< {
+      __typename: "BookmarkedRental",
+      id: string,
+      userID: string,
+      createdAt: string,
+      updatedAt: string,
+      bookmarkedRentalRentalId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type GetBookingQueryVariables = {
   id: string,
 };
@@ -975,18 +1229,10 @@ export type GetBookingQuery = {
     id: string,
     startDate: string,
     endDate: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      dateJoined: string,
-      isOnline: boolean,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     rentalID: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    bookingUserId?: string | null,
   } | null,
 };
 
@@ -1005,9 +1251,9 @@ export type ListBookingsQuery = {
       startDate: string,
       endDate: string,
       rentalID: string,
+      userID: string,
       createdAt: string,
       updatedAt: string,
-      bookingUserId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -1030,9 +1276,34 @@ export type BookingsByRentalIDQuery = {
       startDate: string,
       endDate: string,
       rentalID: string,
+      userID: string,
       createdAt: string,
       updatedAt: string,
-      bookingUserId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type BookingsByUserIDQueryVariables = {
+  userID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelBookingFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type BookingsByUserIDQuery = {
+  bookingsByUserID?:  {
+    __typename: "ModelBookingConnection",
+    items:  Array< {
+      __typename: "Booking",
+      id: string,
+      startDate: string,
+      endDate: string,
+      rentalID: string,
+      userID: string,
+      createdAt: string,
+      updatedAt: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -1050,6 +1321,18 @@ export type GetUserQuery = {
     isOnline: boolean,
     postedRentals?:  {
       __typename: "ModelRentalConnection",
+      nextToken?: string | null,
+    } | null,
+    bookings?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
+    reviews?:  {
+      __typename: "ModelReviewConnection",
+      nextToken?: string | null,
+    } | null,
+    bookmarks?:  {
+      __typename: "ModelBookmarkedRentalConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -1090,18 +1373,10 @@ export type GetReviewQuery = {
     description: string,
     rating?: number | null,
     rentalID: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      dateJoined: string,
-      isOnline: boolean,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     datePublished: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    reviewUserId?: string | null,
   } | null,
 };
 
@@ -1122,9 +1397,9 @@ export type ListReviewsQuery = {
       rating?: number | null,
       rentalID: string,
       datePublished: string,
+      userID: string,
       createdAt: string,
       updatedAt: string,
-      reviewUserId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -1149,9 +1424,36 @@ export type ReviewsByRentalIDQuery = {
       rating?: number | null,
       rentalID: string,
       datePublished: string,
+      userID: string,
       createdAt: string,
       updatedAt: string,
-      reviewUserId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ReviewsByUserIDQueryVariables = {
+  userID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelReviewFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ReviewsByUserIDQuery = {
+  reviewsByUserID?:  {
+    __typename: "ModelReviewConnection",
+    items:  Array< {
+      __typename: "Review",
+      id: string,
+      title: string,
+      description: string,
+      rating?: number | null,
+      rentalID: string,
+      datePublished: string,
+      userID: string,
+      createdAt: string,
+      updatedAt: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -1264,6 +1566,87 @@ export type RentalsByUserIDQuery = {
   } | null,
 };
 
+export type OnCreateBookmarkedRentalSubscriptionVariables = {
+  filter?: ModelSubscriptionBookmarkedRentalFilterInput | null,
+};
+
+export type OnCreateBookmarkedRentalSubscription = {
+  onCreateBookmarkedRental?:  {
+    __typename: "BookmarkedRental",
+    id: string,
+    rental?:  {
+      __typename: "Rental",
+      id: string,
+      title: string,
+      description: string,
+      isAvailable?: boolean | null,
+      rating?: number | null,
+      userID: string,
+      category: number,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string,
+    createdAt: string,
+    updatedAt: string,
+    bookmarkedRentalRentalId?: string | null,
+  } | null,
+};
+
+export type OnUpdateBookmarkedRentalSubscriptionVariables = {
+  filter?: ModelSubscriptionBookmarkedRentalFilterInput | null,
+};
+
+export type OnUpdateBookmarkedRentalSubscription = {
+  onUpdateBookmarkedRental?:  {
+    __typename: "BookmarkedRental",
+    id: string,
+    rental?:  {
+      __typename: "Rental",
+      id: string,
+      title: string,
+      description: string,
+      isAvailable?: boolean | null,
+      rating?: number | null,
+      userID: string,
+      category: number,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string,
+    createdAt: string,
+    updatedAt: string,
+    bookmarkedRentalRentalId?: string | null,
+  } | null,
+};
+
+export type OnDeleteBookmarkedRentalSubscriptionVariables = {
+  filter?: ModelSubscriptionBookmarkedRentalFilterInput | null,
+};
+
+export type OnDeleteBookmarkedRentalSubscription = {
+  onDeleteBookmarkedRental?:  {
+    __typename: "BookmarkedRental",
+    id: string,
+    rental?:  {
+      __typename: "Rental",
+      id: string,
+      title: string,
+      description: string,
+      isAvailable?: boolean | null,
+      rating?: number | null,
+      userID: string,
+      category: number,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string,
+    createdAt: string,
+    updatedAt: string,
+    bookmarkedRentalRentalId?: string | null,
+  } | null,
+};
+
 export type OnCreateBookingSubscriptionVariables = {
   filter?: ModelSubscriptionBookingFilterInput | null,
 };
@@ -1274,18 +1657,10 @@ export type OnCreateBookingSubscription = {
     id: string,
     startDate: string,
     endDate: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      dateJoined: string,
-      isOnline: boolean,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     rentalID: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    bookingUserId?: string | null,
   } | null,
 };
 
@@ -1299,18 +1674,10 @@ export type OnUpdateBookingSubscription = {
     id: string,
     startDate: string,
     endDate: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      dateJoined: string,
-      isOnline: boolean,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     rentalID: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    bookingUserId?: string | null,
   } | null,
 };
 
@@ -1324,18 +1691,10 @@ export type OnDeleteBookingSubscription = {
     id: string,
     startDate: string,
     endDate: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      dateJoined: string,
-      isOnline: boolean,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     rentalID: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    bookingUserId?: string | null,
   } | null,
 };
 
@@ -1351,6 +1710,18 @@ export type OnCreateUserSubscription = {
     isOnline: boolean,
     postedRentals?:  {
       __typename: "ModelRentalConnection",
+      nextToken?: string | null,
+    } | null,
+    bookings?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
+    reviews?:  {
+      __typename: "ModelReviewConnection",
+      nextToken?: string | null,
+    } | null,
+    bookmarks?:  {
+      __typename: "ModelBookmarkedRentalConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -1372,6 +1743,18 @@ export type OnUpdateUserSubscription = {
       __typename: "ModelRentalConnection",
       nextToken?: string | null,
     } | null,
+    bookings?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
+    reviews?:  {
+      __typename: "ModelReviewConnection",
+      nextToken?: string | null,
+    } | null,
+    bookmarks?:  {
+      __typename: "ModelBookmarkedRentalConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1391,6 +1774,18 @@ export type OnDeleteUserSubscription = {
       __typename: "ModelRentalConnection",
       nextToken?: string | null,
     } | null,
+    bookings?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
+    reviews?:  {
+      __typename: "ModelReviewConnection",
+      nextToken?: string | null,
+    } | null,
+    bookmarks?:  {
+      __typename: "ModelBookmarkedRentalConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1408,18 +1803,10 @@ export type OnCreateReviewSubscription = {
     description: string,
     rating?: number | null,
     rentalID: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      dateJoined: string,
-      isOnline: boolean,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     datePublished: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    reviewUserId?: string | null,
   } | null,
 };
 
@@ -1435,18 +1822,10 @@ export type OnUpdateReviewSubscription = {
     description: string,
     rating?: number | null,
     rentalID: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      dateJoined: string,
-      isOnline: boolean,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     datePublished: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    reviewUserId?: string | null,
   } | null,
 };
 
@@ -1462,18 +1841,10 @@ export type OnDeleteReviewSubscription = {
     description: string,
     rating?: number | null,
     rentalID: string,
-    user?:  {
-      __typename: "User",
-      id: string,
-      dateJoined: string,
-      isOnline: boolean,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
     datePublished: string,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    reviewUserId?: string | null,
   } | null,
 };
 

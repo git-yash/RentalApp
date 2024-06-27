@@ -1,9 +1,15 @@
+type BookmarkedRental @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  rental: Rental @hasOne
+  userID: ID! @index(name: "byUser")
+}
+
 type Booking @model @auth(rules: [{allow: public}]) {
   id: ID!
   startDate: AWSDateTime!
   endDate: AWSDateTime!
-  user: User @hasOne
   rentalID: ID! @index(name: "byRental")
+  userID: ID! @index(name: "byUser")
 }
 
 type User @model @auth(rules: [{allow: public}]) {
@@ -11,6 +17,9 @@ type User @model @auth(rules: [{allow: public}]) {
   dateJoined: AWSDate!
   isOnline: Boolean!
   postedRentals: [Rental] @hasMany(indexName: "byUser", fields: ["id"])
+  bookings: [Booking] @hasMany(indexName: "byUser", fields: ["id"])
+  reviews: [Review] @hasMany(indexName: "byUser", fields: ["id"])
+  bookmarks: [BookmarkedRental] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
 type Review @model @auth(rules: [{allow: public}]) {
@@ -19,8 +28,8 @@ type Review @model @auth(rules: [{allow: public}]) {
   description: String!
   rating: Float
   rentalID: ID! @index(name: "byRental")
-  user: User @hasOne
   datePublished: AWSDateTime!
+  userID: ID! @index(name: "byUser")
 }
 
 type Location {

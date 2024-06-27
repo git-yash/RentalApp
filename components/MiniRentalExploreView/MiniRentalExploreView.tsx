@@ -1,10 +1,9 @@
 import React from 'react';
-import {Pressable, Text, View} from 'react-native';
+import {Image, Pressable, Text, View} from 'react-native';
 import Colors from '../../assets/Colors';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHeart as solidHeart, faStar} from '@fortawesome/free-solid-svg-icons';
 import {faHeart as regularHeart} from '@fortawesome/free-regular-svg-icons';
-import MiniRentalExploreViewService from './MiniRentalExploreView.service';
 import useMiniRentalExploreView from './useMiniRentalExploreView';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import miniRentalExploreViewStyle from './MiniRentalExploreView.style';
@@ -15,18 +14,17 @@ import {Rental} from '../../src/API';
 
 const MiniRentalExploreView = (props: {
   rental: Rental;
-  currentLatitude: number;
-  currentLongitude: number;
+  currentLatitude: number | undefined;
+  currentLongitude: number | undefined;
   navigation: any;
 }) => {
-  const miniRentalExploreViewService = new MiniRentalExploreViewService();
-  const {distance, handleRentalPress} = useMiniRentalExploreView(
-    props.currentLatitude,
-    props.currentLongitude,
-    props.rental.address,
-    props.rental,
-    miniRentalExploreViewService,
-  );
+  const {distance, handleRentalPress, rentalPostPictures} =
+    useMiniRentalExploreView(
+      props.currentLatitude,
+      props.currentLongitude,
+      props.rental.address,
+      props.rental,
+    );
   library.add(solidHeart, regularHeart);
   return (
     <GestureHandlerRootView>
@@ -40,11 +38,10 @@ const MiniRentalExploreView = (props: {
             )
           }>
           <View style={miniRentalExploreViewStyle.mainContainer}>
-            {/*<Image*/}
-            {/*  // source={{uri: props.rental.picturePaths[0]}}*/}
-            {/*  source={{uri: ''}}*/}
-            {/*  style={miniRentalExploreViewStyle.image}*/}
-            {/*/>*/}
+            <Image
+              source={{uri: rentalPostPictures[0]}}
+              style={miniRentalExploreViewStyle.image}
+            />
             <View style={miniRentalExploreViewStyle.rightContainer}>
               <View style={miniRentalExploreViewStyle.titlePriceContainer}>
                 <View>

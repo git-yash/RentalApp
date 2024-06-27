@@ -1,5 +1,26 @@
+import {generateClient} from 'aws-amplify/api';
+import {listBookmarkedRentalsWithDetails} from '../../src/graphql/custom-queries';
+import {Rental} from '../../src/API';
+
 export default class BookmarksService {
-  async setBookmarkedPosts(setBookmarkedPosts: any): Promise<void> {
+  client = generateClient();
+
+  async getBookmarkedRentals(userID: string): Promise<Rental[]> {
+    return this.client
+      .graphql({
+        query: listBookmarkedRentalsWithDetails,
+        variables: {
+          filter: {
+            userID: {eq: userID},
+          },
+        },
+      })
+      .then(response => {
+        return response.data.listBookmarkedRentals.items.map(br => br.rental);
+      })
+      .catch(e => {
+        throw e;
+      });
     // const exploreService = new ExploreService();
     // // Reference to the collection
     // const collectionRef = firestore()

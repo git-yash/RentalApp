@@ -19,10 +19,12 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 import BookmarkButton from '../../components/BookmarkButton/BookmarkButton';
 import {Progress} from 'native-base';
 import {Price, Rental} from '../../src/API';
+import RentalDetailsImagesSlider from '../../components/RentalDetailsImagesSlider/RentalDetailsImagesSlider';
 
 const RentalDetails = (props: {navigation: any; route: any}) => {
   const rental: Rental = props.route.params.rental;
-  const {currentLatitude, currentLongitude, distance} = props.route.params;
+  const {currentLatitude, currentLongitude, distance, rentalPostPictures} =
+    props.route.params;
   const noReviews: string = 'No reviews';
   const readMoreMaxCharLength: number = 113;
   const shouldShowReadMore: boolean =
@@ -85,7 +87,7 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
               </Text>
             </View>
           </View>
-          {/*<RentalDetailsImagesSlider picturePaths={rental.picturePaths} />*/}
+          <RentalDetailsImagesSlider picturePaths={rentalPostPictures} />
           <View style={rentalDetailsStyle.mainContainer}>
             <Text style={rentalDetailsStyle.descriptionText}>Description</Text>
             <Text style={rentalDetailsStyle.subtitleDescriptionText}>

@@ -7,7 +7,7 @@ import {
   reviewsByRentalID,
 } from '../../src/graphql/queries';
 import {GetUserQuery, Rental} from '../../src/API';
-import {listRentalsWithAllDetails} from '../../src/graphql/customQueries';
+import {listRentalsWithAllDetails} from '../../src/graphql/custom-queries';
 import LatLng = Geocoder.LatLng;
 
 export default class ExploreService {

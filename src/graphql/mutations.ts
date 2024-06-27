@@ -8,6 +8,93 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
+export const createBookmarkedRental = /* GraphQL */ `mutation CreateBookmarkedRental(
+  $input: CreateBookmarkedRentalInput!
+  $condition: ModelBookmarkedRentalConditionInput
+) {
+  createBookmarkedRental(input: $input, condition: $condition) {
+    id
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      createdAt
+      updatedAt
+      __typename
+    }
+    userID
+    createdAt
+    updatedAt
+    bookmarkedRentalRentalId
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateBookmarkedRentalMutationVariables,
+  APITypes.CreateBookmarkedRentalMutation
+>;
+export const updateBookmarkedRental = /* GraphQL */ `mutation UpdateBookmarkedRental(
+  $input: UpdateBookmarkedRentalInput!
+  $condition: ModelBookmarkedRentalConditionInput
+) {
+  updateBookmarkedRental(input: $input, condition: $condition) {
+    id
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      createdAt
+      updatedAt
+      __typename
+    }
+    userID
+    createdAt
+    updatedAt
+    bookmarkedRentalRentalId
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateBookmarkedRentalMutationVariables,
+  APITypes.UpdateBookmarkedRentalMutation
+>;
+export const deleteBookmarkedRental = /* GraphQL */ `mutation DeleteBookmarkedRental(
+  $input: DeleteBookmarkedRentalInput!
+  $condition: ModelBookmarkedRentalConditionInput
+) {
+  deleteBookmarkedRental(input: $input, condition: $condition) {
+    id
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      createdAt
+      updatedAt
+      __typename
+    }
+    userID
+    createdAt
+    updatedAt
+    bookmarkedRentalRentalId
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteBookmarkedRentalMutationVariables,
+  APITypes.DeleteBookmarkedRentalMutation
+>;
 export const createBooking = /* GraphQL */ `mutation CreateBooking(
   $input: CreateBookingInput!
   $condition: ModelBookingConditionInput
@@ -16,18 +103,10 @@ export const createBooking = /* GraphQL */ `mutation CreateBooking(
     id
     startDate
     endDate
-    user {
-      id
-      dateJoined
-      isOnline
-      createdAt
-      updatedAt
-      __typename
-    }
     rentalID
+    userID
     createdAt
     updatedAt
-    bookingUserId
     __typename
   }
 }
@@ -43,18 +122,10 @@ export const updateBooking = /* GraphQL */ `mutation UpdateBooking(
     id
     startDate
     endDate
-    user {
-      id
-      dateJoined
-      isOnline
-      createdAt
-      updatedAt
-      __typename
-    }
     rentalID
+    userID
     createdAt
     updatedAt
-    bookingUserId
     __typename
   }
 }
@@ -70,18 +141,10 @@ export const deleteBooking = /* GraphQL */ `mutation DeleteBooking(
     id
     startDate
     endDate
-    user {
-      id
-      dateJoined
-      isOnline
-      createdAt
-      updatedAt
-      __typename
-    }
     rentalID
+    userID
     createdAt
     updatedAt
-    bookingUserId
     __typename
   }
 }
@@ -98,6 +161,18 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
     dateJoined
     isOnline
     postedRentals {
+      nextToken
+      __typename
+    }
+    bookings {
+      nextToken
+      __typename
+    }
+    reviews {
+      nextToken
+      __typename
+    }
+    bookmarks {
       nextToken
       __typename
     }
@@ -122,6 +197,18 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
       nextToken
       __typename
     }
+    bookings {
+      nextToken
+      __typename
+    }
+    reviews {
+      nextToken
+      __typename
+    }
+    bookmarks {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -140,6 +227,18 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
     dateJoined
     isOnline
     postedRentals {
+      nextToken
+      __typename
+    }
+    bookings {
+      nextToken
+      __typename
+    }
+    reviews {
+      nextToken
+      __typename
+    }
+    bookmarks {
       nextToken
       __typename
     }
@@ -162,18 +261,10 @@ export const createReview = /* GraphQL */ `mutation CreateReview(
     description
     rating
     rentalID
-    user {
-      id
-      dateJoined
-      isOnline
-      createdAt
-      updatedAt
-      __typename
-    }
     datePublished
+    userID
     createdAt
     updatedAt
-    reviewUserId
     __typename
   }
 }
@@ -191,18 +282,10 @@ export const updateReview = /* GraphQL */ `mutation UpdateReview(
     description
     rating
     rentalID
-    user {
-      id
-      dateJoined
-      isOnline
-      createdAt
-      updatedAt
-      __typename
-    }
     datePublished
+    userID
     createdAt
     updatedAt
-    reviewUserId
     __typename
   }
 }
@@ -220,18 +303,10 @@ export const deleteReview = /* GraphQL */ `mutation DeleteReview(
     description
     rating
     rentalID
-    user {
-      id
-      dateJoined
-      isOnline
-      createdAt
-      updatedAt
-      __typename
-    }
     datePublished
+    userID
     createdAt
     updatedAt
-    reviewUserId
     __typename
   }
 }

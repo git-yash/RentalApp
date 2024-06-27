@@ -5,7 +5,6 @@ import {
   Modal,
   Pressable,
   SafeAreaView,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
   RefreshControl,
   SafeAreaView,
@@ -8,18 +8,12 @@ import {
 } from 'react-native';
 import bookmarksStyle from './Bookmarks.style';
 import useBookmarks from './useBookmarks';
-import MiniRentalExploreView from '../../components/MiniRentalExploreView/MiniRentalExploreView';
-import {useMyContext} from '../../MyContext';
 import ScreenTitle from '../../components/ScreenTitle/ScreenTitle';
+import MiniRentalExploreView from '../../components/MiniRentalExploreView/MiniRentalExploreView';
 
 const Bookmarks = (props: {navigation: any}) => {
-  const {position, refreshing, onRefresh} = useBookmarks();
-  const {bookmarkedPosts} = useMyContext();
-  const doesHaveBookmarks: boolean = bookmarkedPosts.length > 0;
-  useEffect(() => {
-    console.log('bookmark');
-  }, []);
-
+  const {position, refreshing, onRefresh, bookmarkedRentals} = useBookmarks();
+  const doesHaveBookmarks: boolean = bookmarkedRentals.length > 0;
   return (
     <SafeAreaView>
       <ScrollView
@@ -37,13 +31,13 @@ const Bookmarks = (props: {navigation: any}) => {
             </View>
           </View>
         )}
-        {bookmarkedPosts.map((item, index) => {
+        {bookmarkedRentals.map((item, index) => {
           return (
             <MiniRentalExploreView
               rental={item}
               key={index}
-              currentLatitude={position?.coords.latitude as number}
-              currentLongitude={position?.coords.longitude as number}
+              currentLatitude={position?.coords.latitude}
+              currentLongitude={position?.coords.longitude}
               navigation={props.navigation}
             />
           );

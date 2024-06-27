@@ -38,6 +38,7 @@ export default class FinishSigningUpService {
                   id: emailText,
                   isOnline: true,
                   dateJoined: Util.toISODateString(),
+                  bookmarkedRentalIDs: [],
                 },
               },
             })

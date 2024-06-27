@@ -8,23 +8,99 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
+export const onCreateBookmarkedRental = /* GraphQL */ `subscription OnCreateBookmarkedRental(
+  $filter: ModelSubscriptionBookmarkedRentalFilterInput
+) {
+  onCreateBookmarkedRental(filter: $filter) {
+    id
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      createdAt
+      updatedAt
+      __typename
+    }
+    userID
+    createdAt
+    updatedAt
+    bookmarkedRentalRentalId
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateBookmarkedRentalSubscriptionVariables,
+  APITypes.OnCreateBookmarkedRentalSubscription
+>;
+export const onUpdateBookmarkedRental = /* GraphQL */ `subscription OnUpdateBookmarkedRental(
+  $filter: ModelSubscriptionBookmarkedRentalFilterInput
+) {
+  onUpdateBookmarkedRental(filter: $filter) {
+    id
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      createdAt
+      updatedAt
+      __typename
+    }
+    userID
+    createdAt
+    updatedAt
+    bookmarkedRentalRentalId
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateBookmarkedRentalSubscriptionVariables,
+  APITypes.OnUpdateBookmarkedRentalSubscription
+>;
+export const onDeleteBookmarkedRental = /* GraphQL */ `subscription OnDeleteBookmarkedRental(
+  $filter: ModelSubscriptionBookmarkedRentalFilterInput
+) {
+  onDeleteBookmarkedRental(filter: $filter) {
+    id
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      createdAt
+      updatedAt
+      __typename
+    }
+    userID
+    createdAt
+    updatedAt
+    bookmarkedRentalRentalId
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteBookmarkedRentalSubscriptionVariables,
+  APITypes.OnDeleteBookmarkedRentalSubscription
+>;
 export const onCreateBooking = /* GraphQL */ `subscription OnCreateBooking($filter: ModelSubscriptionBookingFilterInput) {
   onCreateBooking(filter: $filter) {
     id
     startDate
     endDate
-    user {
-      id
-      dateJoined
-      isOnline
-      createdAt
-      updatedAt
-      __typename
-    }
     rentalID
+    userID
     createdAt
     updatedAt
-    bookingUserId
     __typename
   }
 }
@@ -37,18 +113,10 @@ export const onUpdateBooking = /* GraphQL */ `subscription OnUpdateBooking($filt
     id
     startDate
     endDate
-    user {
-      id
-      dateJoined
-      isOnline
-      createdAt
-      updatedAt
-      __typename
-    }
     rentalID
+    userID
     createdAt
     updatedAt
-    bookingUserId
     __typename
   }
 }
@@ -61,18 +129,10 @@ export const onDeleteBooking = /* GraphQL */ `subscription OnDeleteBooking($filt
     id
     startDate
     endDate
-    user {
-      id
-      dateJoined
-      isOnline
-      createdAt
-      updatedAt
-      __typename
-    }
     rentalID
+    userID
     createdAt
     updatedAt
-    bookingUserId
     __typename
   }
 }
@@ -86,6 +146,18 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
     dateJoined
     isOnline
     postedRentals {
+      nextToken
+      __typename
+    }
+    bookings {
+      nextToken
+      __typename
+    }
+    reviews {
+      nextToken
+      __typename
+    }
+    bookmarks {
       nextToken
       __typename
     }
@@ -107,6 +179,18 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
       nextToken
       __typename
     }
+    bookings {
+      nextToken
+      __typename
+    }
+    reviews {
+      nextToken
+      __typename
+    }
+    bookmarks {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -122,6 +206,18 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
     dateJoined
     isOnline
     postedRentals {
+      nextToken
+      __typename
+    }
+    bookings {
+      nextToken
+      __typename
+    }
+    reviews {
+      nextToken
+      __typename
+    }
+    bookmarks {
       nextToken
       __typename
     }
@@ -141,18 +237,10 @@ export const onCreateReview = /* GraphQL */ `subscription OnCreateReview($filter
     description
     rating
     rentalID
-    user {
-      id
-      dateJoined
-      isOnline
-      createdAt
-      updatedAt
-      __typename
-    }
     datePublished
+    userID
     createdAt
     updatedAt
-    reviewUserId
     __typename
   }
 }
@@ -167,18 +255,10 @@ export const onUpdateReview = /* GraphQL */ `subscription OnUpdateReview($filter
     description
     rating
     rentalID
-    user {
-      id
-      dateJoined
-      isOnline
-      createdAt
-      updatedAt
-      __typename
-    }
     datePublished
+    userID
     createdAt
     updatedAt
-    reviewUserId
     __typename
   }
 }
@@ -193,18 +273,10 @@ export const onDeleteReview = /* GraphQL */ `subscription OnDeleteReview($filter
     description
     rating
     rentalID
-    user {
-      id
-      dateJoined
-      isOnline
-      createdAt
-      updatedAt
-      __typename
-    }
     datePublished
+    userID
     createdAt
     updatedAt
-    reviewUserId
     __typename
   }
 }

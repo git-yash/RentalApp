@@ -219,6 +219,8 @@ export default class Util {
   }
 
   public static addressToString(address: Address) {
-    return `${address.street} ${address.street2}, ${address.city}, ${address.state} ${address.zip}, ${address.country}`;
+    return `${address.street} ${address.street2 || ''}, ${address.city}, ${
+      address.state
+    } ${address.zip}, ${address.country}`;
   }
 }

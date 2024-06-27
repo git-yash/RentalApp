@@ -5,9 +5,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHeart as solidHeart} from '@fortawesome/free-solid-svg-icons';
 import {faHeart as regularHeart} from '@fortawesome/free-regular-svg-icons';
 import Colors from '../../assets/Colors';
-import {Rental} from '../../models/Rental';
-import useMiniRentalExploreView from '../MiniRentalExploreView/useMiniRentalExploreView';
-import MiniRentalExploreViewService from '../MiniRentalExploreView/MiniRentalExploreView.service';
+import {Rental} from '../../src/API';
+import useBookmarkButton from './useBookmarkButton';
 
 const BookmarkButton = (props: {
   currentLatitude: number;
@@ -15,22 +14,14 @@ const BookmarkButton = (props: {
   rental: Rental;
   iconSize: number;
 }) => {
-  const miniRentalExploreViewService = new MiniRentalExploreViewService();
-  const {handleHeartPress, isBookmarked} = useMiniRentalExploreView(
-    props.currentLatitude,
-    props.currentLongitude,
-    props.rental.address,
-    props.rental,
-    miniRentalExploreViewService,
-  );
+  const {handleHeartPress, isBookmarked} = useBookmarkButton(props.rental);
+
   return (
     <TouchableOpacity
       style={miniRentalExploreViewStyle.heartButton}
       onPress={() => handleHeartPress()}>
       <FontAwesomeIcon
-        icon={
-          isBookmarked || props.rental.isBookmarked ? solidHeart : regularHeart
-        }
+        icon={isBookmarked ? solidHeart : regularHeart}
         color={Colors.green}
         size={props.iconSize}
         style={miniRentalExploreViewStyle.heartIcon}
