@@ -144,7 +144,6 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
   onCreateUser(filter: $filter) {
     id
     dateJoined
-    isOnline
     postedRentals {
       nextToken
       __typename
@@ -161,6 +160,8 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
       nextToken
       __typename
     }
+    phone
+    isPhoneVerified
     createdAt
     updatedAt
     __typename
@@ -174,7 +175,6 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
   onUpdateUser(filter: $filter) {
     id
     dateJoined
-    isOnline
     postedRentals {
       nextToken
       __typename
@@ -191,6 +191,8 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
       nextToken
       __typename
     }
+    phone
+    isPhoneVerified
     createdAt
     updatedAt
     __typename
@@ -204,7 +206,6 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
   onDeleteUser(filter: $filter) {
     id
     dateJoined
-    isOnline
     postedRentals {
       nextToken
       __typename
@@ -221,6 +222,8 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
       nextToken
       __typename
     }
+    phone
+    isPhoneVerified
     createdAt
     updatedAt
     __typename
@@ -323,7 +326,8 @@ export const onCreateRental = /* GraphQL */ `subscription OnCreateRental($filter
     user {
       id
       dateJoined
-      isOnline
+      phone
+      isPhoneVerified
       createdAt
       updatedAt
       __typename
@@ -377,7 +381,8 @@ export const onUpdateRental = /* GraphQL */ `subscription OnUpdateRental($filter
     user {
       id
       dateJoined
-      isOnline
+      phone
+      isPhoneVerified
       createdAt
       updatedAt
       __typename
@@ -431,7 +436,8 @@ export const onDeleteRental = /* GraphQL */ `subscription OnDeleteRental($filter
     user {
       id
       dateJoined
-      isOnline
+      phone
+      isPhoneVerified
       createdAt
       updatedAt
       __typename

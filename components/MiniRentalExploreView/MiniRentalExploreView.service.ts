@@ -66,34 +66,4 @@ export default class MiniRentalExploreViewService {
       return 'error';
     }
   }
-
-  // async addBookmarkToBookMarks(rentalId: string): Promise<void> {
-  //   return firestore()
-  //     .collection('users')
-  //     .doc(auth().currentUser?.email as string)
-  //     .collection('bookmarkedPosts')
-  //     .doc(rentalId)
-  //     .set({});
-  // }
-  //
-  // async removeBookmarkFromBookmarks(rentalId: string): Promise<void> {
-  //   return firestore()
-  //     .collection('users')
-  //     .doc(auth().currentUser?.email as string)
-  //     .collection('bookmarkedPosts')
-  //     .doc(rentalId)
-  //     .delete();
-  // }
-  //
-  // async isInBookmarkedPosts(rentalId: string): Promise<boolean> {
-  //   const documentRef = firestore()
-  //     .collection('users')
-  //     .doc(auth().currentUser?.email as string)
-  //     .collection('bookmarkedPosts')
-  //     .doc(rentalId);
-  //
-  //   return documentRef.get().then(documentSnapshot => {
-  //     return documentSnapshot.exists;
-  //   });
-  // }
 }

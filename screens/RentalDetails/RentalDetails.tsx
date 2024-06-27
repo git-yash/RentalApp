@@ -94,8 +94,8 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
               {rental.description}
             </Text>
             <Text style={rentalDetailsStyle.deliveryText}>Price</Text>
-            {rental.prices.map((p: Price) => (
-              <Text style={rentalDetailsStyle.priceText}>
+            {rental.prices.map((p: Price, index) => (
+              <Text key={index} style={rentalDetailsStyle.priceText}>
                 ${p.amount} / {p.timeIncrement}
               </Text>
             ))}
@@ -167,11 +167,12 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
                     {/*{rental.reviews?.items[0].title}*/}
                   </Text>
                   <View style={rentalDetailsStyle.starContainer}>
-                    {[1, 2, 3, 4, 5].map(starNumber => (
+                    {[1, 2, 3, 4, 5].map((starNumber, index) => (
                       <FontAwesomeIcon
                         icon={faStar}
                         style={rentalDetailsStyle.ratingStarIcon}
                         size={14}
+                        key={index}
                         // color={ starNumber <= rental.reviews[0].rating ? Colors.green : Colors.gray300 }
                       />
                     ))}

@@ -36,9 +36,7 @@ export default class FinishSigningUpService {
               variables: {
                 input: {
                   id: emailText,
-                  isOnline: true,
                   dateJoined: Util.toISODateString(),
-                  bookmarkedRentalIDs: [],
                 },
               },
             })

@@ -3,7 +3,6 @@ import {Alert, AppState} from 'react-native';
 import Geolocation, {
   GeolocationResponse,
 } from '@react-native-community/geolocation';
-import firestore from '@react-native-firebase/firestore';
 import ExploreService from './Explore.service';
 import {useMyContext} from '../../MyContext';
 import Util from '../../Util';
@@ -168,32 +167,16 @@ const useExplore = (navigation: any) => {
   }, [position, bookmarkedPosts]);
 
   useEffect(() => {
-    const subscription = AppState.addEventListener('change', nextAppState => {
-      if (
-        appState.current.match(/inactive|background/) &&
-        nextAppState === 'active'
-      ) {
-        firestore().collection('users').doc(user?.id).update({isOnline: true});
-      } else if (nextAppState === 'inactive') {
-        firestore().collection('users').doc(user?.id).update({isOnline: false});
-      }
-
-      appState.current = nextAppState;
-    });
-
     const userListener = (data: {payload: {event: any}}) => {
       if (data.payload.event === 'UserRetrievedError') {
         navigation.navigate(ScreenNameConstants.LogInOrSignUpScreens);
       }
     };
 
-    // const authListenerCancel = Hub.listen('auth', authListener);
     const userListenerCancel = Hub.listen('user', userListener);
 
     // Cleanup on unmount
     return () => {
-      subscription.remove();
-      // authListenerCancel();
       userListenerCancel();
     };
   }, []);

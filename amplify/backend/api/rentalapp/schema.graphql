@@ -15,11 +15,12 @@ type Booking @model @auth(rules: [{allow: public}]) {
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
   dateJoined: AWSDate!
-  isOnline: Boolean!
   postedRentals: [Rental] @hasMany(indexName: "byUser", fields: ["id"])
   bookings: [Booking] @hasMany(indexName: "byUser", fields: ["id"])
   reviews: [Review] @hasMany(indexName: "byUser", fields: ["id"])
   bookmarks: [BookmarkedRental] @hasMany(indexName: "byUser", fields: ["id"])
+  phone: AWSPhone
+  isPhoneVerified: Boolean
 }
 
 type Review @model @auth(rules: [{allow: public}]) {

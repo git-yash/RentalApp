@@ -194,7 +194,6 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
   getUser(id: $id) {
     id
     dateJoined
-    isOnline
     postedRentals {
       nextToken
       __typename
@@ -211,6 +210,8 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
       nextToken
       __typename
     }
+    phone
+    isPhoneVerified
     createdAt
     updatedAt
     __typename
@@ -226,7 +227,8 @@ export const listUsers = /* GraphQL */ `query ListUsers(
     items {
       id
       dateJoined
-      isOnline
+      phone
+      isPhoneVerified
       createdAt
       updatedAt
       __typename
@@ -384,7 +386,8 @@ export const getRental = /* GraphQL */ `query GetRental($id: ID!) {
     user {
       id
       dateJoined
-      isOnline
+      phone
+      isPhoneVerified
       createdAt
       updatedAt
       __typename
