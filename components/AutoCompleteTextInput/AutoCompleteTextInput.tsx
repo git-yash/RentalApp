@@ -41,9 +41,6 @@ const AutoCompleteTextInput = (props: {
         debounce={300}
         disableScroll={true}
         enablePoweredByContainer={false}
-        onPress={(data, details = null) => {
-          console.log(data, details);
-        }}
         query={{
           key: 'AIzaSyCWx3SEZL595KnuMgxOyGfGAmzcoZ-2eUA',
           language: 'en',
