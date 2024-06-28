@@ -10,12 +10,21 @@ const useRentalDetails = (navigation: any, rental: Rental) => {
   const {showActionSheetWithOptions} = useActionSheet();
   const addressString: string = Util.addressToString(rental.address);
   const rentalDetailsService = new RentalDetailsService();
-  const [distance, setDistance] = useState<string>('');
+  const [distance, setDistance] = useState<string | undefined>('');
 
   useEffect(() => {
     navigation.setOptions({
       title: rental.title,
     });
+    rentalDetailsService
+      .getDistanceAndTimeFromAddresses(
+        rental.latitude,
+        rental.longitude,
+        rental.address,
+      )
+      .then(response => {
+        setDistance(response);
+      });
   }, []);
 
   const getReviewRatingPercentages = (): number[] => {
@@ -98,6 +107,7 @@ const useRentalDetails = (navigation: any, rental: Rental) => {
     handleMapViewPressablePress,
     getReviewRatingPercentages,
     getAverageRating,
+    distance,
   };
 };
 

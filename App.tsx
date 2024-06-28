@@ -34,6 +34,11 @@ import {Hub} from 'aws-amplify/utils';
 import useUser from './hooks/useUser';
 import FilterResults from './screens/FilterResults/FilterResults';
 import ScreenNameConstants from './screens/ScreenNameConstants';
+import {LogBox} from 'react-native';
+
+LogBox.ignoreLogs([
+  'In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.',
+]); // Ignore log notification by message
 
 Amplify.configure(amplifyconfig);
 

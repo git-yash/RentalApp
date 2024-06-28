@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
-import {Text, Pressable, View} from 'react-native';
+import React from 'react';
+import {Pressable, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../../assets/Colors';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import Util from '../../Util';
 
 const CategoryTabBarItem = (props: {
+  index: number;
   label: string;
   iconName: string;
   isSelected: boolean;
@@ -14,7 +15,7 @@ const CategoryTabBarItem = (props: {
   return (
     <Pressable
       onPress={() => {
-        props.setWhichCategorySelected(props.label);
+        props.setWhichCategorySelected(props.index);
         ReactNativeHapticFeedback.trigger('impactHeavy', Util.options);
       }}>
       <View

@@ -142,9 +142,6 @@ const useExplore = (navigation: any) => {
   const isScreenFocused = useIsFocused();
 
   useEffect(() => {
-    if (!selectedCategory) {
-      return;
-    }
     setAllRentals();
   }, [selectedCategory]);
 
@@ -194,9 +191,9 @@ const useExplore = (navigation: any) => {
     isModalVisible,
     setModalVisible,
     position,
-    whichCategorySelected: selectedCategory,
-    setWhichCategorySelected: setSelectedCategory,
     bottomSheetRef,
+    selectedCategory,
+    setSelectedCategory,
     rentals,
     setAllRentals,
     categoryItems,

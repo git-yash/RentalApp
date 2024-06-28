@@ -212,9 +212,24 @@ export default class Util {
     return date.toISOString().split('T')[0];
   }
 
-  public static addressToString(address: Address) {
+  public static addressToString(address: Address): string {
     return `${address.street} ${address.street2 || ''}, ${address.city}, ${
       address.state
     } ${address.zip}, ${address.country}`;
+  }
+
+  public static getCategoryTextFromIndex(index: number): string {
+    let categoryNames: string[] = [
+      'Lawn Equipment',
+      'Power Tools',
+      'Electronics',
+      'Pool Equipment',
+      'Sports',
+      'Outdoors',
+      'Home',
+      'Cooking',
+      'Other',
+    ];
+    return categoryNames[index];
   }
 }

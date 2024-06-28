@@ -34,6 +34,7 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
     handleMapViewPressablePress,
     getReviewRatingPercentages,
     getAverageRating,
+    distance,
   } = useRentalDetails(props.navigation, rental);
   const [rating, setRating] = useState(0);
   const averageRating: number = getAverageRating();

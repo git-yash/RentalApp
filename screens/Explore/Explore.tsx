@@ -26,12 +26,12 @@ const Explore = () => {
     categoryItems,
     handleSheetChanges,
     setAllRentals,
-    setWhichCategorySelected,
     isSearchFocused,
     showSearchResults,
     setShowSearchResults,
     setIsSearchFocused,
-    whichCategorySelected,
+    selectedCategory,
+    setSelectedCategory,
     isListView,
     bottomSheetRef,
     currentItemIndex,
@@ -155,8 +155,8 @@ const Explore = () => {
         />
         <Collapsible collapsed={showSearchResults}>
           <CategoryTabBar
-            setWhichCategorySelected={setWhichCategorySelected}
-            whichCategorySelected={whichCategorySelected}
+            setWhichCategorySelected={setSelectedCategory}
+            whichCategorySelected={selectedCategory}
             categoryItems={categoryItems}
           />
         </Collapsible>

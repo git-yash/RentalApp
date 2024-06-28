@@ -1,9 +1,10 @@
 import React from 'react';
 import {FlatList} from 'react-native';
 import CategoryTabBarItem from '../CategoryTabBarItem/CategoryTabBarItem';
+import Util from '../../Util';
 
 const CategoryTabBar = (props: {
-  whichCategorySelected: string;
+  whichCategorySelected: number;
   setWhichCategorySelected: any;
   categoryItems: any;
 }) => {
@@ -13,11 +14,15 @@ const CategoryTabBar = (props: {
       style={{paddingBottom: 5}}
       showsHorizontalScrollIndicator={false}
       data={props.categoryItems}
-      renderItem={({item}) => (
+      renderItem={({item, index}) => (
         <CategoryTabBarItem
+          index={index}
           label={item.name}
           iconName={item.iconName}
-          isSelected={item.name === props.whichCategorySelected}
+          isSelected={
+            item.name ===
+            Util.getCategoryTextFromIndex(props.whichCategorySelected)
+          }
           setWhichCategorySelected={props.setWhichCategorySelected}
         />
       )}
