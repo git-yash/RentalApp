@@ -19,6 +19,8 @@ export const getBookmarkedRental = /* GraphQL */ `query GetBookmarkedRental($id:
       rating
       userID
       category
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -369,11 +371,6 @@ export const getRental = /* GraphQL */ `query GetRental($id: ID!) {
       country
       __typename
     }
-    location {
-      latitude
-      longitude
-      __typename
-    }
     reviews {
       nextToken
       __typename
@@ -393,6 +390,8 @@ export const getRental = /* GraphQL */ `query GetRental($id: ID!) {
       __typename
     }
     category
+    latitude
+    longitude
     createdAt
     updatedAt
     __typename
@@ -413,6 +412,8 @@ export const listRentals = /* GraphQL */ `query ListRentals(
       rating
       userID
       category
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -447,6 +448,8 @@ export const rentalsByUserID = /* GraphQL */ `query RentalsByUserID(
       rating
       userID
       category
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename

@@ -21,6 +21,8 @@ export const onCreateBookmarkedRental = /* GraphQL */ `subscription OnCreateBook
       rating
       userID
       category
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -49,6 +51,8 @@ export const onUpdateBookmarkedRental = /* GraphQL */ `subscription OnUpdateBook
       rating
       userID
       category
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -77,6 +81,8 @@ export const onDeleteBookmarkedRental = /* GraphQL */ `subscription OnDeleteBook
       rating
       userID
       category
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -309,11 +315,6 @@ export const onCreateRental = /* GraphQL */ `subscription OnCreateRental($filter
       country
       __typename
     }
-    location {
-      latitude
-      longitude
-      __typename
-    }
     reviews {
       nextToken
       __typename
@@ -333,6 +334,8 @@ export const onCreateRental = /* GraphQL */ `subscription OnCreateRental($filter
       __typename
     }
     category
+    latitude
+    longitude
     createdAt
     updatedAt
     __typename
@@ -364,11 +367,6 @@ export const onUpdateRental = /* GraphQL */ `subscription OnUpdateRental($filter
       country
       __typename
     }
-    location {
-      latitude
-      longitude
-      __typename
-    }
     reviews {
       nextToken
       __typename
@@ -388,6 +386,8 @@ export const onUpdateRental = /* GraphQL */ `subscription OnUpdateRental($filter
       __typename
     }
     category
+    latitude
+    longitude
     createdAt
     updatedAt
     __typename
@@ -419,11 +419,6 @@ export const onDeleteRental = /* GraphQL */ `subscription OnDeleteRental($filter
       country
       __typename
     }
-    location {
-      latitude
-      longitude
-      __typename
-    }
     reviews {
       nextToken
       __typename
@@ -443,6 +438,8 @@ export const onDeleteRental = /* GraphQL */ `subscription OnDeleteRental($filter
       __typename
     }
     category
+    latitude
+    longitude
     createdAt
     updatedAt
     __typename

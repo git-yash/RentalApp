@@ -22,6 +22,8 @@ export const createBookmarkedRental = /* GraphQL */ `mutation CreateBookmarkedRe
       rating
       userID
       category
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -51,6 +53,8 @@ export const updateBookmarkedRental = /* GraphQL */ `mutation UpdateBookmarkedRe
       rating
       userID
       category
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -80,6 +84,8 @@ export const deleteBookmarkedRental = /* GraphQL */ `mutation DeleteBookmarkedRe
       rating
       userID
       category
+      latitude
+      longitude
       createdAt
       updatedAt
       __typename
@@ -342,11 +348,6 @@ export const createRental = /* GraphQL */ `mutation CreateRental(
       country
       __typename
     }
-    location {
-      latitude
-      longitude
-      __typename
-    }
     reviews {
       nextToken
       __typename
@@ -366,6 +367,8 @@ export const createRental = /* GraphQL */ `mutation CreateRental(
       __typename
     }
     category
+    latitude
+    longitude
     createdAt
     updatedAt
     __typename
@@ -400,11 +403,6 @@ export const updateRental = /* GraphQL */ `mutation UpdateRental(
       country
       __typename
     }
-    location {
-      latitude
-      longitude
-      __typename
-    }
     reviews {
       nextToken
       __typename
@@ -424,6 +422,8 @@ export const updateRental = /* GraphQL */ `mutation UpdateRental(
       __typename
     }
     category
+    latitude
+    longitude
     createdAt
     updatedAt
     __typename
@@ -458,11 +458,6 @@ export const deleteRental = /* GraphQL */ `mutation DeleteRental(
       country
       __typename
     }
-    location {
-      latitude
-      longitude
-      __typename
-    }
     reviews {
       nextToken
       __typename
@@ -482,6 +477,8 @@ export const deleteRental = /* GraphQL */ `mutation DeleteRental(
       __typename
     }
     category
+    latitude
+    longitude
     createdAt
     updatedAt
     __typename

@@ -65,8 +65,8 @@ const Explore = () => {
             {rentals?.map((rental, index) => (
               <MapMarker
                 coordinate={{
-                  latitude: rental.location.latitude,
-                  longitude: rental.location.longitude,
+                  latitude: rental.latitude,
+                  longitude: rental.longitude,
                 }}
                 key={index}
                 onPress={() => {

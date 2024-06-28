@@ -10,7 +10,6 @@ const useMiniRentalExploreView = (
   address: Address,
   rental: Rental,
 ) => {
-  const [distance, setDistance] = useState<string | undefined>();
   const [rentalPostPictures, setRentalPostPictures] = useState<string[]>([]);
   const miniRentalExploreViewService = new MiniRentalExploreViewService();
 
@@ -26,16 +25,6 @@ const useMiniRentalExploreView = (
       }
 
       // This is called multiple times because of BookmarkButton
-
-      if (currentLatitude !== undefined && currentLongitude !== undefined) {
-        miniRentalExploreViewService
-          .getDistanceAndTimeFromAddresses(
-            currentLatitude,
-            currentLongitude,
-            address,
-          )
-          .then(result => setDistance(result ? result : 'N/A'));
-      }
     });
   }, []);
 
@@ -48,13 +37,11 @@ const useMiniRentalExploreView = (
       rental: rental,
       currentLatitude: userLatitude,
       currentLongitude: userLongitude,
-      distance: distance,
       rentalPostPictures: rentalPostPictures,
     });
   };
 
   return {
-    distance,
     handleRentalPress,
     rentalPostPictures,
   };

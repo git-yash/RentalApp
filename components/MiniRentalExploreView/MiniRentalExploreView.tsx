@@ -18,13 +18,12 @@ const MiniRentalExploreView = (props: {
   currentLongitude: number | undefined;
   navigation: any;
 }) => {
-  const {distance, handleRentalPress, rentalPostPictures} =
-    useMiniRentalExploreView(
-      props.currentLatitude,
-      props.currentLongitude,
-      props.rental.address,
-      props.rental,
-    );
+  const {handleRentalPress, rentalPostPictures} = useMiniRentalExploreView(
+    props.currentLatitude,
+    props.currentLongitude,
+    props.rental.address,
+    props.rental,
+  );
   library.add(solidHeart, regularHeart);
   return (
     <GestureHandlerRootView>
@@ -47,9 +46,6 @@ const MiniRentalExploreView = (props: {
                 <View>
                   <Text style={miniRentalExploreViewStyle.titleText}>
                     {props.rental.title}
-                  </Text>
-                  <Text style={miniRentalExploreViewStyle.distanceText}>
-                    {distance}
                   </Text>
                 </View>
                 <View style={miniRentalExploreViewStyle.pricePerHourContainer}>

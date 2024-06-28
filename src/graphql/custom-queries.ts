@@ -38,12 +38,9 @@ export const listRentalsWithAllDetails =
       country
       __typename
     }
-    location {
-      latitude
-      longitude
-      __typename
-    }
-      __typename
+     latitude
+     longitude
+     __typename
     }
     nextToken
     __typename
@@ -76,10 +73,8 @@ export const listBookmarkedRentalsWithDetails =
           zip
           street
         }
-        location {
-          latitude
-          longitude
-        }
+        latitude
+        longitude
         category
         id
         isAvailable

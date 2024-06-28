@@ -98,16 +98,10 @@ export default class Util {
   };
 
   public static getUserInitials(name: string): string {
-    if (typeof name === 'string') {
-      const nameArray = name.split(' ');
-      const firstNameIn = nameArray[0].charAt(0).toUpperCase();
-      const lastNameIn = nameArray[nameArray.length - 1]
-        .charAt(0)
-        .toUpperCase();
-      return firstNameIn + lastNameIn;
-    }
-
-    return '';
+    const nameArray = name.split(' ');
+    const firstNameIn = nameArray[0].charAt(0).toUpperCase();
+    const lastNameIn = nameArray[nameArray.length - 1].charAt(0).toUpperCase();
+    return firstNameIn + lastNameIn;
   }
 
   public static getAPIKeyForPlatform(platform: string): string {

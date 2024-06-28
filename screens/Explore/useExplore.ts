@@ -128,11 +128,10 @@ const useExplore = (navigation: any) => {
     if (!rentals?.length) {
       return;
     }
-    const currentRentalLocation = rentals[currentItemIndex].location;
     mapRef?.current?.animateToRegion(
       {
-        latitude: currentRentalLocation.latitude,
-        longitude: currentRentalLocation.longitude,
+        latitude: rentals[currentItemIndex].latitude,
+        longitude: rentals[currentItemIndex].longitude,
         latitudeDelta: 0.15,
         longitudeDelta: 0.15,
       },

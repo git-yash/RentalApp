@@ -23,7 +23,7 @@ import RentalDetailsImagesSlider from '../../components/RentalDetailsImagesSlide
 
 const RentalDetails = (props: {navigation: any; route: any}) => {
   const rental: Rental = props.route.params.rental;
-  const {currentLatitude, currentLongitude, distance, rentalPostPictures} =
+  const {currentLatitude, currentLongitude, rentalPostPictures} =
     props.route.params;
   const noReviews: string = 'No reviews';
   const readMoreMaxCharLength: number = 113;

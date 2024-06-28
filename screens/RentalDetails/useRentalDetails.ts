@@ -1,13 +1,16 @@
 import {Linking, Platform} from 'react-native';
 import {createMapLink} from 'react-native-open-maps';
 import {useActionSheet} from '@expo/react-native-action-sheet';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {Rental} from '../../src/API';
 import Util from '../../Util';
+import RentalDetailsService from './RentalDetails.service';
 
 const useRentalDetails = (navigation: any, rental: Rental) => {
   const {showActionSheetWithOptions} = useActionSheet();
   const addressString: string = Util.addressToString(rental.address);
+  const rentalDetailsService = new RentalDetailsService();
+  const [distance, setDistance] = useState<string>('');
 
   useEffect(() => {
     navigation.setOptions({

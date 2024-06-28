@@ -63,6 +63,18 @@ export default class ExploreService {
     startDate?: Date,
     endDate?: Date,
   ) {
+    const earthRadius = 3958.8; // Earth's radius in miles
+
+    const latRad = location.lat * (Math.PI / 180);
+
+    const latDiff = radiusInMiles / earthRadius;
+    const lonDiff = radiusInMiles / (earthRadius * Math.cos(latRad));
+
+    const minLat = location.lat - latDiff * (180 / Math.PI);
+    const maxLat = location.lat + latDiff * (180 / Math.PI);
+    const minLon = location.lng - lonDiff * (180 / Math.PI);
+    const maxLon = location.lng + lonDiff * (180 / Math.PI);
+
     return this.client
       .graphql({
         query: listRentalsWithAllDetails,
@@ -80,6 +92,8 @@ export default class ExploreService {
                   {
                     category: {eq: category},
                     isAvailable: {eq: true},
+                    latitude: {between: [minLat, maxLat]},
+                    longitude: {between: [minLon, maxLon]},
                   },
                 ],
               },

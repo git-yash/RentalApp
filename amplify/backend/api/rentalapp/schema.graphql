@@ -68,11 +68,12 @@ type Rental @model @auth(rules: [{allow: public}]) {
   prices: [Price!]!
   rating: Float
   address: Address!
-  location: Location!
   reviews: [Review] @hasMany(indexName: "byRental", fields: ["id"])
   bookings: [Booking] @hasMany(indexName: "byRental", fields: ["id"])
   userID: ID! @index(name: "byUser")
   user: User @belongsTo(fields: ["userID"])
   category: Int!
+  latitude: Float!
+  longitude: Float!
 }
  
