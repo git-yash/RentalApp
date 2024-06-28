@@ -41,6 +41,8 @@ const Explore = () => {
     mapStyle,
     mapRef,
     flatListRef,
+    mapInitiallyVisible,
+    showMapButtonPress,
   } = useExplore(navigation);
 
   return (
@@ -51,42 +53,44 @@ const Explore = () => {
       {/*/>*/}
       {canShowMap && (
         <>
-          <MapView
-            customMapStyle={mapStyle}
-            provider={PROVIDER_GOOGLE}
-            ref={mapRef}
-            initialRegion={{
-              latitude: position?.coords.latitude as number,
-              longitude: position?.coords.longitude as number,
-              latitudeDelta: 0.15,
-              longitudeDelta: 0.15,
-            }}
-            style={exploreStyles.mapView}>
-            {rentals?.map((rental, index) => (
-              <MapMarker
-                coordinate={{
-                  latitude: rental.latitude,
-                  longitude: rental.longitude,
-                }}
-                key={index}
-                onPress={() => {
-                  flatListRef.current?.scrollToIndex({index: index});
-                }}>
-                <CustomMapMarker
-                  price={rental.prices[0]}
-                  isSelected={currentItemIndex === index}
-                  key={index}
-                />
-              </MapMarker>
-            ))}
-            <MapMarker
-              coordinate={{
+          {mapInitiallyVisible && (
+            <MapView
+              customMapStyle={mapStyle}
+              provider={PROVIDER_GOOGLE}
+              ref={mapRef}
+              initialRegion={{
                 latitude: position?.coords.latitude as number,
                 longitude: position?.coords.longitude as number,
-              }}>
-              <UserPositionCustomMapMarker />
-            </MapMarker>
-          </MapView>
+                latitudeDelta: 0.15,
+                longitudeDelta: 0.15,
+              }}
+              style={exploreStyles.mapView}>
+              {rentals?.map((rental, index) => (
+                <MapMarker
+                  coordinate={{
+                    latitude: rental.latitude,
+                    longitude: rental.longitude,
+                  }}
+                  key={index}
+                  onPress={() => {
+                    flatListRef.current?.scrollToIndex({index: index});
+                  }}>
+                  <CustomMapMarker
+                    price={rental.prices[0]}
+                    isSelected={currentItemIndex === index}
+                    key={index}
+                  />
+                </MapMarker>
+              ))}
+              <MapMarker
+                coordinate={{
+                  latitude: position?.coords.latitude as number,
+                  longitude: position?.coords.longitude as number,
+                }}>
+                <UserPositionCustomMapMarker />
+              </MapMarker>
+            </MapView>
+          )}
           <GestureHandlerRootView
             style={exploreStyles.listModalContainer}
             pointerEvents={'box-none'}>
@@ -116,7 +120,7 @@ const Explore = () => {
                 />
                 {isListView && (
                   <TouchableOpacity
-                    onPress={() => bottomSheetRef.current?.snapToIndex(0)}
+                    onPress={() => showMapButtonPress()}
                     style={{
                       position: 'absolute',
                       zIndex: 5,

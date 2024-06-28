@@ -15,8 +15,10 @@ import {Rental} from '../../src/API';
 import {useIsFocused} from '@react-navigation/native';
 
 const useExplore = (navigation: any) => {
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [canShowMap, setCanShowMap] = useState(false);
+  const [isModalVisible, setModalVisible] = useState<boolean>(false);
+  const [canShowMap, setCanShowMap] = useState<boolean>(false);
+  const [mapInitiallyVisible, setMapInitiallyVisible] =
+    useState<boolean>(false);
   const [position, setPosition] = useState<GeolocationResponse>();
   const mapStyle = require('../../assets/MapStyle.json');
   const [rentals, setRentals] = useState<Rental[]>([]);
@@ -25,7 +27,7 @@ const useExplore = (navigation: any) => {
   const mapRef = useRef(null);
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const {bookmarkedPosts} = useMyContext();
-  const [isListView, setIsListView] = useState(false);
+  const [isListView, setIsListView] = useState<boolean | undefined>(undefined);
   const appState = useRef(AppState.currentState);
   const [refreshing, setRefreshing] = React.useState(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -78,6 +80,18 @@ const useExplore = (navigation: any) => {
     },
   ];
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
+  useEffect(() => {
+    if (isListView === false) {
+      setMapInitiallyVisible(true);
+    }
+  }, [isListView]);
+
+  const showMapButtonPress = () => {
+    bottomSheetRef.current?.snapToIndex(0);
+    if (!mapInitiallyVisible) {
+      setMapInitiallyVisible(true);
+    }
+  };
 
   const setAllRentals = (
     searchText?: string,
@@ -212,6 +226,8 @@ const useExplore = (navigation: any) => {
     mapStyle,
     mapRef,
     flatListRef,
+    mapInitiallyVisible,
+    showMapButtonPress,
   };
 };
 
