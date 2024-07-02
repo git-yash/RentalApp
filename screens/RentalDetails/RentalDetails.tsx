@@ -65,7 +65,7 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
           <Text style={rentalDetailsStyle.titleText}>{rental.title}</Text>
           <View style={{marginLeft: 10}}>
             <Text style={rentalDetailsStyle.reviewLengthText}>
-              in {rental.category}
+              in {Util.getCategoryTextFromIndex(rental.category)}
             </Text>
           </View>
           <View style={rentalDetailsStyle.cityReviewContainer}>

@@ -13,7 +13,6 @@ import UserPositionCustomMapMarker from '../../components/UserPositionCustomMapM
 import BottomSheet from '@gorhom/bottom-sheet';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import SearchView from '../../components/SearchView/SearchView';
 import CategoryTabBar from '../../components/CategoryTabBar/CategoryTabBar';
 import Collapsible from 'react-native-collapsible';
 import {useNavigation} from '@react-navigation/native';
@@ -43,6 +42,7 @@ const Explore = () => {
     flatListRef,
     mapInitiallyVisible,
     showMapButtonPress,
+    onSearchBarPress,
   } = useExplore(navigation);
 
   return (
@@ -102,7 +102,7 @@ const Explore = () => {
               onChange={handleSheetChanges}>
               <View style={exploreStyles.listModalContentContainer}>
                 <Text style={{fontFamily: 'Poppins-Regular'}}>
-                  View all {rentals.length} rentals
+                  View all rentals
                 </Text>
                 <FlatList
                   style={{marginTop: 15}}
@@ -153,9 +153,8 @@ const Explore = () => {
       )}
       <View style={exploreStyles.categoryAndSearchView}>
         <SearchBar
-          isSearchFocused={isSearchFocused}
-          setIsSearchFocused={setIsSearchFocused}
           navigation={navigation}
+          onSearchBarPress={onSearchBarPress}
         />
         <Collapsible collapsed={showSearchResults}>
           <CategoryTabBar
@@ -165,36 +164,31 @@ const Explore = () => {
           />
         </Collapsible>
       </View>
-      {isSearchFocused && (
-        <SearchView
-          setIsSearchFocused={setIsSearchFocused}
-          setRentals={setAllRentals}
-          setShowSearchResults={setShowSearchResults}
-        />
+      {mapInitiallyVisible && (
+        <View style={exploreStyles.flatListView}>
+          <FlatList
+            data={rentals}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            ref={flatListRef}
+            snapToInterval={Dimensions.get('window').width * 0.9}
+            decelerationRate={0}
+            snapToAlignment={'center'}
+            keyExtractor={item => item.id}
+            onViewableItemsChanged={onViewableItemsChanged}
+            viewabilityConfig={{viewAreaCoveragePercentThreshold: 50}}
+            renderItem={({item}) => (
+              <MiniRentalExploreView
+                rental={item}
+                currentLongitude={position?.coords.longitude as number}
+                currentLatitude={position?.coords.latitude as number}
+                navigation={navigation}
+              />
+            )}
+          />
+        </View>
       )}
-      <View style={exploreStyles.flatListView}>
-        <FlatList
-          data={rentals}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          ref={flatListRef}
-          snapToInterval={Dimensions.get('window').width * 0.9}
-          decelerationRate={0}
-          snapToAlignment={'center'}
-          keyExtractor={item => item.id}
-          onViewableItemsChanged={onViewableItemsChanged}
-          viewabilityConfig={{viewAreaCoveragePercentThreshold: 50}}
-          renderItem={({item}) => (
-            <MiniRentalExploreView
-              rental={item}
-              currentLongitude={position?.coords.longitude as number}
-              currentLatitude={position?.coords.latitude as number}
-              navigation={navigation}
-            />
-          )}
-        />
-      </View>
-      {!canShowMap && <Spinner color={Colors.green} />}
+      {!canShowMap && <Spinner />}
     </View>
   );
 };

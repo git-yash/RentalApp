@@ -14,32 +14,12 @@ export const listRentalsWithAllDetails =
 ) {
   listRentals(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
-      id
       title
-      description
-      isAvailable
       rating
       userID
-      category
-      createdAt
-      updatedAt
-      prices {
-        amount
-        timeIncrement
-        isFirmOnPrice
-        __typename
-      }
-      address {
-      street
-      street2
-      city
-      state
-      zip
-      country
-      __typename
-    }
-     latitude
-     longitude
+      amountHourly
+      amountDaily
+      amountWeekly
      __typename
     }
     nextToken
@@ -59,33 +39,16 @@ export const listBookmarkedRentalsWithDetails =
 ) {
   listBookmarkedRentals(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
-      id
       userID
-      createdAt
-      updatedAt
       bookmarkedRentalRentalId
       rental {
-        address {
-          city
-          country
-          state
-          street2
-          zip
-          street
-        }
-        latitude
-        longitude
-        category
-        id
         isAvailable
-        prices {
-          amount
-          isFirmOnPrice
-          timeIncrement
-        }
         rating
         title
         userID
+        amountHourly
+        amountDaily
+        amountWeekly
       }
     }
   }

@@ -155,6 +155,13 @@ const useExplore = (navigation: any) => {
 
   const isScreenFocused = useIsFocused();
 
+  const onSearchBarPress = () => {
+    navigation.navigate(ScreenNameConstants.Search, {
+      setRentals,
+      setShowSearchResults,
+    });
+  };
+
   useEffect(() => {
     setAllRentals();
   }, [selectedCategory]);
@@ -228,6 +235,7 @@ const useExplore = (navigation: any) => {
     flatListRef,
     mapInitiallyVisible,
     showMapButtonPress,
+    onSearchBarPress,
   };
 };
 

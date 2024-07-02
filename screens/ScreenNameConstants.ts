@@ -16,4 +16,5 @@ export default {
   Prices: 'Prices',
   PostRentalScreens: 'PostRentalScreens',
   RentalDetails: 'Details',
+  Search: 'Search',
 };

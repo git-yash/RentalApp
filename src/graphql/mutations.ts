@@ -24,6 +24,14 @@ export const createBookmarkedRental = /* GraphQL */ `mutation CreateBookmarkedRe
       category
       latitude
       longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
       createdAt
       updatedAt
       __typename
@@ -55,6 +63,14 @@ export const updateBookmarkedRental = /* GraphQL */ `mutation UpdateBookmarkedRe
       category
       latitude
       longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
       createdAt
       updatedAt
       __typename
@@ -86,6 +102,14 @@ export const deleteBookmarkedRental = /* GraphQL */ `mutation DeleteBookmarkedRe
       category
       latitude
       longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
       createdAt
       updatedAt
       __typename
@@ -111,6 +135,29 @@ export const createBooking = /* GraphQL */ `mutation CreateBooking(
     endDate
     rentalID
     userID
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      latitude
+      longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
+      createdAt
+      updatedAt
+      __typename
+    }
+    isAccepted
     createdAt
     updatedAt
     __typename
@@ -130,6 +177,29 @@ export const updateBooking = /* GraphQL */ `mutation UpdateBooking(
     endDate
     rentalID
     userID
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      latitude
+      longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
+      createdAt
+      updatedAt
+      __typename
+    }
+    isAccepted
     createdAt
     updatedAt
     __typename
@@ -149,6 +219,29 @@ export const deleteBooking = /* GraphQL */ `mutation DeleteBooking(
     endDate
     rentalID
     userID
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      latitude
+      longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
+      createdAt
+      updatedAt
+      __typename
+    }
+    isAccepted
     createdAt
     updatedAt
     __typename
@@ -272,6 +365,37 @@ export const createReview = /* GraphQL */ `mutation CreateReview(
     rentalID
     datePublished
     userID
+    user {
+      id
+      dateJoined
+      phone
+      isPhoneVerified
+      createdAt
+      updatedAt
+      __typename
+    }
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      latitude
+      longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -293,6 +417,37 @@ export const updateReview = /* GraphQL */ `mutation UpdateReview(
     rentalID
     datePublished
     userID
+    user {
+      id
+      dateJoined
+      phone
+      isPhoneVerified
+      createdAt
+      updatedAt
+      __typename
+    }
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      latitude
+      longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -314,6 +469,37 @@ export const deleteReview = /* GraphQL */ `mutation DeleteReview(
     rentalID
     datePublished
     userID
+    user {
+      id
+      dateJoined
+      phone
+      isPhoneVerified
+      createdAt
+      updatedAt
+      __typename
+    }
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      latitude
+      longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -332,12 +518,6 @@ export const createRental = /* GraphQL */ `mutation CreateRental(
     title
     description
     isAvailable
-    prices {
-      amount
-      timeIncrement
-      isFirmOnPrice
-      __typename
-    }
     rating
     address {
       street
@@ -369,6 +549,14 @@ export const createRental = /* GraphQL */ `mutation CreateRental(
     category
     latitude
     longitude
+    isFirmOnPrice
+    amountHourly
+    amountWeekly
+    amountDaily
+    allowedStartDates
+    allowedEndDates
+    bookingStartDates
+    bookingEndDates
     createdAt
     updatedAt
     __typename
@@ -387,12 +575,6 @@ export const updateRental = /* GraphQL */ `mutation UpdateRental(
     title
     description
     isAvailable
-    prices {
-      amount
-      timeIncrement
-      isFirmOnPrice
-      __typename
-    }
     rating
     address {
       street
@@ -424,6 +606,14 @@ export const updateRental = /* GraphQL */ `mutation UpdateRental(
     category
     latitude
     longitude
+    isFirmOnPrice
+    amountHourly
+    amountWeekly
+    amountDaily
+    allowedStartDates
+    allowedEndDates
+    bookingStartDates
+    bookingEndDates
     createdAt
     updatedAt
     __typename
@@ -442,12 +632,6 @@ export const deleteRental = /* GraphQL */ `mutation DeleteRental(
     title
     description
     isAvailable
-    prices {
-      amount
-      timeIncrement
-      isFirmOnPrice
-      __typename
-    }
     rating
     address {
       street
@@ -479,6 +663,14 @@ export const deleteRental = /* GraphQL */ `mutation DeleteRental(
     category
     latitude
     longitude
+    isFirmOnPrice
+    amountHourly
+    amountWeekly
+    amountDaily
+    allowedStartDates
+    allowedEndDates
+    bookingStartDates
+    bookingEndDates
     createdAt
     updatedAt
     __typename

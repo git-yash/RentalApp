@@ -23,6 +23,14 @@ export const onCreateBookmarkedRental = /* GraphQL */ `subscription OnCreateBook
       category
       latitude
       longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
       createdAt
       updatedAt
       __typename
@@ -53,6 +61,14 @@ export const onUpdateBookmarkedRental = /* GraphQL */ `subscription OnUpdateBook
       category
       latitude
       longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
       createdAt
       updatedAt
       __typename
@@ -83,6 +99,14 @@ export const onDeleteBookmarkedRental = /* GraphQL */ `subscription OnDeleteBook
       category
       latitude
       longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
       createdAt
       updatedAt
       __typename
@@ -105,6 +129,29 @@ export const onCreateBooking = /* GraphQL */ `subscription OnCreateBooking($filt
     endDate
     rentalID
     userID
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      latitude
+      longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
+      createdAt
+      updatedAt
+      __typename
+    }
+    isAccepted
     createdAt
     updatedAt
     __typename
@@ -121,6 +168,29 @@ export const onUpdateBooking = /* GraphQL */ `subscription OnUpdateBooking($filt
     endDate
     rentalID
     userID
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      latitude
+      longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
+      createdAt
+      updatedAt
+      __typename
+    }
+    isAccepted
     createdAt
     updatedAt
     __typename
@@ -137,6 +207,29 @@ export const onDeleteBooking = /* GraphQL */ `subscription OnDeleteBooking($filt
     endDate
     rentalID
     userID
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      latitude
+      longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
+      createdAt
+      updatedAt
+      __typename
+    }
+    isAccepted
     createdAt
     updatedAt
     __typename
@@ -248,6 +341,37 @@ export const onCreateReview = /* GraphQL */ `subscription OnCreateReview($filter
     rentalID
     datePublished
     userID
+    user {
+      id
+      dateJoined
+      phone
+      isPhoneVerified
+      createdAt
+      updatedAt
+      __typename
+    }
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      latitude
+      longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -266,6 +390,37 @@ export const onUpdateReview = /* GraphQL */ `subscription OnUpdateReview($filter
     rentalID
     datePublished
     userID
+    user {
+      id
+      dateJoined
+      phone
+      isPhoneVerified
+      createdAt
+      updatedAt
+      __typename
+    }
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      latitude
+      longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -284,6 +439,37 @@ export const onDeleteReview = /* GraphQL */ `subscription OnDeleteReview($filter
     rentalID
     datePublished
     userID
+    user {
+      id
+      dateJoined
+      phone
+      isPhoneVerified
+      createdAt
+      updatedAt
+      __typename
+    }
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      latitude
+      longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -299,12 +485,6 @@ export const onCreateRental = /* GraphQL */ `subscription OnCreateRental($filter
     title
     description
     isAvailable
-    prices {
-      amount
-      timeIncrement
-      isFirmOnPrice
-      __typename
-    }
     rating
     address {
       street
@@ -336,6 +516,14 @@ export const onCreateRental = /* GraphQL */ `subscription OnCreateRental($filter
     category
     latitude
     longitude
+    isFirmOnPrice
+    amountHourly
+    amountWeekly
+    amountDaily
+    allowedStartDates
+    allowedEndDates
+    bookingStartDates
+    bookingEndDates
     createdAt
     updatedAt
     __typename
@@ -351,12 +539,6 @@ export const onUpdateRental = /* GraphQL */ `subscription OnUpdateRental($filter
     title
     description
     isAvailable
-    prices {
-      amount
-      timeIncrement
-      isFirmOnPrice
-      __typename
-    }
     rating
     address {
       street
@@ -388,6 +570,14 @@ export const onUpdateRental = /* GraphQL */ `subscription OnUpdateRental($filter
     category
     latitude
     longitude
+    isFirmOnPrice
+    amountHourly
+    amountWeekly
+    amountDaily
+    allowedStartDates
+    allowedEndDates
+    bookingStartDates
+    bookingEndDates
     createdAt
     updatedAt
     __typename
@@ -403,12 +593,6 @@ export const onDeleteRental = /* GraphQL */ `subscription OnDeleteRental($filter
     title
     description
     isAvailable
-    prices {
-      amount
-      timeIncrement
-      isFirmOnPrice
-      __typename
-    }
     rating
     address {
       street
@@ -440,6 +624,14 @@ export const onDeleteRental = /* GraphQL */ `subscription OnDeleteRental($filter
     category
     latitude
     longitude
+    isFirmOnPrice
+    amountHourly
+    amountWeekly
+    amountDaily
+    allowedStartDates
+    allowedEndDates
+    bookingStartDates
+    bookingEndDates
     createdAt
     updatedAt
     __typename

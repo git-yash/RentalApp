@@ -21,6 +21,14 @@ export const getBookmarkedRental = /* GraphQL */ `query GetBookmarkedRental($id:
       category
       latitude
       longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
       createdAt
       updatedAt
       __typename
@@ -95,6 +103,29 @@ export const getBooking = /* GraphQL */ `query GetBooking($id: ID!) {
     endDate
     rentalID
     userID
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      latitude
+      longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
+      createdAt
+      updatedAt
+      __typename
+    }
+    isAccepted
     createdAt
     updatedAt
     __typename
@@ -116,6 +147,7 @@ export const listBookings = /* GraphQL */ `query ListBookings(
       endDate
       rentalID
       userID
+      isAccepted
       createdAt
       updatedAt
       __typename
@@ -148,6 +180,7 @@ export const bookingsByRentalID = /* GraphQL */ `query BookingsByRentalID(
       endDate
       rentalID
       userID
+      isAccepted
       createdAt
       updatedAt
       __typename
@@ -180,6 +213,7 @@ export const bookingsByUserID = /* GraphQL */ `query BookingsByUserID(
       endDate
       rentalID
       userID
+      isAccepted
       createdAt
       updatedAt
       __typename
@@ -249,6 +283,37 @@ export const getReview = /* GraphQL */ `query GetReview($id: ID!) {
     rentalID
     datePublished
     userID
+    user {
+      id
+      dateJoined
+      phone
+      isPhoneVerified
+      createdAt
+      updatedAt
+      __typename
+    }
+    rental {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      category
+      latitude
+      longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -355,12 +420,6 @@ export const getRental = /* GraphQL */ `query GetRental($id: ID!) {
     title
     description
     isAvailable
-    prices {
-      amount
-      timeIncrement
-      isFirmOnPrice
-      __typename
-    }
     rating
     address {
       street
@@ -392,6 +451,14 @@ export const getRental = /* GraphQL */ `query GetRental($id: ID!) {
     category
     latitude
     longitude
+    isFirmOnPrice
+    amountHourly
+    amountWeekly
+    amountDaily
+    allowedStartDates
+    allowedEndDates
+    bookingStartDates
+    bookingEndDates
     createdAt
     updatedAt
     __typename
@@ -414,6 +481,14 @@ export const listRentals = /* GraphQL */ `query ListRentals(
       category
       latitude
       longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
       createdAt
       updatedAt
       __typename
@@ -450,6 +525,14 @@ export const rentalsByUserID = /* GraphQL */ `query RentalsByUserID(
       category
       latitude
       longitude
+      isFirmOnPrice
+      amountHourly
+      amountWeekly
+      amountDaily
+      allowedStartDates
+      allowedEndDates
+      bookingStartDates
+      bookingEndDates
       createdAt
       updatedAt
       __typename

@@ -35,6 +35,7 @@ import useUser from './hooks/useUser';
 import FilterResults from './screens/FilterResults/FilterResults';
 import ScreenNameConstants from './screens/ScreenNameConstants';
 import {LogBox} from 'react-native';
+import SearchView from './components/SearchView/SearchView';
 
 LogBox.ignoreLogs([
   'In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.',
@@ -241,18 +242,24 @@ function App(): JSX.Element {
                     headerShown: false,
                   }}
                 />
-                <Stack.Screen
-                  name={ScreenNameConstants.FilterResults}
-                  component={FilterResults}
-                  options={{
+                <Stack.Group
+                  screenOptions={{
                     presentation: 'modal',
                     headerTitleStyle: {
                       fontFamily: 'Poppins-Regular',
                     },
                     headerBackTitleVisible: false,
                     headerTintColor: 'black',
-                  }}
-                />
+                  }}>
+                  <Stack.Screen
+                    name={ScreenNameConstants.Search}
+                    component={SearchView}
+                  />
+                  <Stack.Screen
+                    name={ScreenNameConstants.FilterResults}
+                    component={FilterResults}
+                  />
+                </Stack.Group>
                 <Stack.Screen
                   name={ScreenNameConstants.PostRentalScreens}
                   component={PostRentalScreens}

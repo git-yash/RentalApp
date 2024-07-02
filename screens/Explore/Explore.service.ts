@@ -58,15 +58,13 @@ export default class ExploreService {
   async getAllRentals(
     location: LatLng,
     radiusInMiles: number,
-    category: number,
+    category?: number,
     searchText?: string,
     startDate?: Date,
     endDate?: Date,
   ) {
     const earthRadius = 3958.8; // Earth's radius in miles
-
     const latRad = location.lat * (Math.PI / 180);
-
     const latDiff = radiusInMiles / earthRadius;
     const lonDiff = radiusInMiles / (earthRadius * Math.cos(latRad));
 
@@ -82,21 +80,39 @@ export default class ExploreService {
           filter: {
             and: [
               {
-                or: [
-                  {
-                    title: {contains: searchText || ''},
-                    description: {contains: searchText || ''},
-                  },
-                ],
-                and: [
-                  {
-                    category: {eq: category},
-                    isAvailable: {eq: true},
-                    latitude: {between: [minLat, maxLat]},
-                    longitude: {between: [minLon, maxLon]},
-                  },
-                ],
+                isAvailable: {eq: true},
+                latitude: {between: [minLat, maxLat]},
+                longitude: {between: [minLon, maxLon]},
               },
+              category !== undefined ? {category: {eq: category}} : {},
+              searchText
+                ? {
+                    or: [
+                      {title: {contains: searchText}},
+                      {description: {contains: searchText}},
+                    ],
+                  }
+                : {},
+              startDate && endDate
+                ? {
+                    and: [
+                      {
+                        or: [
+                          {
+                            bookingStartDates: {ge: startDate.toISOString()},
+                            bookingEndDates: {le: endDate.toISOString()},
+                          },
+                        ],
+                        or: [
+                          {
+                            allowedStartDates: {ge: startDate.toISOString()},
+                            bookingEndDates: {le: endDate.toISOString()},
+                          },
+                        ],
+                      },
+                    ],
+                  }
+                : {},
             ],
           },
           limit: 15,

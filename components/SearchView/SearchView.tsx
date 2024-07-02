@@ -11,7 +11,6 @@ import {
   faAngleDown,
   faAngleUp,
   faMagnifyingGlass,
-  faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import SearchBarInput from '../SearchBarInput/SearchBarInput';
 import CustomDateAndTimeInput from '../CustomDateAndTimeInput/CustomDateAndTimeInput';
@@ -19,12 +18,12 @@ import Collapsible from 'react-native-collapsible';
 import useSearchView from './useSearchView';
 import searchViewStyle from './SearchView.style';
 import DismissKeyboardView from '../DismissKeyboardView';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
-const SearchView = (props: {
-  setIsSearchFocused: any;
-  setRentals: any;
-  setShowSearchResults: any;
-}) => {
+const SearchView = () => {
+  const navigation = useNavigation();
+  const route = useRoute();
+  const {setRentals, setShowSearchResults} = route.params;
   const {
     searchText,
     setSearchText,
@@ -46,22 +45,7 @@ const SearchView = (props: {
   return (
     <DismissKeyboardView>
       <SafeAreaView style={searchViewStyle.safeArea}>
-        <View style={searchViewStyle.headerContainer}>
-          <TouchableOpacity
-            onPress={() => props.setIsSearchFocused(false)}
-            style={searchViewStyle.xMarkIcon}>
-            <FontAwesomeIcon icon={faXmark} size={25} />
-          </TouchableOpacity>
-          <View style={searchViewStyle.titleTextContainer}>
-            <Text style={searchViewStyle.titleText}>Search</Text>
-          </View>
-        </View>
-        <View>
-          <SearchBarInput
-            searchText={searchText}
-            setSearchText={setSearchText}
-          />
-        </View>
+        <SearchBarInput searchText={searchText} setSearchText={setSearchText} />
         {!isSearchTextValid && (
           <Text style={searchViewStyle.errorText}>
             You must enter search text!
@@ -141,11 +125,7 @@ const SearchView = (props: {
           <TouchableOpacity
             style={searchViewStyle.searchButton}
             onPress={() =>
-              onSearchButtonPress(
-                props.setIsSearchFocused,
-                props.setRentals,
-                props.setShowSearchResults,
-              )
+              onSearchButtonPress(navigation, setRentals, setShowSearchResults)
             }>
             <FontAwesomeIcon
               icon={faMagnifyingGlass}

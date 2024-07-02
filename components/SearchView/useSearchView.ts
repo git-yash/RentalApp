@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import ScreenNameConstants from '../../screens/ScreenNameConstants';
 
 const useSearchView = () => {
   const [areDatesApplied, setAreDatesApplied] = useState<boolean>(false);
@@ -55,7 +56,7 @@ const useSearchView = () => {
   };
 
   const onSearchButtonPress = (
-    setIsSearchFocused: any,
+    navigation: any,
     setRentals: any,
     setShowSearchResults: any,
   ) => {
@@ -82,7 +83,7 @@ const useSearchView = () => {
       setRentals(searchText);
       setShowSearchResults(true);
     }
-    setIsSearchFocused(false);
+    navigation.navigate(ScreenNameConstants.Explore);
   };
 
   return {
