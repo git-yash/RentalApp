@@ -28,8 +28,6 @@ export const createBookmarkedRental = /* GraphQL */ `mutation CreateBookmarkedRe
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -67,8 +65,6 @@ export const updateBookmarkedRental = /* GraphQL */ `mutation UpdateBookmarkedRe
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -106,8 +102,6 @@ export const deleteBookmarkedRental = /* GraphQL */ `mutation DeleteBookmarkedRe
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -149,8 +143,6 @@ export const createBooking = /* GraphQL */ `mutation CreateBooking(
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -191,8 +183,6 @@ export const updateBooking = /* GraphQL */ `mutation UpdateBooking(
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -233,8 +223,6 @@ export const deleteBooking = /* GraphQL */ `mutation DeleteBooking(
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -388,8 +376,6 @@ export const createReview = /* GraphQL */ `mutation CreateReview(
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -440,8 +426,6 @@ export const updateReview = /* GraphQL */ `mutation UpdateReview(
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -492,8 +476,6 @@ export const deleteReview = /* GraphQL */ `mutation DeleteReview(
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -553,8 +535,6 @@ export const createRental = /* GraphQL */ `mutation CreateRental(
     amountHourly
     amountWeekly
     amountDaily
-    allowedStartDates
-    allowedEndDates
     bookingStartDates
     bookingEndDates
     createdAt
@@ -610,8 +590,6 @@ export const updateRental = /* GraphQL */ `mutation UpdateRental(
     amountHourly
     amountWeekly
     amountDaily
-    allowedStartDates
-    allowedEndDates
     bookingStartDates
     bookingEndDates
     createdAt
@@ -667,8 +645,6 @@ export const deleteRental = /* GraphQL */ `mutation DeleteRental(
     amountHourly
     amountWeekly
     amountDaily
-    allowedStartDates
-    allowedEndDates
     bookingStartDates
     bookingEndDates
     createdAt

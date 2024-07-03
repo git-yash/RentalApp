@@ -1,72 +1,69 @@
 type BookmarkedRental @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  rental: Rental @hasOne
-  userID: ID! @index(name: "byUser")
+    id: ID!
+    rental: Rental @hasOne
+    userID: ID! @index(name: "byUser")
 }
 
 type Booking @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  startDate: AWSDateTime!
-  endDate: AWSDateTime!
-  rentalID: ID! @index(name: "byRental")
-  userID: ID! @index(name: "byUser")
-  rental: Rental @belongsTo(fields: ["rentalID"])
-  isAccepted: Boolean!
+    id: ID!
+    startDate: AWSDateTime!
+    endDate: AWSDateTime!
+    rentalID: ID! @index(name: "byRental")
+    userID: ID! @index(name: "byUser")
+    rental: Rental @belongsTo(fields: ["rentalID"])
+    isAccepted: Boolean!
 }
 
 type User @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  dateJoined: AWSDate!
-  postedRentals: [Rental] @hasMany(indexName: "byUser", fields: ["id"])
-  bookings: [Booking] @hasMany(indexName: "byUser", fields: ["id"])
-  reviews: [Review] @hasMany(indexName: "byUser", fields: ["id"])
-  bookmarks: [BookmarkedRental] @hasMany(indexName: "byUser", fields: ["id"])
-  phone: AWSPhone
-  isPhoneVerified: Boolean
+    id: ID!
+    dateJoined: AWSDate!
+    postedRentals: [Rental] @hasMany(indexName: "byUser", fields: ["id"])
+    bookings: [Booking] @hasMany(indexName: "byUser", fields: ["id"])
+    reviews: [Review] @hasMany(indexName: "byUser", fields: ["id"])
+    bookmarks: [BookmarkedRental] @hasMany(indexName: "byUser", fields: ["id"])
+    phone: AWSPhone
+    isPhoneVerified: Boolean
 }
 
 type Review @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  title: String!
-  description: String!
-  rating: Float
-  rentalID: ID! @index(name: "byRental")
-  datePublished: AWSDateTime!
-  userID: ID! @index(name: "byUser")
-  user: User @belongsTo(fields: ["userID"])
-  rental: Rental @belongsTo(fields: ["rentalID"])
+    id: ID!
+    title: String!
+    description: String!
+    rating: Float
+    rentalID: ID! @index(name: "byRental")
+    datePublished: AWSDateTime!
+    userID: ID! @index(name: "byUser")
+    user: User @belongsTo(fields: ["userID"])
+    rental: Rental @belongsTo(fields: ["rentalID"])
 }
 
 type Address {
-  street: String!
-  street2: String
-  city: String!
-  state: String!
-  zip: String!
-  country: String!
+    street: String!
+    street2: String
+    city: String!
+    state: String!
+    zip: String!
+    country: String!
 }
 
 type Rental @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  title: String!
-  description: String!
-  isAvailable: Boolean
-  rating: Float
-  address: Address!
-  reviews: [Review] @hasMany(indexName: "byRental", fields: ["id"])
-  bookings: [Booking] @hasMany(indexName: "byRental", fields: ["id"])
-  userID: ID! @index(name: "byUser")
-  user: User @belongsTo(fields: ["userID"])
-  category: Int!
-  latitude: Float!
-  longitude: Float!
-  isFirmOnPrice: Boolean!
-  amountHourly: Int
-  amountWeekly: Int
-  amountDaily: Int
-  allowedStartDates: [AWSDateTime]
-  allowedEndDates: [AWSDateTime]
-  bookingStartDates: [AWSDateTime]
-  bookingEndDates: [AWSDateTime]
+    id: ID!
+    title: String!
+    description: String!
+    isAvailable: Boolean!
+    rating: Float
+    address: Address!
+    reviews: [Review] @hasMany(indexName: "byRental", fields: ["id"])
+    bookings: [Booking] @hasMany(indexName: "byRental", fields: ["id"])
+    userID: ID! @index(name: "byUser")
+    user: User @belongsTo(fields: ["userID"])
+    category: Int!
+    latitude: Float!
+    longitude: Float!
+    isFirmOnPrice: Boolean!
+    amountHourly: Int
+    amountWeekly: Int
+    amountDaily: Int
+    bookingStartDates: [AWSDateTime]
+    bookingEndDates: [AWSDateTime]
 }
- 

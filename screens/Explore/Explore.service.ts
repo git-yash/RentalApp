@@ -64,7 +64,9 @@ export default class ExploreService {
     endDate?: Date,
   ) {
     const earthRadius = 3958.8; // Earth's radius in miles
+
     const latRad = location.lat * (Math.PI / 180);
+
     const latDiff = radiusInMiles / earthRadius;
     const lonDiff = radiusInMiles / (earthRadius * Math.cos(latRad));
 
@@ -73,48 +75,45 @@ export default class ExploreService {
     const minLon = location.lng - lonDiff * (180 / Math.PI);
     const maxLon = location.lng + lonDiff * (180 / Math.PI);
 
+    // Prepare filters
+    let filters = {
+      and: [
+        {isAvailable: {eq: true}},
+        {latitude: {between: [minLat, maxLat]}},
+        {longitude: {between: [minLon, maxLon]}},
+      ],
+    };
+
+    if (category !== undefined) {
+      // @ts-ignore
+      filters.and.push({category: {eq: category}});
+    }
+
+    if (searchText) {
+      filters.and.push({
+        // @ts-ignore
+        or: [
+          {title: {contains: searchText}},
+          {description: {contains: searchText}},
+        ],
+      });
+    }
+
+    if (startDate && endDate) {
+      filters.and.push({
+        // @ts-ignore
+        or: [
+          {bookingStartDates: {ge: startDate.toISOString()}},
+          {bookingEndDates: {le: endDate.toISOString()}},
+        ],
+      });
+    }
+
     return this.client
       .graphql({
         query: listRentalsWithAllDetails,
         variables: {
-          filter: {
-            and: [
-              {
-                isAvailable: {eq: true},
-                latitude: {between: [minLat, maxLat]},
-                longitude: {between: [minLon, maxLon]},
-              },
-              category !== undefined ? {category: {eq: category}} : {},
-              searchText
-                ? {
-                    or: [
-                      {title: {contains: searchText}},
-                      {description: {contains: searchText}},
-                    ],
-                  }
-                : {},
-              startDate && endDate
-                ? {
-                    and: [
-                      {
-                        or: [
-                          {
-                            bookingStartDates: {ge: startDate.toISOString()},
-                            bookingEndDates: {le: endDate.toISOString()},
-                          },
-                        ],
-                        or: [
-                          {
-                            allowedStartDates: {ge: startDate.toISOString()},
-                            bookingEndDates: {le: endDate.toISOString()},
-                          },
-                        ],
-                      },
-                    ],
-                  }
-                : {},
-            ],
-          },
+          filter: filters,
           limit: 15,
         },
       })

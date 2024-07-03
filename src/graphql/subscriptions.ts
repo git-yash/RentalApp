@@ -27,8 +27,6 @@ export const onCreateBookmarkedRental = /* GraphQL */ `subscription OnCreateBook
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -65,8 +63,6 @@ export const onUpdateBookmarkedRental = /* GraphQL */ `subscription OnUpdateBook
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -103,8 +99,6 @@ export const onDeleteBookmarkedRental = /* GraphQL */ `subscription OnDeleteBook
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -143,8 +137,6 @@ export const onCreateBooking = /* GraphQL */ `subscription OnCreateBooking($filt
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -182,8 +174,6 @@ export const onUpdateBooking = /* GraphQL */ `subscription OnUpdateBooking($filt
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -221,8 +211,6 @@ export const onDeleteBooking = /* GraphQL */ `subscription OnDeleteBooking($filt
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -364,8 +352,6 @@ export const onCreateReview = /* GraphQL */ `subscription OnCreateReview($filter
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -413,8 +399,6 @@ export const onUpdateReview = /* GraphQL */ `subscription OnUpdateReview($filter
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -462,8 +446,6 @@ export const onDeleteReview = /* GraphQL */ `subscription OnDeleteReview($filter
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -520,8 +502,6 @@ export const onCreateRental = /* GraphQL */ `subscription OnCreateRental($filter
     amountHourly
     amountWeekly
     amountDaily
-    allowedStartDates
-    allowedEndDates
     bookingStartDates
     bookingEndDates
     createdAt
@@ -574,8 +554,6 @@ export const onUpdateRental = /* GraphQL */ `subscription OnUpdateRental($filter
     amountHourly
     amountWeekly
     amountDaily
-    allowedStartDates
-    allowedEndDates
     bookingStartDates
     bookingEndDates
     createdAt
@@ -628,8 +606,6 @@ export const onDeleteRental = /* GraphQL */ `subscription OnDeleteRental($filter
     amountHourly
     amountWeekly
     amountDaily
-    allowedStartDates
-    allowedEndDates
     bookingStartDates
     bookingEndDates
     createdAt

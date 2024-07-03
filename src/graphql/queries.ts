@@ -25,8 +25,6 @@ export const getBookmarkedRental = /* GraphQL */ `query GetBookmarkedRental($id:
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -117,8 +115,6 @@ export const getBooking = /* GraphQL */ `query GetBooking($id: ID!) {
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -306,8 +302,6 @@ export const getReview = /* GraphQL */ `query GetReview($id: ID!) {
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -455,8 +449,6 @@ export const getRental = /* GraphQL */ `query GetRental($id: ID!) {
     amountHourly
     amountWeekly
     amountDaily
-    allowedStartDates
-    allowedEndDates
     bookingStartDates
     bookingEndDates
     createdAt
@@ -485,8 +477,6 @@ export const listRentals = /* GraphQL */ `query ListRentals(
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
@@ -529,8 +519,6 @@ export const rentalsByUserID = /* GraphQL */ `query RentalsByUserID(
       amountHourly
       amountWeekly
       amountDaily
-      allowedStartDates
-      allowedEndDates
       bookingStartDates
       bookingEndDates
       createdAt
