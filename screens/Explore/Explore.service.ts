@@ -58,35 +58,16 @@ export default class ExploreService {
   async getAllRentals(
     location: LatLng,
     radiusInMiles: number,
-    category?: number,
+    category?: string,
     searchText?: string,
     startDate?: Date,
     endDate?: Date,
   ) {
-    const earthRadius = 3958.8; // Earth's radius in miles
-
-    const latRad = location.lat * (Math.PI / 180);
-
-    const latDiff = radiusInMiles / earthRadius;
-    const lonDiff = radiusInMiles / (earthRadius * Math.cos(latRad));
-
-    const minLat = location.lat - latDiff * (180 / Math.PI);
-    const maxLat = location.lat + latDiff * (180 / Math.PI);
-    const minLon = location.lng - lonDiff * (180 / Math.PI);
-    const maxLon = location.lng + lonDiff * (180 / Math.PI);
-
-    // Prepare filters
-    let filters = {
-      and: [
-        {isAvailable: {eq: true}},
-        {latitude: {between: [minLat, maxLat]}},
-        {longitude: {between: [minLon, maxLon]}},
-      ],
-    };
-
-    if (category !== undefined) {
+    let filters = this.createLocationInMilesFilter(location, radiusInMiles);
+    const categoryFilter = this.createCategoryFilter(category);
+    if (categoryFilter !== undefined) {
       // @ts-ignore
-      filters.and.push({category: {eq: category}});
+      filters.and.push(categoryFilter);
     }
 
     if (searchText) {
@@ -124,5 +105,38 @@ export default class ExploreService {
         console.error(e);
         throw e;
       });
+  }
+
+  private createCategoryFilter(category?: string) {
+    if (!category) {
+      return undefined;
+    }
+    return {category: {eq: category}};
+  }
+
+  private createLocationInMilesFilter(
+    location: Geocoder.LatLng,
+    radiusInMiles: number,
+  ) {
+    const earthRadius = 3958.8; // Earth's radius in miles
+
+    const latRad = location.lat * (Math.PI / 180);
+
+    const latDiff = radiusInMiles / earthRadius;
+    const lonDiff = radiusInMiles / (earthRadius * Math.cos(latRad));
+
+    const minLat = location.lat - latDiff * (180 / Math.PI);
+    const maxLat = location.lat + latDiff * (180 / Math.PI);
+    const minLon = location.lng - lonDiff * (180 / Math.PI);
+    const maxLon = location.lng + lonDiff * (180 / Math.PI);
+
+    // Prepare filters
+    return {
+      and: [
+        {isAvailable: {eq: 1}},
+        {latitude: {between: [minLat, maxLat]}},
+        {longitude: {between: [minLon, maxLon]}},
+      ],
+    };
   }
 }

@@ -18,13 +18,13 @@ export const getBookmarkedRental = /* GraphQL */ `query GetBookmarkedRental($id:
       isAvailable
       rating
       userID
-      category
+      categoryName
+      availabilityCategoryIndex
+      amountHourly
+      amountDaily
+      amountWeekly
       latitude
       longitude
-      isFirmOnPrice
-      amountHourly
-      amountWeekly
-      amountDaily
       bookingStartDates
       bookingEndDates
       createdAt
@@ -108,13 +108,13 @@ export const getBooking = /* GraphQL */ `query GetBooking($id: ID!) {
       isAvailable
       rating
       userID
-      category
+      categoryName
+      availabilityCategoryIndex
+      amountHourly
+      amountDaily
+      amountWeekly
       latitude
       longitude
-      isFirmOnPrice
-      amountHourly
-      amountWeekly
-      amountDaily
       bookingStartDates
       bookingEndDates
       createdAt
@@ -295,13 +295,13 @@ export const getReview = /* GraphQL */ `query GetReview($id: ID!) {
       isAvailable
       rating
       userID
-      category
+      categoryName
+      availabilityCategoryIndex
+      amountHourly
+      amountDaily
+      amountWeekly
       latitude
       longitude
-      isFirmOnPrice
-      amountHourly
-      amountWeekly
-      amountDaily
       bookingStartDates
       bookingEndDates
       createdAt
@@ -442,13 +442,13 @@ export const getRental = /* GraphQL */ `query GetRental($id: ID!) {
       updatedAt
       __typename
     }
-    category
+    categoryName
+    availabilityCategoryIndex
+    amountHourly
+    amountDaily
+    amountWeekly
     latitude
     longitude
-    isFirmOnPrice
-    amountHourly
-    amountWeekly
-    amountDaily
     bookingStartDates
     bookingEndDates
     createdAt
@@ -470,13 +470,13 @@ export const listRentals = /* GraphQL */ `query ListRentals(
       isAvailable
       rating
       userID
-      category
+      categoryName
+      availabilityCategoryIndex
+      amountHourly
+      amountDaily
+      amountWeekly
       latitude
       longitude
-      isFirmOnPrice
-      amountHourly
-      amountWeekly
-      amountDaily
       bookingStartDates
       bookingEndDates
       createdAt
@@ -490,6 +490,48 @@ export const listRentals = /* GraphQL */ `query ListRentals(
 ` as GeneratedQuery<
   APITypes.ListRentalsQueryVariables,
   APITypes.ListRentalsQuery
+>;
+export const rentalsByIsAvailable = /* GraphQL */ `query RentalsByIsAvailable(
+  $isAvailable: Int!
+  $sortDirection: ModelSortDirection
+  $filter: ModelRentalFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  rentalsByIsAvailable(
+    isAvailable: $isAvailable
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      categoryName
+      availabilityCategoryIndex
+      amountHourly
+      amountDaily
+      amountWeekly
+      latitude
+      longitude
+      bookingStartDates
+      bookingEndDates
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.RentalsByIsAvailableQueryVariables,
+  APITypes.RentalsByIsAvailableQuery
 >;
 export const rentalsByUserID = /* GraphQL */ `query RentalsByUserID(
   $userID: ID!
@@ -512,13 +554,13 @@ export const rentalsByUserID = /* GraphQL */ `query RentalsByUserID(
       isAvailable
       rating
       userID
-      category
+      categoryName
+      availabilityCategoryIndex
+      amountHourly
+      amountDaily
+      amountWeekly
       latitude
       longitude
-      isFirmOnPrice
-      amountHourly
-      amountWeekly
-      amountDaily
       bookingStartDates
       bookingEndDates
       createdAt
@@ -532,4 +574,88 @@ export const rentalsByUserID = /* GraphQL */ `query RentalsByUserID(
 ` as GeneratedQuery<
   APITypes.RentalsByUserIDQueryVariables,
   APITypes.RentalsByUserIDQuery
+>;
+export const rentalsByCategoryName = /* GraphQL */ `query RentalsByCategoryName(
+  $categoryName: String!
+  $sortDirection: ModelSortDirection
+  $filter: ModelRentalFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  rentalsByCategoryName(
+    categoryName: $categoryName
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      categoryName
+      availabilityCategoryIndex
+      amountHourly
+      amountDaily
+      amountWeekly
+      latitude
+      longitude
+      bookingStartDates
+      bookingEndDates
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.RentalsByCategoryNameQueryVariables,
+  APITypes.RentalsByCategoryNameQuery
+>;
+export const rentalsByAvailabilityCategoryIndex = /* GraphQL */ `query RentalsByAvailabilityCategoryIndex(
+  $availabilityCategoryIndex: String!
+  $sortDirection: ModelSortDirection
+  $filter: ModelRentalFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  rentalsByAvailabilityCategoryIndex(
+    availabilityCategoryIndex: $availabilityCategoryIndex
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      description
+      isAvailable
+      rating
+      userID
+      categoryName
+      availabilityCategoryIndex
+      amountHourly
+      amountDaily
+      amountWeekly
+      latitude
+      longitude
+      bookingStartDates
+      bookingEndDates
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.RentalsByAvailabilityCategoryIndexQueryVariables,
+  APITypes.RentalsByAvailabilityCategoryIndexQuery
 >;

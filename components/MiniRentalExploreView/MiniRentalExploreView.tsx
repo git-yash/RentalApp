@@ -25,6 +25,18 @@ const MiniRentalExploreView = (props: {
     props.rental,
   );
   library.add(solidHeart, regularHeart);
+  const PriceText = (props: {amount: number; timeIncrement: string}) => {
+    return (
+      <View style={miniRentalExploreViewStyle.pricePerHourContainer}>
+        <Text style={miniRentalExploreViewStyle.priceText}>
+          ${props.amount}
+        </Text>
+        <Text style={miniRentalExploreViewStyle.hourText}>
+          / {props.timeIncrement}
+        </Text>
+      </View>
+    );
+  };
   return (
     <GestureHandlerRootView>
       <Bounceable>
@@ -48,14 +60,24 @@ const MiniRentalExploreView = (props: {
                     {props.rental.title}
                   </Text>
                 </View>
-                <View style={miniRentalExploreViewStyle.pricePerHourContainer}>
-                  <Text style={miniRentalExploreViewStyle.priceText}>
-                    ${props.rental.prices[0].amount}
-                  </Text>
-                  <Text style={miniRentalExploreViewStyle.hourText}>
-                    / {props.rental.prices[0].timeIncrement}
-                  </Text>
-                </View>
+                {props.rental.amountHourly && (
+                  <PriceText
+                    amount={props.rental.amountHourly}
+                    timeIncrement={'Hour'}
+                  />
+                )}
+                {props.rental.amountDaily && (
+                  <PriceText
+                    amount={props.rental.amountDaily}
+                    timeIncrement={'Day'}
+                  />
+                )}
+                {props.rental.amountWeekly && (
+                  <PriceText
+                    amount={props.rental.amountWeekly}
+                    timeIncrement={'Week'}
+                  />
+                )}
               </View>
               <View style={miniRentalExploreViewStyle.ratingLikeContainer}>
                 <View style={miniRentalExploreViewStyle.ratingContainer}>

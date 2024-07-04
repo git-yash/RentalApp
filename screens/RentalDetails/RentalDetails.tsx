@@ -18,7 +18,7 @@ import {useEffect, useState} from 'react';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import BookmarkButton from '../../components/BookmarkButton/BookmarkButton';
 import {Progress} from 'native-base';
-import {Price, Rental} from '../../src/API';
+import {Rental} from '../../src/API';
 import RentalDetailsImagesSlider from '../../components/RentalDetailsImagesSlider/RentalDetailsImagesSlider';
 
 const RentalDetails = (props: {navigation: any; route: any}) => {
@@ -65,7 +65,7 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
           <Text style={rentalDetailsStyle.titleText}>{rental.title}</Text>
           <View style={{marginLeft: 10}}>
             <Text style={rentalDetailsStyle.reviewLengthText}>
-              in {Util.getCategoryTextFromIndex(rental.category)}
+              in {rental.categoryName}
             </Text>
           </View>
           <View style={rentalDetailsStyle.cityReviewContainer}>
@@ -95,11 +95,21 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
               {rental.description}
             </Text>
             <Text style={rentalDetailsStyle.deliveryText}>Price</Text>
-            {rental.prices.map((p: Price, index) => (
-              <Text key={index} style={rentalDetailsStyle.priceText}>
-                ${p.amount} / {p.timeIncrement}
+            {rental.amountHourly && (
+              <Text style={rentalDetailsStyle.priceText}>
+                ${rental.amountHourly} / Hour
               </Text>
-            ))}
+            )}
+            {rental.amountDaily && (
+              <Text style={rentalDetailsStyle.priceText}>
+                ${rental.amountDaily} / Day
+              </Text>
+            )}
+            {rental.amountWeekly && (
+              <Text style={rentalDetailsStyle.priceText}>
+                ${rental.amountWeekly} / Week
+              </Text>
+            )}
             {shouldShowReadMore && (
               <TouchableOpacity>
                 <Text style={rentalDetailsStyle.readMoreText}>Read more</Text>

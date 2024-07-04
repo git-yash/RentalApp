@@ -15,7 +15,7 @@ export default class UserService {
         return response.data.getUser as User;
       })
       .catch(e => {
-        console.error(e);
+        console.error('getUser', e);
         throw e;
       });
   }

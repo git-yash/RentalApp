@@ -213,6 +213,9 @@ export default class Util {
   }
 
   public static addressToString(address: Address): string {
+    if (!address) {
+      return '';
+    }
     return `${address.street} ${address.street2 || ''}, ${address.city}, ${
       address.state
     } ${address.zip}, ${address.country}`;

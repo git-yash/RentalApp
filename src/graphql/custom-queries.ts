@@ -14,6 +14,7 @@ export const listRentalsWithAllDetails =
 ) {
   listRentals(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
+      id
       title
       rating
       userID

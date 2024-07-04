@@ -79,7 +79,9 @@ const useExplore = (navigation: any) => {
       name: 'Other',
     },
   ];
-  const [selectedCategory, setSelectedCategory] = useState<number>(0);
+  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
+    undefined,
+  );
   useEffect(() => {
     if (isListView === false) {
       setMapInitiallyVisible(true);

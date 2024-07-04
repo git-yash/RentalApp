@@ -12,9 +12,6 @@
       "AmplifyAppId": "d2ovq5w4ddq2dw"
     },
     "categories": {
-      "api": {
-        "rentalapp": {}
-      },
       "auth": {
         "RentalApp": {},
         "userPoolGroups": {}
