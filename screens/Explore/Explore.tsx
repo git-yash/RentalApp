@@ -6,7 +6,6 @@ import {Spinner} from 'native-base';
 import Colors from '../../assets/Colors';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import CustomMapMarker from '../../components/CustomMapMarker/CustomMapMarker';
-import MiniRentalExploreView from '../../components/MiniRentalExploreView/MiniRentalExploreView';
 import useExplore from './useExplore';
 import exploreStyles from './Explore.style';
 import UserPositionCustomMapMarker from '../../components/UserPositionCustomMapMarker/UserPositionCustomMapMarker';
@@ -16,6 +15,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import CategoryTabBar from '../../components/CategoryTabBar/CategoryTabBar';
 import Collapsible from 'react-native-collapsible';
 import {useNavigation} from '@react-navigation/native';
+import RentalCard from '../../components/RentalCard/RentalCard';
 
 const Explore = () => {
   const navigation = useNavigation();
@@ -24,11 +24,7 @@ const Explore = () => {
     snapPoints,
     categoryItems,
     handleSheetChanges,
-    setAllRentals,
-    isSearchFocused,
     showSearchResults,
-    setShowSearchResults,
-    setIsSearchFocused,
     selectedCategory,
     setSelectedCategory,
     isListView,
@@ -110,12 +106,14 @@ const Explore = () => {
                   keyExtractor={item => item.id}
                   contentContainerStyle={{paddingBottom: '20%'}}
                   renderItem={({item}) => (
-                    <MiniRentalExploreView
-                      rental={item}
-                      currentLongitude={position?.coords.longitude as number}
-                      currentLatitude={position?.coords.latitude as number}
-                      navigation={navigation}
-                    />
+                    <View>
+                      <RentalCard
+                        rental={item}
+                        currentLongitude={position?.coords.longitude as number}
+                        currentLatitude={position?.coords.latitude as number}
+                        navigation={navigation}
+                      />
+                    </View>
                   )}
                 />
                 {isListView && (
@@ -178,7 +176,7 @@ const Explore = () => {
             onViewableItemsChanged={onViewableItemsChanged}
             viewabilityConfig={{viewAreaCoveragePercentThreshold: 50}}
             renderItem={({item}) => (
-              <MiniRentalExploreView
+              <RentalCard
                 rental={item}
                 currentLongitude={position?.coords.longitude as number}
                 currentLatitude={position?.coords.latitude as number}

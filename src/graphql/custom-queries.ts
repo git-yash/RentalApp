@@ -16,8 +16,10 @@ export const listRentalsWithAllDetails =
     items {
       id
       title
-      rating
+      averageRating
       userID
+      numberOfTimesRented
+      numberOfReviews
       amountHourly
       amountDaily
       amountWeekly
@@ -43,13 +45,16 @@ export const listBookmarkedRentalsWithDetails =
       userID
       bookmarkedRentalRentalId
       rental {
-        isAvailable
-        rating
-        title
-        userID
-        amountHourly
-        amountDaily
-        amountWeekly
+      id
+      title
+      averageRating
+      userID
+      numberOfTimesRented
+      numberOfReviews
+      amountHourly
+      amountDaily
+      amountWeekly
+     __typename
       }
     }
   }

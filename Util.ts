@@ -212,7 +212,7 @@ export default class Util {
     return date.toISOString().split('T')[0];
   }
 
-  public static addressToString(address: Address): string {
+  public static addressToString(address?: Address): string {
     if (!address) {
       return '';
     }
@@ -234,5 +234,27 @@ export default class Util {
       'Other',
     ];
     return categoryNames[index];
+  }
+
+  public static getPriceString(
+    amountHourly?: number | null,
+    amountDaily?: number | null,
+    amountWeekly?: number | null,
+  ) {
+    const parts: string[] = [];
+
+    if (amountHourly !== undefined && amountHourly !== null) {
+      parts.push(`$${amountHourly}H`);
+    }
+
+    if (amountDaily !== undefined && amountDaily !== null) {
+      parts.push(`$${amountDaily}D`);
+    }
+
+    if (amountWeekly !== undefined && amountWeekly !== null) {
+      parts.push(`$${amountWeekly}W`);
+    }
+
+    return parts.join(' / ');
   }
 }

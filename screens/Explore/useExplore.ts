@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {Alert, AppState} from 'react-native';
+import {Alert, FlatList} from 'react-native';
 import Geolocation, {
   GeolocationResponse,
 } from '@react-native-community/geolocation';
@@ -12,7 +12,6 @@ import useUserStore from '../../store/userStore';
 import {Hub} from 'aws-amplify/utils';
 import ScreenNameConstants from '../ScreenNameConstants';
 import {Rental} from '../../src/API';
-import {useIsFocused} from '@react-navigation/native';
 
 const useExplore = (navigation: any) => {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
@@ -23,12 +22,11 @@ const useExplore = (navigation: any) => {
   const mapStyle = require('../../assets/MapStyle.json');
   const [rentals, setRentals] = useState<Rental[]>([]);
   const exploreService = new ExploreService();
-  const flatListRef = useRef();
+  const flatListRef = useRef<FlatList>(null);
   const mapRef = useRef(null);
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const {bookmarkedPosts} = useMyContext();
   const [isListView, setIsListView] = useState<boolean | undefined>(undefined);
-  const appState = useRef(AppState.currentState);
   const [refreshing, setRefreshing] = React.useState(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const {user} = useUserStore();
@@ -154,8 +152,6 @@ const useExplore = (navigation: any) => {
       300,
     );
   }, [currentItemIndex, rentals]);
-
-  const isScreenFocused = useIsFocused();
 
   const onSearchBarPress = () => {
     navigation.navigate(ScreenNameConstants.Search, {

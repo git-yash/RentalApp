@@ -14,47 +14,42 @@ import {faHeart as regularHeart} from '@fortawesome/free-regular-svg-icons';
 import Colors from '../../assets/Colors';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import useRentalDetails from './useRentalDetails';
-import {useEffect, useState} from 'react';
+import {SetStateAction, useEffect, useState} from 'react';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import BookmarkButton from '../../components/BookmarkButton/BookmarkButton';
 import {Progress} from 'native-base';
-import {Rental} from '../../src/API';
 import RentalDetailsImagesSlider from '../../components/RentalDetailsImagesSlider/RentalDetailsImagesSlider';
 
 const RentalDetails = (props: {navigation: any; route: any}) => {
-  const rental: Rental = props.route.params.rental;
-  const {currentLatitude, currentLongitude, rentalPostPictures} =
-    props.route.params;
+  const rentalID: string = props.route.params.rentalID;
+  const {rentalPostPictures} = props.route.params;
   const noReviews: string = 'No reviews';
   const readMoreMaxCharLength: number = 113;
-  const shouldShowReadMore: boolean =
-    rental.description >= readMoreMaxCharLength;
   const mapStyle = require('../../assets/MapStyle.json');
-  const {
-    handleMapViewPressablePress,
-    getReviewRatingPercentages,
-    getAverageRating,
-    distance,
-  } = useRentalDetails(props.navigation, rental);
-  const [rating, setRating] = useState(0);
-  const averageRating: number = getAverageRating();
-  const reviewRatingPercentages: number[] = getReviewRatingPercentages();
 
-  const handleStarPress = starNumber => {
+  const {getReviewRatingPercentages, distance, rental} = useRentalDetails(
+    props.navigation,
+    rentalID,
+  );
+  const [rating, setRating] = useState(0);
+  const reviewRatingPercentages: number[] = getReviewRatingPercentages();
+  const shouldShowReadMore: boolean =
+    !!rental && rental.description.length >= readMoreMaxCharLength;
+
+  const handleStarPress = (starNumber: SetStateAction<number>) => {
     setRating(starNumber);
   };
+
   library.add(solidHeart, regularHeart);
   // max is 33
+
   useEffect(() => {
+    if (!rental) {
+      return;
+    }
+
     props.navigation.setOptions({
-      headerRight: () => (
-        <BookmarkButton
-          rental={rental}
-          iconSize={23}
-          currentLatitude={currentLatitude}
-          currentLongitude={currentLongitude}
-        />
-      ),
+      headerRight: () => <BookmarkButton rental={rental} iconSize={23} />,
     });
   }, []);
 
@@ -62,52 +57,57 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
     <GestureHandlerRootView>
       <SafeAreaView>
         <ScrollView>
-          <Text style={rentalDetailsStyle.titleText}>{rental.title}</Text>
+          <Text style={rentalDetailsStyle.titleText}>{rental?.title}</Text>
           <View style={{marginLeft: 10}}>
             <Text style={rentalDetailsStyle.reviewLengthText}>
-              in {rental.categoryName}
+              in {rental?.categoryName}
             </Text>
           </View>
           <View style={rentalDetailsStyle.cityReviewContainer}>
             <Text style={rentalDetailsStyle.cityText}>
-              {rental.address.city}, {rental.address.state} ({distance})
+              {rental?.address.city}, {rental?.address.state} ({distance})
             </Text>
             <View style={rentalDetailsStyle.reviewContainer}>
               <FontAwesomeIcon
-                icon={faStar}
-                color={Colors.green}
                 style={rentalDetailsStyle.starIcon}
+                icon={faStar}
+                color={rental?.averageRating ? Colors.green : Colors.gray500}
               />
               <Text style={rentalDetailsStyle.ratingText}>
-                {rental.reviews?.items?.length === 0
-                  ? noReviews
-                  : rental.rating}
+                {rental?.averageRating || 'No Reviews'}
               </Text>
-              <Text style={rentalDetailsStyle.reviewLengthText}>
-                ({rental.reviews?.items?.length})
-              </Text>
+              {rental?.numberOfReviews && (
+                <Text
+                  style={{
+                    fontFamily: 'Poppins-Regular',
+                    color: Colors.gray700,
+                    paddingLeft: 5,
+                  }}>
+                  ({rental?.numberOfReviews})
+                </Text>
+              )}
             </View>
           </View>
           <RentalDetailsImagesSlider picturePaths={rentalPostPictures} />
           <View style={rentalDetailsStyle.mainContainer}>
             <Text style={rentalDetailsStyle.descriptionText}>Description</Text>
             <Text style={rentalDetailsStyle.subtitleDescriptionText}>
-              {rental.description}
+              {rental?.description}
             </Text>
             <Text style={rentalDetailsStyle.deliveryText}>Price</Text>
-            {rental.amountHourly && (
+            {rental?.amountHourly && (
               <Text style={rentalDetailsStyle.priceText}>
-                ${rental.amountHourly} / Hour
+                ${rental?.amountHourly} / Hour
               </Text>
             )}
-            {rental.amountDaily && (
+            {rental?.amountDaily && (
               <Text style={rentalDetailsStyle.priceText}>
-                ${rental.amountDaily} / Day
+                ${rental?.amountDaily} / Day
               </Text>
             )}
-            {rental.amountWeekly && (
+            {rental?.amountWeekly && (
               <Text style={rentalDetailsStyle.priceText}>
-                ${rental.amountWeekly} / Week
+                ${rental?.amountWeekly} / Week
               </Text>
             )}
             {shouldShowReadMore && (
@@ -117,7 +117,7 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
             )}
             <Text style={rentalDetailsStyle.subtitleText}>Inclusions</Text>
             <Text style={rentalDetailsStyle.subtitleDescriptionText}>
-              {rental.description}
+              {rental?.description}
             </Text>
             {shouldShowReadMore && (
               <TouchableOpacity>
@@ -142,7 +142,7 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
             <View style={rentalDetailsStyle.ratingsContainer}>
               <View style={rentalDetailsStyle.averageRatingTextContainer}>
                 <Text style={rentalDetailsStyle.averageRatingText}>
-                  {averageRating}
+                  {rental?.averageRating}
                 </Text>
                 <Text style={rentalDetailsStyle.outOfFiveText}>Out of 5</Text>
               </View>
@@ -166,7 +166,7 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
             <View style={rentalDetailsStyle.reviewsContainer}>
               <Text style={rentalDetailsStyle.reviewText}>
                 {Util.getFormattedNumberText(
-                  rental.reviews?.items?.length,
+                  rental?.reviews?.items?.length,
                   'Review',
                 )}
               </Text>

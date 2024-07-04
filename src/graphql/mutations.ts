@@ -1,14 +1,16 @@
 /* tslint:disable */
-/* eslint-disable */
+
 // this is an auto generated file. This will be overwritten
 
-import * as APITypes from "../API";
+import * as APITypes from '../API';
+
 type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationInput: InputType;
   __generatedMutationOutput: OutputType;
 };
 
-export const createBookmarkedRental = /* GraphQL */ `mutation CreateBookmarkedRental(
+export const createBookmarkedRental =
+  /* GraphQL */ `mutation CreateBookmarkedRental(
   $input: CreateBookmarkedRentalInput!
   $condition: ModelBookmarkedRentalConditionInput
 ) {
@@ -19,7 +21,6 @@ export const createBookmarkedRental = /* GraphQL */ `mutation CreateBookmarkedRe
       title
       description
       isAvailable
-      rating
       userID
       categoryName
       availabilityCategoryIndex
@@ -30,6 +31,9 @@ export const createBookmarkedRental = /* GraphQL */ `mutation CreateBookmarkedRe
       longitude
       bookingStartDates
       bookingEndDates
+      numberOfTimesRented
+      numberOfReviews
+      averageRating
       createdAt
       updatedAt
       __typename
@@ -42,10 +46,11 @@ export const createBookmarkedRental = /* GraphQL */ `mutation CreateBookmarkedRe
   }
 }
 ` as GeneratedMutation<
-  APITypes.CreateBookmarkedRentalMutationVariables,
-  APITypes.CreateBookmarkedRentalMutation
->;
-export const updateBookmarkedRental = /* GraphQL */ `mutation UpdateBookmarkedRental(
+    APITypes.CreateBookmarkedRentalMutationVariables,
+    APITypes.CreateBookmarkedRentalMutation
+  >;
+export const updateBookmarkedRental =
+  /* GraphQL */ `mutation UpdateBookmarkedRental(
   $input: UpdateBookmarkedRentalInput!
   $condition: ModelBookmarkedRentalConditionInput
 ) {
@@ -56,7 +61,6 @@ export const updateBookmarkedRental = /* GraphQL */ `mutation UpdateBookmarkedRe
       title
       description
       isAvailable
-      rating
       userID
       categoryName
       availabilityCategoryIndex
@@ -67,6 +71,9 @@ export const updateBookmarkedRental = /* GraphQL */ `mutation UpdateBookmarkedRe
       longitude
       bookingStartDates
       bookingEndDates
+      numberOfTimesRented
+      numberOfReviews
+      averageRating
       createdAt
       updatedAt
       __typename
@@ -79,10 +86,11 @@ export const updateBookmarkedRental = /* GraphQL */ `mutation UpdateBookmarkedRe
   }
 }
 ` as GeneratedMutation<
-  APITypes.UpdateBookmarkedRentalMutationVariables,
-  APITypes.UpdateBookmarkedRentalMutation
->;
-export const deleteBookmarkedRental = /* GraphQL */ `mutation DeleteBookmarkedRental(
+    APITypes.UpdateBookmarkedRentalMutationVariables,
+    APITypes.UpdateBookmarkedRentalMutation
+  >;
+export const deleteBookmarkedRental =
+  /* GraphQL */ `mutation DeleteBookmarkedRental(
   $input: DeleteBookmarkedRentalInput!
   $condition: ModelBookmarkedRentalConditionInput
 ) {
@@ -93,7 +101,6 @@ export const deleteBookmarkedRental = /* GraphQL */ `mutation DeleteBookmarkedRe
       title
       description
       isAvailable
-      rating
       userID
       categoryName
       availabilityCategoryIndex
@@ -104,6 +111,9 @@ export const deleteBookmarkedRental = /* GraphQL */ `mutation DeleteBookmarkedRe
       longitude
       bookingStartDates
       bookingEndDates
+      numberOfTimesRented
+      numberOfReviews
+      averageRating
       createdAt
       updatedAt
       __typename
@@ -116,9 +126,9 @@ export const deleteBookmarkedRental = /* GraphQL */ `mutation DeleteBookmarkedRe
   }
 }
 ` as GeneratedMutation<
-  APITypes.DeleteBookmarkedRentalMutationVariables,
-  APITypes.DeleteBookmarkedRentalMutation
->;
+    APITypes.DeleteBookmarkedRentalMutationVariables,
+    APITypes.DeleteBookmarkedRentalMutation
+  >;
 export const createBooking = /* GraphQL */ `mutation CreateBooking(
   $input: CreateBookingInput!
   $condition: ModelBookingConditionInput
@@ -134,7 +144,6 @@ export const createBooking = /* GraphQL */ `mutation CreateBooking(
       title
       description
       isAvailable
-      rating
       userID
       categoryName
       availabilityCategoryIndex
@@ -145,6 +154,9 @@ export const createBooking = /* GraphQL */ `mutation CreateBooking(
       longitude
       bookingStartDates
       bookingEndDates
+      numberOfTimesRented
+      numberOfReviews
+      averageRating
       createdAt
       updatedAt
       __typename
@@ -174,7 +186,6 @@ export const updateBooking = /* GraphQL */ `mutation UpdateBooking(
       title
       description
       isAvailable
-      rating
       userID
       categoryName
       availabilityCategoryIndex
@@ -185,6 +196,9 @@ export const updateBooking = /* GraphQL */ `mutation UpdateBooking(
       longitude
       bookingStartDates
       bookingEndDates
+      numberOfTimesRented
+      numberOfReviews
+      averageRating
       createdAt
       updatedAt
       __typename
@@ -214,7 +228,6 @@ export const deleteBooking = /* GraphQL */ `mutation DeleteBooking(
       title
       description
       isAvailable
-      rating
       userID
       categoryName
       availabilityCategoryIndex
@@ -225,6 +238,9 @@ export const deleteBooking = /* GraphQL */ `mutation DeleteBooking(
       longitude
       bookingStartDates
       bookingEndDates
+      numberOfTimesRented
+      numberOfReviews
+      averageRating
       createdAt
       updatedAt
       __typename
@@ -367,7 +383,6 @@ export const createReview = /* GraphQL */ `mutation CreateReview(
       title
       description
       isAvailable
-      rating
       userID
       categoryName
       availabilityCategoryIndex
@@ -378,6 +393,9 @@ export const createReview = /* GraphQL */ `mutation CreateReview(
       longitude
       bookingStartDates
       bookingEndDates
+      numberOfTimesRented
+      numberOfReviews
+      averageRating
       createdAt
       updatedAt
       __typename
@@ -417,7 +435,6 @@ export const updateReview = /* GraphQL */ `mutation UpdateReview(
       title
       description
       isAvailable
-      rating
       userID
       categoryName
       availabilityCategoryIndex
@@ -428,6 +445,9 @@ export const updateReview = /* GraphQL */ `mutation UpdateReview(
       longitude
       bookingStartDates
       bookingEndDates
+      numberOfTimesRented
+      numberOfReviews
+      averageRating
       createdAt
       updatedAt
       __typename
@@ -467,7 +487,6 @@ export const deleteReview = /* GraphQL */ `mutation DeleteReview(
       title
       description
       isAvailable
-      rating
       userID
       categoryName
       availabilityCategoryIndex
@@ -478,6 +497,9 @@ export const deleteReview = /* GraphQL */ `mutation DeleteReview(
       longitude
       bookingStartDates
       bookingEndDates
+      numberOfTimesRented
+      numberOfReviews
+      averageRating
       createdAt
       updatedAt
       __typename
@@ -500,7 +522,6 @@ export const createRental = /* GraphQL */ `mutation CreateRental(
     title
     description
     isAvailable
-    rating
     address {
       street
       street2
@@ -537,6 +558,9 @@ export const createRental = /* GraphQL */ `mutation CreateRental(
     longitude
     bookingStartDates
     bookingEndDates
+    numberOfTimesRented
+    numberOfReviews
+    averageRating
     createdAt
     updatedAt
     __typename
@@ -555,7 +579,6 @@ export const updateRental = /* GraphQL */ `mutation UpdateRental(
     title
     description
     isAvailable
-    rating
     address {
       street
       street2
@@ -592,6 +615,9 @@ export const updateRental = /* GraphQL */ `mutation UpdateRental(
     longitude
     bookingStartDates
     bookingEndDates
+    numberOfTimesRented
+    numberOfReviews
+    averageRating
     createdAt
     updatedAt
     __typename
@@ -610,7 +636,6 @@ export const deleteRental = /* GraphQL */ `mutation DeleteRental(
     title
     description
     isAvailable
-    rating
     address {
       street
       street2
@@ -647,6 +672,9 @@ export const deleteRental = /* GraphQL */ `mutation DeleteRental(
     longitude
     bookingStartDates
     bookingEndDates
+    numberOfTimesRented
+    numberOfReviews
+    averageRating
     createdAt
     updatedAt
     __typename

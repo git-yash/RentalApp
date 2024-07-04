@@ -51,7 +51,6 @@ type Rental @model @auth(rules: [{ allow: public }]) {
     title: String!
     description: String!
     isAvailable: Int! @index(name: "byAvailability")
-    rating: Float
     address: Address!
     reviews: [Review] @hasMany(indexName: "byRental", fields: ["id"])
     bookings: [Booking] @hasMany(indexName: "byRental", fields: ["id"])
@@ -66,4 +65,7 @@ type Rental @model @auth(rules: [{ allow: public }]) {
     longitude: Float!
     bookingStartDates: [AWSDateTime]
     bookingEndDates: [AWSDateTime]
+    numberOfTimesRented: Int
+    numberOfReviews: Int
+    averageRating: Float
 }

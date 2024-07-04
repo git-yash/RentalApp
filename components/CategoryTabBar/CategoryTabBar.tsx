@@ -3,7 +3,7 @@ import {FlatList} from 'react-native';
 import CategoryTabBarItem from '../CategoryTabBarItem/CategoryTabBarItem';
 
 const CategoryTabBar = (props: {
-  whichCategorySelected: string;
+  whichCategorySelected: string | undefined;
   setWhichCategorySelected: any;
   categoryItems: any;
 }) => {

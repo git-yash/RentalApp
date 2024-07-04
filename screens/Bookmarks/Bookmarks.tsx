@@ -9,7 +9,7 @@ import {
 import bookmarksStyle from './Bookmarks.style';
 import useBookmarks from './useBookmarks';
 import ScreenTitle from '../../components/ScreenTitle/ScreenTitle';
-import MiniRentalExploreView from '../../components/MiniRentalExploreView/MiniRentalExploreView';
+import RentalCard from '../../components/RentalCard/RentalCard';
 
 const Bookmarks = (props: {navigation: any}) => {
   const {position, refreshing, onRefresh, bookmarkedRentals} = useBookmarks();
@@ -33,7 +33,7 @@ const Bookmarks = (props: {navigation: any}) => {
         )}
         {bookmarkedRentals.map((item, index) => {
           return (
-            <MiniRentalExploreView
+            <RentalCard
               rental={item}
               key={index}
               currentLatitude={position?.coords.latitude}

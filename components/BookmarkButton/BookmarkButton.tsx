@@ -8,12 +8,7 @@ import Colors from '../../assets/Colors';
 import {Rental} from '../../src/API';
 import useBookmarkButton from './useBookmarkButton';
 
-const BookmarkButton = (props: {
-  currentLatitude: number;
-  currentLongitude: number;
-  rental: Rental;
-  iconSize: number;
-}) => {
+const BookmarkButton = (props: {rental: Rental; iconSize: number}) => {
   const {handleHeartPress, isBookmarked} = useBookmarkButton(props.rental);
 
   return (

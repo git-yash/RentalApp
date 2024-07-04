@@ -1,14 +1,16 @@
 /* tslint:disable */
-/* eslint-disable */
+
 // this is an auto generated file. This will be overwritten
 
-import * as APITypes from "../API";
+import * as APITypes from '../API';
+
 type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryInput: InputType;
   __generatedQueryOutput: OutputType;
 };
 
-export const getBookmarkedRental = /* GraphQL */ `query GetBookmarkedRental($id: ID!) {
+export const getBookmarkedRental =
+  /* GraphQL */ `query GetBookmarkedRental($id: ID!) {
   getBookmarkedRental(id: $id) {
     id
     rental {
@@ -16,7 +18,6 @@ export const getBookmarkedRental = /* GraphQL */ `query GetBookmarkedRental($id:
       title
       description
       isAvailable
-      rating
       userID
       categoryName
       availabilityCategoryIndex
@@ -27,6 +28,9 @@ export const getBookmarkedRental = /* GraphQL */ `query GetBookmarkedRental($id:
       longitude
       bookingStartDates
       bookingEndDates
+      numberOfTimesRented
+      numberOfReviews
+      averageRating
       createdAt
       updatedAt
       __typename
@@ -39,9 +43,9 @@ export const getBookmarkedRental = /* GraphQL */ `query GetBookmarkedRental($id:
   }
 }
 ` as GeneratedQuery<
-  APITypes.GetBookmarkedRentalQueryVariables,
-  APITypes.GetBookmarkedRentalQuery
->;
+    APITypes.GetBookmarkedRentalQueryVariables,
+    APITypes.GetBookmarkedRentalQuery
+  >;
 export const listBookmarkedRentals = /* GraphQL */ `query ListBookmarkedRentals(
   $filter: ModelBookmarkedRentalFilterInput
   $limit: Int
@@ -64,7 +68,8 @@ export const listBookmarkedRentals = /* GraphQL */ `query ListBookmarkedRentals(
   APITypes.ListBookmarkedRentalsQueryVariables,
   APITypes.ListBookmarkedRentalsQuery
 >;
-export const bookmarkedRentalsByUserID = /* GraphQL */ `query BookmarkedRentalsByUserID(
+export const bookmarkedRentalsByUserID =
+  /* GraphQL */ `query BookmarkedRentalsByUserID(
   $userID: ID!
   $sortDirection: ModelSortDirection
   $filter: ModelBookmarkedRentalFilterInput
@@ -91,9 +96,9 @@ export const bookmarkedRentalsByUserID = /* GraphQL */ `query BookmarkedRentalsB
   }
 }
 ` as GeneratedQuery<
-  APITypes.BookmarkedRentalsByUserIDQueryVariables,
-  APITypes.BookmarkedRentalsByUserIDQuery
->;
+    APITypes.BookmarkedRentalsByUserIDQueryVariables,
+    APITypes.BookmarkedRentalsByUserIDQuery
+  >;
 export const getBooking = /* GraphQL */ `query GetBooking($id: ID!) {
   getBooking(id: $id) {
     id
@@ -106,7 +111,6 @@ export const getBooking = /* GraphQL */ `query GetBooking($id: ID!) {
       title
       description
       isAvailable
-      rating
       userID
       categoryName
       availabilityCategoryIndex
@@ -117,6 +121,9 @@ export const getBooking = /* GraphQL */ `query GetBooking($id: ID!) {
       longitude
       bookingStartDates
       bookingEndDates
+      numberOfTimesRented
+      numberOfReviews
+      averageRating
       createdAt
       updatedAt
       __typename
@@ -293,7 +300,6 @@ export const getReview = /* GraphQL */ `query GetReview($id: ID!) {
       title
       description
       isAvailable
-      rating
       userID
       categoryName
       availabilityCategoryIndex
@@ -304,6 +310,9 @@ export const getReview = /* GraphQL */ `query GetReview($id: ID!) {
       longitude
       bookingStartDates
       bookingEndDates
+      numberOfTimesRented
+      numberOfReviews
+      averageRating
       createdAt
       updatedAt
       __typename
@@ -414,7 +423,6 @@ export const getRental = /* GraphQL */ `query GetRental($id: ID!) {
     title
     description
     isAvailable
-    rating
     address {
       street
       street2
@@ -451,6 +459,9 @@ export const getRental = /* GraphQL */ `query GetRental($id: ID!) {
     longitude
     bookingStartDates
     bookingEndDates
+    numberOfTimesRented
+    numberOfReviews
+    averageRating
     createdAt
     updatedAt
     __typename
@@ -468,7 +479,6 @@ export const listRentals = /* GraphQL */ `query ListRentals(
       title
       description
       isAvailable
-      rating
       userID
       categoryName
       availabilityCategoryIndex
@@ -479,6 +489,9 @@ export const listRentals = /* GraphQL */ `query ListRentals(
       longitude
       bookingStartDates
       bookingEndDates
+      numberOfTimesRented
+      numberOfReviews
+      averageRating
       createdAt
       updatedAt
       __typename
@@ -510,7 +523,6 @@ export const rentalsByIsAvailable = /* GraphQL */ `query RentalsByIsAvailable(
       title
       description
       isAvailable
-      rating
       userID
       categoryName
       availabilityCategoryIndex
@@ -521,6 +533,9 @@ export const rentalsByIsAvailable = /* GraphQL */ `query RentalsByIsAvailable(
       longitude
       bookingStartDates
       bookingEndDates
+      numberOfTimesRented
+      numberOfReviews
+      averageRating
       createdAt
       updatedAt
       __typename
@@ -552,7 +567,6 @@ export const rentalsByUserID = /* GraphQL */ `query RentalsByUserID(
       title
       description
       isAvailable
-      rating
       userID
       categoryName
       availabilityCategoryIndex
@@ -563,6 +577,9 @@ export const rentalsByUserID = /* GraphQL */ `query RentalsByUserID(
       longitude
       bookingStartDates
       bookingEndDates
+      numberOfTimesRented
+      numberOfReviews
+      averageRating
       createdAt
       updatedAt
       __typename
@@ -594,7 +611,6 @@ export const rentalsByCategoryName = /* GraphQL */ `query RentalsByCategoryName(
       title
       description
       isAvailable
-      rating
       userID
       categoryName
       availabilityCategoryIndex
@@ -605,6 +621,9 @@ export const rentalsByCategoryName = /* GraphQL */ `query RentalsByCategoryName(
       longitude
       bookingStartDates
       bookingEndDates
+      numberOfTimesRented
+      numberOfReviews
+      averageRating
       createdAt
       updatedAt
       __typename
@@ -617,7 +636,8 @@ export const rentalsByCategoryName = /* GraphQL */ `query RentalsByCategoryName(
   APITypes.RentalsByCategoryNameQueryVariables,
   APITypes.RentalsByCategoryNameQuery
 >;
-export const rentalsByAvailabilityCategoryIndex = /* GraphQL */ `query RentalsByAvailabilityCategoryIndex(
+export const rentalsByAvailabilityCategoryIndex =
+  /* GraphQL */ `query RentalsByAvailabilityCategoryIndex(
   $availabilityCategoryIndex: String!
   $sortDirection: ModelSortDirection
   $filter: ModelRentalFilterInput
@@ -636,7 +656,6 @@ export const rentalsByAvailabilityCategoryIndex = /* GraphQL */ `query RentalsBy
       title
       description
       isAvailable
-      rating
       userID
       categoryName
       availabilityCategoryIndex
@@ -647,6 +666,9 @@ export const rentalsByAvailabilityCategoryIndex = /* GraphQL */ `query RentalsBy
       longitude
       bookingStartDates
       bookingEndDates
+      numberOfTimesRented
+      numberOfReviews
+      averageRating
       createdAt
       updatedAt
       __typename
@@ -656,6 +678,6 @@ export const rentalsByAvailabilityCategoryIndex = /* GraphQL */ `query RentalsBy
   }
 }
 ` as GeneratedQuery<
-  APITypes.RentalsByAvailabilityCategoryIndexQueryVariables,
-  APITypes.RentalsByAvailabilityCategoryIndexQuery
->;
+    APITypes.RentalsByAvailabilityCategoryIndexQueryVariables,
+    APITypes.RentalsByAvailabilityCategoryIndexQuery
+  >;

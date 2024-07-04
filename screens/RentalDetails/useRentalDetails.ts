@@ -3,32 +3,51 @@ import {createMapLink} from 'react-native-open-maps';
 import {useActionSheet} from '@expo/react-native-action-sheet';
 import {useEffect, useState} from 'react';
 import {Rental} from '../../src/API';
-import Util from '../../Util';
 import RentalDetailsService from './RentalDetails.service';
+import Util from '../../Util';
 
-const useRentalDetails = (navigation: any, rental: Rental) => {
+const useRentalDetails = (navigation: any, rentalID: string) => {
   const {showActionSheetWithOptions} = useActionSheet();
-  const addressString: string = Util.addressToString(rental.address);
   const rentalDetailsService = new RentalDetailsService();
   const [distance, setDistance] = useState<string | undefined>('');
+  const [rental, setRental] = useState<Rental | undefined>(undefined);
 
   useEffect(() => {
     navigation.setOptions({
-      title: rental.title,
+      title: rental?.title,
     });
+  }, []);
+
+  useEffect(() => {
+    console.log(rentalID);
+    if (!rentalID) {
+      return;
+    }
+
     rentalDetailsService
-      .getDistanceAndTimeFromAddresses(
-        rental.latitude,
-        rental.longitude,
-        rental.address,
-      )
-      .then(response => {
-        setDistance(response);
-      });
+      .getRentalDetails(rentalID)
+      .then(responseRental => {
+        if (!responseRental) {
+          return;
+        }
+
+        setRental(responseRental);
+
+        rentalDetailsService
+          .getDistanceAndTimeFromAddresses(
+            responseRental.latitude,
+            responseRental.longitude,
+            responseRental.addres,
+          )
+          .then(response => {
+            setDistance(response);
+          });
+      })
+      .catch(e => console.error(e));
   }, []);
 
   const getReviewRatingPercentages = (): number[] => {
-    if (!rental.reviews?.items) {
+    if (!rental?.reviews?.items) {
       return [];
     }
 
@@ -46,7 +65,7 @@ const useRentalDetails = (navigation: any, rental: Rental) => {
   };
 
   const getAverageRating = (): number => {
-    if (!rental.reviews || !rental.reviews.items) {
+    if (!rental?.reviews || !rental.reviews.items) {
       return 0;
     }
 
@@ -59,6 +78,11 @@ const useRentalDetails = (navigation: any, rental: Rental) => {
   };
 
   const handleMapViewPressablePress = () => {
+    if (!rental) {
+      return;
+    }
+
+    const addressString: string = Util.addressToString(rental?.address);
     if (Platform.OS === 'ios') {
       const options = ['Open In Maps', 'Open In Google Maps', 'Cancel'];
       const cancelButtonIndex = 2;
@@ -68,13 +92,13 @@ const useRentalDetails = (navigation: any, rental: Rental) => {
           options,
           cancelButtonIndex,
         },
-        (selectedIndex: number) => {
+        (selectedIndex: number | undefined) => {
           switch (selectedIndex) {
             case 0:
               void Linking.openURL(
                 createMapLink({
                   provider: 'apple',
-                  end: rental.address,
+                  end: addressString,
                 }),
               );
               break;
@@ -83,7 +107,7 @@ const useRentalDetails = (navigation: any, rental: Rental) => {
               void Linking.openURL(
                 createMapLink({
                   provider: 'google',
-                  end: rental.address,
+                  end: addressStrin,
                 }),
               );
               break;
@@ -108,6 +132,7 @@ const useRentalDetails = (navigation: any, rental: Rental) => {
     getReviewRatingPercentages,
     getAverageRating,
     distance,
+    rental,
   };
 };
 

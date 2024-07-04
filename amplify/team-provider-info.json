@@ -24,6 +24,9 @@
       },
       "storage": {
         "productContent": {}
+      },
+      "api": {
+        "rentalapp": {}
       }
     }
   }
