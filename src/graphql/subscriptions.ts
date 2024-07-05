@@ -1,16 +1,14 @@
 /* tslint:disable */
-
+/* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-import * as APITypes from '../API';
-
+import * as APITypes from "../API";
 type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionInput: InputType;
   __generatedSubscriptionOutput: OutputType;
 };
 
-export const onCreateBookmarkedRental =
-  /* GraphQL */ `subscription OnCreateBookmarkedRental(
+export const onCreateBookmarkedRental = /* GraphQL */ `subscription OnCreateBookmarkedRental(
   $filter: ModelSubscriptionBookmarkedRentalFilterInput
 ) {
   onCreateBookmarkedRental(filter: $filter) {
@@ -33,6 +31,12 @@ export const onCreateBookmarkedRental =
       numberOfTimesRented
       numberOfReviews
       averageRating
+      numberOfFiveStarRatings
+      numberOfFourStarRatings
+      numberOfThreeStarRatings
+      numberOfTwoStarRatings
+      numberOfOneStarRatings
+      numberOfRatings
       createdAt
       updatedAt
       __typename
@@ -45,11 +49,10 @@ export const onCreateBookmarkedRental =
   }
 }
 ` as GeneratedSubscription<
-    APITypes.OnCreateBookmarkedRentalSubscriptionVariables,
-    APITypes.OnCreateBookmarkedRentalSubscription
-  >;
-export const onUpdateBookmarkedRental =
-  /* GraphQL */ `subscription OnUpdateBookmarkedRental(
+  APITypes.OnCreateBookmarkedRentalSubscriptionVariables,
+  APITypes.OnCreateBookmarkedRentalSubscription
+>;
+export const onUpdateBookmarkedRental = /* GraphQL */ `subscription OnUpdateBookmarkedRental(
   $filter: ModelSubscriptionBookmarkedRentalFilterInput
 ) {
   onUpdateBookmarkedRental(filter: $filter) {
@@ -72,6 +75,12 @@ export const onUpdateBookmarkedRental =
       numberOfTimesRented
       numberOfReviews
       averageRating
+      numberOfFiveStarRatings
+      numberOfFourStarRatings
+      numberOfThreeStarRatings
+      numberOfTwoStarRatings
+      numberOfOneStarRatings
+      numberOfRatings
       createdAt
       updatedAt
       __typename
@@ -84,11 +93,10 @@ export const onUpdateBookmarkedRental =
   }
 }
 ` as GeneratedSubscription<
-    APITypes.OnUpdateBookmarkedRentalSubscriptionVariables,
-    APITypes.OnUpdateBookmarkedRentalSubscription
-  >;
-export const onDeleteBookmarkedRental =
-  /* GraphQL */ `subscription OnDeleteBookmarkedRental(
+  APITypes.OnUpdateBookmarkedRentalSubscriptionVariables,
+  APITypes.OnUpdateBookmarkedRentalSubscription
+>;
+export const onDeleteBookmarkedRental = /* GraphQL */ `subscription OnDeleteBookmarkedRental(
   $filter: ModelSubscriptionBookmarkedRentalFilterInput
 ) {
   onDeleteBookmarkedRental(filter: $filter) {
@@ -111,6 +119,12 @@ export const onDeleteBookmarkedRental =
       numberOfTimesRented
       numberOfReviews
       averageRating
+      numberOfFiveStarRatings
+      numberOfFourStarRatings
+      numberOfThreeStarRatings
+      numberOfTwoStarRatings
+      numberOfOneStarRatings
+      numberOfRatings
       createdAt
       updatedAt
       __typename
@@ -123,11 +137,10 @@ export const onDeleteBookmarkedRental =
   }
 }
 ` as GeneratedSubscription<
-    APITypes.OnDeleteBookmarkedRentalSubscriptionVariables,
-    APITypes.OnDeleteBookmarkedRentalSubscription
-  >;
-export const onCreateBooking =
-  /* GraphQL */ `subscription OnCreateBooking($filter: ModelSubscriptionBookingFilterInput) {
+  APITypes.OnDeleteBookmarkedRentalSubscriptionVariables,
+  APITypes.OnDeleteBookmarkedRentalSubscription
+>;
+export const onCreateBooking = /* GraphQL */ `subscription OnCreateBooking($filter: ModelSubscriptionBookingFilterInput) {
   onCreateBooking(filter: $filter) {
     id
     startDate
@@ -152,6 +165,12 @@ export const onCreateBooking =
       numberOfTimesRented
       numberOfReviews
       averageRating
+      numberOfFiveStarRatings
+      numberOfFourStarRatings
+      numberOfThreeStarRatings
+      numberOfTwoStarRatings
+      numberOfOneStarRatings
+      numberOfRatings
       createdAt
       updatedAt
       __typename
@@ -163,11 +182,10 @@ export const onCreateBooking =
   }
 }
 ` as GeneratedSubscription<
-    APITypes.OnCreateBookingSubscriptionVariables,
-    APITypes.OnCreateBookingSubscription
-  >;
-export const onUpdateBooking =
-  /* GraphQL */ `subscription OnUpdateBooking($filter: ModelSubscriptionBookingFilterInput) {
+  APITypes.OnCreateBookingSubscriptionVariables,
+  APITypes.OnCreateBookingSubscription
+>;
+export const onUpdateBooking = /* GraphQL */ `subscription OnUpdateBooking($filter: ModelSubscriptionBookingFilterInput) {
   onUpdateBooking(filter: $filter) {
     id
     startDate
@@ -192,6 +210,12 @@ export const onUpdateBooking =
       numberOfTimesRented
       numberOfReviews
       averageRating
+      numberOfFiveStarRatings
+      numberOfFourStarRatings
+      numberOfThreeStarRatings
+      numberOfTwoStarRatings
+      numberOfOneStarRatings
+      numberOfRatings
       createdAt
       updatedAt
       __typename
@@ -203,11 +227,10 @@ export const onUpdateBooking =
   }
 }
 ` as GeneratedSubscription<
-    APITypes.OnUpdateBookingSubscriptionVariables,
-    APITypes.OnUpdateBookingSubscription
-  >;
-export const onDeleteBooking =
-  /* GraphQL */ `subscription OnDeleteBooking($filter: ModelSubscriptionBookingFilterInput) {
+  APITypes.OnUpdateBookingSubscriptionVariables,
+  APITypes.OnUpdateBookingSubscription
+>;
+export const onDeleteBooking = /* GraphQL */ `subscription OnDeleteBooking($filter: ModelSubscriptionBookingFilterInput) {
   onDeleteBooking(filter: $filter) {
     id
     startDate
@@ -232,6 +255,12 @@ export const onDeleteBooking =
       numberOfTimesRented
       numberOfReviews
       averageRating
+      numberOfFiveStarRatings
+      numberOfFourStarRatings
+      numberOfThreeStarRatings
+      numberOfTwoStarRatings
+      numberOfOneStarRatings
+      numberOfRatings
       createdAt
       updatedAt
       __typename
@@ -243,11 +272,10 @@ export const onDeleteBooking =
   }
 }
 ` as GeneratedSubscription<
-    APITypes.OnDeleteBookingSubscriptionVariables,
-    APITypes.OnDeleteBookingSubscription
-  >;
-export const onCreateUser =
-  /* GraphQL */ `subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
+  APITypes.OnDeleteBookingSubscriptionVariables,
+  APITypes.OnDeleteBookingSubscription
+>;
+export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
   onCreateUser(filter: $filter) {
     id
     dateJoined
@@ -275,11 +303,10 @@ export const onCreateUser =
   }
 }
 ` as GeneratedSubscription<
-    APITypes.OnCreateUserSubscriptionVariables,
-    APITypes.OnCreateUserSubscription
-  >;
-export const onUpdateUser =
-  /* GraphQL */ `subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
+  APITypes.OnCreateUserSubscriptionVariables,
+  APITypes.OnCreateUserSubscription
+>;
+export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
   onUpdateUser(filter: $filter) {
     id
     dateJoined
@@ -307,11 +334,10 @@ export const onUpdateUser =
   }
 }
 ` as GeneratedSubscription<
-    APITypes.OnUpdateUserSubscriptionVariables,
-    APITypes.OnUpdateUserSubscription
-  >;
-export const onDeleteUser =
-  /* GraphQL */ `subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
+  APITypes.OnUpdateUserSubscriptionVariables,
+  APITypes.OnUpdateUserSubscription
+>;
+export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
   onDeleteUser(filter: $filter) {
     id
     dateJoined
@@ -339,11 +365,10 @@ export const onDeleteUser =
   }
 }
 ` as GeneratedSubscription<
-    APITypes.OnDeleteUserSubscriptionVariables,
-    APITypes.OnDeleteUserSubscription
-  >;
-export const onCreateReview =
-  /* GraphQL */ `subscription OnCreateReview($filter: ModelSubscriptionReviewFilterInput) {
+  APITypes.OnDeleteUserSubscriptionVariables,
+  APITypes.OnDeleteUserSubscription
+>;
+export const onCreateReview = /* GraphQL */ `subscription OnCreateReview($filter: ModelSubscriptionReviewFilterInput) {
   onCreateReview(filter: $filter) {
     id
     title
@@ -379,6 +404,12 @@ export const onCreateReview =
       numberOfTimesRented
       numberOfReviews
       averageRating
+      numberOfFiveStarRatings
+      numberOfFourStarRatings
+      numberOfThreeStarRatings
+      numberOfTwoStarRatings
+      numberOfOneStarRatings
+      numberOfRatings
       createdAt
       updatedAt
       __typename
@@ -389,11 +420,10 @@ export const onCreateReview =
   }
 }
 ` as GeneratedSubscription<
-    APITypes.OnCreateReviewSubscriptionVariables,
-    APITypes.OnCreateReviewSubscription
-  >;
-export const onUpdateReview =
-  /* GraphQL */ `subscription OnUpdateReview($filter: ModelSubscriptionReviewFilterInput) {
+  APITypes.OnCreateReviewSubscriptionVariables,
+  APITypes.OnCreateReviewSubscription
+>;
+export const onUpdateReview = /* GraphQL */ `subscription OnUpdateReview($filter: ModelSubscriptionReviewFilterInput) {
   onUpdateReview(filter: $filter) {
     id
     title
@@ -429,6 +459,12 @@ export const onUpdateReview =
       numberOfTimesRented
       numberOfReviews
       averageRating
+      numberOfFiveStarRatings
+      numberOfFourStarRatings
+      numberOfThreeStarRatings
+      numberOfTwoStarRatings
+      numberOfOneStarRatings
+      numberOfRatings
       createdAt
       updatedAt
       __typename
@@ -439,11 +475,10 @@ export const onUpdateReview =
   }
 }
 ` as GeneratedSubscription<
-    APITypes.OnUpdateReviewSubscriptionVariables,
-    APITypes.OnUpdateReviewSubscription
-  >;
-export const onDeleteReview =
-  /* GraphQL */ `subscription OnDeleteReview($filter: ModelSubscriptionReviewFilterInput) {
+  APITypes.OnUpdateReviewSubscriptionVariables,
+  APITypes.OnUpdateReviewSubscription
+>;
+export const onDeleteReview = /* GraphQL */ `subscription OnDeleteReview($filter: ModelSubscriptionReviewFilterInput) {
   onDeleteReview(filter: $filter) {
     id
     title
@@ -479,6 +514,12 @@ export const onDeleteReview =
       numberOfTimesRented
       numberOfReviews
       averageRating
+      numberOfFiveStarRatings
+      numberOfFourStarRatings
+      numberOfThreeStarRatings
+      numberOfTwoStarRatings
+      numberOfOneStarRatings
+      numberOfRatings
       createdAt
       updatedAt
       __typename
@@ -489,11 +530,10 @@ export const onDeleteReview =
   }
 }
 ` as GeneratedSubscription<
-    APITypes.OnDeleteReviewSubscriptionVariables,
-    APITypes.OnDeleteReviewSubscription
-  >;
-export const onCreateRental =
-  /* GraphQL */ `subscription OnCreateRental($filter: ModelSubscriptionRentalFilterInput) {
+  APITypes.OnDeleteReviewSubscriptionVariables,
+  APITypes.OnDeleteReviewSubscription
+>;
+export const onCreateRental = /* GraphQL */ `subscription OnCreateRental($filter: ModelSubscriptionRentalFilterInput) {
   onCreateRental(filter: $filter) {
     id
     title
@@ -538,17 +578,22 @@ export const onCreateRental =
     numberOfTimesRented
     numberOfReviews
     averageRating
+    numberOfFiveStarRatings
+    numberOfFourStarRatings
+    numberOfThreeStarRatings
+    numberOfTwoStarRatings
+    numberOfOneStarRatings
+    numberOfRatings
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedSubscription<
-    APITypes.OnCreateRentalSubscriptionVariables,
-    APITypes.OnCreateRentalSubscription
-  >;
-export const onUpdateRental =
-  /* GraphQL */ `subscription OnUpdateRental($filter: ModelSubscriptionRentalFilterInput) {
+  APITypes.OnCreateRentalSubscriptionVariables,
+  APITypes.OnCreateRentalSubscription
+>;
+export const onUpdateRental = /* GraphQL */ `subscription OnUpdateRental($filter: ModelSubscriptionRentalFilterInput) {
   onUpdateRental(filter: $filter) {
     id
     title
@@ -593,17 +638,22 @@ export const onUpdateRental =
     numberOfTimesRented
     numberOfReviews
     averageRating
+    numberOfFiveStarRatings
+    numberOfFourStarRatings
+    numberOfThreeStarRatings
+    numberOfTwoStarRatings
+    numberOfOneStarRatings
+    numberOfRatings
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedSubscription<
-    APITypes.OnUpdateRentalSubscriptionVariables,
-    APITypes.OnUpdateRentalSubscription
-  >;
-export const onDeleteRental =
-  /* GraphQL */ `subscription OnDeleteRental($filter: ModelSubscriptionRentalFilterInput) {
+  APITypes.OnUpdateRentalSubscriptionVariables,
+  APITypes.OnUpdateRentalSubscription
+>;
+export const onDeleteRental = /* GraphQL */ `subscription OnDeleteRental($filter: ModelSubscriptionRentalFilterInput) {
   onDeleteRental(filter: $filter) {
     id
     title
@@ -648,12 +698,18 @@ export const onDeleteRental =
     numberOfTimesRented
     numberOfReviews
     averageRating
+    numberOfFiveStarRatings
+    numberOfFourStarRatings
+    numberOfThreeStarRatings
+    numberOfTwoStarRatings
+    numberOfOneStarRatings
+    numberOfRatings
     createdAt
     updatedAt
     __typename
   }
 }
 ` as GeneratedSubscription<
-    APITypes.OnDeleteRentalSubscriptionVariables,
-    APITypes.OnDeleteRentalSubscription
-  >;
+  APITypes.OnDeleteRentalSubscriptionVariables,
+  APITypes.OnDeleteRentalSubscription
+>;

@@ -63,3 +63,71 @@ export const listBookmarkedRentalsWithDetails =
     APITypes.ListBookmarkedRentalsQueryVariables,
     CustomAPITypes.ListBookmarkedRentalsWithDetailsQuery
   >;
+
+export const getRentalWithDetails =
+  /* GraphQL */ `query GetRentalWithDetails($id: ID!) {
+  getRental(id: $id) {
+    id
+    title
+    description
+    isAvailable
+    address {
+      street
+      street2
+      city
+      state
+      zip
+      country
+      __typename
+    }
+    reviews {
+    items {
+      id
+      title
+      description
+      rating
+      datePublished
+      userID
+    }
+    }
+    bookings {
+      nextToken
+      __typename
+    }
+    userID
+    user {
+      id
+      dateJoined
+      phone
+      isPhoneVerified
+      createdAt
+      updatedAt
+      __typename
+    }
+    categoryName
+    availabilityCategoryIndex
+    amountHourly
+    amountDaily
+    amountWeekly
+    latitude
+    longitude
+    bookingStartDates
+    bookingEndDates
+    numberOfTimesRented
+    numberOfReviews
+    averageRating
+    numberOfFiveStarRatings
+    numberOfFourStarRatings
+    numberOfThreeStarRatings
+    numberOfTwoStarRatings
+    numberOfOneStarRatings
+    numberOfRatings
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+    APITypes.GetRentalQueryVariables,
+    APITypes.GetRentalWithDetailsQuery
+  >;

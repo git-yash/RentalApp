@@ -1,16 +1,14 @@
 /* tslint:disable */
-
+/* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-import * as APITypes from '../API';
-
+import * as APITypes from "../API";
 type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryInput: InputType;
   __generatedQueryOutput: OutputType;
 };
 
-export const getBookmarkedRental =
-  /* GraphQL */ `query GetBookmarkedRental($id: ID!) {
+export const getBookmarkedRental = /* GraphQL */ `query GetBookmarkedRental($id: ID!) {
   getBookmarkedRental(id: $id) {
     id
     rental {
@@ -31,6 +29,12 @@ export const getBookmarkedRental =
       numberOfTimesRented
       numberOfReviews
       averageRating
+      numberOfFiveStarRatings
+      numberOfFourStarRatings
+      numberOfThreeStarRatings
+      numberOfTwoStarRatings
+      numberOfOneStarRatings
+      numberOfRatings
       createdAt
       updatedAt
       __typename
@@ -43,9 +47,9 @@ export const getBookmarkedRental =
   }
 }
 ` as GeneratedQuery<
-    APITypes.GetBookmarkedRentalQueryVariables,
-    APITypes.GetBookmarkedRentalQuery
-  >;
+  APITypes.GetBookmarkedRentalQueryVariables,
+  APITypes.GetBookmarkedRentalQuery
+>;
 export const listBookmarkedRentals = /* GraphQL */ `query ListBookmarkedRentals(
   $filter: ModelBookmarkedRentalFilterInput
   $limit: Int
@@ -68,8 +72,7 @@ export const listBookmarkedRentals = /* GraphQL */ `query ListBookmarkedRentals(
   APITypes.ListBookmarkedRentalsQueryVariables,
   APITypes.ListBookmarkedRentalsQuery
 >;
-export const bookmarkedRentalsByUserID =
-  /* GraphQL */ `query BookmarkedRentalsByUserID(
+export const bookmarkedRentalsByUserID = /* GraphQL */ `query BookmarkedRentalsByUserID(
   $userID: ID!
   $sortDirection: ModelSortDirection
   $filter: ModelBookmarkedRentalFilterInput
@@ -96,9 +99,9 @@ export const bookmarkedRentalsByUserID =
   }
 }
 ` as GeneratedQuery<
-    APITypes.BookmarkedRentalsByUserIDQueryVariables,
-    APITypes.BookmarkedRentalsByUserIDQuery
-  >;
+  APITypes.BookmarkedRentalsByUserIDQueryVariables,
+  APITypes.BookmarkedRentalsByUserIDQuery
+>;
 export const getBooking = /* GraphQL */ `query GetBooking($id: ID!) {
   getBooking(id: $id) {
     id
@@ -124,6 +127,12 @@ export const getBooking = /* GraphQL */ `query GetBooking($id: ID!) {
       numberOfTimesRented
       numberOfReviews
       averageRating
+      numberOfFiveStarRatings
+      numberOfFourStarRatings
+      numberOfThreeStarRatings
+      numberOfTwoStarRatings
+      numberOfOneStarRatings
+      numberOfRatings
       createdAt
       updatedAt
       __typename
@@ -313,6 +322,12 @@ export const getReview = /* GraphQL */ `query GetReview($id: ID!) {
       numberOfTimesRented
       numberOfReviews
       averageRating
+      numberOfFiveStarRatings
+      numberOfFourStarRatings
+      numberOfThreeStarRatings
+      numberOfTwoStarRatings
+      numberOfOneStarRatings
+      numberOfRatings
       createdAt
       updatedAt
       __typename
@@ -462,6 +477,12 @@ export const getRental = /* GraphQL */ `query GetRental($id: ID!) {
     numberOfTimesRented
     numberOfReviews
     averageRating
+    numberOfFiveStarRatings
+    numberOfFourStarRatings
+    numberOfThreeStarRatings
+    numberOfTwoStarRatings
+    numberOfOneStarRatings
+    numberOfRatings
     createdAt
     updatedAt
     __typename
@@ -492,6 +513,12 @@ export const listRentals = /* GraphQL */ `query ListRentals(
       numberOfTimesRented
       numberOfReviews
       averageRating
+      numberOfFiveStarRatings
+      numberOfFourStarRatings
+      numberOfThreeStarRatings
+      numberOfTwoStarRatings
+      numberOfOneStarRatings
+      numberOfRatings
       createdAt
       updatedAt
       __typename
@@ -536,6 +563,12 @@ export const rentalsByIsAvailable = /* GraphQL */ `query RentalsByIsAvailable(
       numberOfTimesRented
       numberOfReviews
       averageRating
+      numberOfFiveStarRatings
+      numberOfFourStarRatings
+      numberOfThreeStarRatings
+      numberOfTwoStarRatings
+      numberOfOneStarRatings
+      numberOfRatings
       createdAt
       updatedAt
       __typename
@@ -580,6 +613,12 @@ export const rentalsByUserID = /* GraphQL */ `query RentalsByUserID(
       numberOfTimesRented
       numberOfReviews
       averageRating
+      numberOfFiveStarRatings
+      numberOfFourStarRatings
+      numberOfThreeStarRatings
+      numberOfTwoStarRatings
+      numberOfOneStarRatings
+      numberOfRatings
       createdAt
       updatedAt
       __typename
@@ -624,6 +663,12 @@ export const rentalsByCategoryName = /* GraphQL */ `query RentalsByCategoryName(
       numberOfTimesRented
       numberOfReviews
       averageRating
+      numberOfFiveStarRatings
+      numberOfFourStarRatings
+      numberOfThreeStarRatings
+      numberOfTwoStarRatings
+      numberOfOneStarRatings
+      numberOfRatings
       createdAt
       updatedAt
       __typename
@@ -636,8 +681,7 @@ export const rentalsByCategoryName = /* GraphQL */ `query RentalsByCategoryName(
   APITypes.RentalsByCategoryNameQueryVariables,
   APITypes.RentalsByCategoryNameQuery
 >;
-export const rentalsByAvailabilityCategoryIndex =
-  /* GraphQL */ `query RentalsByAvailabilityCategoryIndex(
+export const rentalsByAvailabilityCategoryIndex = /* GraphQL */ `query RentalsByAvailabilityCategoryIndex(
   $availabilityCategoryIndex: String!
   $sortDirection: ModelSortDirection
   $filter: ModelRentalFilterInput
@@ -669,6 +713,12 @@ export const rentalsByAvailabilityCategoryIndex =
       numberOfTimesRented
       numberOfReviews
       averageRating
+      numberOfFiveStarRatings
+      numberOfFourStarRatings
+      numberOfThreeStarRatings
+      numberOfTwoStarRatings
+      numberOfOneStarRatings
+      numberOfRatings
       createdAt
       updatedAt
       __typename
@@ -678,6 +728,6 @@ export const rentalsByAvailabilityCategoryIndex =
   }
 }
 ` as GeneratedQuery<
-    APITypes.RentalsByAvailabilityCategoryIndexQueryVariables,
-    APITypes.RentalsByAvailabilityCategoryIndexQuery
-  >;
+  APITypes.RentalsByAvailabilityCategoryIndexQueryVariables,
+  APITypes.RentalsByAvailabilityCategoryIndexQuery
+>;

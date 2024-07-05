@@ -68,4 +68,10 @@ type Rental @model @auth(rules: [{ allow: public }]) {
     numberOfTimesRented: Int
     numberOfReviews: Int
     averageRating: Float
+    numberOfFiveStarRatings: Int
+    numberOfFourStarRatings: Int
+    numberOfThreeStarRatings: Int
+    numberOfTwoStarRatings: Int
+    numberOfOneStarRatings: Int
+    numberOfRatings: Int
 }

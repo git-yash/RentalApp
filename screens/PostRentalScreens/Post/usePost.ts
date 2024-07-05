@@ -1,9 +1,12 @@
-import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
+import ImagePicker, {
+  ImageOrVideo,
+  Options,
+} from 'react-native-image-crop-picker';
 import {useActionSheet} from '@expo/react-native-action-sheet';
 import {useState} from 'react';
 import {Alert} from 'react-native';
-import {Rental} from '../../../models/Rental';
 import ScreenNameConstants from '../../ScreenNameConstants';
+import {Rental} from '../../../src/API';
 
 const usePost = (navigation: any) => {
   const [images, setImages] = useState<ImageOrVideo>();
@@ -129,12 +132,14 @@ const usePost = (navigation: any) => {
     const cancelButtonIndex = 2;
 
     let imagePickerOptions = {
+      mediaType: 'photo',
       width: 700,
       height: 500,
       cropping: true,
       multiple: true,
       maxFiles: 10,
-    };
+      compressImageQuality: 0.7,
+    } as Options;
 
     showActionSheetWithOptions(
       {

@@ -2,14 +2,14 @@ import axios from 'axios';
 import Util from '../../Util';
 import {Platform} from 'react-native';
 import {Address, Rental} from '../../src/API';
-import {getRental} from '../../src/graphql/queries';
 import {AbstractAPIService} from '../../services/AbstractAPI.service';
+import {getRentalWithDetails} from '../../src/graphql/custom-queries';
 
 export default class RentalDetailsService extends AbstractAPIService {
   async getRentalDetails(rentalID: string) {
     return await this.client
       .graphql({
-        query: getRental,
+        query: getRentalWithDetails,
         variables: {id: rentalID},
       })
       .then(response => {
@@ -52,7 +52,6 @@ export default class RentalDetailsService extends AbstractAPIService {
       return '';
     }
 
-    console.log(destinationAddress);
     const addressString: string = Util.addressToString(destinationAddress);
     try {
       let address: string;

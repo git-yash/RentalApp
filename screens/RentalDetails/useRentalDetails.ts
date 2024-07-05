@@ -69,15 +69,26 @@ const useRentalDetails = (navigation: any, rentalID: string) => {
     if (!rental?.reviews?.items) {
       return [];
     }
+    const reviewRatingPercentages: number[] = [];
+    reviewRatingPercentages.push(
+      rental.numberOfOneStarRatings ? rental.numberOfOneStarRatings : 0,
+    );
+    reviewRatingPercentages.push(
+      rental.numberOfTwoStarRatings ? rental.numberOfTwoStarRatings : 0,
+    );
+    reviewRatingPercentages.push(
+      rental.numberOfThreeStarRatings ? rental.numberOfThreeStarRatings : 0,
+    );
+    reviewRatingPercentages.push(
+      rental.numberOfFourStarRatings ? rental.numberOfFourStarRatings : 0,
+    );
+    reviewRatingPercentages.push(
+      rental.numberOfFiveStarRatings ? rental.numberOfFiveStarRatings : 0,
+    );
 
-    const reviews = rental.reviews.items;
-    const reviewRatings: number[] = [0, 0, 0, 0, 0];
-    const reviewRatingPercentages: number[] = [0, 0, 0, 0, 0];
-    for (const review of reviews) {
-      reviewRatings[review?.rating || 0 - 1]++;
-    }
-    for (let i = 0; i < reviewRatings.length; i++) {
-      reviewRatingPercentages[i] = (reviewRatings[i] / reviews.length) * 100;
+    for (let i = 0; i < 5; i++) {
+      reviewRatingPercentages[i] =
+        (reviewRatingPercentages[i] / rental.numberOfRatings!) * 100;
     }
 
     return reviewRatingPercentages.reverse();
