@@ -5,12 +5,15 @@ import {useEffect, useState} from 'react';
 import {Rental} from '../../src/API';
 import RentalDetailsService from './RentalDetails.service';
 import Util from '../../Util';
+import useRentalDetailsStore from '../../store/rentalDetailsStore';
+import {RentalDetails} from './models/RentalDetails';
 
 const useRentalDetails = (navigation: any, rentalID: string) => {
   const {showActionSheetWithOptions} = useActionSheet();
   const rentalDetailsService = new RentalDetailsService();
   const [distance, setDistance] = useState<string | undefined>('');
   const [rental, setRental] = useState<Rental | undefined>(undefined);
+  const {rentalDetails, setRentalDetails} = useRentalDetailsStore();
 
   useEffect(() => {
     navigation.setOptions({
@@ -18,32 +21,48 @@ const useRentalDetails = (navigation: any, rentalID: string) => {
     });
   }, []);
 
+  const getRentalDetailFromStore = () => {
+    return rentalDetails?.find(r => r.rental.id === rentalID);
+  };
+
   useEffect(() => {
-    console.log(rentalID);
     if (!rentalID) {
       return;
     }
 
-    rentalDetailsService
-      .getRentalDetails(rentalID)
-      .then(responseRental => {
-        if (!responseRental) {
-          return;
-        }
+    const rentalStore = getRentalDetailFromStore();
+    if (rentalStore) {
+      setRental(rentalStore.rental);
+      setDistance(rentalStore.distance);
+    } else {
+      rentalDetailsService
+        .getRentalDetails(rentalID)
+        .then(responseRental => {
+          if (!responseRental) {
+            return;
+          }
 
-        setRental(responseRental);
+          setRental(responseRental);
 
-        rentalDetailsService
-          .getDistanceAndTimeFromAddresses(
-            responseRental.latitude,
-            responseRental.longitude,
-            responseRental.address,
-          )
-          .then(response => {
-            setDistance(response);
-          });
-      })
-      .catch(e => console.error(e));
+          rentalDetailsService
+            .getDistanceAndTimeFromAddresses(
+              responseRental.latitude,
+              responseRental.longitude,
+              responseRental.address,
+            )
+            .then(response => {
+              setDistance(response);
+              const rentalDetails1: RentalDetails = {
+                rental: responseRental,
+                distance: response || '',
+              };
+              const tempRentalDetails = !rentalDetails ? [] : rentalDetails;
+              tempRentalDetails?.push(rentalDetails1);
+              setRentalDetails(tempRentalDetails);
+            });
+        })
+        .catch(e => console.error(e));
+    }
   }, []);
 
   const getReviewRatingPercentages = (): number[] => {
