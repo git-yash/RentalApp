@@ -37,7 +37,7 @@ const useRentalDetails = (navigation: any, rentalID: string) => {
           .getDistanceAndTimeFromAddresses(
             responseRental.latitude,
             responseRental.longitude,
-            responseRental.addres,
+            responseRental.address,
           )
           .then(response => {
             setDistance(response);
