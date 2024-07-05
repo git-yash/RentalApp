@@ -1,22 +1,22 @@
-import axios from "axios";
-import Util from "../../Util";
-import { Platform } from "react-native";
-import { Address, Rental } from "../../src/API";
-import { getRental } from "../../src/graphql/queries";
-import { AbstractAPIService } from "../../services/AbstractAPI.service";
+import axios from 'axios';
+import Util from '../../Util';
+import {Platform} from 'react-native';
+import {Address, Rental} from '../../src/API';
+import {getRental} from '../../src/graphql/queries';
+import {AbstractAPIService} from '../../services/AbstractAPI.service';
 
 export default class RentalDetailsService extends AbstractAPIService {
   async getRentalDetails(rentalID: string) {
     return await this.client
       .graphql({
         query: getRental,
-        variables: { id: rentalID },
-      )
+        variables: {id: rentalID},
+      })
       .then(response => {
         return response.data.getRental as Rental;
       })
       .catch((e: Error) => {
-        this.logError(e, "Error\"Error fetching Rental\"Re\"getRental");
+        this.logError(e, 'Error"Error fetching Rental"Re"getRental');
       });
   }
 
@@ -49,7 +49,7 @@ export default class RentalDetailsService extends AbstractAPIService {
     destinationAddress: Address,
   ): Promise<string | undefined> {
     if (!destinationAddress.zip) {
-      return "";
+      return '';
     }
 
     console.log(destinationAddress);
