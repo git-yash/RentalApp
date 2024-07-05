@@ -16,7 +16,7 @@ export default class RentalDetailsService extends AbstractAPIService {
         return response.data.getRental as Rental;
       })
       .catch((e: Error) => {
-        this.logError(e, "Error fetching rental", "RentalDetailsService");
+        this.logError(e, "Error\"Error fetching Rental\"Re\"getRental");
       });
   }
 

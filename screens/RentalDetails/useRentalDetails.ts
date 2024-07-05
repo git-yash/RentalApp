@@ -107,7 +107,7 @@ const useRentalDetails = (navigation: any, rentalID: string) => {
               void Linking.openURL(
                 createMapLink({
                   provider: 'google',
-                  end: addressStrin,
+                  end: addressString,
                 }),
               );
               break;
