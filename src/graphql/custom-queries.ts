@@ -87,7 +87,9 @@ export const getRentalWithDetails =
       description
       rating
       datePublished
-      userID
+      user {
+        name
+      }
     }
     }
     bookings {

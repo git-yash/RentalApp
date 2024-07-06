@@ -14,30 +14,13 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import useRentalCard from './useRentalCard';
 import Util from '../../Util';
 
-const RentalCard = (props: {
-  rental: Rental;
-  currentLatitude: number | undefined;
-  currentLongitude: number | undefined;
-  navigation: any;
-}) => {
-  const {handleRentalPress, rentalPostPictures} = useRentalCard(
-    props.currentLatitude,
-    props.currentLongitude,
-    props.rental.address,
-    props.rental,
-  );
+const RentalCard = (props: {rental: Rental; navigation: any}) => {
+  const {handleRentalPress, rentalPostPictures} = useRentalCard(props.rental);
   library.add(solidHeart, regularHeart);
   return (
     <GestureHandlerRootView style={{padding: 10}}>
       <Bounceable>
-        <Pressable
-          onPress={() =>
-            handleRentalPress(
-              props.navigation,
-              props.currentLatitude,
-              props.currentLongitude,
-            )
-          }>
+        <Pressable onPress={() => handleRentalPress(props.navigation)}>
           <View style={rentalCardStyle.mainContainer}>
             <Image
               source={{uri: rentalPostPictures[0]}}

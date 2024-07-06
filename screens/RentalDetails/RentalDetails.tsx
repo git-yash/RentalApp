@@ -62,6 +62,10 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
             <Text style={rentalDetailsStyle.reviewLengthText}>
               in {rental?.categoryName}
             </Text>
+            <Text
+              style={{fontFamily: 'Poppins-Regular', color: Colors.gray600}}>
+              Rented {rental?.numberOfTimesRented} times
+            </Text>
           </View>
           <View style={rentalDetailsStyle.cityReviewContainer}>
             <Text style={rentalDetailsStyle.cityText}>
@@ -171,37 +175,45 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
                 )}
               </Text>
             </View>
-            <View style={rentalDetailsStyle.reviewConatiner}>
-              <View style={rentalDetailsStyle.topReviewContainer}>
-                <View>
-                  <Text style={rentalDetailsStyle.reviewTitle}>
-                    {/*{rental.reviews?.items[0].title}*/}
-                  </Text>
-                  <View style={rentalDetailsStyle.starContainer}>
-                    {[1, 2, 3, 4, 5].map((starNumber, index) => (
-                      <FontAwesomeIcon
-                        icon={faStar}
-                        style={rentalDetailsStyle.ratingStarIcon}
-                        size={14}
-                        key={index}
-                        // color={ starNumber <= rental.reviews[0].rating ? Colors.green : Colors.gray300 }
-                      />
-                    ))}
+            {rental?.reviews?.items.map(review => (
+              <View style={rentalDetailsStyle.reviewConatiner}>
+                <View style={rentalDetailsStyle.topReviewContainer}>
+                  <View>
+                    <Text style={rentalDetailsStyle.reviewTitle}>
+                      {review?.title}
+                    </Text>
+                    <View style={rentalDetailsStyle.starContainer}>
+                      {[1, 2, 3, 4, 5].map((starNumber, index) => (
+                        <FontAwesomeIcon
+                          icon={faStar}
+                          style={rentalDetailsStyle.ratingStarIcon}
+                          size={14}
+                          key={index}
+                          color={
+                            starNumber <= rental?.reviews?.items[0]?.rating!
+                              ? Colors.green
+                              : Colors.gray300
+                          }
+                        />
+                      ))}
+                    </View>
+                  </View>
+                  <View>
+                    <Text style={rentalDetailsStyle.reviewDateText}>
+                      {Util.formatCustomDate(
+                        new Date(review?.datePublished || ''),
+                      )}
+                    </Text>
+                    <Text style={rentalDetailsStyle.reviewUserNameText}>
+                      {review?.user?.name}
+                    </Text>
                   </View>
                 </View>
-                <View>
-                  <Text style={rentalDetailsStyle.reviewDateText}>
-                    {/*{Util.formatCustomDate(rental.reviews[0].date)}*/}
-                  </Text>
-                  <Text style={rentalDetailsStyle.reviewUserNameText}>
-                    {/*{rental.reviews[0].user.name}*/}
-                  </Text>
-                </View>
+                <Text style={rentalDetailsStyle.reviewDescriptionText}>
+                  {review?.description}
+                </Text>
               </View>
-              <Text style={rentalDetailsStyle.reviewDescriptionText}>
-                {/*{rental.reviews[0].description}*/}
-              </Text>
-            </View>
+            ))}
 
             {/*<View style={{flexDirection: 'row'}}>*/}
             {/*  {[1, 2, 3, 4, 5].map(starNumber => (*/}

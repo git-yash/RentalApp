@@ -186,6 +186,7 @@ export type Review = {
 export type User = {
   __typename: "User",
   id: string,
+  name: string,
   dateJoined: string,
   postedRentals?: ModelRentalConnection | null,
   bookings?: ModelBookingConnection | null,
@@ -313,12 +314,14 @@ export type DeleteBookingInput = {
 
 export type CreateUserInput = {
   id?: string | null,
+  name: string,
   dateJoined: string,
   phone?: string | null,
   isPhoneVerified?: boolean | null,
 };
 
 export type ModelUserConditionInput = {
+  name?: ModelStringInput | null,
   dateJoined?: ModelStringInput | null,
   phone?: ModelStringInput | null,
   isPhoneVerified?: ModelBooleanInput | null,
@@ -331,6 +334,7 @@ export type ModelUserConditionInput = {
 
 export type UpdateUserInput = {
   id: string,
+  name?: string | null,
   dateJoined?: string | null,
   phone?: string | null,
   isPhoneVerified?: boolean | null,
@@ -497,6 +501,7 @@ export type ModelBookingFilterInput = {
 
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
   dateJoined?: ModelStringInput | null,
   phone?: ModelStringInput | null,
   isPhoneVerified?: ModelBooleanInput | null,
@@ -588,6 +593,7 @@ export type ModelSubscriptionBooleanInput = {
 
 export type ModelSubscriptionUserFilterInput = {
   id?: ModelSubscriptionIDInput | null,
+  name?: ModelSubscriptionStringInput | null,
   dateJoined?: ModelSubscriptionStringInput | null,
   phone?: ModelSubscriptionStringInput | null,
   isPhoneVerified?: ModelSubscriptionBooleanInput | null,
@@ -748,7 +754,10 @@ export type GetRentalWithDetailsQuery = {
         description: string,
         rating?: number | null,
         datePublished: string,
-        userID: string,
+        user?:  {
+          __typename: "User",
+          name: string,
+        } | null,
       } | null >,
     } | null,
     bookings?:  {
@@ -1070,6 +1079,7 @@ export type CreateUserMutation = {
   createUser?:  {
     __typename: "User",
     id: string,
+    name: string,
     dateJoined: string,
     postedRentals?:  {
       __typename: "ModelRentalConnection",
@@ -1103,6 +1113,7 @@ export type UpdateUserMutation = {
   updateUser?:  {
     __typename: "User",
     id: string,
+    name: string,
     dateJoined: string,
     postedRentals?:  {
       __typename: "ModelRentalConnection",
@@ -1136,6 +1147,7 @@ export type DeleteUserMutation = {
   deleteUser?:  {
     __typename: "User",
     id: string,
+    name: string,
     dateJoined: string,
     postedRentals?:  {
       __typename: "ModelRentalConnection",
@@ -1178,6 +1190,7 @@ export type CreateReviewMutation = {
     user?:  {
       __typename: "User",
       id: string,
+      name: string,
       dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
@@ -1235,6 +1248,7 @@ export type UpdateReviewMutation = {
     user?:  {
       __typename: "User",
       id: string,
+      name: string,
       dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
@@ -1292,6 +1306,7 @@ export type DeleteReviewMutation = {
     user?:  {
       __typename: "User",
       id: string,
+      name: string,
       dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
@@ -1364,6 +1379,7 @@ export type CreateRentalMutation = {
     user?:  {
       __typename: "User",
       id: string,
+      name: string,
       dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
@@ -1426,6 +1442,7 @@ export type UpdateRentalMutation = {
     user?:  {
       __typename: "User",
       id: string,
+      name: string,
       dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
@@ -1488,6 +1505,7 @@ export type DeleteRentalMutation = {
     user?:  {
       __typename: "User",
       id: string,
+      name: string,
       dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
@@ -1734,6 +1752,7 @@ export type GetUserQuery = {
   getUser?:  {
     __typename: "User",
     id: string,
+    name: string,
     dateJoined: string,
     postedRentals?:  {
       __typename: "ModelRentalConnection",
@@ -1770,6 +1789,7 @@ export type ListUsersQuery = {
     items:  Array< {
       __typename: "User",
       id: string,
+      name: string,
       dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
@@ -1797,6 +1817,7 @@ export type GetReviewQuery = {
     user?:  {
       __typename: "User",
       id: string,
+      name: string,
       dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
@@ -1947,6 +1968,7 @@ export type GetRentalQuery = {
     user?:  {
       __typename: "User",
       id: string,
+      name: string,
       dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
@@ -2464,6 +2486,7 @@ export type OnCreateUserSubscription = {
   onCreateUser?:  {
     __typename: "User",
     id: string,
+    name: string,
     dateJoined: string,
     postedRentals?:  {
       __typename: "ModelRentalConnection",
@@ -2496,6 +2519,7 @@ export type OnUpdateUserSubscription = {
   onUpdateUser?:  {
     __typename: "User",
     id: string,
+    name: string,
     dateJoined: string,
     postedRentals?:  {
       __typename: "ModelRentalConnection",
@@ -2528,6 +2552,7 @@ export type OnDeleteUserSubscription = {
   onDeleteUser?:  {
     __typename: "User",
     id: string,
+    name: string,
     dateJoined: string,
     postedRentals?:  {
       __typename: "ModelRentalConnection",
@@ -2569,6 +2594,7 @@ export type OnCreateReviewSubscription = {
     user?:  {
       __typename: "User",
       id: string,
+      name: string,
       dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
@@ -2625,6 +2651,7 @@ export type OnUpdateReviewSubscription = {
     user?:  {
       __typename: "User",
       id: string,
+      name: string,
       dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
@@ -2681,6 +2708,7 @@ export type OnDeleteReviewSubscription = {
     user?:  {
       __typename: "User",
       id: string,
+      name: string,
       dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
@@ -2752,6 +2780,7 @@ export type OnCreateRentalSubscription = {
     user?:  {
       __typename: "User",
       id: string,
+      name: string,
       dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
@@ -2813,6 +2842,7 @@ export type OnUpdateRentalSubscription = {
     user?:  {
       __typename: "User",
       id: string,
+      name: string,
       dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
@@ -2874,6 +2904,7 @@ export type OnDeleteRentalSubscription = {
     user?:  {
       __typename: "User",
       id: string,
+      name: string,
       dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,

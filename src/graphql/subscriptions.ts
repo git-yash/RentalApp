@@ -278,6 +278,7 @@ export const onDeleteBooking = /* GraphQL */ `subscription OnDeleteBooking($filt
 export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
   onCreateUser(filter: $filter) {
     id
+    name
     dateJoined
     postedRentals {
       nextToken
@@ -309,6 +310,7 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
 export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
   onUpdateUser(filter: $filter) {
     id
+    name
     dateJoined
     postedRentals {
       nextToken
@@ -340,6 +342,7 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
 export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
   onDeleteUser(filter: $filter) {
     id
+    name
     dateJoined
     postedRentals {
       nextToken
@@ -379,6 +382,7 @@ export const onCreateReview = /* GraphQL */ `subscription OnCreateReview($filter
     userID
     user {
       id
+      name
       dateJoined
       phone
       isPhoneVerified
@@ -434,6 +438,7 @@ export const onUpdateReview = /* GraphQL */ `subscription OnUpdateReview($filter
     userID
     user {
       id
+      name
       dateJoined
       phone
       isPhoneVerified
@@ -489,6 +494,7 @@ export const onDeleteReview = /* GraphQL */ `subscription OnDeleteReview($filter
     userID
     user {
       id
+      name
       dateJoined
       phone
       isPhoneVerified
@@ -559,6 +565,7 @@ export const onCreateRental = /* GraphQL */ `subscription OnCreateRental($filter
     userID
     user {
       id
+      name
       dateJoined
       phone
       isPhoneVerified
@@ -619,6 +626,7 @@ export const onUpdateRental = /* GraphQL */ `subscription OnUpdateRental($filter
     userID
     user {
       id
+      name
       dateJoined
       phone
       isPhoneVerified
@@ -679,6 +687,7 @@ export const onDeleteRental = /* GraphQL */ `subscription OnDeleteRental($filter
     userID
     user {
       id
+      name
       dateJoined
       phone
       isPhoneVerified

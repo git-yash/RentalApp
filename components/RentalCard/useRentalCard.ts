@@ -1,19 +1,16 @@
 import {useEffect, useState} from 'react';
 import ScreenNameConstants from '../../screens/ScreenNameConstants';
-import {Address, Rental} from '../../src/API';
+import {Rental} from '../../src/API';
 import {getUrl} from 'aws-amplify/storage';
 import RentalCardService from './RentalCard.service';
 
-const useRentalCard = (
-  currentLatitude: number | undefined,
-  currentLongitude: number | undefined,
-  address: Address,
-  rental: Rental,
-) => {
+const useRentalCard = (rental: Rental) => {
   const [rentalPostPictures, setRentalPostPictures] = useState<string[]>([]);
   const rentalCardService = new RentalCardService();
 
   useEffect(() => {
+    // TODO: Do not fetch images in card, fetch in detail screen instead. Also only fetch cover-photo.jps for card.
+    // TODO: store images to store and try to fetch from store first.
     rentalCardService.getRentalImages(rental.id).then(async r => {
       const items = r.items;
       let pictures: string[] = [];
@@ -23,23 +20,12 @@ const useRentalCard = (
           setRentalPostPictures(pictures);
         });
       }
-
-      // This is called multiple times because of BookmarkButton
     });
   }, []);
 
-  const handleRentalPress = (
-    navigation: any,
-    userLatitude: number | undefined,
-    userLongitude: number | undefined,
-  ) => {
-    if (userLatitude === undefined || userLongitude === undefined) {
-      return;
-    }
+  const handleRentalPress = (navigation: any) => {
     navigation.navigate(ScreenNameConstants.RentalDetails, {
       rentalID: rental.id,
-      currentLatitude: userLatitude,
-      currentLongitude: userLongitude,
       rentalPostPictures: rentalPostPictures,
     });
   };

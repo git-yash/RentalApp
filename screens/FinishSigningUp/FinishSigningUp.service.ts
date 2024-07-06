@@ -3,6 +3,7 @@ import {generateClient} from 'aws-amplify/api';
 import Util from '../../Util';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import {createUser} from '../../src/graphql/mutations';
+import {CreateUserInput} from '../../src/API';
 
 export default class FinishSigningUpService {
   async signUp(
@@ -36,8 +37,9 @@ export default class FinishSigningUpService {
               variables: {
                 input: {
                   id: emailText,
+                  name: firstNameText + ' ' + lastNameText,
                   dateJoined: Util.toISODateString(),
-                },
+                } as CreateUserInput,
               },
             })
             .then(() => {

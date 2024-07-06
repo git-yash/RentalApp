@@ -293,6 +293,7 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
 ) {
   createUser(input: $input, condition: $condition) {
     id
+    name
     dateJoined
     postedRentals {
       nextToken
@@ -327,6 +328,7 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
 ) {
   updateUser(input: $input, condition: $condition) {
     id
+    name
     dateJoined
     postedRentals {
       nextToken
@@ -361,6 +363,7 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
 ) {
   deleteUser(input: $input, condition: $condition) {
     id
+    name
     dateJoined
     postedRentals {
       nextToken
@@ -403,6 +406,7 @@ export const createReview = /* GraphQL */ `mutation CreateReview(
     userID
     user {
       id
+      name
       dateJoined
       phone
       isPhoneVerified
@@ -461,6 +465,7 @@ export const updateReview = /* GraphQL */ `mutation UpdateReview(
     userID
     user {
       id
+      name
       dateJoined
       phone
       isPhoneVerified
@@ -519,6 +524,7 @@ export const deleteReview = /* GraphQL */ `mutation DeleteReview(
     userID
     user {
       id
+      name
       dateJoined
       phone
       isPhoneVerified
@@ -592,6 +598,7 @@ export const createRental = /* GraphQL */ `mutation CreateRental(
     userID
     user {
       id
+      name
       dateJoined
       phone
       isPhoneVerified
@@ -655,6 +662,7 @@ export const updateRental = /* GraphQL */ `mutation UpdateRental(
     userID
     user {
       id
+      name
       dateJoined
       phone
       isPhoneVerified
@@ -718,6 +726,7 @@ export const deleteRental = /* GraphQL */ `mutation DeleteRental(
     userID
     user {
       id
+      name
       dateJoined
       phone
       isPhoneVerified

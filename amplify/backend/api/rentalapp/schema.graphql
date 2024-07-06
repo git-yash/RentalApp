@@ -16,6 +16,7 @@ type Booking @model @auth(rules: [{ allow: public }]) {
 
 type User @model @auth(rules: [{ allow: public }]) {
     id: ID!
+    name: String!
     dateJoined: AWSDate!
     postedRentals: [Rental] @hasMany(indexName: "byUser", fields: ["id"])
     bookings: [Booking] @hasMany(indexName: "byUser", fields: ["id"])

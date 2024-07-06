@@ -241,6 +241,7 @@ export const bookingsByUserID = /* GraphQL */ `query BookingsByUserID(
 export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
   getUser(id: $id) {
     id
+    name
     dateJoined
     postedRentals {
       nextToken
@@ -274,6 +275,7 @@ export const listUsers = /* GraphQL */ `query ListUsers(
   listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      name
       dateJoined
       phone
       isPhoneVerified
@@ -297,6 +299,7 @@ export const getReview = /* GraphQL */ `query GetReview($id: ID!) {
     userID
     user {
       id
+      name
       dateJoined
       phone
       isPhoneVerified
@@ -458,6 +461,7 @@ export const getRental = /* GraphQL */ `query GetRental($id: ID!) {
     userID
     user {
       id
+      name
       dateJoined
       phone
       isPhoneVerified
