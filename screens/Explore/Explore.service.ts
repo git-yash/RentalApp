@@ -1,21 +1,16 @@
 import Geocoder from 'react-native-geocoding';
-import {generateClient, GraphQLResult} from 'aws-amplify/api';
+import {GraphQLResult} from 'aws-amplify/api';
 import {
   bookingsByRentalID,
   getUser,
   reviewsByRentalID,
 } from '../../src/graphql/queries';
 import {GetUserQuery, Rental} from '../../src/API';
-import {listRentalsWithAllDetails} from '../../src/graphql/custom-queries';
+import {listRentalsForCard} from '../../src/graphql/custom-queries';
+import {AbstractAPIService} from '../../services/AbstractAPI.service';
 import LatLng = Geocoder.LatLng;
 
-export default class ExploreService {
-  client;
-
-  constructor() {
-    this.client = generateClient();
-  }
-
+export default class ExploreService extends AbstractAPIService {
   async getUserFromUserEmail(
     email: string,
   ): Promise<GraphQLResult<GetUserQuery>> {
@@ -64,11 +59,6 @@ export default class ExploreService {
     endDate?: Date,
   ) {
     let filters = this.createLocationInMilesFilter(location, radiusInMiles);
-    const categoryFilter = this.createCategoryFilter(category);
-    if (categoryFilter !== undefined) {
-      // @ts-ignore
-      filters.and.push(categoryFilter);
-    }
 
     if (searchText) {
       filters.and.push({
@@ -92,26 +82,21 @@ export default class ExploreService {
 
     return this.client
       .graphql({
-        query: listRentalsWithAllDetails,
+        query: listRentalsForCard,
         variables: {
           filter: filters,
           limit: 15,
+          availabilityCategoryIndex: `1#${category}`,
         },
       })
       .then(response => {
-        return response.data.listRentals.items as Rental[];
+        return response.data.rentalsByAvailabilityCategoryIndex
+          .items as Rental[];
       })
       .catch(e => {
         console.error(e);
         throw e;
       });
-  }
-
-  private createCategoryFilter(category?: string) {
-    if (!category) {
-      return undefined;
-    }
-    return {category: {eq: category}};
   }
 
   private createLocationInMilesFilter(
@@ -133,7 +118,6 @@ export default class ExploreService {
     // Prepare filters
     return {
       and: [
-        {isAvailable: {eq: 1}},
         {latitude: {between: [minLat, maxLat]}},
         {longitude: {between: [minLon, maxLon]}},
       ],

@@ -15,7 +15,6 @@ const CategoryTabBar = (props: {
       data={props.categoryItems}
       renderItem={({item, index}) => (
         <CategoryTabBarItem
-          index={index}
           label={item.name}
           iconName={item.iconName}
           isSelected={item.name === props.whichCategorySelected}

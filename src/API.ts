@@ -2,35 +2,15 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type ModelRentalFilterInput = {
+export type ModelBookmarkedRentalFilterInput = {
   id?: ModelIDInput | null,
-  title?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  isAvailable?: ModelIntInput | null,
   userID?: ModelIDInput | null,
-  categoryName?: ModelStringInput | null,
-  availabilityCategoryIndex?: ModelStringInput | null,
-  amountHourly?: ModelIntInput | null,
-  amountDaily?: ModelIntInput | null,
-  amountWeekly?: ModelIntInput | null,
-  latitude?: ModelFloatInput | null,
-  longitude?: ModelFloatInput | null,
-  bookingStartDates?: ModelStringInput | null,
-  bookingEndDates?: ModelStringInput | null,
-  numberOfTimesRented?: ModelIntInput | null,
-  numberOfReviews?: ModelIntInput | null,
-  averageRating?: ModelFloatInput | null,
-  numberOfFiveStarRatings?: ModelIntInput | null,
-  numberOfFourStarRatings?: ModelIntInput | null,
-  numberOfThreeStarRatings?: ModelIntInput | null,
-  numberOfTwoStarRatings?: ModelIntInput | null,
-  numberOfOneStarRatings?: ModelIntInput | null,
-  numberOfRatings?: ModelIntInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  and?: Array< ModelRentalFilterInput | null > | null,
-  or?: Array< ModelRentalFilterInput | null > | null,
-  not?: ModelRentalFilterInput | null,
+  and?: Array< ModelBookmarkedRentalFilterInput | null > | null,
+  or?: Array< ModelBookmarkedRentalFilterInput | null > | null,
+  not?: ModelBookmarkedRentalFilterInput | null,
+  bookmarkedRentalRentalId?: ModelIDInput | null,
 };
 
 export type ModelIDInput = {
@@ -89,34 +69,20 @@ export type ModelStringInput = {
   size?: ModelSizeInput | null,
 };
 
-export type ModelIntInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
-export type ModelFloatInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
-export type ModelRentalConnection = {
-  __typename: "ModelRentalConnection",
-  items:  Array<Rental | null >,
+export type ModelBookmarkedRentalConnection = {
+  __typename: "ModelBookmarkedRentalConnection",
+  items:  Array<BookmarkedRental | null >,
   nextToken?: string | null,
+};
+
+export type BookmarkedRental = {
+  __typename: "BookmarkedRental",
+  id: string,
+  rental?: Rental | null,
+  userID: string,
+  createdAt: string,
+  updatedAt: string,
+  bookmarkedRentalRentalId?: string | null,
 };
 
 export type Rental = {
@@ -198,6 +164,12 @@ export type User = {
   updatedAt: string,
 };
 
+export type ModelRentalConnection = {
+  __typename: "ModelRentalConnection",
+  items:  Array<Rental | null >,
+  nextToken?: string | null,
+};
+
 export type ModelBookingConnection = {
   __typename: "ModelBookingConnection",
   items:  Array<Booking | null >,
@@ -217,31 +189,65 @@ export type Booking = {
   updatedAt: string,
 };
 
-export type ModelBookmarkedRentalConnection = {
-  __typename: "ModelBookmarkedRentalConnection",
-  items:  Array<BookmarkedRental | null >,
-  nextToken?: string | null,
-};
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
 
-export type BookmarkedRental = {
-  __typename: "BookmarkedRental",
-  id: string,
-  rental?: Rental | null,
-  userID: string,
-  createdAt: string,
-  updatedAt: string,
-  bookmarkedRentalRentalId?: string | null,
-};
 
-export type ModelBookmarkedRentalFilterInput = {
+export type ModelRentalFilterInput = {
   id?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  isAvailable?: ModelIntInput | null,
   userID?: ModelIDInput | null,
+  categoryName?: ModelStringInput | null,
+  availabilityCategoryIndex?: ModelStringInput | null,
+  amountHourly?: ModelIntInput | null,
+  amountDaily?: ModelIntInput | null,
+  amountWeekly?: ModelIntInput | null,
+  latitude?: ModelFloatInput | null,
+  longitude?: ModelFloatInput | null,
+  bookingStartDates?: ModelStringInput | null,
+  bookingEndDates?: ModelStringInput | null,
+  numberOfTimesRented?: ModelIntInput | null,
+  numberOfReviews?: ModelIntInput | null,
+  averageRating?: ModelFloatInput | null,
+  numberOfFiveStarRatings?: ModelIntInput | null,
+  numberOfFourStarRatings?: ModelIntInput | null,
+  numberOfThreeStarRatings?: ModelIntInput | null,
+  numberOfTwoStarRatings?: ModelIntInput | null,
+  numberOfOneStarRatings?: ModelIntInput | null,
+  numberOfRatings?: ModelIntInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  and?: Array< ModelBookmarkedRentalFilterInput | null > | null,
-  or?: Array< ModelBookmarkedRentalFilterInput | null > | null,
-  not?: ModelBookmarkedRentalFilterInput | null,
-  bookmarkedRentalRentalId?: ModelIDInput | null,
+  and?: Array< ModelRentalFilterInput | null > | null,
+  or?: Array< ModelRentalFilterInput | null > | null,
+  not?: ModelRentalFilterInput | null,
+};
+
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type ModelFloatInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
 };
 
 export type CreateBookmarkedRentalInput = {
@@ -479,12 +485,6 @@ export type DeleteRentalInput = {
   id: string,
 };
 
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
-
 export type ModelBookingFilterInput = {
   id?: ModelIDInput | null,
   startDate?: ModelStringInput | null,
@@ -671,31 +671,6 @@ export type ModelSubscriptionIntInput = {
   notIn?: Array< number | null > | null,
 };
 
-export type ListRentalsWithAllDetailsQueryVariables = {
-  filter?: ModelRentalFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListRentalsWithAllDetailsQuery = {
-  listRentals?:  {
-    __typename: "ModelRentalConnection",
-    items:  Array< {
-      __typename: "Rental",
-      id: string,
-      title: string,
-      averageRating?: number | null,
-      userID: string,
-      numberOfTimesRented?: number | null,
-      numberOfReviews?: number | null,
-      amountHourly?: number | null,
-      amountDaily?: number | null,
-      amountWeekly?: number | null,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
 export type ListBookmarkedRentalsWithDetailsQueryVariables = {
   filter?: ModelBookmarkedRentalFilterInput | null,
   limit?: number | null,
@@ -794,6 +769,33 @@ export type GetRentalWithDetailsQuery = {
     numberOfRatings?: number | null,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type ListRentalsForCardQueryVariables = {
+  availabilityCategoryIndex: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelRentalFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListRentalsForCardQuery = {
+  rentalsByAvailabilityCategoryIndex?:  {
+    __typename: "ModelRentalConnection",
+    items:  Array< {
+      __typename: "Rental",
+      id: string,
+      title: string,
+      averageRating?: number | null,
+      userID: string,
+      numberOfTimesRented?: number | null,
+      numberOfReviews?: number | null,
+      amountHourly?: number | null,
+      amountDaily?: number | null,
+      amountWeekly?: number | null,
+    } | null >,
+    nextToken?: string | null,
   } | null,
 };
 

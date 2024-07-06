@@ -130,9 +130,9 @@ const rentalDetailsStyle = StyleSheet.create({
   ratingStarIcon: {marginRight: 3},
   reviewDateText: {
     fontFamily: 'Poppins-Regular',
-    alignSelf: 'center',
     fontSize: 13,
     color: Colors.gray600,
+    alignSelf: 'flex-end',
   },
   reviewUserNameText: {
     fontFamily: 'Poppins-Regular',

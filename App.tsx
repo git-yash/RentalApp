@@ -36,6 +36,7 @@ import FilterResults from './screens/FilterResults/FilterResults';
 import ScreenNameConstants from './screens/ScreenNameConstants';
 import {LogBox} from 'react-native';
 import SearchView from './components/SearchView/SearchView';
+import FullReview from './screens/FullReview/FullReview';
 
 LogBox.ignoreLogs([
   'In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.',
@@ -258,6 +259,10 @@ function App(): JSX.Element {
                   <Stack.Screen
                     name={ScreenNameConstants.FilterResults}
                     component={FilterResults}
+                  />
+                  <Stack.Screen
+                    name={ScreenNameConstants.FullReview}
+                    component={FullReview}
                   />
                 </Stack.Group>
                 <Stack.Screen

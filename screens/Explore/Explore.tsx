@@ -107,12 +107,7 @@ const Explore = () => {
                   contentContainerStyle={{paddingBottom: '20%'}}
                   renderItem={({item}) => (
                     <View>
-                      <RentalCard
-                        rental={item}
-                        currentLongitude={position?.coords.longitude as number}
-                        currentLatitude={position?.coords.latitude as number}
-                        navigation={navigation}
-                      />
+                      <RentalCard rental={item} navigation={navigation} />
                     </View>
                   )}
                 />

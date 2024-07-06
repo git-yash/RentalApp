@@ -19,6 +19,9 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 import BookmarkButton from '../../components/BookmarkButton/BookmarkButton';
 import {Progress} from 'native-base';
 import RentalDetailsImagesSlider from '../../components/RentalDetailsImagesSlider/RentalDetailsImagesSlider';
+import ReviewCard from '../../components/ReviewCard/ReviewCard';
+import {Bounceable} from 'rn-bounceable';
+import ScreenNameConstants from '../ScreenNameConstants';
 
 const RentalDetails = (props: {navigation: any; route: any}) => {
   const rentalID: string = props.route.params.rentalID;
@@ -176,43 +179,22 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
               </Text>
             </View>
             {rental?.reviews?.items.map(review => (
-              <View style={rentalDetailsStyle.reviewConatiner}>
-                <View style={rentalDetailsStyle.topReviewContainer}>
-                  <View>
-                    <Text style={rentalDetailsStyle.reviewTitle}>
-                      {review?.title}
-                    </Text>
-                    <View style={rentalDetailsStyle.starContainer}>
-                      {[1, 2, 3, 4, 5].map((starNumber, index) => (
-                        <FontAwesomeIcon
-                          icon={faStar}
-                          style={rentalDetailsStyle.ratingStarIcon}
-                          size={14}
-                          key={index}
-                          color={
-                            starNumber <= rental?.reviews?.items[0]?.rating!
-                              ? Colors.green
-                              : Colors.gray300
-                          }
-                        />
-                      ))}
-                    </View>
-                  </View>
-                  <View>
-                    <Text style={rentalDetailsStyle.reviewDateText}>
-                      {Util.formatCustomDate(
-                        new Date(review?.datePublished || ''),
-                      )}
-                    </Text>
-                    <Text style={rentalDetailsStyle.reviewUserNameText}>
-                      {review?.user?.name}
-                    </Text>
-                  </View>
-                </View>
-                <Text style={rentalDetailsStyle.reviewDescriptionText}>
-                  {review?.description}
-                </Text>
-              </View>
+              <GestureHandlerRootView>
+                <Bounceable>
+                  <Pressable
+                    onPress={() => {
+                      props.navigation.navigate(
+                        ScreenNameConstants.FullReview,
+                        {review: review},
+                      );
+                    }}>
+                    <ReviewCard
+                      review={review!}
+                      shouldMinimizeDescription={true}
+                    />
+                  </Pressable>
+                </Bounceable>
+              </GestureHandlerRootView>
             ))}
 
             {/*<View style={{flexDirection: 'row'}}>*/}

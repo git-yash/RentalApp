@@ -6,7 +6,6 @@ import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import Util from '../../Util';
 
 const CategoryTabBarItem = (props: {
-  index: number;
   label: string;
   iconName: string;
   isSelected: boolean;
@@ -15,7 +14,7 @@ const CategoryTabBarItem = (props: {
   return (
     <Pressable
       onPress={() => {
-        props.setWhichCategorySelected(props.index);
+        props.setWhichCategorySelected(props.label);
         ReactNativeHapticFeedback.trigger('impactHeavy', Util.options);
       }}>
       <View

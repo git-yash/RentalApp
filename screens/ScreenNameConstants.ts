@@ -17,4 +17,5 @@ export default {
   PostRentalScreens: 'PostRentalScreens',
   RentalDetails: 'Details',
   Search: 'Search',
+  FullReview: 'Review',
 };

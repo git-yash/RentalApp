@@ -6,34 +6,6 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
-export const listRentalsWithAllDetails =
-  /* GraphQL */ `query ListRentalsWithAllDetails(
-  $filter: ModelRentalFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listRentals(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      title
-      averageRating
-      userID
-      numberOfTimesRented
-      numberOfReviews
-      amountHourly
-      amountDaily
-      amountWeekly
-     __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-    APITypes.ListRentalsQueryVariables,
-    APITypes.ListRentalsQuery
-  >;
-
 export const listBookmarkedRentalsWithDetails =
   /* GraphQL */ `query ListBookmarkedRentalsWithDetails(
   $filter: ModelBookmarkedRentalFilterInput
@@ -80,7 +52,7 @@ export const getRentalWithDetails =
       country
       __typename
     }
-    reviews {
+    reviews (limit: 5) {
     items {
       id
       title
@@ -133,3 +105,37 @@ export const getRentalWithDetails =
     APITypes.GetRentalQueryVariables,
     APITypes.GetRentalWithDetailsQuery
   >;
+export const listRentalsForCard = /* GraphQL */ `query ListRentalsForCard(
+  $availabilityCategoryIndex: String!
+  $sortDirection: ModelSortDirection
+  $filter: ModelRentalFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  rentalsByAvailabilityCategoryIndex(
+    availabilityCategoryIndex: $availabilityCategoryIndex
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      averageRating
+      userID
+      numberOfTimesRented
+      numberOfReviews
+      amountHourly
+      amountDaily
+      amountWeekly
+     __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.RentalsByAvailabilityCategoryIndexQueryVariables,
+  APITypes.RentalsByAvailabilityCategoryIndexQuery
+>;

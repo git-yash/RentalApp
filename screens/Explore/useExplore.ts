@@ -84,6 +84,7 @@ const useExplore = (navigation: any) => {
     if (isListView === false) {
       setMapInitiallyVisible(true);
     }
+    setSelectedCategory('Lawn Equipment');
   }, [isListView]);
 
   const showMapButtonPress = () => {
