@@ -12,7 +12,7 @@ const ReviewCard = (props: {
   shouldMinimizeDescription: boolean;
 }) => {
   return (
-    <View style={rentalDetailsStyle.reviewConatiner}>
+    <View style={rentalDetailsStyle.reviewConatiner} key={props.review.id}>
       <View style={rentalDetailsStyle.topReviewContainer}>
         <View>
           <Text style={rentalDetailsStyle.reviewTitle}>

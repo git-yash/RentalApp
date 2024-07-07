@@ -1,4 +1,7 @@
+import React, {SetStateAction, useEffect, useState} from 'react';
 import {
+  Dimensions,
+  FlatList,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -6,21 +9,21 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Util from '../../Util';
-import rentalDetailsStyle from './RentalDetails.style';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHeart as solidHeart, faStar} from '@fortawesome/free-solid-svg-icons';
 import {faHeart as regularHeart} from '@fortawesome/free-regular-svg-icons';
-import Colors from '../../assets/Colors';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import useRentalDetails from './useRentalDetails';
-import {SetStateAction, useEffect, useState} from 'react';
-import {library} from '@fortawesome/fontawesome-svg-core';
-import BookmarkButton from '../../components/BookmarkButton/BookmarkButton';
 import {Progress} from 'native-base';
+import {Bounceable} from 'rn-bounceable';
+import Util from '../../Util';
+import rentalDetailsStyle from './RentalDetails.style';
+import useRentalDetails from './useRentalDetails';
+import BookmarkButton from '../../components/BookmarkButton/BookmarkButton';
 import RentalDetailsImagesSlider from '../../components/RentalDetailsImagesSlider/RentalDetailsImagesSlider';
 import ReviewCard from '../../components/ReviewCard/ReviewCard';
-import {Bounceable} from 'rn-bounceable';
+import Colors from '../../assets/Colors';
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {Review} from '../../src/API';
 import ScreenNameConstants from '../ScreenNameConstants';
 
 const RentalDetails = (props: {navigation: any; route: any}) => {
@@ -28,7 +31,6 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
   const {rentalPostPictures} = props.route.params;
   const noReviews: string = 'No reviews';
   const readMoreMaxCharLength: number = 113;
-  const mapStyle = require('../../assets/MapStyle.json');
 
   const {getReviewRatingPercentages, distance, rental} = useRentalDetails(
     props.navigation,
@@ -44,7 +46,6 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
   };
 
   library.add(solidHeart, regularHeart);
-  // max is 33
 
   useEffect(() => {
     if (!rental) {
@@ -54,12 +55,12 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
     props.navigation.setOptions({
       headerRight: () => <BookmarkButton rental={rental} iconSize={23} />,
     });
-  }, []);
+  }, [rental]);
 
   return (
     <GestureHandlerRootView>
       <SafeAreaView>
-        <ScrollView>
+        <ScrollView nestedScrollEnabled={true} overScrollMode={'never'}>
           <Text style={rentalDetailsStyle.titleText}>{rental?.title}</Text>
           <View style={{marginLeft: 10}}>
             <Text style={rentalDetailsStyle.reviewLengthText}>
@@ -131,13 +132,6 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
                 <Text style={rentalDetailsStyle.readMoreText}>Read more</Text>
               </TouchableOpacity>
             )}
-
-            {/*<Pressable onPress={() => handleMapViewPressablePress()}>*/}
-            {/*  <Text style={rentalDetailsStyle.addressText}>*/}
-            {/*    {rental.address}*/}
-            {/*  </Text>*/}
-            {/*</Pressable>*/}
-
             <View style={rentalDetailsStyle.topRatingAndReviewsContainer}>
               <Text style={rentalDetailsStyle.subtitleText}>
                 Ratings & Reviews
@@ -155,7 +149,9 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
               </View>
               <View style={rentalDetailsStyle.ratingsChartContainer}>
                 {reviewRatingPercentages?.map((percentage, index) => (
-                  <View style={rentalDetailsStyle.ratingProgressBar}>
+                  <View
+                    key={index}
+                    style={rentalDetailsStyle.ratingProgressBar}>
                     <Text style={rentalDetailsStyle.ratingProgressBarText}>
                       {reviewRatingPercentages.length - index}
                     </Text>
@@ -172,57 +168,43 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
             </View>
             <View style={rentalDetailsStyle.reviewsContainer}>
               <Text style={rentalDetailsStyle.reviewText}>
-                {Util.getFormattedNumberText(
-                  rental?.reviews?.items?.length,
-                  'Review',
-                )}
+                {Util.getFormattedNumberText(rental?.numberOfReviews, 'Review')}
               </Text>
             </View>
-            {rental?.reviews?.items.map(review => (
-              <GestureHandlerRootView>
-                <Bounceable>
-                  <Pressable
-                    onPress={() => {
-                      props.navigation.navigate(
-                        ScreenNameConstants.FullReview,
-                        {review: review},
-                      );
-                    }}>
-                    <ReviewCard
-                      review={review!}
-                      shouldMinimizeDescription={true}
-                    />
-                  </Pressable>
-                </Bounceable>
-              </GestureHandlerRootView>
-            ))}
-
-            {/*<View style={{flexDirection: 'row'}}>*/}
-            {/*  {[1, 2, 3, 4, 5].map(starNumber => (*/}
-            {/*    <Pressable*/}
-            {/*      key={starNumber}*/}
-            {/*      onPress={() => handleStarPress(starNumber)}>*/}
-            {/*      <FontAwesomeIcon*/}
-            {/*        icon={faStar}*/}
-            {/*        style={{marginRight: 3}}*/}
-            {/*        size={30}*/}
-            {/*        color={starNumber <= rating ? Colors.green : Colors.gray300}*/}
-            {/*      />*/}
-            {/*    </Pressable>*/}
-            {/*  ))}*/}
-            {/*</View>*/}
+          </View>
+          <View style={{marginBottom: 80}}>
+            <FlatList
+              data={rental?.reviews?.items}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              snapToInterval={Dimensions.get('window').width * 0.9}
+              decelerationRate={0}
+              snapToAlignment={'center'}
+              keyExtractor={item => item?.id!}
+              viewabilityConfig={{viewAreaCoveragePercentThreshold: 50}}
+              renderItem={({item, index}) => (
+                <View style={{marginLeft: index === 0 ? 10 : 0}}>
+                  <Bounceable>
+                    <Pressable
+                      onPress={() => {
+                        props.navigation.navigate(
+                          ScreenNameConstants.FullReview,
+                          {review: item as Review},
+                        );
+                      }}>
+                      <ReviewCard
+                        review={item as Review}
+                        key={item?.id}
+                        shouldMinimizeDescription
+                      />
+                    </Pressable>
+                  </Bounceable>
+                </View>
+              )}
+            />
           </View>
         </ScrollView>
         <View style={rentalDetailsStyle.stickyFooter}>
-          {/*<View style={rentalDetailsStyle.priceContainer}>*/}
-          {/*  <Text style={rentalDetailsStyle.smallPriceText}>*/}
-          {/*    ${rental.prices[0].price}*/}
-          {/*  </Text>*/}
-          {/*  <Text style={rentalDetailsStyle.perHourText}>*/}
-          {/*    {' '}*/}
-          {/*    / {Util.getTimeIncrementString(rental.prices[0].timeIncrement)}*/}
-          {/*  </Text>*/}
-          {/*</View>*/}
           <Pressable style={rentalDetailsStyle.messagePressable}>
             <Text style={rentalDetailsStyle.messageText}>Message</Text>
           </Pressable>
