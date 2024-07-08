@@ -13,9 +13,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHeart as solidHeart, faStar} from '@fortawesome/free-solid-svg-icons';
 import {faHeart as regularHeart} from '@fortawesome/free-regular-svg-icons';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {Progress} from 'native-base';
 import {Bounceable} from 'rn-bounceable';
-import Util from '../../Util';
 import rentalDetailsStyle from './RentalDetails.style';
 import useRentalDetails from './useRentalDetails';
 import BookmarkButton from '../../components/BookmarkButton/BookmarkButton';
@@ -25,6 +23,7 @@ import Colors from '../../assets/Colors';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {Review} from '../../src/API';
 import ScreenNameConstants from '../ScreenNameConstants';
+import RatingsAndReviewsSummary from '../../components/RatingsAndReviewsSummary/RatingsAndReviewsSummary';
 
 const RentalDetails = (props: {navigation: any; route: any}) => {
   const rentalID: string = props.route.params.rentalID;
@@ -32,10 +31,8 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
   const noReviews: string = 'No reviews';
   const readMoreMaxCharLength: number = 113;
 
-  const {getReviewRatingPercentages, distance, rental} = useRentalDetails(
-    props.navigation,
-    rentalID,
-  );
+  const {getReviewRatingPercentages, distance, reviews, rental} =
+    useRentalDetails(props.navigation, rentalID);
   const [rating, setRating] = useState(0);
   const reviewRatingPercentages: number[] = getReviewRatingPercentages();
   const shouldShowReadMore: boolean =
@@ -132,49 +129,16 @@ const RentalDetails = (props: {navigation: any; route: any}) => {
                 <Text style={rentalDetailsStyle.readMoreText}>Read more</Text>
               </TouchableOpacity>
             )}
-            <View style={rentalDetailsStyle.topRatingAndReviewsContainer}>
-              <Text style={rentalDetailsStyle.subtitleText}>
-                Ratings & Reviews
-              </Text>
-              <Pressable>
-                <Text style={rentalDetailsStyle.seeAllPressable}>See All</Text>
-              </Pressable>
-            </View>
-            <View style={rentalDetailsStyle.ratingsContainer}>
-              <View style={rentalDetailsStyle.averageRatingTextContainer}>
-                <Text style={rentalDetailsStyle.averageRatingText}>
-                  {rental?.averageRating}
-                </Text>
-                <Text style={rentalDetailsStyle.outOfFiveText}>Out of 5</Text>
-              </View>
-              <View style={rentalDetailsStyle.ratingsChartContainer}>
-                {reviewRatingPercentages?.map((percentage, index) => (
-                  <View
-                    key={index}
-                    style={rentalDetailsStyle.ratingProgressBar}>
-                    <Text style={rentalDetailsStyle.ratingProgressBarText}>
-                      {reviewRatingPercentages.length - index}
-                    </Text>
-                    <Progress
-                      value={percentage}
-                      size={'xs'}
-                      w={'90%'}
-                      style={{margin: 4}}
-                      _filledTrack={{bg: Colors.green}}
-                    />
-                  </View>
-                ))}
-              </View>
-            </View>
-            <View style={rentalDetailsStyle.reviewsContainer}>
-              <Text style={rentalDetailsStyle.reviewText}>
-                {Util.getFormattedNumberText(rental?.numberOfReviews, 'Review')}
-              </Text>
-            </View>
+            <RatingsAndReviewsSummary
+              shouldShowButton={true}
+              rental={rental}
+              navigation={props.navigation}
+              reviewRatingPercentages={reviewRatingPercentages}
+            />
           </View>
-          <View style={{marginBottom: 80}}>
+          <View style={{marginBottom: 60}}>
             <FlatList
-              data={rental?.reviews?.items}
+              data={reviews}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
               snapToInterval={Dimensions.get('window').width * 0.9}

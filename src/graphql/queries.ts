@@ -242,7 +242,6 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
   getUser(id: $id) {
     id
     name
-    dateJoined
     postedRentals {
       nextToken
       __typename
@@ -276,7 +275,6 @@ export const listUsers = /* GraphQL */ `query ListUsers(
     items {
       id
       name
-      dateJoined
       phone
       isPhoneVerified
       createdAt
@@ -295,12 +293,10 @@ export const getReview = /* GraphQL */ `query GetReview($id: ID!) {
     description
     rating
     rentalID
-    datePublished
     userID
     user {
       id
       name
-      dateJoined
       phone
       isPhoneVerified
       createdAt
@@ -353,7 +349,6 @@ export const listReviews = /* GraphQL */ `query ListReviews(
       description
       rating
       rentalID
-      datePublished
       userID
       createdAt
       updatedAt
@@ -367,15 +362,17 @@ export const listReviews = /* GraphQL */ `query ListReviews(
   APITypes.ListReviewsQueryVariables,
   APITypes.ListReviewsQuery
 >;
-export const reviewsByRentalID = /* GraphQL */ `query ReviewsByRentalID(
+export const reviewsByRental = /* GraphQL */ `query ReviewsByRental(
   $rentalID: ID!
+  $createdAt: ModelStringKeyConditionInput
   $sortDirection: ModelSortDirection
   $filter: ModelReviewFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  reviewsByRentalID(
+  reviewsByRental(
     rentalID: $rentalID
+    createdAt: $createdAt
     sortDirection: $sortDirection
     filter: $filter
     limit: $limit
@@ -387,7 +384,6 @@ export const reviewsByRentalID = /* GraphQL */ `query ReviewsByRentalID(
       description
       rating
       rentalID
-      datePublished
       userID
       createdAt
       updatedAt
@@ -398,8 +394,8 @@ export const reviewsByRentalID = /* GraphQL */ `query ReviewsByRentalID(
   }
 }
 ` as GeneratedQuery<
-  APITypes.ReviewsByRentalIDQueryVariables,
-  APITypes.ReviewsByRentalIDQuery
+  APITypes.ReviewsByRentalQueryVariables,
+  APITypes.ReviewsByRentalQuery
 >;
 export const reviewsByUserID = /* GraphQL */ `query ReviewsByUserID(
   $userID: ID!
@@ -421,7 +417,6 @@ export const reviewsByUserID = /* GraphQL */ `query ReviewsByUserID(
       description
       rating
       rentalID
-      datePublished
       userID
       createdAt
       updatedAt
@@ -462,7 +457,6 @@ export const getRental = /* GraphQL */ `query GetRental($id: ID!) {
     user {
       id
       name
-      dateJoined
       phone
       isPhoneVerified
       createdAt

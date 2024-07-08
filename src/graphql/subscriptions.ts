@@ -279,7 +279,6 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser($filter: Mo
   onCreateUser(filter: $filter) {
     id
     name
-    dateJoined
     postedRentals {
       nextToken
       __typename
@@ -311,7 +310,6 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser($filter: Mo
   onUpdateUser(filter: $filter) {
     id
     name
-    dateJoined
     postedRentals {
       nextToken
       __typename
@@ -343,7 +341,6 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser($filter: Mo
   onDeleteUser(filter: $filter) {
     id
     name
-    dateJoined
     postedRentals {
       nextToken
       __typename
@@ -378,12 +375,10 @@ export const onCreateReview = /* GraphQL */ `subscription OnCreateReview($filter
     description
     rating
     rentalID
-    datePublished
     userID
     user {
       id
       name
-      dateJoined
       phone
       isPhoneVerified
       createdAt
@@ -434,12 +429,10 @@ export const onUpdateReview = /* GraphQL */ `subscription OnUpdateReview($filter
     description
     rating
     rentalID
-    datePublished
     userID
     user {
       id
       name
-      dateJoined
       phone
       isPhoneVerified
       createdAt
@@ -490,12 +483,10 @@ export const onDeleteReview = /* GraphQL */ `subscription OnDeleteReview($filter
     description
     rating
     rentalID
-    datePublished
     userID
     user {
       id
       name
-      dateJoined
       phone
       isPhoneVerified
       createdAt
@@ -566,7 +557,6 @@ export const onCreateRental = /* GraphQL */ `subscription OnCreateRental($filter
     user {
       id
       name
-      dateJoined
       phone
       isPhoneVerified
       createdAt
@@ -627,7 +617,6 @@ export const onUpdateRental = /* GraphQL */ `subscription OnUpdateRental($filter
     user {
       id
       name
-      dateJoined
       phone
       isPhoneVerified
       createdAt
@@ -688,7 +677,6 @@ export const onDeleteRental = /* GraphQL */ `subscription OnDeleteRental($filter
     user {
       id
       name
-      dateJoined
       phone
       isPhoneVerified
       createdAt

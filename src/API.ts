@@ -141,7 +141,6 @@ export type Review = {
   description: string,
   rating?: number | null,
   rentalID: string,
-  datePublished: string,
   userID: string,
   user?: User | null,
   rental?: Rental | null,
@@ -153,7 +152,6 @@ export type User = {
   __typename: "User",
   id: string,
   name: string,
-  dateJoined: string,
   postedRentals?: ModelRentalConnection | null,
   bookings?: ModelBookingConnection | null,
   reviews?: ModelReviewConnection | null,
@@ -250,6 +248,30 @@ export type ModelFloatInput = {
   attributeType?: ModelAttributeTypes | null,
 };
 
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
+export type ModelReviewFilterInput = {
+  id?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  rating?: ModelFloatInput | null,
+  rentalID?: ModelIDInput | null,
+  userID?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  and?: Array< ModelReviewFilterInput | null > | null,
+  or?: Array< ModelReviewFilterInput | null > | null,
+  not?: ModelReviewFilterInput | null,
+};
+
 export type CreateBookmarkedRentalInput = {
   id?: string | null,
   userID: string,
@@ -321,14 +343,12 @@ export type DeleteBookingInput = {
 export type CreateUserInput = {
   id?: string | null,
   name: string,
-  dateJoined: string,
   phone?: string | null,
   isPhoneVerified?: boolean | null,
 };
 
 export type ModelUserConditionInput = {
   name?: ModelStringInput | null,
-  dateJoined?: ModelStringInput | null,
   phone?: ModelStringInput | null,
   isPhoneVerified?: ModelBooleanInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
@@ -341,7 +361,6 @@ export type ModelUserConditionInput = {
 export type UpdateUserInput = {
   id: string,
   name?: string | null,
-  dateJoined?: string | null,
   phone?: string | null,
   isPhoneVerified?: boolean | null,
 };
@@ -356,8 +375,8 @@ export type CreateReviewInput = {
   description: string,
   rating?: number | null,
   rentalID: string,
-  datePublished: string,
   userID: string,
+  createdAt?: string | null,
 };
 
 export type ModelReviewConditionInput = {
@@ -365,12 +384,11 @@ export type ModelReviewConditionInput = {
   description?: ModelStringInput | null,
   rating?: ModelFloatInput | null,
   rentalID?: ModelIDInput | null,
-  datePublished?: ModelStringInput | null,
   userID?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
   and?: Array< ModelReviewConditionInput | null > | null,
   or?: Array< ModelReviewConditionInput | null > | null,
   not?: ModelReviewConditionInput | null,
-  createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
 };
 
@@ -380,8 +398,8 @@ export type UpdateReviewInput = {
   description?: string | null,
   rating?: number | null,
   rentalID?: string | null,
-  datePublished?: string | null,
   userID?: string | null,
+  createdAt?: string | null,
 };
 
 export type DeleteReviewInput = {
@@ -502,7 +520,6 @@ export type ModelBookingFilterInput = {
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
-  dateJoined?: ModelStringInput | null,
   phone?: ModelStringInput | null,
   isPhoneVerified?: ModelBooleanInput | null,
   createdAt?: ModelStringInput | null,
@@ -516,21 +533,6 @@ export type ModelUserConnection = {
   __typename: "ModelUserConnection",
   items:  Array<User | null >,
   nextToken?: string | null,
-};
-
-export type ModelReviewFilterInput = {
-  id?: ModelIDInput | null,
-  title?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  rating?: ModelFloatInput | null,
-  rentalID?: ModelIDInput | null,
-  datePublished?: ModelStringInput | null,
-  userID?: ModelIDInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-  and?: Array< ModelReviewFilterInput | null > | null,
-  or?: Array< ModelReviewFilterInput | null > | null,
-  not?: ModelReviewFilterInput | null,
 };
 
 export type ModelSubscriptionBookmarkedRentalFilterInput = {
@@ -594,7 +596,6 @@ export type ModelSubscriptionBooleanInput = {
 export type ModelSubscriptionUserFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
-  dateJoined?: ModelSubscriptionStringInput | null,
   phone?: ModelSubscriptionStringInput | null,
   isPhoneVerified?: ModelSubscriptionBooleanInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
@@ -609,7 +610,6 @@ export type ModelSubscriptionReviewFilterInput = {
   description?: ModelSubscriptionStringInput | null,
   rating?: ModelSubscriptionFloatInput | null,
   rentalID?: ModelSubscriptionIDInput | null,
-  datePublished?: ModelSubscriptionStringInput | null,
   userID?: ModelSubscriptionIDInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
@@ -720,21 +720,6 @@ export type GetRentalWithDetailsQuery = {
       zip: string,
       country: string,
     },
-    reviews?:  {
-      __typename: "ModelReviewConnection",
-      items:  Array< {
-        __typename: "Review",
-        id: string,
-        title: string,
-        description: string,
-        rating?: number | null,
-        datePublished: string,
-        user?:  {
-          __typename: "User",
-          name: string,
-        } | null,
-      } | null >,
-    } | null,
     bookings?:  {
       __typename: "ModelBookingConnection",
       nextToken?: string | null,
@@ -743,7 +728,6 @@ export type GetRentalWithDetailsQuery = {
     user?:  {
       __typename: "User",
       id: string,
-      dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
       createdAt: string,
@@ -794,6 +778,33 @@ export type ListRentalsForCardQuery = {
       amountHourly?: number | null,
       amountDaily?: number | null,
       amountWeekly?: number | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ReviewByRentalForRentalDetailsQueryVariables = {
+  rentalID: string,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelReviewFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ReviewByRentalForRentalDetailsQuery = {
+  reviewsByRental?:  {
+    __typename: "ModelReviewConnection",
+    items:  Array< {
+      __typename: "Review",
+      title: string,
+      description: string,
+      rating?: number | null,
+      user?:  {
+        __typename: "User",
+        name: string,
+      } | null,
+      createdAt: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -1082,7 +1093,6 @@ export type CreateUserMutation = {
     __typename: "User",
     id: string,
     name: string,
-    dateJoined: string,
     postedRentals?:  {
       __typename: "ModelRentalConnection",
       nextToken?: string | null,
@@ -1116,7 +1126,6 @@ export type UpdateUserMutation = {
     __typename: "User",
     id: string,
     name: string,
-    dateJoined: string,
     postedRentals?:  {
       __typename: "ModelRentalConnection",
       nextToken?: string | null,
@@ -1150,7 +1159,6 @@ export type DeleteUserMutation = {
     __typename: "User",
     id: string,
     name: string,
-    dateJoined: string,
     postedRentals?:  {
       __typename: "ModelRentalConnection",
       nextToken?: string | null,
@@ -1187,13 +1195,11 @@ export type CreateReviewMutation = {
     description: string,
     rating?: number | null,
     rentalID: string,
-    datePublished: string,
     userID: string,
     user?:  {
       __typename: "User",
       id: string,
       name: string,
-      dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
       createdAt: string,
@@ -1245,13 +1251,11 @@ export type UpdateReviewMutation = {
     description: string,
     rating?: number | null,
     rentalID: string,
-    datePublished: string,
     userID: string,
     user?:  {
       __typename: "User",
       id: string,
       name: string,
-      dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
       createdAt: string,
@@ -1303,13 +1307,11 @@ export type DeleteReviewMutation = {
     description: string,
     rating?: number | null,
     rentalID: string,
-    datePublished: string,
     userID: string,
     user?:  {
       __typename: "User",
       id: string,
       name: string,
-      dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
       createdAt: string,
@@ -1382,7 +1384,6 @@ export type CreateRentalMutation = {
       __typename: "User",
       id: string,
       name: string,
-      dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
       createdAt: string,
@@ -1445,7 +1446,6 @@ export type UpdateRentalMutation = {
       __typename: "User",
       id: string,
       name: string,
-      dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
       createdAt: string,
@@ -1508,7 +1508,6 @@ export type DeleteRentalMutation = {
       __typename: "User",
       id: string,
       name: string,
-      dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
       createdAt: string,
@@ -1755,7 +1754,6 @@ export type GetUserQuery = {
     __typename: "User",
     id: string,
     name: string,
-    dateJoined: string,
     postedRentals?:  {
       __typename: "ModelRentalConnection",
       nextToken?: string | null,
@@ -1792,7 +1790,6 @@ export type ListUsersQuery = {
       __typename: "User",
       id: string,
       name: string,
-      dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
       createdAt: string,
@@ -1814,13 +1811,11 @@ export type GetReviewQuery = {
     description: string,
     rating?: number | null,
     rentalID: string,
-    datePublished: string,
     userID: string,
     user?:  {
       __typename: "User",
       id: string,
       name: string,
-      dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
       createdAt: string,
@@ -1875,7 +1870,6 @@ export type ListReviewsQuery = {
       description: string,
       rating?: number | null,
       rentalID: string,
-      datePublished: string,
       userID: string,
       createdAt: string,
       updatedAt: string,
@@ -1884,16 +1878,17 @@ export type ListReviewsQuery = {
   } | null,
 };
 
-export type ReviewsByRentalIDQueryVariables = {
+export type ReviewsByRentalQueryVariables = {
   rentalID: string,
+  createdAt?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelReviewFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ReviewsByRentalIDQuery = {
-  reviewsByRentalID?:  {
+export type ReviewsByRentalQuery = {
+  reviewsByRental?:  {
     __typename: "ModelReviewConnection",
     items:  Array< {
       __typename: "Review",
@@ -1902,7 +1897,6 @@ export type ReviewsByRentalIDQuery = {
       description: string,
       rating?: number | null,
       rentalID: string,
-      datePublished: string,
       userID: string,
       createdAt: string,
       updatedAt: string,
@@ -1929,7 +1923,6 @@ export type ReviewsByUserIDQuery = {
       description: string,
       rating?: number | null,
       rentalID: string,
-      datePublished: string,
       userID: string,
       createdAt: string,
       updatedAt: string,
@@ -1971,7 +1964,6 @@ export type GetRentalQuery = {
       __typename: "User",
       id: string,
       name: string,
-      dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
       createdAt: string,
@@ -2489,7 +2481,6 @@ export type OnCreateUserSubscription = {
     __typename: "User",
     id: string,
     name: string,
-    dateJoined: string,
     postedRentals?:  {
       __typename: "ModelRentalConnection",
       nextToken?: string | null,
@@ -2522,7 +2513,6 @@ export type OnUpdateUserSubscription = {
     __typename: "User",
     id: string,
     name: string,
-    dateJoined: string,
     postedRentals?:  {
       __typename: "ModelRentalConnection",
       nextToken?: string | null,
@@ -2555,7 +2545,6 @@ export type OnDeleteUserSubscription = {
     __typename: "User",
     id: string,
     name: string,
-    dateJoined: string,
     postedRentals?:  {
       __typename: "ModelRentalConnection",
       nextToken?: string | null,
@@ -2591,13 +2580,11 @@ export type OnCreateReviewSubscription = {
     description: string,
     rating?: number | null,
     rentalID: string,
-    datePublished: string,
     userID: string,
     user?:  {
       __typename: "User",
       id: string,
       name: string,
-      dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
       createdAt: string,
@@ -2648,13 +2635,11 @@ export type OnUpdateReviewSubscription = {
     description: string,
     rating?: number | null,
     rentalID: string,
-    datePublished: string,
     userID: string,
     user?:  {
       __typename: "User",
       id: string,
       name: string,
-      dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
       createdAt: string,
@@ -2705,13 +2690,11 @@ export type OnDeleteReviewSubscription = {
     description: string,
     rating?: number | null,
     rentalID: string,
-    datePublished: string,
     userID: string,
     user?:  {
       __typename: "User",
       id: string,
       name: string,
-      dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
       createdAt: string,
@@ -2783,7 +2766,6 @@ export type OnCreateRentalSubscription = {
       __typename: "User",
       id: string,
       name: string,
-      dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
       createdAt: string,
@@ -2845,7 +2827,6 @@ export type OnUpdateRentalSubscription = {
       __typename: "User",
       id: string,
       name: string,
-      dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
       createdAt: string,
@@ -2907,7 +2888,6 @@ export type OnDeleteRentalSubscription = {
       __typename: "User",
       id: string,
       name: string,
-      dateJoined: string,
       phone?: string | null,
       isPhoneVerified?: boolean | null,
       createdAt: string,

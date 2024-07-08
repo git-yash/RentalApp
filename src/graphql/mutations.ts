@@ -294,7 +294,6 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
   createUser(input: $input, condition: $condition) {
     id
     name
-    dateJoined
     postedRentals {
       nextToken
       __typename
@@ -329,7 +328,6 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
   updateUser(input: $input, condition: $condition) {
     id
     name
-    dateJoined
     postedRentals {
       nextToken
       __typename
@@ -364,7 +362,6 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
   deleteUser(input: $input, condition: $condition) {
     id
     name
-    dateJoined
     postedRentals {
       nextToken
       __typename
@@ -402,12 +399,10 @@ export const createReview = /* GraphQL */ `mutation CreateReview(
     description
     rating
     rentalID
-    datePublished
     userID
     user {
       id
       name
-      dateJoined
       phone
       isPhoneVerified
       createdAt
@@ -461,12 +456,10 @@ export const updateReview = /* GraphQL */ `mutation UpdateReview(
     description
     rating
     rentalID
-    datePublished
     userID
     user {
       id
       name
-      dateJoined
       phone
       isPhoneVerified
       createdAt
@@ -520,12 +513,10 @@ export const deleteReview = /* GraphQL */ `mutation DeleteReview(
     description
     rating
     rentalID
-    datePublished
     userID
     user {
       id
       name
-      dateJoined
       phone
       isPhoneVerified
       createdAt
@@ -599,7 +590,6 @@ export const createRental = /* GraphQL */ `mutation CreateRental(
     user {
       id
       name
-      dateJoined
       phone
       isPhoneVerified
       createdAt
@@ -663,7 +653,6 @@ export const updateRental = /* GraphQL */ `mutation UpdateRental(
     user {
       id
       name
-      dateJoined
       phone
       isPhoneVerified
       createdAt
@@ -727,7 +716,6 @@ export const deleteRental = /* GraphQL */ `mutation DeleteRental(
     user {
       id
       name
-      dateJoined
       phone
       isPhoneVerified
       createdAt

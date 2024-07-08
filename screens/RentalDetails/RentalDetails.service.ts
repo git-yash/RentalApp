@@ -1,9 +1,17 @@
 import axios from 'axios';
 import Util from '../../Util';
 import {Platform} from 'react-native';
-import {Address, Rental} from '../../src/API';
+import {
+  Address,
+  ModelReviewConnection,
+  ModelSortDirection,
+  Rental,
+} from '../../src/API';
 import {AbstractAPIService} from '../../services/AbstractAPI.service';
-import {getRentalWithDetails} from '../../src/graphql/custom-queries';
+import {
+  getRentalWithDetails,
+  reviewByRentalForRentalDetails,
+} from '../../src/graphql/custom-queries';
 
 export default class RentalDetailsService extends AbstractAPIService {
   async getRentalDetails(rentalID: string) {
@@ -17,6 +25,25 @@ export default class RentalDetailsService extends AbstractAPIService {
       })
       .catch((e: Error) => {
         this.logError(e, 'Error fetching rental');
+      });
+  }
+
+  async getReviews(rentalID: string, limit: number, nextToken?: string) {
+    return await this.client
+      .graphql({
+        query: reviewByRentalForRentalDetails,
+        variables: {
+          rentalID: rentalID,
+          sortDirection: ModelSortDirection.DESC,
+          limit: limit,
+          nextToken: nextToken,
+        },
+      })
+      .then(response => {
+        return response.data.reviewsByRental as ModelReviewConnection;
+      })
+      .catch((e: Error) => {
+        this.logError(e, 'Error fetching reviews');
       });
   }
 

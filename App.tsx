@@ -37,6 +37,7 @@ import ScreenNameConstants from './screens/ScreenNameConstants';
 import {LogBox} from 'react-native';
 import SearchView from './components/SearchView/SearchView';
 import FullReview from './screens/FullReview/FullReview';
+import SeeAllReviews from './screens/SeeAllReviews/SeeAllReviews';
 
 LogBox.ignoreLogs([
   'In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.',
@@ -277,6 +278,17 @@ function App(): JSX.Element {
                 <Stack.Screen
                   name={ScreenNameConstants.RentalDetails}
                   component={RentalDetails}
+                  options={{
+                    headerTitleStyle: {
+                      fontFamily: 'Poppins-Regular',
+                    },
+                    headerBackTitleVisible: false,
+                    headerTintColor: 'black',
+                  }}
+                />
+                <Stack.Screen
+                  name={ScreenNameConstants.SeeAllReviews}
+                  component={SeeAllReviews}
                   options={{
                     headerTitleStyle: {
                       fontFamily: 'Poppins-Regular',

@@ -18,4 +18,5 @@ export default {
   RentalDetails: 'Details',
   Search: 'Search',
   FullReview: 'Review',
+  SeeAllReviews: 'Reviews & Ratings',
 };

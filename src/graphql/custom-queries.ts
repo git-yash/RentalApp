@@ -52,18 +52,6 @@ export const getRentalWithDetails =
       country
       __typename
     }
-    reviews (limit: 5) {
-    items {
-      id
-      title
-      description
-      rating
-      datePublished
-      user {
-        name
-      }
-    }
-    }
     bookings {
       nextToken
       __typename
@@ -71,7 +59,6 @@ export const getRentalWithDetails =
     userID
     user {
       id
-      dateJoined
       phone
       isPhoneVerified
       createdAt
@@ -139,3 +126,37 @@ export const listRentalsForCard = /* GraphQL */ `query ListRentalsForCard(
   APITypes.RentalsByAvailabilityCategoryIndexQueryVariables,
   APITypes.RentalsByAvailabilityCategoryIndexQuery
 >;
+
+export const reviewByRentalForRentalDetails =
+  /* GraphQL */ `query ReviewByRentalForRentalDetails(
+  $rentalID: ID!
+  $createdAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelReviewFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  reviewsByRental(
+    rentalID: $rentalID
+    createdAt: $createdAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      title
+      description
+      rating
+      user {
+        name
+      }
+      createdAt
+    }
+    nextToken
+  }
+}
+` as GeneratedQuery<
+    APITypes.ReviewsByRentalQueryVariables,
+    APITypes.ReviewsByRentalQuery
+  >;

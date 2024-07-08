@@ -36,7 +36,7 @@ const ReviewCard = (props: {
         </View>
         <View>
           <Text style={rentalDetailsStyle.reviewDateText}>
-            {Util.formatCustomDate(new Date(props.review?.datePublished || ''))}
+            {Util.formatCustomDate(new Date(props.review?.createdAt || ''))}
           </Text>
           <Text style={rentalDetailsStyle.reviewUserNameText}>
             {props.review?.user?.name}

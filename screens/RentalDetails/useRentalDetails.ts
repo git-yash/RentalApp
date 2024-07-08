@@ -2,7 +2,7 @@ import {Linking, Platform} from 'react-native';
 import {createMapLink} from 'react-native-open-maps';
 import {useActionSheet} from '@expo/react-native-action-sheet';
 import {useEffect, useState} from 'react';
-import {Rental} from '../../src/API';
+import {Rental, Review} from '../../src/API';
 import RentalDetailsService from './RentalDetails.service';
 import Util from '../../Util';
 import useRentalDetailsStore from '../../store/rentalDetailsStore';
@@ -13,6 +13,7 @@ const useRentalDetails = (navigation: any, rentalID: string) => {
   const rentalDetailsService = new RentalDetailsService();
   const [distance, setDistance] = useState<string | undefined>('');
   const [rental, setRental] = useState<Rental | undefined>(undefined);
+  const [reviews, setReviews] = useState<Review[] | undefined>(undefined);
   const {rentalDetails, setRentalDetails} = useRentalDetailsStore();
 
   useEffect(() => {
@@ -34,6 +35,7 @@ const useRentalDetails = (navigation: any, rentalID: string) => {
     if (rentalStore) {
       setRental(rentalStore.rental);
       setDistance(rentalStore.distance);
+      setReviews(rentalStore.reviews);
     } else {
       rentalDetailsService
         .getRentalDetails(rentalID)
@@ -41,32 +43,37 @@ const useRentalDetails = (navigation: any, rentalID: string) => {
           if (!responseRental) {
             return;
           }
-
           setRental(responseRental);
-
-          rentalDetailsService
-            .getDistanceAndTimeFromAddresses(
-              responseRental.latitude,
-              responseRental.longitude,
-              responseRental.address,
-            )
-            .then(response => {
-              setDistance(response);
-              const rentalDetails1: RentalDetails = {
-                rental: responseRental,
-                distance: response || '',
-              };
-              const tempRentalDetails = !rentalDetails ? [] : rentalDetails;
-              tempRentalDetails?.push(rentalDetails1);
-              setRentalDetails(tempRentalDetails);
-            });
+          rentalDetailsService.getReviews(rentalID, 5).then(responseReviews => {
+            if (!responseReviews) {
+              return;
+            }
+            setReviews(responseReviews.items as Review[]);
+            rentalDetailsService
+              .getDistanceAndTimeFromAddresses(
+                responseRental.latitude,
+                responseRental.longitude,
+                responseRental.address,
+              )
+              .then(response => {
+                setDistance(response);
+                const rentalDetails1: RentalDetails = {
+                  rental: responseRental,
+                  distance: response || '',
+                  reviews: responseReviews.items as Review[],
+                };
+                const tempRentalDetails = !rentalDetails ? [] : rentalDetails;
+                tempRentalDetails?.push(rentalDetails1);
+                setRentalDetails(tempRentalDetails);
+              });
+          });
         })
         .catch(e => console.error(e));
     }
   }, []);
 
   const getReviewRatingPercentages = (): number[] => {
-    if (!rental?.reviews?.items) {
+    if (!rental) {
       return [];
     }
     const reviewRatingPercentages: number[] = [];
@@ -95,11 +102,10 @@ const useRentalDetails = (navigation: any, rentalID: string) => {
   };
 
   const getAverageRating = (): number => {
-    if (!rental?.reviews || !rental.reviews.items) {
+    if (!reviews) {
       return 0;
     }
 
-    const reviews = rental.reviews.items;
     let total: number = 0;
     for (const review of reviews) {
       total += review?.rating || 0;
@@ -163,6 +169,7 @@ const useRentalDetails = (navigation: any, rentalID: string) => {
     getAverageRating,
     distance,
     rental,
+    reviews,
   };
 };
 

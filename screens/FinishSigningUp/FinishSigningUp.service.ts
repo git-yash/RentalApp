@@ -38,7 +38,6 @@ export default class FinishSigningUpService {
                 input: {
                   id: emailText,
                   name: firstNameText + ' ' + lastNameText,
-                  dateJoined: Util.toISODateString(),
                 } as CreateUserInput,
               },
             })
