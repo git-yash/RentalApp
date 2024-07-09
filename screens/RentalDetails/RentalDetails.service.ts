@@ -24,7 +24,7 @@ export default class RentalDetailsService extends AbstractAPIService {
         return response.data.getRental as Rental;
       })
       .catch((e: Error) => {
-        this.logError(e, 'Error fetching rental');
+        throw this.logError(e, 'Error fetching rental');
       });
   }
 
@@ -43,7 +43,7 @@ export default class RentalDetailsService extends AbstractAPIService {
         return response.data.reviewsByRental as ModelReviewConnection;
       })
       .catch((e: Error) => {
-        this.logError(e, 'Error fetching reviews');
+        throw this.logError(e, 'Error fetching reviews');
       });
   }
 

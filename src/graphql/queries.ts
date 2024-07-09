@@ -260,6 +260,14 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
     }
     phone
     isPhoneVerified
+    chats {
+      nextToken
+      __typename
+    }
+    messages {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -728,4 +736,289 @@ export const rentalsByAvailabilityCategoryIndex = /* GraphQL */ `query RentalsBy
 ` as GeneratedQuery<
   APITypes.RentalsByAvailabilityCategoryIndexQueryVariables,
   APITypes.RentalsByAvailabilityCategoryIndexQuery
+>;
+export const getChat = /* GraphQL */ `query GetChat($id: ID!) {
+  getChat(id: $id) {
+    id
+    participants {
+      nextToken
+      __typename
+    }
+    messages {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    lastMessage {
+      id
+      content
+      userID
+      chatID
+      read
+      sentAt
+      createdAt
+      updatedAt
+      __typename
+    }
+    chatLastMessageId
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetChatQueryVariables, APITypes.GetChatQuery>;
+export const listChats = /* GraphQL */ `query ListChats(
+  $filter: ModelChatFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listChats(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      createdAt
+      updatedAt
+      chatLastMessageId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.ListChatsQueryVariables, APITypes.ListChatsQuery>;
+export const getMessage = /* GraphQL */ `query GetMessage($id: ID!) {
+  getMessage(id: $id) {
+    id
+    content
+    sender {
+      id
+      name
+      phone
+      isPhoneVerified
+      createdAt
+      updatedAt
+      __typename
+    }
+    userID
+    chat {
+      id
+      createdAt
+      updatedAt
+      chatLastMessageId
+      __typename
+    }
+    chatID
+    read
+    sentAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetMessageQueryVariables,
+  APITypes.GetMessageQuery
+>;
+export const listMessages = /* GraphQL */ `query ListMessages(
+  $filter: ModelMessageFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      content
+      userID
+      chatID
+      read
+      sentAt
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListMessagesQueryVariables,
+  APITypes.ListMessagesQuery
+>;
+export const messagesByUserID = /* GraphQL */ `query MessagesByUserID(
+  $userID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelMessageFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  messagesByUserID(
+    userID: $userID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      content
+      userID
+      chatID
+      read
+      sentAt
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.MessagesByUserIDQueryVariables,
+  APITypes.MessagesByUserIDQuery
+>;
+export const messagesByChat = /* GraphQL */ `query MessagesByChat(
+  $chatID: ID!
+  $sentAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelMessageFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  messagesByChat(
+    chatID: $chatID
+    sentAt: $sentAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      content
+      userID
+      chatID
+      read
+      sentAt
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.MessagesByChatQueryVariables,
+  APITypes.MessagesByChatQuery
+>;
+export const getUserChats = /* GraphQL */ `query GetUserChats($id: ID!) {
+  getUserChats(id: $id) {
+    id
+    userId
+    chatId
+    user {
+      id
+      name
+      phone
+      isPhoneVerified
+      createdAt
+      updatedAt
+      __typename
+    }
+    chat {
+      id
+      createdAt
+      updatedAt
+      chatLastMessageId
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetUserChatsQueryVariables,
+  APITypes.GetUserChatsQuery
+>;
+export const listUserChats = /* GraphQL */ `query ListUserChats(
+  $filter: ModelUserChatsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUserChats(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      userId
+      chatId
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListUserChatsQueryVariables,
+  APITypes.ListUserChatsQuery
+>;
+export const userChatsByUserId = /* GraphQL */ `query UserChatsByUserId(
+  $userId: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelUserChatsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  userChatsByUserId(
+    userId: $userId
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      userId
+      chatId
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.UserChatsByUserIdQueryVariables,
+  APITypes.UserChatsByUserIdQuery
+>;
+export const userChatsByChatId = /* GraphQL */ `query UserChatsByChatId(
+  $chatId: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelUserChatsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  userChatsByChatId(
+    chatId: $chatId
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      userId
+      chatId
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.UserChatsByChatIdQueryVariables,
+  APITypes.UserChatsByChatIdQuery
 >;

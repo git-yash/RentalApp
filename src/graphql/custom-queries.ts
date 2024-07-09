@@ -160,3 +160,42 @@ export const reviewByRentalForRentalDetails =
     APITypes.ReviewsByRentalQueryVariables,
     APITypes.ReviewsByRentalQuery
   >;
+export const userChatsWithDetails = /* GraphQL */ `query UserChatsWithDetails(
+  $userId: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelUserChatsFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  userChatsByUserId(
+    userId: $userId
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      chat {
+        lastMessage {
+          content
+          sentAt
+          read
+        }
+        participants {
+          items {
+            user {
+              name
+              id
+            }
+          }
+        }
+      }
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.UserChatsByUserIdQueryVariables,
+  APITypes.UserChatsByUserIdQuery
+>;

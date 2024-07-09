@@ -10,6 +10,7 @@ import bookmarksStyle from './Bookmarks.style';
 import useBookmarks from './useBookmarks';
 import ScreenTitle from '../../components/ScreenTitle/ScreenTitle';
 import RentalCard from '../../components/RentalCard/RentalCard';
+import ScreenNameConstants from '../ScreenNameConstants';
 
 const Bookmarks = (props: {navigation: any}) => {
   const {position, refreshing, onRefresh, bookmarkedRentals} = useBookmarks();
@@ -21,7 +22,7 @@ const Bookmarks = (props: {navigation: any}) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
         style={bookmarksStyle.mainContainer}>
-        <ScreenTitle title={'Bookmarks'} />
+        <ScreenTitle title={ScreenNameConstants.Bookmarks} />
         {!doesHaveBookmarks && (
           <View>
             <View style={bookmarksStyle.noBookmarksView}>

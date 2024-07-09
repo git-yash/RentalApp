@@ -3,7 +3,7 @@ import {GraphQLResult} from 'aws-amplify/api';
 import {
   bookingsByRentalID,
   getUser,
-  reviewsByRentalID,
+  reviewsByRental,
 } from '../../src/graphql/queries';
 import {GetUserQuery, Rental} from '../../src/API';
 import {listRentalsForCard} from '../../src/graphql/custom-queries';
@@ -39,7 +39,7 @@ export default class ExploreService extends AbstractAPIService {
   async getAllReviews(rentalID: string): Promise<void> {
     this.client
       .graphql({
-        query: reviewsByRentalID,
+        query: reviewsByRental,
         variables: {
           rentalID: rentalID,
         },

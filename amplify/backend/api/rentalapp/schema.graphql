@@ -23,6 +23,8 @@ type User @model @auth(rules: [{ allow: public }]) {
     bookmarks: [BookmarkedRental] @hasMany(indexName: "byUser", fields: ["id"])
     phone: AWSPhone
     isPhoneVerified: Boolean
+    chats: [Chat] @manyToMany(relationName: "UserChats")
+    messages: [Message] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
 type Review @model @auth(rules: [{ allow: public }]) {
@@ -74,4 +76,24 @@ type Rental @model @auth(rules: [{ allow: public }]) {
     numberOfTwoStarRatings: Int
     numberOfOneStarRatings: Int
     numberOfRatings: Int
+}
+
+type Chat @model @auth(rules: [{ allow: public }]) {
+    id: ID!
+    participants: [User] @manyToMany(relationName: "UserChats")
+    messages: [Message] @hasMany(indexName: "byChat", fields: ["id"])
+    createdAt: AWSDateTime!
+    updatedAt: AWSDateTime!
+    lastMessage: Message @hasOne
+}
+
+type Message @model @auth(rules: [{ allow: public }]) {
+    id: ID!
+    content: String!
+    sender: User @belongsTo(fields: ["userID"])
+    userID: ID! @index(name: "byUser")
+    chat: Chat @belongsTo(fields: ["chatID"])
+    chatID: ID! @index(name: "byChat", queryField: "messagesByChat", sortKeyFields: ["sentAt"])
+    read: Boolean!
+    sentAt: AWSDateTime!
 }

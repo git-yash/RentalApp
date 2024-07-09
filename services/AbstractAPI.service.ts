@@ -5,6 +5,6 @@ export abstract class AbstractAPIService {
 
   logError(e: Error, customErrorMessage?: string, refClass?: string) {
     console.error(refClass, customErrorMessage, e);
-    throw new Error(customErrorMessage) || e;
+    return new Error(customErrorMessage) || e;
   }
 }
