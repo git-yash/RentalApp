@@ -18,6 +18,11 @@ const chatStyles = StyleSheet.create({
   content: {
     flex: 1,
   },
+  flatListContentContainer: {
+    flexGrow: 1,
+    justifyContent: 'flex-end',
+    paddingBottom: 10, // Adjust padding if needed
+  },
   stickyView: {
     width: '100%',
     backgroundColor: Colors.gray100,
@@ -25,6 +30,7 @@ const chatStyles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: Colors.gray300,
     flexDirection: 'row',
+    alignItems: 'center',
   },
   input: {
     height: 40,

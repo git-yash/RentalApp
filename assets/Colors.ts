@@ -1,6 +1,7 @@
 export default {
   green: '#6ab97f',
   lightGreen: '#84a891',
+  darkGreen: '#41734c',
   borderGrey: '#c4c6c9',
   invalidRed: '#c5494d',
   mediumYellow: '#e8d51a',
