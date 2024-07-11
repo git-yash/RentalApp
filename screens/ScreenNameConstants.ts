@@ -19,4 +19,5 @@ export default {
   Search: 'Search',
   FullReview: 'Review',
   SeeAllReviews: 'Reviews & Ratings',
+  Chat: 'Chat',
 };

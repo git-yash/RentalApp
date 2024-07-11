@@ -1036,6 +1036,7 @@ export type UserChatsWithDetailsQuery = {
       __typename: "UserChats",
       chat:  {
         __typename: "Chat",
+        id: string,
         lastMessage?:  {
           __typename: "Message",
           content: string,

@@ -176,6 +176,7 @@ export const userChatsWithDetails = /* GraphQL */ `query UserChatsWithDetails(
   ) {
     items {
       chat {
+        id
         lastMessage {
           content
           sentAt
