@@ -45,6 +45,7 @@ const Chat = () => {
         keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 20}>
         <SafeAreaView style={chatStyles.safeAreaView}>
           <FlatList
+            inverted={true}
             data={messages}
             keyExtractor={item => item.id}
             renderItem={({item}) => (
@@ -69,7 +70,12 @@ const Chat = () => {
                   }}>
                   {item.content}
                 </Text>
-                <Text>{item.sentAt}</Text>
+                <Text
+                  style={{
+                    color: isMessageFromUser(item.userID) ? 'white' : 'black',
+                  }}>
+                  {new Date(item.sentAt).toLocaleTimeString()}
+                </Text>
               </View>
             )}
             contentContainerStyle={chatStyles.flatListContentContainer}

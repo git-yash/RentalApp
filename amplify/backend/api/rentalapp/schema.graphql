@@ -97,3 +97,8 @@ type Message @model @auth(rules: [{ allow: public }]) {
     read: Boolean!
     sentAt: AWSDateTime!
 }
+
+type Subscription {
+    onMessageByChatID(chatID: ID!): Message
+    @aws_subscribe(mutations: ["createMessage"])
+}

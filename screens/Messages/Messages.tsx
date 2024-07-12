@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, ScrollView, View} from 'react-native';
+import {Pressable, ScrollView, Text, View} from 'react-native';
 import {Divider} from 'native-base';
 import useMessages from './useMessages';
 import ChatCard from '../../components/ChatCard/ChatCard';
@@ -14,28 +14,40 @@ const Messages = () => {
   const navigation = useNavigation();
 
   return (
-    <ScrollView style={messagesStyle.scrollView}>
+    <View style={messagesStyle.container}>
       <View style={messagesStyle.titleContainer}>
         <ScreenTitle title={ScreenNameConstants.Messages} />
       </View>
-      <Divider style={messagesStyle.topDivider} />
-      {chats.map(c => (
-        <Pressable
-          key={c.id + '-pressable'}
-          onPress={() =>
-            navigation.navigate(ScreenNameConstants.Chat, {
-              senderName: getSender(c)?.name || '',
-              chatID: c.chat.id,
-            })
-          }>
-          <ChatCard
-            key={c.id + '-card'}
-            senderName={getSender(c)?.name || ''}
-            lastMessage={c.chat.lastMessage as Message}
-          />
-        </Pressable>
-      ))}
-    </ScrollView>
+      {chats.length > 0 ? (
+        <ScrollView style={messagesStyle.scrollView}>
+          <Divider style={messagesStyle.topDivider} />
+          {chats.map(c => (
+            <Pressable
+              key={c.chat.id + '-pressable'}
+              onPress={() =>
+                navigation.navigate(ScreenNameConstants.Chat, {
+                  senderName: getSender(c)?.name || '',
+                  chatID: c.chat.id,
+                })
+              }>
+              <ChatCard
+                key={c.chat.id + '-card'}
+                senderName={getSender(c)?.name || ''}
+                lastMessage={c.chat.lastMessage as Message}
+              />
+            </Pressable>
+          ))}
+        </ScrollView>
+      ) : (
+        <>
+          <View style={messagesStyle.noChatsContainer}>
+            <Text style={messagesStyle.noChatsText}>
+              No chats available. ☹️
+            </Text>
+          </View>
+        </>
+      )}
+    </View>
   );
 };
 

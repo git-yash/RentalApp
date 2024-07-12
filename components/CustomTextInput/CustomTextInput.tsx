@@ -12,7 +12,7 @@ const CustomTextInput = (props: {
   inputTitle: string;
   placeholderText: string;
   value: string;
-  onChange: any;
+  onChange: ((text: string) => void) | undefined;
   errorMessage: string | undefined;
   autoCapitalize: 'none' | 'sentences' | 'words' | 'characters' | undefined;
   keyboardType: KeyboardTypeOptions | undefined;

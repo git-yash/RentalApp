@@ -8,6 +8,39 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
+export const onMessageByChatID = /* GraphQL */ `subscription OnMessageByChatID($chatID: ID!) {
+  onMessageByChatID(chatID: $chatID) {
+    id
+    content
+    sender {
+      id
+      name
+      phone
+      isPhoneVerified
+      createdAt
+      updatedAt
+      __typename
+    }
+    userID
+    chat {
+      id
+      createdAt
+      updatedAt
+      chatLastMessageId
+      __typename
+    }
+    chatID
+    read
+    sentAt
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnMessageByChatIDSubscriptionVariables,
+  APITypes.OnMessageByChatIDSubscription
+>;
 export const onCreateBookmarkedRental = /* GraphQL */ `subscription OnCreateBookmarkedRental(
   $filter: ModelSubscriptionBookmarkedRentalFilterInput
 ) {

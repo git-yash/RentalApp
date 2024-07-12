@@ -10,6 +10,7 @@ import {
   UpdateChatMutationVariables,
 } from '../../src/API';
 import {createMessage, updateChat} from '../../src/graphql/mutations';
+import {onMessageByChatIDForChatScreen} from '../../src/graphql/custom-subscriptions';
 
 export default class ChatService extends AbstractAPIService {
   async getMessages(chatID: string) {
@@ -18,8 +19,8 @@ export default class ChatService extends AbstractAPIService {
         query: messagesByChat,
         variables: {
           chatID,
-          limit: 25,
-          sortDirection: ModelSortDirection.ASC,
+          limit: 20,
+          sortDirection: ModelSortDirection.DESC,
         } as MessagesByChatQueryVariables,
       })
       .then(response => {
@@ -67,5 +68,12 @@ export default class ChatService extends AbstractAPIService {
       .catch((e: Error) => {
         throw this.logError(e, e.message, 'updateChat');
       });
+  }
+
+  async messageSubscription(chatID: string) {
+    return this.client.graphql({
+      query: onMessageByChatIDForChatScreen,
+      variables: {chatID},
+    });
   }
 }

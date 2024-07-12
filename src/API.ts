@@ -1060,6 +1060,24 @@ export type UserChatsWithDetailsQuery = {
   } | null,
 };
 
+export type OnMessageByChatIDForChatScreenSubscriptionVariables = {
+  chatID: string,
+};
+
+export type OnMessageByChatIDForChatScreenSubscription = {
+  onMessageByChatID?:  {
+    __typename: "Message",
+    id: string,
+    content: string,
+    userID: string,
+    chatID: string,
+    read: boolean,
+    sentAt: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type CreateBookmarkedRentalMutationVariables = {
   input: CreateBookmarkedRentalInput,
   condition?: ModelBookmarkedRentalConditionInput | null,
@@ -3049,6 +3067,40 @@ export type UserChatsByChatIdQuery = {
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
+  } | null,
+};
+
+export type OnMessageByChatIDSubscriptionVariables = {
+  chatID: string,
+};
+
+export type OnMessageByChatIDSubscription = {
+  onMessageByChatID?:  {
+    __typename: "Message",
+    id: string,
+    content: string,
+    sender?:  {
+      __typename: "User",
+      id: string,
+      name: string,
+      phone?: string | null,
+      isPhoneVerified?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string,
+    chat?:  {
+      __typename: "Chat",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+      chatLastMessageId?: string | null,
+    } | null,
+    chatID: string,
+    read: boolean,
+    sentAt: string,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 

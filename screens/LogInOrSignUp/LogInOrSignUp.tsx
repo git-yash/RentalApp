@@ -29,7 +29,7 @@ const LogInOrSignUp = () => {
           placeholderText={'Enter email...'}
           errorMessage={emailError}
           value={emailText}
-          onChange={handleEmailOnChange}
+          onChange={text => handleEmailOnChange(text)}
           autoCapitalize={'none'}
           keyboardType={'email-address'}
           maxCharacterLength={320}

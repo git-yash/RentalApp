@@ -27,7 +27,7 @@ const useLogInOrSignUp = () => {
   const handleEmailOnChange = (text: string): void => {
     setEmailText(text);
     setEmailError(
-      Util.isValidEmail(emailText.trim())
+      Util.isValidEmail(text.trim())
         ? undefined
         : 'Please enter a valid email!',
     );
