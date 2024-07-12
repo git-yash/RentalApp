@@ -16,7 +16,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 import chatStyles from './Chat.style';
 import useChat from './useChat';
-import Colors from '../../assets/Colors';
 
 const Chat = () => {
   const navigation = useNavigation();
@@ -51,42 +50,21 @@ const Chat = () => {
             renderItem={({item}) => (
               <View>
                 {!!item.dateString && (
-                  <Text
-                    style={{
-                      fontFamily: 'Poppins-SemiBold',
-                      alignSelf: 'center',
-                      paddingVertical: 5,
-                      color: Colors.gray700,
-                    }}>
-                    {item.dateString}
-                  </Text>
+                  <Text style={chatStyles.dateString}>{item.dateString}</Text>
                 )}
                 <View
-                  style={{
-                    backgroundColor: isMessageFromUser(item.userID)
-                      ? Colors.darkGreen
-                      : Colors.gray300,
-                    padding: 10,
-                    margin: 10,
-                    maxWidth: '75%',
-                    borderRadius: 10,
-                    alignSelf: isMessageFromUser(item.userID)
-                      ? 'flex-end'
-                      : 'flex-start',
-                  }}>
+                  style={
+                    isMessageFromUser(item.userID)
+                      ? chatStyles.messageViewFromUser
+                      : chatStyles.messageViewFromSender
+                  }>
                   <Text
-                    style={{
-                      color: isMessageFromUser(item.userID) ? 'white' : 'black',
-                      fontFamily: 'Poppins-Regular',
-                      fontSize: 14,
-                    }}>
+                    style={
+                      isMessageFromUser(item.userID)
+                        ? chatStyles.messageTextFromUser
+                        : chatStyles.messageTextFromSender
+                    }>
                     {item.content}
-                  </Text>
-                  <Text
-                    style={{
-                      color: isMessageFromUser(item.userID) ? 'white' : 'black',
-                    }}>
-                    {new Date(item.sentAt).toTimeString()}
                   </Text>
                 </View>
               </View>

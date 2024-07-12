@@ -256,4 +256,78 @@ export default class Util {
 
     return parts.join(' / ');
   }
+
+  public static getChatDate(date: Date): string {
+    const now = new Date();
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
+
+    // Function to check if the input date is today
+    const isToday = (inputDate: Date): boolean => {
+      return inputDate.toDateString() === now.toDateString();
+    };
+
+    // Function to check if the input date is yesterday
+    const isYesterday = (inputDate: Date): boolean => {
+      return inputDate.toDateString() === yesterday.toDateString();
+    };
+
+    // Format time in "h:mm am/pm" format
+    const formatTime = (inputDate: Date): string => {
+      const hours = inputDate.getHours();
+      const minutes = inputDate.getMinutes();
+      const ampm = hours >= 12 ? 'pm' : 'am';
+      const formattedHours = hours % 12 || 12; // convert 0 hour to 12
+      const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+      return `${formattedHours}:${formattedMinutes}${ampm}`;
+    };
+
+    // Get the month, day, and weekday in a readable format
+    const monthNames = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+    const getMonthDay = (inputDate: Date): string => {
+      const month = monthNames[inputDate.getMonth()];
+      const day = inputDate.getDate();
+      const dayOfWeek = dayNames[inputDate.getDay()];
+      const daySuffix = (day: number): string => {
+        if (day > 3 && day < 21) {
+          return 'th';
+        }
+        switch (day % 10) {
+          case 1:
+            return 'st';
+          case 2:
+            return 'nd';
+          case 3:
+            return 'rd';
+          default:
+            return 'th';
+        }
+      };
+      return `${dayOfWeek}, ${month} ${day}${daySuffix(day)}`;
+    };
+
+    if (isToday(date)) {
+      return `Today at ${formatTime(date)}`;
+    } else if (isYesterday(date)) {
+      return `Yesterday at ${formatTime(date)}`;
+    } else {
+      return `${getMonthDay(date)} at ${formatTime(date)}`;
+    }
+  }
 }

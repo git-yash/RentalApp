@@ -52,6 +52,38 @@ const chatStyles = StyleSheet.create({
     padding: 10,
     borderRadius: 50,
   },
+  dateString: {
+    fontFamily: 'Poppins-SemiBold',
+    alignSelf: 'center',
+    paddingVertical: 5,
+    color: Colors.gray700,
+  },
+  messageViewFromUser: {
+    backgroundColor: Colors.darkGreen,
+    padding: 10,
+    margin: 10,
+    maxWidth: '75%',
+    borderRadius: 10,
+    alignSelf: 'flex-end',
+  },
+  messageViewFromSender: {
+    backgroundColor: Colors.gray300,
+    padding: 10,
+    margin: 10,
+    maxWidth: '75%',
+    borderRadius: 10,
+    alignSelf: 'flex-start',
+  },
+  messageTextFromUser: {
+    color: 'white',
+    fontFamily: 'Poppins-Regular',
+    fontSize: 14,
+  },
+  messageTextFromSender: {
+    color: 'black',
+    fontFamily: 'Poppins-Regular',
+    fontSize: 14,
+  },
 });
 
 export default chatStyles;

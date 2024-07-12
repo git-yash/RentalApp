@@ -5,6 +5,7 @@ import useUserStore from '../../store/userStore';
 import {Subscription} from 'rxjs';
 import {useFocusEffect} from '@react-navigation/native';
 import {ChatMessage} from './models/ChatMessage';
+import Util from '../../Util';
 
 const useChat = (chatID: string) => {
   const [messages, setMessages] = useState<ChatMessage[] | undefined>(
@@ -74,10 +75,10 @@ const useChat = (chatID: string) => {
       let prevItem = msgs[i + 1];
       prevItemDateString = new Date(prevItem?.sentAt).toDateString();
       if (!prevItem) {
-        msgs[i].dateString = currentDateString;
+        msgs[i].dateString = Util.getChatDate(new Date(currentItem.sentAt));
       }
       if (currentDateString !== prevItemDateString) {
-        msgs[i].dateString = currentDateString;
+        msgs[i].dateString = Util.getChatDate(new Date(currentItem.sentAt));
       }
     }
 
