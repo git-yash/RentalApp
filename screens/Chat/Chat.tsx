@@ -49,33 +49,46 @@ const Chat = () => {
             data={messages}
             keyExtractor={item => item.id}
             renderItem={({item}) => (
-              <View
-                style={{
-                  backgroundColor: isMessageFromUser(item.userID)
-                    ? Colors.darkGreen
-                    : Colors.gray300,
-                  padding: 10,
-                  margin: 10,
-                  maxWidth: '75%',
-                  borderRadius: 10,
-                  alignSelf: isMessageFromUser(item.userID)
-                    ? 'flex-end'
-                    : 'flex-start',
-                }}>
-                <Text
+              <View>
+                {!!item.dateString && (
+                  <Text
+                    style={{
+                      fontFamily: 'Poppins-SemiBold',
+                      alignSelf: 'center',
+                      paddingVertical: 5,
+                      color: Colors.gray700,
+                    }}>
+                    {item.dateString}
+                  </Text>
+                )}
+                <View
                   style={{
-                    color: isMessageFromUser(item.userID) ? 'white' : 'black',
-                    fontFamily: 'Poppins-Regular',
-                    fontSize: 14,
+                    backgroundColor: isMessageFromUser(item.userID)
+                      ? Colors.darkGreen
+                      : Colors.gray300,
+                    padding: 10,
+                    margin: 10,
+                    maxWidth: '75%',
+                    borderRadius: 10,
+                    alignSelf: isMessageFromUser(item.userID)
+                      ? 'flex-end'
+                      : 'flex-start',
                   }}>
-                  {item.content}
-                </Text>
-                <Text
-                  style={{
-                    color: isMessageFromUser(item.userID) ? 'white' : 'black',
-                  }}>
-                  {new Date(item.sentAt).toLocaleTimeString()}
-                </Text>
+                  <Text
+                    style={{
+                      color: isMessageFromUser(item.userID) ? 'white' : 'black',
+                      fontFamily: 'Poppins-Regular',
+                      fontSize: 14,
+                    }}>
+                    {item.content}
+                  </Text>
+                  <Text
+                    style={{
+                      color: isMessageFromUser(item.userID) ? 'white' : 'black',
+                    }}>
+                    {new Date(item.sentAt).toTimeString()}
+                  </Text>
+                </View>
               </View>
             )}
             contentContainerStyle={chatStyles.flatListContentContainer}

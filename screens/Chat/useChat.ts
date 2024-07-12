@@ -1,13 +1,15 @@
 import {useCallback, useEffect, useState} from 'react';
-import {Message} from '../../src/API';
 import ChatService from './Chat.service';
 import {Alert} from 'react-native';
 import useUserStore from '../../store/userStore';
 import {Subscription} from 'rxjs';
 import {useFocusEffect} from '@react-navigation/native';
+import {ChatMessage} from './models/ChatMessage';
 
 const useChat = (chatID: string) => {
-  const [messages, setMessages] = useState<Message[] | undefined>(undefined);
+  const [messages, setMessages] = useState<ChatMessage[] | undefined>(
+    undefined,
+  );
   const chatService = new ChatService();
   const {user} = useUserStore();
   const [message, setMessage] = useState('');
@@ -56,6 +58,31 @@ const useChat = (chatID: string) => {
         console.error(e);
       });
   }, []);
+
+  useEffect(() => {
+    const msgs = messages;
+    if (!msgs?.length) {
+      return;
+    }
+
+    let currentDateString = new Date(msgs[0].sentAt).toDateString();
+    let prevItemDateString = new Date(msgs[0].sentAt).toDateString();
+
+    for (let i = 0; i < msgs.length; i++) {
+      let currentItem = msgs[i];
+      currentDateString = new Date(currentItem.sentAt).toDateString();
+      let prevItem = msgs[i + 1];
+      prevItemDateString = new Date(prevItem?.sentAt).toDateString();
+      if (!prevItem) {
+        msgs[i].dateString = currentDateString;
+      }
+      if (currentDateString !== prevItemDateString) {
+        msgs[i].dateString = currentDateString;
+      }
+    }
+
+    setMessages(msgs);
+  }, [messages]);
 
   const onMessageButtonPress = (messageText: string) => {
     chatService
