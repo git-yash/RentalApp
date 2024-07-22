@@ -16,6 +16,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 import chatStyles from './Chat.style';
 import useChat from './useChat';
+import {Spinner} from 'native-base';
+import Colors from '../../assets/Colors';
 
 const Chat = () => {
   const navigation = useNavigation();
@@ -28,6 +30,10 @@ const Chat = () => {
     message,
     setMessage,
     canSendMessage,
+    onScrollToTop,
+    isLoadingMoreMessages,
+    endReachedCalledDuringMomentum,
+    setEndReachedCalledDuringMomentum,
   } = useChat(chatID);
 
   useEffect(() => {
@@ -46,6 +52,16 @@ const Chat = () => {
           <FlatList
             inverted={true}
             data={messages}
+            onMomentumScrollBegin={() =>
+              setEndReachedCalledDuringMomentum(false)
+            }
+            ListFooterComponent={() => (
+              <View>
+                {isLoadingMoreMessages && <Spinner color={Colors.gray700} />}
+              </View>
+            )}
+            onEndReached={onScrollToTop}
+            onEndReachedThreshold={0.7}
             keyExtractor={item => item.id}
             renderItem={({item}) => (
               <View>

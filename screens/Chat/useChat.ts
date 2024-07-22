@@ -14,8 +14,15 @@ const useChat = (chatID: string) => {
   const chatService = new ChatService();
   const {user} = useUserStore();
   const [message, setMessage] = useState('');
+  const [isLoadingMoreMessages, setIsLoadingMoreMessages] =
+    useState<boolean>(false);
+  const [nextToken, setNextToken] = useState<string | null | undefined>(
+    undefined,
+  );
   const canSendMessage = message.length > 0;
   let messageSubscription: Subscription | undefined;
+  const [endReachedCalledDuringMomentum, setEndReachedCalledDuringMomentum] =
+    useState(true);
 
   const isMessageFromUser = (userID: string) => {
     return userID === user?.id;
@@ -49,15 +56,7 @@ const useChat = (chatID: string) => {
   );
 
   useEffect(() => {
-    chatService
-      .getMessages(chatID)
-      .then(msgs => {
-        setMessages(msgs);
-      })
-      .catch(e => {
-        Alert.alert('Unable to fetch messages.');
-        console.error(e);
-      });
+    fetchMessages();
   }, []);
 
   useEffect(() => {
@@ -70,6 +69,7 @@ const useChat = (chatID: string) => {
     let prevItemDateString = new Date(msgs[0].sentAt).toDateString();
 
     for (let i = 0; i < msgs.length; i++) {
+      msgs[i].delivered = true;
       let currentItem = msgs[i];
       currentDateString = new Date(currentItem.sentAt).toDateString();
       let prevItem = msgs[i + 1];
@@ -84,6 +84,41 @@ const useChat = (chatID: string) => {
 
     setMessages(msgs);
   }, [messages]);
+
+  const fetchMessages = (loadingMoreMessages?: boolean) => {
+    if (loadingMoreMessages) {
+      setIsLoadingMoreMessages(true);
+    }
+    chatService
+      .getMessages(chatID, nextToken)
+      .then(msgs => {
+        if (messages && messages?.length > 0 && nextToken) {
+          let tempMessages = messages;
+          let newMessages = msgs.items;
+          tempMessages?.push(...newMessages);
+          setMessages(tempMessages);
+        } else {
+          setMessages(msgs.items as ChatMessage[]);
+        }
+        setNextToken(msgs.nextToken);
+        if (loadingMoreMessages) {
+          setIsLoadingMoreMessages(false);
+        }
+      })
+      .catch(e => {
+        Alert.alert('Unable to fetch messages.');
+        console.error(e);
+      });
+  };
+
+  const onScrollToTop = (info: {distanceFromEnd: number}) => {
+    if (info.distanceFromEnd === 0 || !nextToken) {
+      return;
+    }
+    if (!isLoadingMoreMessages && !endReachedCalledDuringMomentum) {
+      fetchMessages(true);
+    }
+  };
 
   const onMessageButtonPress = (messageText: string) => {
     chatService
@@ -103,6 +138,10 @@ const useChat = (chatID: string) => {
     message,
     setMessage,
     canSendMessage,
+    onScrollToTop,
+    isLoadingMoreMessages,
+    endReachedCalledDuringMomentum,
+    setEndReachedCalledDuringMomentum,
   };
 };
 

@@ -10,21 +10,21 @@ import {
 } from '../../src/API';
 import {createMessage, updateChat} from '../../src/graphql/mutations';
 import {onMessageByChatIDForChatScreen} from '../../src/graphql/custom-subscriptions';
-import {ChatMessage} from './models/ChatMessage';
 
 export default class ChatService extends AbstractAPIService {
-  async getMessages(chatID: string) {
+  async getMessages(chatID: string, nextToken?: string | null) {
     return await this.client
       .graphql({
         query: messagesByChat,
         variables: {
           chatID,
           limit: 20,
+          nextToken,
           sortDirection: ModelSortDirection.DESC,
         } as MessagesByChatQueryVariables,
       })
       .then(response => {
-        return response.data.messagesByChat.items as ChatMessage[];
+        return response.data.messagesByChat;
       })
       .catch((e: Error) => {
         throw this.logError(e, e.message, 'messagesByChat');
