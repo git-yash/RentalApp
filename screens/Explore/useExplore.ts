@@ -4,17 +4,14 @@ import Geolocation, {
   GeolocationResponse,
 } from '@react-native-community/geolocation';
 import ExploreService from './Explore.service';
-import {useMyContext} from '../../MyContext';
 import Util from '../../Util';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import BottomSheet from '@gorhom/bottom-sheet';
-import useUserStore from '../../store/userStore';
 import {Hub} from 'aws-amplify/utils';
 import ScreenNameConstants from '../ScreenNameConstants';
 import {Rental} from '../../src/API';
 
 const useExplore = (navigation: any) => {
-  const [isModalVisible, setModalVisible] = useState<boolean>(false);
   const [canShowMap, setCanShowMap] = useState<boolean>(false);
   const [mapInitiallyVisible, setMapInitiallyVisible] =
     useState<boolean>(false);
@@ -25,11 +22,9 @@ const useExplore = (navigation: any) => {
   const flatListRef = useRef<FlatList>(null);
   const mapRef = useRef(null);
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
-  const {bookmarkedPosts} = useMyContext();
   const [isListView, setIsListView] = useState<boolean | undefined>(undefined);
   const [refreshing, setRefreshing] = React.useState(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const {user} = useUserStore();
   const snapPoints = useMemo(
     () => ['10%', showSearchResults ? '95%' : '85%'],
     [],
@@ -102,6 +97,7 @@ const useExplore = (navigation: any) => {
     if (!position) {
       return;
     }
+    console.log('position: ' + position);
 
     exploreService
       .getAllRentals(
@@ -129,6 +125,7 @@ const useExplore = (navigation: any) => {
     setAllRentals();
     setRefreshing(false);
   };
+
   const onRefresh = React.useCallback(() => {
     refreshScreen();
   }, []);
@@ -162,31 +159,46 @@ const useExplore = (navigation: any) => {
   };
 
   useEffect(() => {
+    if (!position) {
+      return;
+    }
+
+    console.log(`selectedCategory ${selectedCategory}, position: ${position}`);
     setAllRentals();
-  }, [selectedCategory]);
+  }, [selectedCategory, position]);
 
   // TODO: fix bookmark update issue
 
   useEffect(() => {
-    if (user) {
-      setModalVisible(false);
-      void setCurrentGeoPosition();
-    }
-  }, [user]);
+    console.log('loading explore');
 
-  useEffect(() => {
-    if (!position) {
-      return;
-    }
-    setCanShowMap(true);
-    setAllRentals();
-  }, [position, bookmarkedPosts]);
+    getCurrentGeoPosition()
+      .then(pos => {
+        console.log('setting position');
+        setPosition(pos);
+        setCanShowMap(true);
+      })
+      .catch(e => {
+        console.error(e);
+        Alert.alert('GetCurrentPosition Error');
+      });
 
-  useEffect(() => {
-    const userListener = (data: {payload: {event: any}}) => {
+    const userListener = (data: {payload: {event: any; data: any}}) => {
       if (data.payload.event === 'UserRetrievedError') {
         navigation.navigate(ScreenNameConstants.LogInOrSignUpScreens);
       }
+      // else if (data.payload.event === 'UserRetrieved') {
+      //   getCurrentGeoPosition()
+      //     .then(pos => {
+      //       console.log('setting position');
+      //       setPosition(pos);
+      //       setCanShowMap(true);
+      //     })
+      //     .catch(e => {
+      //       console.error(e);
+      //       Alert.alert('GetCurrentPosition Error');
+      //     });
+      // }
     };
 
     const userListenerCancel = Hub.listen('user', userListener);
@@ -197,25 +209,26 @@ const useExplore = (navigation: any) => {
     };
   }, []);
 
-  const setCurrentGeoPosition = async () => {
-    Geolocation.getCurrentPosition(
-      pos => {
-        setPosition(pos);
-      },
-      error => Alert.alert('GetCurrentPosition Error', JSON.stringify(error)),
-      {enableHighAccuracy: true},
-    );
+  const getCurrentGeoPosition = async () => {
+    return new Promise((resolve, reject) => {
+      Geolocation.getCurrentPosition(
+        pos => {
+          resolve(pos as GeolocationResponse);
+        },
+        error => {
+          reject(error);
+        },
+        {enableHighAccuracy: true},
+      );
+    });
   };
 
   return {
-    isModalVisible,
-    setModalVisible,
     position,
     bottomSheetRef,
     selectedCategory,
     setSelectedCategory,
     rentals,
-    setAllRentals,
     categoryItems,
     currentItemIndex,
     onViewableItemsChanged,

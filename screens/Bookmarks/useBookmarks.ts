@@ -1,9 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import BookmarksService from './Bookmarks.service';
-import Geolocation, {
-  GeolocationResponse,
-} from '@react-native-community/geolocation';
-import {Alert} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import useUserStore from '../../store/userStore';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
@@ -11,47 +7,33 @@ import Util from '../../Util';
 import {Rental} from '../../src/API';
 
 const useBookmarks = () => {
-  // const {bookmarkedPosts, setBookmarkedPosts} = useMyContext();
   const [bookmarkedRentals, setBookmarkedRentals] = useState<Rental[]>([]);
-  const [position, setPosition] = useState<GeolocationResponse>();
   const bookmarksService = new BookmarksService();
   const [refreshing, setRefreshing] = React.useState(false);
   const {user} = useUserStore();
-  // const doesHaveBookmarks: boolean = user?.bookmarkedRentalIDs
-  //   ? user?.bookmarkedRentalIDs.length > 0
-  //   : false;
-
   const isScreenFocused = useIsFocused();
 
-  useEffect(() => {
-    if (isScreenFocused) {
-      // refreshScreen();
-    }
-  }, [isScreenFocused]);
-
-  useEffect(() => {
+  const fetchBookmarkedRentals = () => {
     if (!user?.id) {
       return;
     }
-    void setCurrentPosition();
+    if (!isScreenFocused) {
+      return;
+    }
+
+    console.log('loading bookmarks');
     bookmarksService.getBookmarkedRentals(user.id).then(response => {
       setBookmarkedRentals(response);
     });
-  }, []);
+  };
+
+  useEffect(() => {
+    fetchBookmarkedRentals();
+  }, [isScreenFocused]);
 
   const onRefresh = React.useCallback(() => {
     refreshScreen();
   }, []);
-
-  const setCurrentPosition = async () => {
-    Geolocation.getCurrentPosition(
-      pos => {
-        setPosition(pos);
-      },
-      error => Alert.alert('GetCurrentPosition Error', JSON.stringify(error)),
-      {enableHighAccuracy: true},
-    );
-  };
 
   const refreshScreen = () => {
     if (!user?.id) {
@@ -65,12 +47,7 @@ const useBookmarks = () => {
     });
   };
 
-  // useEffect(() => {
-  //   void setCurrentPosition();
-  //   void bookmarksService.getBookmarkedRentals(setBookmarkedPosts);
-  // }, [user?.bookmarkedRentalIDs]);
-
-  return {bookmarkedRentals, position, refreshing, onRefresh};
+  return {bookmarkedRentals, refreshing, onRefresh};
 };
 
 export default useBookmarks;

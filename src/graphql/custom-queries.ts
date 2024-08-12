@@ -201,3 +201,45 @@ export const userChatsWithDetails = /* GraphQL */ `query UserChatsWithDetails(
   APITypes.UserChatsByUserIdQueryVariables,
   APITypes.UserChatsByUserIdQuery
 >;
+
+export const getUserWithDetails =
+  /* GraphQL */ `query GetUserWithDetails($id: ID!) {
+  getUser(id: $id) {
+    id
+    name
+    postedRentals {
+      nextToken
+      __typename
+    }
+    bookings {
+      nextToken
+      __typename
+    }
+    reviews {
+      nextToken
+      __typename
+    }
+    bookmarks {
+      items {
+        bookmarkedRentalRentalId
+        id
+      }
+      nextToken
+      __typename
+    }
+    phone
+    isPhoneVerified
+    chats {
+      nextToken
+      __typename
+    }
+    messages {
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetUserQueryVariables, APITypes.GetUserQuery>;

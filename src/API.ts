@@ -1034,6 +1034,7 @@ export type UserChatsWithDetailsQuery = {
     __typename: "ModelUserChatsConnection",
     items:  Array< {
       __typename: "UserChats",
+      id: string,
       chat:  {
         __typename: "Chat",
         id: string,
@@ -1057,6 +1058,51 @@ export type UserChatsWithDetailsQuery = {
       },
     } | null >,
     nextToken?: string | null,
+  } | null,
+};
+
+export type GetUserWithDetailsQueryVariables = {
+  id: string,
+};
+
+export type GetUserWithDetailsQuery = {
+  getUser?:  {
+    __typename: "User",
+    id: string,
+    name: string,
+    postedRentals?:  {
+      __typename: "ModelRentalConnection",
+      nextToken?: string | null,
+    } | null,
+    bookings?:  {
+      __typename: "ModelBookingConnection",
+      nextToken?: string | null,
+    } | null,
+    reviews?:  {
+      __typename: "ModelReviewConnection",
+      nextToken?: string | null,
+    } | null,
+    bookmarks?:  {
+      __typename: "ModelBookmarkedRentalConnection",
+      items:  Array< {
+        __typename: "BookmarkedRental",
+        bookmarkedRentalRentalId?: string | null,
+        id: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    phone?: string | null,
+    isPhoneVerified?: boolean | null,
+    chats?:  {
+      __typename: "ModelUserChatsConnection",
+      nextToken?: string | null,
+    } | null,
+    messages?:  {
+      __typename: "ModelMessageConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 

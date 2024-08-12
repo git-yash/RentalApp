@@ -13,7 +13,7 @@ import RentalCard from '../../components/RentalCard/RentalCard';
 import ScreenNameConstants from '../ScreenNameConstants';
 
 const Bookmarks = (props: {navigation: any}) => {
-  const {position, refreshing, onRefresh, bookmarkedRentals} = useBookmarks();
+  const {refreshing, onRefresh, bookmarkedRentals} = useBookmarks();
   const doesHaveBookmarks: boolean = bookmarkedRentals.length > 0;
   return (
     <SafeAreaView>
@@ -37,8 +37,6 @@ const Bookmarks = (props: {navigation: any}) => {
             <RentalCard
               rental={item}
               key={index}
-              currentLatitude={position?.coords.latitude}
-              currentLongitude={position?.coords.longitude}
               navigation={props.navigation}
             />
           );

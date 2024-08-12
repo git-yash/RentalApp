@@ -51,15 +51,17 @@ function App(): JSX.Element {
   const Stack = createNativeStackNavigator();
   const PostRentalScreensStack = createNativeStackNavigator();
   const LogInOrSignUpStack = createNativeStackNavigator();
-  const {authUser, userAttributes} = useUserStore();
+  const {authUser} = useUserStore();
   const [isUserFetched, setIsUserFetched] = useState<boolean>(false);
   const {initializeUser} = useUser();
 
   useEffect(() => {
+    console.log('App Initializing');
     initializeUser()
       .then(() => {
         setIsUserFetched(true);
         setTimeout(function () {
+          console.log('User Retrieved');
           Hub.dispatch('user', {event: 'UserRetrieved', data: authUser});
         }, 0);
       })
@@ -67,6 +69,7 @@ function App(): JSX.Element {
         console.error('App: load: user fetched error', e);
         setIsUserFetched(true);
         setTimeout(function () {
+          console.log('User Retrieved Error');
           Hub.dispatch('user', {event: 'UserRetrievedError', data: e});
         }, 0);
       });

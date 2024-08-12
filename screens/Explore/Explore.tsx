@@ -43,10 +43,6 @@ const Explore = () => {
 
   return (
     <View>
-      {/*<LogInOrSignUp*/}
-      {/*  isModalVisible={isModalVisible}*/}
-      {/*  setIsModalVisible={setModalVisible}*/}
-      {/*/>*/}
       {canShowMap && (
         <>
           {mapInitiallyVisible && (

@@ -8,13 +8,12 @@ import {
   DeleteBookmarkedRentalInput,
   Rental,
 } from '../../src/API';
-import {bookmarkedRentalsByUserID} from '../../src/graphql/queries';
 
 export default class BookmarkButtonService {
   client = generateClient();
 
   async createBookmark(userID: string, rental: Rental) {
-    this.client
+    return this.client
       .graphql({
         query: createBookmarkedRental,
         variables: {
@@ -38,25 +37,6 @@ export default class BookmarkButtonService {
             id: bookmarkID,
           } as DeleteBookmarkedRentalInput,
         },
-      })
-      .catch(e => {
-        throw e;
-      });
-  }
-
-  async getBookmark(userID: string, rentalID: string) {
-    return this.client
-      .graphql({
-        query: bookmarkedRentalsByUserID,
-        variables: {
-          userID: userID,
-          filter: {
-            bookmarkedRentalRentalId: {eq: rentalID},
-          },
-        },
-      })
-      .then(r => {
-        return r;
       })
       .catch(e => {
         throw e;

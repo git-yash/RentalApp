@@ -1,6 +1,6 @@
-import {getUser} from '../src/graphql/queries';
 import {generateClient} from 'aws-amplify/api';
 import {User} from '../src/API';
+import {getUserWithDetails} from '../src/graphql/custom-queries';
 
 export default class UserService {
   client = generateClient();
@@ -8,7 +8,7 @@ export default class UserService {
   async getUser(loginId: string) {
     return this.client
       .graphql({
-        query: getUser,
+        query: getUserWithDetails,
         variables: {id: loginId},
       })
       .then(response => {
