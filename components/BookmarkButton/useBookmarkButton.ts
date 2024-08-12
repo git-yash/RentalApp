@@ -10,13 +10,11 @@ import useBookmarksStore from '../../store/bookmarksStore';
 const useBookmarkButton = (rental: Rental) => {
   const {user, setUser} = useUserStore();
 
-  const {bookmarkedRentals, addBookmark, removeBookmark} = useBookmarksStore(
-    state => ({
-      bookmarkedRentals: state.bookmarkedRentals,
-      removeBookmark: state.removeBookmark,
-      addBookmark: state.addBookmark,
-    }),
-  );
+  const {addBookmark, removeBookmark} = useBookmarksStore(state => ({
+    bookmarkedRentals: state.bookmarkedRentals,
+    removeBookmark: state.removeBookmark,
+    addBookmark: state.addBookmark,
+  }));
 
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
   const [bookmarkedRental, setBookmarkedRental] = useState<
@@ -40,7 +38,7 @@ const useBookmarkButton = (rental: Rental) => {
           addBookmark(br);
 
           if (user.bookmarks) {
-            user.bookmarks.items = bookmarkedRentals;
+            user.bookmarks?.items.push(br);
           }
           setBookmarkedRental(br);
           setIsBookmarked(true);
@@ -59,7 +57,9 @@ const useBookmarkButton = (rental: Rental) => {
           removeBookmark(bookmarkedRental.id);
 
           if (user.bookmarks) {
-            user.bookmarks.items = bookmarkedRentals;
+            user.bookmarks.items = user.bookmarks?.items.filter(
+              br => bookmarkedRental?.id !== br?.id,
+            );
           }
           setBookmarkedRental(null);
           setIsBookmarked(false);
@@ -70,10 +70,6 @@ const useBookmarkButton = (rental: Rental) => {
         });
     }
   }, [isBookmarked]);
-
-  useEffect(() => {
-    setIsBookmarked(!isBookmarked);
-  }, [bookmarkedRentals]);
 
   useEffect(() => {
     let bookmark = user?.bookmarks?.items.find(

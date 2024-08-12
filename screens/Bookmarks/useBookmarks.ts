@@ -21,7 +21,6 @@ const useBookmarks = () => {
       return;
     }
 
-    console.log('loading bookmarks');
     bookmarksService.getBookmarkedRentals(user.id).then(response => {
       setBookmarkedRentals(response);
     });

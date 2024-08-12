@@ -56,12 +56,10 @@ function App(): JSX.Element {
   const {initializeUser} = useUser();
 
   useEffect(() => {
-    console.log('App Initializing');
     initializeUser()
       .then(() => {
         setIsUserFetched(true);
         setTimeout(function () {
-          console.log('User Retrieved');
           Hub.dispatch('user', {event: 'UserRetrieved', data: authUser});
         }, 0);
       })

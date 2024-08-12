@@ -97,7 +97,6 @@ const useExplore = (navigation: any) => {
     if (!position) {
       return;
     }
-    console.log('position: ' + position);
 
     exploreService
       .getAllRentals(
@@ -163,18 +162,13 @@ const useExplore = (navigation: any) => {
       return;
     }
 
-    console.log(`selectedCategory ${selectedCategory}, position: ${position}`);
     setAllRentals();
   }, [selectedCategory, position]);
 
   // TODO: fix bookmark update issue
-
   useEffect(() => {
-    console.log('loading explore');
-
     getCurrentGeoPosition()
       .then(pos => {
-        console.log('setting position');
         setPosition(pos);
         setCanShowMap(true);
       })

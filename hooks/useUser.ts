@@ -26,7 +26,6 @@ const useUser = () => {
         return;
       }
       addBookmarks(user.bookmarks.items.slice());
-      console.log('Setting bookmarks');
 
       const attributes = await fetchUserAttributes();
       setUserAttributes(attributes);

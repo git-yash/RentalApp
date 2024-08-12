@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback} from 'react';
 import {Button, SafeAreaView, ScrollView} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import TabBarIcon from '../../components/TabBarIcon/TabBarIcon';
@@ -17,10 +17,6 @@ const Profile = (props: {navigation: any}) => {
   const {authUser} = useUserStore();
   library.add(solidUser, regularUser);
   const {signOutUser} = useUser();
-
-  useEffect(() => {
-    console.log('loading profile');
-  }, []);
 
   // have to leave this useFocusEffect in tsx file due to it changing the tab bar property
   useFocusEffect(
