@@ -22,6 +22,7 @@ export const getBookmarkedRental = /* GraphQL */ `query GetBookmarkedRental($id:
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -35,6 +36,8 @@ export const getBookmarkedRental = /* GraphQL */ `query GetBookmarkedRental($id:
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -120,6 +123,7 @@ export const getBooking = /* GraphQL */ `query GetBooking($id: ID!) {
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -133,6 +137,8 @@ export const getBooking = /* GraphQL */ `query GetBooking($id: ID!) {
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -322,6 +328,7 @@ export const getReview = /* GraphQL */ `query GetReview($id: ID!) {
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -335,6 +342,8 @@ export const getReview = /* GraphQL */ `query GetReview($id: ID!) {
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -476,6 +485,7 @@ export const getRental = /* GraphQL */ `query GetRental($id: ID!) {
     amountHourly
     amountDaily
     amountWeekly
+    amountMonthly
     latitude
     longitude
     bookingStartDates
@@ -489,6 +499,8 @@ export const getRental = /* GraphQL */ `query GetRental($id: ID!) {
     numberOfTwoStarRatings
     numberOfOneStarRatings
     numberOfRatings
+    willDeliver
+    willPickUp
     createdAt
     updatedAt
     __typename
@@ -512,6 +524,7 @@ export const listRentals = /* GraphQL */ `query ListRentals(
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -525,6 +538,8 @@ export const listRentals = /* GraphQL */ `query ListRentals(
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -562,6 +577,7 @@ export const rentalsByIsAvailable = /* GraphQL */ `query RentalsByIsAvailable(
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -575,6 +591,8 @@ export const rentalsByIsAvailable = /* GraphQL */ `query RentalsByIsAvailable(
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -612,6 +630,7 @@ export const rentalsByUserID = /* GraphQL */ `query RentalsByUserID(
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -625,6 +644,8 @@ export const rentalsByUserID = /* GraphQL */ `query RentalsByUserID(
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -662,6 +683,7 @@ export const rentalsByCategoryName = /* GraphQL */ `query RentalsByCategoryName(
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -675,6 +697,8 @@ export const rentalsByCategoryName = /* GraphQL */ `query RentalsByCategoryName(
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -712,6 +736,7 @@ export const rentalsByAvailabilityCategoryIndex = /* GraphQL */ `query RentalsBy
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -725,6 +750,8 @@ export const rentalsByAvailabilityCategoryIndex = /* GraphQL */ `query RentalsBy
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename

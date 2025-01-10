@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import {Alert} from 'react-native';
-import {Rental} from '../../../models/Rental';
 import ScreenNameConstants from '../../ScreenNameConstants';
-import {Price, TimeIncrement} from '../../../src/API';
+import {Rental} from '../../../src/API';
 
 const usePrices = (itemWorthNumber: number, rental: Rental) => {
   const suggestedHourlyRate: string = (itemWorthNumber * 0.03).toFixed(0);
@@ -40,44 +39,10 @@ const usePrices = (itemWorthNumber: number, rental: Rental) => {
   };
   // TODO: add is firm on price
   const setPrices = (): void => {
-    const priceItems: Price[] = [];
-    if (hourlyCheckbox) {
-      const hourlyPrice: Price = {
-        __typename: 'Price',
-        isFirmOnPrice: false,
-        amount: Number(hourlyRate),
-        timeIncrement: TimeIncrement.HOUR,
-      };
-      priceItems.push(hourlyPrice);
-    }
-    if (dailyCheckbox) {
-      const dailyPrice: Price = {
-        __typename: 'Price',
-        isFirmOnPrice: false,
-        amount: Number(dailyRate),
-        timeIncrement: TimeIncrement.DAY,
-      };
-      priceItems.push(dailyPrice);
-    }
-    if (weeklyCheckbox) {
-      const weeklyPrice: Price = {
-        __typename: 'Price',
-        isFirmOnPrice: false,
-        amount: Number(weeklyRate),
-        timeIncrement: TimeIncrement.WEEK,
-      };
-      priceItems.push(weeklyPrice);
-    }
-    if (monthlyCheckbox) {
-      const monthlyPrice: Price = {
-        __typename: 'Price',
-        isFirmOnPrice: false,
-        amount: Number(monthlyRate),
-        timeIncrement: TimeIncrement.MONTH,
-      };
-      priceItems.push(monthlyPrice);
-    }
-    rental.priceItems = priceItems;
+    rental.amountHourly = hourlyCheckbox ? Number(hourlyRate) : undefined;
+    rental.amountDaily = dailyCheckbox ? Number(dailyRate) : undefined;
+    rental.amountWeekly = weeklyCheckbox ? Number(weeklyRate) : undefined;
+    rental.amountMonthly = monthlyCheckbox ? Number(monthlyRate) : undefined;
   };
   const setEmptyRateToZero = (
     rate: string,

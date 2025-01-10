@@ -2,6 +2,11 @@ import {ImageSourcePropType, Platform} from 'react-native';
 import Colors from './assets/Colors';
 import Geocoder from 'react-native-geocoding';
 import {Address, Price, Rental, TimeIncrement} from './src/API';
+import {
+  ANDROID_GOOGLE_API_KEY,
+  DEFAULT_GOOGLE_API_KEY,
+  IOS_GOOGLE_API_KEY,
+} from '@env';
 import LatLng = Geocoder.LatLng;
 
 export default class Util {
@@ -106,11 +111,11 @@ export default class Util {
   public static getAPIKeyForPlatform(platform: string): string {
     switch (platform) {
       case 'ios':
-        return 'AIzaSyBess9KnTOAUWkF1uLGWsCR6mdJM4VTvl0';
+        return IOS_GOOGLE_API_KEY;
       case 'android':
-        return 'AIzaSyALRojxK1-M8lo-vB28xa1_nQomRhj4K3Q';
+        return ANDROID_GOOGLE_API_KEY;
       default:
-        return 'AIzaSyC_ndBoSOiL1Cvm3tzb-kdSC18Fpfja3_Q';
+        return DEFAULT_GOOGLE_API_KEY;
     }
   }
 

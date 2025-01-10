@@ -25,6 +25,7 @@ export const createBookmarkedRental = /* GraphQL */ `mutation CreateBookmarkedRe
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -38,6 +39,8 @@ export const createBookmarkedRental = /* GraphQL */ `mutation CreateBookmarkedRe
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -70,6 +73,7 @@ export const updateBookmarkedRental = /* GraphQL */ `mutation UpdateBookmarkedRe
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -83,6 +87,8 @@ export const updateBookmarkedRental = /* GraphQL */ `mutation UpdateBookmarkedRe
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -115,6 +121,7 @@ export const deleteBookmarkedRental = /* GraphQL */ `mutation DeleteBookmarkedRe
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -128,6 +135,8 @@ export const deleteBookmarkedRental = /* GraphQL */ `mutation DeleteBookmarkedRe
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -164,6 +173,7 @@ export const createBooking = /* GraphQL */ `mutation CreateBooking(
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -177,6 +187,8 @@ export const createBooking = /* GraphQL */ `mutation CreateBooking(
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -212,6 +224,7 @@ export const updateBooking = /* GraphQL */ `mutation UpdateBooking(
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -225,6 +238,8 @@ export const updateBooking = /* GraphQL */ `mutation UpdateBooking(
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -260,6 +275,7 @@ export const deleteBooking = /* GraphQL */ `mutation DeleteBooking(
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -273,6 +289,8 @@ export const deleteBooking = /* GraphQL */ `mutation DeleteBooking(
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -444,6 +462,7 @@ export const createReview = /* GraphQL */ `mutation CreateReview(
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -457,6 +476,8 @@ export const createReview = /* GraphQL */ `mutation CreateReview(
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -501,6 +522,7 @@ export const updateReview = /* GraphQL */ `mutation UpdateReview(
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -514,6 +536,8 @@ export const updateReview = /* GraphQL */ `mutation UpdateReview(
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -558,6 +582,7 @@ export const deleteReview = /* GraphQL */ `mutation DeleteReview(
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -571,6 +596,8 @@ export const deleteReview = /* GraphQL */ `mutation DeleteReview(
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -625,6 +652,7 @@ export const createRental = /* GraphQL */ `mutation CreateRental(
     amountHourly
     amountDaily
     amountWeekly
+    amountMonthly
     latitude
     longitude
     bookingStartDates
@@ -638,6 +666,8 @@ export const createRental = /* GraphQL */ `mutation CreateRental(
     numberOfTwoStarRatings
     numberOfOneStarRatings
     numberOfRatings
+    willDeliver
+    willPickUp
     createdAt
     updatedAt
     __typename
@@ -688,6 +718,7 @@ export const updateRental = /* GraphQL */ `mutation UpdateRental(
     amountHourly
     amountDaily
     amountWeekly
+    amountMonthly
     latitude
     longitude
     bookingStartDates
@@ -701,6 +732,8 @@ export const updateRental = /* GraphQL */ `mutation UpdateRental(
     numberOfTwoStarRatings
     numberOfOneStarRatings
     numberOfRatings
+    willDeliver
+    willPickUp
     createdAt
     updatedAt
     __typename
@@ -751,6 +784,7 @@ export const deleteRental = /* GraphQL */ `mutation DeleteRental(
     amountHourly
     amountDaily
     amountWeekly
+    amountMonthly
     latitude
     longitude
     bookingStartDates
@@ -764,6 +798,8 @@ export const deleteRental = /* GraphQL */ `mutation DeleteRental(
     numberOfTwoStarRatings
     numberOfOneStarRatings
     numberOfRatings
+    willDeliver
+    willPickUp
     createdAt
     updatedAt
     __typename

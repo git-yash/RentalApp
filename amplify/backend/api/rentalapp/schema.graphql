@@ -63,6 +63,7 @@ type Rental @model @auth(rules: [{ allow: public }]) {
     amountHourly: Int
     amountDaily: Int
     amountWeekly: Int
+    amountMonthly: Int
     latitude: Float!
     longitude: Float!
     bookingStartDates: [AWSDateTime]
@@ -76,6 +77,8 @@ type Rental @model @auth(rules: [{ allow: public }]) {
     numberOfTwoStarRatings: Int
     numberOfOneStarRatings: Int
     numberOfRatings: Int
+    willDeliver: Boolean
+    willPickUp: Boolean
 }
 
 type Chat @model @auth(rules: [{ allow: public }]) {

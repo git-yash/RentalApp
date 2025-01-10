@@ -57,6 +57,7 @@ export const onCreateBookmarkedRental = /* GraphQL */ `subscription OnCreateBook
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -70,6 +71,8 @@ export const onCreateBookmarkedRental = /* GraphQL */ `subscription OnCreateBook
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -101,6 +104,7 @@ export const onUpdateBookmarkedRental = /* GraphQL */ `subscription OnUpdateBook
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -114,6 +118,8 @@ export const onUpdateBookmarkedRental = /* GraphQL */ `subscription OnUpdateBook
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -145,6 +151,7 @@ export const onDeleteBookmarkedRental = /* GraphQL */ `subscription OnDeleteBook
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -158,6 +165,8 @@ export const onDeleteBookmarkedRental = /* GraphQL */ `subscription OnDeleteBook
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -191,6 +200,7 @@ export const onCreateBooking = /* GraphQL */ `subscription OnCreateBooking($filt
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -204,6 +214,8 @@ export const onCreateBooking = /* GraphQL */ `subscription OnCreateBooking($filt
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -236,6 +248,7 @@ export const onUpdateBooking = /* GraphQL */ `subscription OnUpdateBooking($filt
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -249,6 +262,8 @@ export const onUpdateBooking = /* GraphQL */ `subscription OnUpdateBooking($filt
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -281,6 +296,7 @@ export const onDeleteBooking = /* GraphQL */ `subscription OnDeleteBooking($filt
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -294,6 +310,8 @@ export const onDeleteBooking = /* GraphQL */ `subscription OnDeleteBooking($filt
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -453,6 +471,7 @@ export const onCreateReview = /* GraphQL */ `subscription OnCreateReview($filter
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -466,6 +485,8 @@ export const onCreateReview = /* GraphQL */ `subscription OnCreateReview($filter
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -507,6 +528,7 @@ export const onUpdateReview = /* GraphQL */ `subscription OnUpdateReview($filter
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -520,6 +542,8 @@ export const onUpdateReview = /* GraphQL */ `subscription OnUpdateReview($filter
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -561,6 +585,7 @@ export const onDeleteReview = /* GraphQL */ `subscription OnDeleteReview($filter
       amountHourly
       amountDaily
       amountWeekly
+      amountMonthly
       latitude
       longitude
       bookingStartDates
@@ -574,6 +599,8 @@ export const onDeleteReview = /* GraphQL */ `subscription OnDeleteReview($filter
       numberOfTwoStarRatings
       numberOfOneStarRatings
       numberOfRatings
+      willDeliver
+      willPickUp
       createdAt
       updatedAt
       __typename
@@ -625,6 +652,7 @@ export const onCreateRental = /* GraphQL */ `subscription OnCreateRental($filter
     amountHourly
     amountDaily
     amountWeekly
+    amountMonthly
     latitude
     longitude
     bookingStartDates
@@ -638,6 +666,8 @@ export const onCreateRental = /* GraphQL */ `subscription OnCreateRental($filter
     numberOfTwoStarRatings
     numberOfOneStarRatings
     numberOfRatings
+    willDeliver
+    willPickUp
     createdAt
     updatedAt
     __typename
@@ -685,6 +715,7 @@ export const onUpdateRental = /* GraphQL */ `subscription OnUpdateRental($filter
     amountHourly
     amountDaily
     amountWeekly
+    amountMonthly
     latitude
     longitude
     bookingStartDates
@@ -698,6 +729,8 @@ export const onUpdateRental = /* GraphQL */ `subscription OnUpdateRental($filter
     numberOfTwoStarRatings
     numberOfOneStarRatings
     numberOfRatings
+    willDeliver
+    willPickUp
     createdAt
     updatedAt
     __typename
@@ -745,6 +778,7 @@ export const onDeleteRental = /* GraphQL */ `subscription OnDeleteRental($filter
     amountHourly
     amountDaily
     amountWeekly
+    amountMonthly
     latitude
     longitude
     bookingStartDates
@@ -758,6 +792,8 @@ export const onDeleteRental = /* GraphQL */ `subscription OnDeleteRental($filter
     numberOfTwoStarRatings
     numberOfOneStarRatings
     numberOfRatings
+    willDeliver
+    willPickUp
     createdAt
     updatedAt
     __typename
